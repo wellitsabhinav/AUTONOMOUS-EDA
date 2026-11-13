@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools==84.2.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "autonomous-eda"
+version = "0.1.0"
+description = "Reproducible RTL-to-GDSII experiment orchestration"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["ruff==0.17.5", "mypy==2.4.1", "pytest==8.4.1"]
+
+[project.scripts]
+autonomous-eda = "autonomous_eda.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+files = ["src", "tests"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
