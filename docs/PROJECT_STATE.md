@@ -1,5 +1,9 @@
 # Project state
 
+- Milestone 06 implements the [read-only AI supervisor](AI_SUPERVISOR.md) for [issue #7](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/7). Local CPU inference completed four grounded selections and correctly abstained on both negative cases without model calls. See [AI evaluation](AI_EVALUATION.md) for observed timing, token counts, and limitations.
+- Windows validation passed 99 tests with local Qwen inference, MiniLM, retained MCP evidence, and the cached ORFS Doctor probes enabled. Ruff, strict mypy, dependency checks, and the AI, MCP, knowledge, and Doctor CLI smoke tests passed.
+- Milestone 05 merged in [PR #16](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/16) at `43b1cda`, closed #6, and passed [all four main CI jobs](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43468519240).
+
 - Milestone 05 implements [offline engineering knowledge and retrieval](KNOWLEDGE.md) for [issue #6](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/6). The [benchmark](RAG_BENCHMARK.md) compares BM25, exact CPU vectors, and reciprocal rank fusion on the retained GCD and Ibex evidence and pinned ORFS documentation.
 - Milestone 05 local validation passed 76 tests on Windows Python 3.12.5, including CPU MiniLM, retained GCD evidence over MCP stdio, and the two cached ORFS Doctor probes in WSL. Ruff, strict mypy, and `pip check` passed. The benchmark's 371-chunk index used schema 1 and 384-dimensional vectors. Both mutated and missing GCD timing reports withdrew the corresponding verified slack result.
 - [Read-only MCP PR #15](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/15) merged at `b72516d`, closed #5, and passed [all four main CI jobs](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43436542710). The [MCP guide](MCP.md) documents the optional SDK, scoped read access, and the local stdio client.

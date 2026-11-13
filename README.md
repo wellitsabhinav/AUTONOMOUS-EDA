@@ -19,4 +19,6 @@ Install the optional MCP extra with `python -m pip install -e '.[mcp]'`. Run `au
 
 Use `autonomous-eda knowledge --help` to index approved reports, documentation, and experiment evidence for local keyword, semantic, or hybrid search. The [knowledge guide](docs/KNOWLEDGE.md) covers registration, citations, and the optional CPU embedding model.
 
+Use `autonomous-eda ai --help` for deterministic observation, model-assisted explanation, and durable replay of approved experiments. The [AI supervisor guide](docs/AI_SUPERVISOR.md) covers the CLI and local model setup.
+
 See the [architecture](docs/ARCHITECTURE.md), [roadmap](docs/ROADMAP.md), [project state](docs/PROJECT_STATE.md), and [experiment protocol](docs/EXPERIMENT_PROTOCOL.md).
