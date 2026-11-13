@@ -14,6 +14,8 @@ from .discovery import inspect_rtl
 from .doctor import configure_doctor, doctor_main, environment_secrets, redact_diagnostics
 from .experiment import continue_run, initialize, verify
 from .manifest import ORFSManifest, RTLManifest, load_manifest
+from .mcp.cli import configure as configure_mcp
+from .mcp.cli import main as mcp_main
 from .orfs import stage_plan
 
 
@@ -23,6 +25,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     commands = parser.add_subparsers(dest="command")
     doctor = commands.add_parser("doctor", help="check the host and the pinned ORFS backend")
     configure_doctor(doctor)
+    configure_mcp(commands.add_parser("mcp", help="inspect approved run evidence over local MCP"))
     for name in ("inspect", "plan", "run"):
         item = commands.add_parser(name)
         item.add_argument("manifest", type=Path)
@@ -46,6 +49,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
     if args.command == "doctor":
         return doctor_main(args)
+    if args.command == "mcp":
+        return mcp_main(args)
     if not args.command:
         parser.print_help()
         return 0

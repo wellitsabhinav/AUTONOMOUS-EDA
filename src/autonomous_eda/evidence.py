@@ -221,13 +221,13 @@ def evidence_metrics(
     return metrics
 
 
-def get_experiment(root: Path) -> Experiment:
+def get_experiment(root: Path, *, legacy_root: Path | None = None) -> Experiment:
     root = root.resolve()
     if not (root / "run.sqlite3").is_file() and (root / "reference.json").is_file():
         return import_reference(root, root / "reference.json")
     data = report(root)
     manifest = data["manifest"]
-    run_id = data.get("run_id") or fingerprint(["legacy", str(root)])[:32]
+    run_id = data.get("run_id") or fingerprint(["legacy", str(legacy_root or root)])[:32]
     artifacts: dict[str, Artifact] = {}
     attempts = data["attempts"]
     for attempt in attempts:

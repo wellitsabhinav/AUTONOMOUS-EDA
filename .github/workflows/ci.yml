@@ -29,6 +29,10 @@ jobs:
       - run: python -m autonomous_eda doctor --help
       - run: python -m autonomous_eda plan configs/gcd-sky130hd.toml
       - run: python -m autonomous_eda experiments compare --help
+      - run: python -c "import importlib.util; assert importlib.util.find_spec('mcp') is None"
+      - run: pytest -q
+      - run: python -m pip install -c .github/ci-constraints.txt -e '.[mcp]'
+      - run: python -m pip check
       - run: ruff check .
       - run: ruff format --check .
       - run: mypy
@@ -42,6 +46,6 @@ jobs:
           persist-credentials: false
       - name: Check bootstrap files
         run: |
-          for path in README.md AGENTS.md CONTRIBUTING.md docs/{ARCHITECTURE,ROADMAP,CHANGELOG,EXPERIMENT_PROTOCOL,PROJECT_STATE,DECISIONS}.md .github/PULL_REQUEST_TEMPLATE.md; do
+          for path in README.md AGENTS.md CONTRIBUTING.md docs/{ARCHITECTURE,ROADMAP,CHANGELOG,EXPERIMENT_PROTOCOL,PROJECT_STATE,DECISIONS,MCP}.md docs/adr/0002-read-only-mcp.md .github/PULL_REQUEST_TEMPLATE.md; do
             test -s "$path" || exit 1
           done
