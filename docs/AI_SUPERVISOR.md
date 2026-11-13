@@ -34,6 +34,7 @@ Omit `[knowledge]` for deterministic observation and structured facts without re
 ```sh
 autonomous-eda ai --config .local/ai.toml --journal .local/ai.sqlite3 status
 autonomous-eda ai --config .local/ai.toml --journal .local/ai.sqlite3 observe --experiment gcd
+autonomous-eda ai --config .local/ai.toml --journal .local/ai.sqlite3 --json diagnose --experiment ibex --check setup
 autonomous-eda ai --config .local/ai.toml --journal .local/ai.sqlite3 --json explain --experiment gcd --request-id gcd-review --question 'Why did my GCD implementation fail?'
 autonomous-eda ai --config .local/ai.toml --journal .local/ai.sqlite3 inspect gcd-review
 autonomous-eda ai --config .local/ai.toml --journal .local/ai.sqlite3 replay gcd-review
@@ -44,6 +45,8 @@ autonomous-eda ai --config .local/ai.toml --journal .local/ai.sqlite3 cancel gcd
 Pass `--json` before the action. Repeat `--filter KEY=VALUE` to constrain retrieval. Design, platform, corner and run filters must match the selected experiment. The supported questions cover setup results, timing paths, independent verification, equivalence, and exact pinned ORFS option names. Classification uses deterministic terms. A retrieval miss, changed artifact, missing required fact, or unrelated request can result in abstention. A filtered path must cite a current report whose bytes match the selected run's recorded hash. The supervisor checks the cited line slice and parses its fields again. A trusted option reference must match the recorded ORFS revision when available.
 
 ## Workflow state and recovery
+
+The `diagnose` action reads the [deterministic diagnosis](TIMING_DIAGNOSIS.md) and exposes the full report in `observation.diagnosis`. An optional `[routes.diagnose]` selects a provider. Without a model, the workflow records the deterministic result. A model can select only supplied interpretations, hypotheses and measurements. It receives a bounded set of facts and options, with optional revision-matched retrieval citations. Malformed, missing or ambiguous final path evidence prevents model dispatch. Current resume revalidates the evidence and replay displays the historical result. See the [evaluation](DIAGNOSIS_EVALUATION.md).
 
 The journal schema is version 1. The normal inference path is `CREATED` → `VALIDATING` → `COLLECTING_EVIDENCE` → `RETRIEVING_CONTEXT` → `CHECKING_SUFFICIENCY` → `SELECTING_MODEL` → `GENERATING_EXPLANATION` → `VALIDATING_OUTPUT` → `COMPLETED`. Other terminal states are `INSUFFICIENT_EVIDENCE`, `FAILED`, and `CANCELLED`. A workflow records the input digest, scope policy digest, deadline, token and cost budgets, adapter, context and snapshot digests, attempt metadata, output digest, and transition IDs.
 

@@ -304,9 +304,12 @@ class Snapshot:
 
 
 def load_evidence(source: Source, target: Path) -> Experiment:
-    snapshot = Snapshot(source, target)
+    return collect_evidence(Snapshot(source, target))
+
+
+def collect_evidence(snapshot: Snapshot) -> Experiment:
     snapshot.collect()
-    evidence = get_experiment(snapshot.target, legacy_root=source.root)
+    evidence = get_experiment(snapshot.target, legacy_root=snapshot.source.root)
     # Historical controller reports without artifact-bound deck verification
     # cannot establish an MCP pass or failure for those gates.
     if evidence["origin"] != "external":

@@ -10,6 +10,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Literal, TypedDict
 
+from .diagnostic_artifacts import STAGE_REPORTS
 from .experiment import report
 from .manifest import fingerprint, sha256
 from .metrics import FINAL_FIELDS, ROUTE_FIELDS, Number, summarize_verified
@@ -421,11 +422,17 @@ def import_reference(root: Path, index: Path) -> Experiment:
         raise ValueError("unsupported reference design or revision")
     run_id = fingerprint(record)
     artifacts: dict[str, Artifact] = {}
+    stage_reports = {
+        name: spec.stage
+        for spec in STAGE_REPORTS
+        for name in (spec.metrics, spec.timing, spec.sdc)
+        if name is not None
+    }
     for relative, digest in record["sha256"].items():
         if not isinstance(digest, str) or not re.fullmatch(r"[a-f0-9]{64}", digest):
             raise ValueError(f"invalid reference hash: {relative}")
         name = Path(relative).name
-        stage = (
+        stage = stage_reports.get(name) or (
             "drc"
             if "drc" in name
             else "lvs"

@@ -8,12 +8,14 @@ from dataclasses import asdict, dataclass, field
 from typing import cast
 from uuid import uuid4
 
+from ..diagnosis import Check
 from ..knowledge.index import canonical, identity
 from ..knowledge.retrieval import where
 from ..knowledge.sources import check_sensitive
 from ..mcp.registry import Registry
 from .context import Knowledge, build, classify
 from .contracts import VERSION, Context, render, selection
+from .diagnosis import build_diagnosis
 from .gateway import HttpProvider, InferenceError, Mock, Provider, Route, request_for
 from .journal import JOURNAL_VERSION, TERMINAL, Journal, State, Workflow
 
@@ -113,6 +115,7 @@ class Supervisor:
         filters: dict[str, str] | None = None,
         consent: bool = False,
         request_id: str | None = None,
+        diagnosis_check: Check | None = None,
     ) -> dict[str, object]:
         if request_id is not None and not re.fullmatch(r"[a-zA-Z0-9_-]{1,64}", request_id):
             raise ValueError("Invalid request ID")
@@ -127,7 +130,9 @@ class Supervisor:
         filters = filters or {}
         where(filters)
         check_sensitive(canonical(filters))
-        task = "observe" if observe else classify(question)
+        if diagnosis_check is not None and (observe or filters):
+            raise ValueError("Structured diagnosis takes a timing check and authorized experiment")
+        task = "diagnose" if diagnosis_check else "observe" if observe else classify(question)
         route = self.settings.route(task)
         key = self.journal.create(
             {
@@ -141,6 +146,7 @@ class Supervisor:
                 "route": asdict(route),
                 "limits": asdict(self.settings.limits),
                 "schema_version": VERSION,
+                **({"diagnosis_check": diagnosis_check} if diagnosis_check else {}),
             },
             self.settings.limits.deadline_seconds,
             request_id,
@@ -191,6 +197,14 @@ class Supervisor:
 
     def context(self, workflow: Workflow) -> Context:
         question = str(workflow.inputs["question"])
+        if workflow.inputs["task"] == "diagnose":
+            return build_diagnosis(
+                self.settings.registry,
+                str(workflow.inputs["experiment"]),
+                question,
+                cast(Check, workflow.inputs["diagnosis_check"]),
+                self.settings.knowledge,
+            )
         task = classify(question) if not workflow.inputs["observe"] else "observe"
         return build(
             self.settings.registry,
@@ -319,6 +333,8 @@ class Supervisor:
                 )
             elif context.task == "observe":
                 self.finish(workflow, owner, State.COMPLETED, "observed", context)
+            elif context.task == "diagnose" and route.adapter == "disabled":
+                self.finish(workflow, owner, State.COMPLETED, "deterministic_diagnosis", context)
             elif route.adapter == "disabled":
                 self.finish(workflow, owner, State.FAILED, "inference_disabled", context)
             elif route.adapter == "openai" and not (
@@ -429,6 +445,17 @@ class Supervisor:
             self.journal.update(workflow, owner, workflow.state, "attempt_failed", changes)
             if not retryable:
                 current, _ = self.journal.inspect(workflow.id)
+                if context.task == "diagnose":
+                    # This provider failure can still return deterministic findings.
+                    # Verify them again before attaching output to the current result.
+                    try:
+                        fresh = self.context(current)
+                    except (OSError, ValueError, sqlite3.Error, KeyError, TypeError):
+                        self.finish(current, owner, State.FAILED, "stale_evidence")
+                        return
+                    if fresh.digest() != context.digest():
+                        self.finish(current, owner, State.FAILED, "stale_evidence")
+                        return
                 self.finish(
                     current, owner, State.FAILED, error or "invalid_model_selection", context
                 )

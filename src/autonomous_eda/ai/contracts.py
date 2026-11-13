@@ -9,7 +9,14 @@ from ..knowledge.index import canonical, identity
 VERSION = 1
 MAX_CHOICE_TEXT = 6000
 Task = Literal[
-    "observe", "setup", "path", "verification", "equivalence", "documentation", "unrelated"
+    "observe",
+    "setup",
+    "path",
+    "verification",
+    "equivalence",
+    "documentation",
+    "unrelated",
+    "diagnose",
 ]
 Classification = Literal["MEASURED", "DOCUMENTED", "INFERRED", "HYPOTHESIS", "UNKNOWN"]
 
@@ -189,7 +196,7 @@ def render(
         ],
         "recommended_next_measurements": next_steps,
         "uncertainty": "Root cause unverified"
-        if context.task in {"setup", "path"}
+        if context.task in {"setup", "path", "diagnose"}
         else "Limited to recorded evidence",
         "limitations": context.retrieval_events,
         "model_metadata": model,

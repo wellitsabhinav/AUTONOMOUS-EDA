@@ -1,5 +1,8 @@
 # Project state
 
+- Milestone 07 implements [timing and physical diagnosis](TIMING_DIAGNOSIS.md) for [issue #8](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/8). The original GCD and Ibex setup failures remain at −1.20488 ns and −0.377013 ns. Independent hold, platform DRC and LVS passed. The [physical analysis](PHYSICAL_DIAGNOSIS.md) documents changing stage extrema, matching endpoint checks and unavailable path-local measurements.
+- The [diagnosis evaluation](DIAGNOSIS_EVALUATION.md) preserved the deterministic report in mock and live CPU Qwen workflows. Both abstained without inference for malformed, ambiguous and missing timing reports. Windows validation exercised the retained MCP run, MiniLM and the loopback model. The two cached ORFS Doctor checks were skipped.
+
 - Milestone 06 implements the [read-only AI supervisor](AI_SUPERVISOR.md) for [issue #7](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/7). Local CPU inference completed four grounded selections and correctly abstained on both negative cases without model calls. See [AI evaluation](AI_EVALUATION.md) for observed timing, token counts, and limitations.
 - Windows validation passed 99 tests with local Qwen inference, MiniLM, retained MCP evidence, and the cached ORFS Doctor probes enabled. Ruff, strict mypy, dependency checks, and the AI, MCP, knowledge, and Doctor CLI smoke tests passed.
 - Milestone 05 merged in [PR #16](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/16) at `43b1cda`, closed #6, and passed [all four main CI jobs](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43468519240).

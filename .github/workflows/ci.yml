@@ -31,6 +31,7 @@ jobs:
       - run: python -m autonomous_eda experiments compare --help
       - run: python -m autonomous_eda knowledge --help
       - run: python -m autonomous_eda ai --help
+      - run: python -m autonomous_eda diagnose --help
       - run: python -c "import importlib.util; assert importlib.util.find_spec('mcp') is None"
       - run: pytest -q
       - run: python -m pip install -c .github/ci-constraints.txt -e '.[mcp]'
@@ -52,5 +53,8 @@ jobs:
             test -s "$path" || exit 1
           done
           for path in docs/{AI_SUPERVISOR,MODEL_GATEWAY,AI_EVALUATION}.md docs/adr/0003-model-gateway-supervisor.md; do
+            test -s "$path" || exit 1
+          done
+          for path in docs/{TIMING_DIAGNOSIS,PHYSICAL_DIAGNOSIS,DIAGNOSIS_SCHEMA,DIAGNOSIS_EVALUATION}.md; do
             test -s "$path" || exit 1
           done
