@@ -1,0 +1,16 @@
+{
+  "cases": [
+    {"id":"gcd-setup-slack","query":"What setup slack was recorded for GCD?","filters":{"design":"gcd","trust":"verified_measured"},"relevant":[{"source":"gcd","fact":"setup_worst_slack_ns","contains":"-1.20488 ns","lines":[30,30]}]},
+    {"id":"gcd-corner","query":"Which operating condition was used for the GCD setup result?","filters":{"design":"gcd","fact":"setup_worst_slack_ns"},"relevant":[{"source":"gcd","fact":"setup_worst_slack_ns","contains":"tt_025C_1v80","lines":[30,30]}]},
+    {"id":"ibex-verification","query":"Which Ibex verification gates passed for hold timing, platform DRC and LVS?","filters":{"design":"ibex","trust":"verified_measured"},"relevant":[{"source":"ibex","fact":"hold","contains":"PASSED"},{"source":"ibex","fact":"platform_drc","contains":"PASSED"},{"source":"ibex","fact":"lvs","contains":"PASSED"}]},
+    {"id":"gcd-setup-report","query":"Which final timing path report shows a setup slack violation for GCD?","filters":{"source":"gcd-paths"},"relevant":[{"source":"gcd-paths","contains":"slack (VIOLATED)","lines":[205,205]}]},
+    {"id":"placement-option","query":"What does GPL_TIMING_DRIVEN control and what is its default?","filters":{},"relevant":[{"source":"orfs-options","contains":"default: 1","lines":[762,767]}]},
+    {"id":"overflow-option","query":"When does placement retain resizing below a congestion threshold?","filters":{},"relevant":[{"source":"orfs-options","contains":"-keep_resize_below_overflow","lines":[780,785]}]},
+    {"id":"diagnostic-stage","query":"Which stage emitted RSZ-0062 Unable to repair all setup violations?","filters":{"kind":"log"},"relevant":[{"source":"gcd-routing","contains":"RSZ-0062","lines":[366,366]}]},
+    {"id":"cross-run-setup","query":"Compare final setup worst slack for GCD and Ibex in the Sky130HD runs.","filters":{"platform":"sky130hd","trust":"verified_measured"},"relevant":[{"source":"gcd","fact":"setup_worst_slack_ns","contains":"-1.20488 ns","lines":[30,30]},{"source":"ibex","fact":"setup_worst_slack_ns","contains":"-0.377013 ns","lines":[32,32]}]},
+    {"id":"evidence-policy","query":"Can a missing timing report still support a verified slack claim?","filters":{"source":"evidence-contract"},"relevant":[{"source":"evidence-contract","contains":"Missing or modified report files withdraw dependent measurements"}]},
+    {"id":"equivalence-unverified","query":"Did Ibex pass functional equivalence?","filters":{"design":"ibex","fact":"equivalence","trust":"verified_measured"},"relevant":[]},
+    {"id":"unrecorded-corner","query":"What setup slack did GCD achieve at the slow corner?","filters":{"design":"gcd","corner":"ss_100C_1v60","fact":"setup_worst_slack_ns"},"relevant":[]},
+    {"id":"unrelated-query","query":"What is the reference volume of freshwater in Lake Baikal?","filters":{},"relevant":[]}
+  ]
+}
