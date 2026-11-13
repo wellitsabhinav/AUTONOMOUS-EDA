@@ -6,6 +6,7 @@ import tomllib
 from pathlib import Path
 from typing import cast
 
+from ..diagnosis import Check
 from ..knowledge.cli import parse_filters
 from ..knowledge.sources import check_sensitive
 from ..knowledge.sources import registry as knowledge_registry
@@ -79,6 +80,7 @@ def load_settings(path: Path) -> Settings:
         "verification",
         "equivalence",
         "documentation",
+        "diagnose",
     }:
         raise ValueError("Invalid task routing configuration")
     limits = data.get("limits", {})
@@ -111,9 +113,12 @@ def configure(parser: argparse.ArgumentParser) -> None:
     actions.add_parser("status", help="show routes and workflow counts")
     observe = actions.add_parser("observe", help="read verified experiment facts without inference")
     explain = actions.add_parser("explain", help="generate a cited engineering explanation")
-    for command in (observe, explain):
+    diagnose = actions.add_parser("diagnose", help="interpret a verified deterministic diagnosis")
+    diagnose.add_argument("--check", choices=("setup", "hold"), default="setup")
+    for command in (observe, explain, diagnose):
         command.add_argument("--experiment", required=True)
         command.add_argument("--request-id", help="idempotency key for this input")
+    diagnose.add_argument("--consent-hosted", action="store_true")
     explain.add_argument("--question", required=True)
     explain.add_argument("--filter", action="append", default=[], metavar="KEY=VALUE")
     explain.add_argument(
@@ -144,6 +149,10 @@ def readable(value: dict[str, object]) -> None:
             f"{observation['design']} / {observation['platform']} | "
             f"Acceptance {observation['acceptance']}"
         )
+        if diagnosis := observation.get("diagnosis"):
+            from ..diagnostic_cli import readable as readable_diagnosis
+
+            readable_diagnosis(diagnosis)
     for item in output["observed_facts"]:
         print(f"[{item['classification']}] {item['text']} ({', '.join(item['evidence'])})")
     if item := output["engineering_interpretation"]:
@@ -183,6 +192,14 @@ def main(args: argparse.Namespace) -> int:
             args.experiment,
             args.question,
             filters=parse_filters(args.filter),
+            consent=args.consent_hosted,
+            request_id=args.request_id,
+        )
+    elif args.action == "diagnose":
+        value = supervisor.start(
+            args.experiment,
+            f"Diagnose {args.check} timing and physical implementation.",
+            diagnosis_check=cast(Check, args.check),
             consent=args.consent_hosted,
             request_id=args.request_id,
         )

@@ -1,5 +1,10 @@
 # Changelog
 
+## Timing and physical diagnosis
+
+- Added offline OpenSTA path parsing, rounding-aware delay accounting, independent stage extrema and matched endpoint checks, and artifact-bound physical observations.
+- Added `diagnose` and journaled `ai diagnose`, with bounded interpretation choices, stale-evidence invalidation and a fixed GCD/Ibex evaluation.
+
 ## Read-only AI supervisor
 
 - Added a durable observation, explanation, and replay workflow over approved schema 1 evidence and scoped knowledge retrieval.

@@ -15,6 +15,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from .diagnostic_artifacts import supplemental_artifacts
 from .doctor import available_cpus, memory_bytes
 from .manifest import ORFSManifest, fingerprint, integer, load_manifest, sha256
 from .metrics import summarize
@@ -278,6 +279,16 @@ def run_stages(
                     hashes[relative] = sha256(root / relative)
                 if code:
                     raise ValueError(f"KLayout GDS validation exited {code}")
+            if version == 2:
+                for relative in supplemental_artifacts(
+                    f"{manifest.platform}/{manifest.design}/base", stage.name
+                ):
+                    path = root / relative
+                    if path.resolve().is_relative_to(root) and path.is_file():
+                        try:
+                            hashes[relative] = sha256(path)
+                        except OSError:
+                            continue
             state = "passed"
             passed.add(stage.name)
         except (OSError, ValueError) as error:
@@ -309,10 +320,12 @@ def checkpoint_valid(root: Path, stage: Stage, hashes: dict[str, str]) -> bool:
     if not hashes:
         return False
     actual = artifact_hashes(root, stage)
+    variant = Path(stage.outputs[0]).parent.relative_to("results").as_posix()
+    optional = supplemental_artifacts(variant, stage.name)
     return all(hashes.get(path) == digest for path, digest in actual.items()) and all(
         (root / path).resolve().is_relative_to(root) and sha256(root / path) == digest
         for path, digest in hashes.items()
-        if path not in actual
+        if path not in actual and path not in optional
     )
 
 
