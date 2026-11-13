@@ -1,5 +1,10 @@
 # Changelog
 
+## Read-only AI supervisor
+
+- Added a durable observation, explanation, and replay workflow over approved schema 1 evidence and scoped knowledge retrieval.
+- Added deterministic fixture, loopback Chat, and opt-in OpenAI Responses adapters with bounded requests and evidence-validated selection.
+
 ## Read-only MCP
 
 - Added an optional official-SDK stdio server and local client for scoped experiment discovery, stage status, timing, physical metrics, verification gates, and artifact metadata.

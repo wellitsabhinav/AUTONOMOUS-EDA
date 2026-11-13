@@ -10,6 +10,8 @@ from dataclasses import asdict
 from pathlib import Path
 
 from . import __version__
+from .ai.cli import configure as configure_ai
+from .ai.cli import main as ai_main
 from .discovery import inspect_rtl
 from .doctor import configure_doctor, doctor_main, environment_secrets, redact_diagnostics
 from .experiment import continue_run, initialize, verify
@@ -29,6 +31,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     configure_doctor(doctor)
     configure_mcp(commands.add_parser("mcp", help="inspect approved run evidence over local MCP"))
     configure_knowledge(commands.add_parser("knowledge", help="search approved local EDA sources"))
+    configure_ai(commands.add_parser("ai", help="observe and explain approved run evidence"))
     for name in ("inspect", "plan", "run"):
         item = commands.add_parser(name)
         item.add_argument("manifest", type=Path)
@@ -60,12 +63,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         if args.command == "knowledge":
             return knowledge_main(args)
+        if args.command == "ai":
+            return ai_main(args)
         return controller_main(args)
     except KeyboardInterrupt:
         print(
-            "Knowledge operation interrupted"
-            if args.command == "knowledge"
-            else "Experiment interrupted",
+            {"knowledge": "Knowledge operation interrupted", "ai": "AI workflow interrupted"}.get(
+                args.command, "Experiment interrupted"
+            ),
             file=sys.stderr,
         )
         return 130
