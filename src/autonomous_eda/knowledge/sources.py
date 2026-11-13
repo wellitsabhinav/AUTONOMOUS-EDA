@@ -303,7 +303,10 @@ def capture(entry: Registration) -> tuple[str, str, list[Document]]:
             except (KeyError, TypeError) as error:
                 raise ValueError("Malformed experiment evidence") from error
             receipt = "reference.json" if record["origin"] == "external" else "run.sqlite3"
-            digest = current_hash(Source.register(target), receipt, MAX_DATABASE_BYTES)
+            # The snapshot has already bounded and copied this receipt. Its
+            # private temporary directory may have a Windows short-path alias.
+            with (target / receipt).open("rb") as stream:
+                digest = hashlib.file_digest(stream, "sha256").hexdigest()
             return digest, receipt, evidence_documents(entry, target, record, digest)
     if entry.trust not in TRUST or Path(entry.path).suffix.lower() not in TEXT_SUFFIXES:
         raise ValueError("Unsupported text source extension or trust classification")
