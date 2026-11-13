@@ -13,6 +13,7 @@ dependencies = []
 [project.optional-dependencies]
 dev = ["ruff==0.17.5", "mypy==2.4.1", "pytest==8.4.1"]
 mcp = ["mcp==2.3.0"]
+knowledge = ["numpy==2.4.4", "onnxruntime==1.24.4", "tokenizers==0.22.2"]
 
 [project.scripts]
 autonomous-eda = "autonomous_eda.cli:main"

@@ -17,4 +17,6 @@ RTL inspection uses a local Yosys executable. Physical execution and deck verifi
 
 Install the optional MCP extra with `python -m pip install -e '.[mcp]'`. Run `autonomous-eda mcp inspect --config mcp.toml` to discover the local server's tools. The [MCP guide](docs/MCP.md) includes the experiment allowlist, stdio client configuration, and CLI reference.
 
+Use `autonomous-eda knowledge --help` to index approved reports, documentation, and experiment evidence for local keyword, semantic, or hybrid search. The [knowledge guide](docs/KNOWLEDGE.md) covers registration, citations, and the optional CPU embedding model.
+
 See the [architecture](docs/ARCHITECTURE.md), [roadmap](docs/ROADMAP.md), [project state](docs/PROJECT_STATE.md), and [experiment protocol](docs/EXPERIMENT_PROTOCOL.md).

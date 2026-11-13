@@ -13,6 +13,8 @@ from . import __version__
 from .discovery import inspect_rtl
 from .doctor import configure_doctor, doctor_main, environment_secrets, redact_diagnostics
 from .experiment import continue_run, initialize, verify
+from .knowledge.cli import configure as configure_knowledge
+from .knowledge.cli import main as knowledge_main
 from .manifest import ORFSManifest, RTLManifest, load_manifest
 from .mcp.cli import configure as configure_mcp
 from .mcp.cli import main as mcp_main
@@ -26,6 +28,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     doctor = commands.add_parser("doctor", help="check the host and the pinned ORFS backend")
     configure_doctor(doctor)
     configure_mcp(commands.add_parser("mcp", help="inspect approved run evidence over local MCP"))
+    configure_knowledge(commands.add_parser("knowledge", help="search approved local EDA sources"))
     for name in ("inspect", "plan", "run"):
         item = commands.add_parser(name)
         item.add_argument("manifest", type=Path)
@@ -55,9 +58,16 @@ def main(argv: Sequence[str] | None = None) -> int:
         parser.print_help()
         return 0
     try:
+        if args.command == "knowledge":
+            return knowledge_main(args)
         return controller_main(args)
     except KeyboardInterrupt:
-        print("Experiment interrupted", file=sys.stderr)
+        print(
+            "Knowledge operation interrupted"
+            if args.command == "knowledge"
+            else "Experiment interrupted",
+            file=sys.stderr,
+        )
         return 130
     except (ValueError, OSError, sqlite3.Error, subprocess.TimeoutExpired) as error:
         print(redact_diagnostics(str(error), environment_secrets()), file=sys.stderr)
