@@ -6,8 +6,8 @@ Use one reviewable PR from validated `main` at a time. Each milestone issue reco
 | --- | --- | --- |
 | [01 Bootstrap #1](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/1) | Project packaging and lightweight CI published in [PR #2](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/2). | Complete |
 | [02 Environment Doctor #3](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/3) | Offline probes published in [PR #13](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/13). | Complete |
-| [03 Controller, evidence and provenance #4](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/4) | Promote ordered RTL manifests, fixed ORFS stages and recovery, and artifact-linked reference reports and gate states. | 02 |
-| [04 Read-only MCP #5](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/5) | Demonstrate discovery, scoped invocation, and structured denial over stdio. | 03 |
+| [03 Controller, evidence and provenance #4](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/4) | Ordered RTL manifests, fixed ORFS stages and recovery, and artifact-linked evidence published in [PR #14](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/14). | Complete |
+| [04 Read-only MCP #5](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/5) | [Local stdio server and client](MCP.md) with discovery, scoped invocation, and structured denial. | 03 |
 | [05 Offline knowledge and retrieval #6](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/6) | Evaluate local hybrid retrieval against BM25 using cited evidence and abstention cases. | 03, 04 |
 | [06 Gateway and supervisor #7](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/7) | Demonstrate typed, resumable read-only diagnosis with optional inference. | 04, 05 |
 | [07 Timing and physical diagnosis #8](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/8) | Compare rule-based and model-assisted diagnoses of reference timing failures with path and stage evidence. | 03, 06 |
