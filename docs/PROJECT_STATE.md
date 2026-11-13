@@ -1,10 +1,8 @@
 # Project state
 
-- Current milestone is 01, repository bootstrap.
-- Branch is `milestone/01-bootstrap-ci`.
-- The private GitHub repository is `wellitsabhinav/AUTONOMOUS-EDA`. The active work is [bootstrap PR #2](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/2), linked to [issue #1](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/1).
-- GitHub Actions passed for [initial main](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43415086668) at `e9ed67a` and for [bootstrap code](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43415229307) at `bb37396`.
-- Completed functionality includes package and CLI scaffolding, Python CI, and project documentation.
-- Physical experiments are tracked on later local milestone branches. The bootstrap PR validates packaging and CI.
-- GitHub returned HTTP 403 for private branch protection under the current plan. Verify the latest PR head checks before merging.
-- Next executable task is to review bootstrap PR #2, then publish the environment doctor milestone after bootstrap lands.
+- Current milestone is 02, [Environment Doctor #3](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/3), on `codex/environment-doctor`.
+- [Bootstrap PR #2](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/2) merged at `6a43937` and closed [issue #1](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/1). [Head CI](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43415421743) and [merged main CI](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43419392128) passed Python 3.11, Python 3.12, and bootstrap documentation.
+- On Windows with Python 3.12.5, Ruff lint, Ruff formatting, mypy, and pytest passed on bootstrap (1 test) and an isolated archive of local controller commit `9e79f44` (16 tests).
+- The [Environment Doctor](ENVIRONMENT_DOCTOR.md) checks host and pinned-backend readiness in text and JSON. On Windows, Ruff lint, formatting, mypy and pytest passed. Pytest reported 20 passed with 2 live tests skipped by default, and 22 passed with WSL2/Docker integration enabled for Sky130HD and Nangate45. The restricted Windows probe reported UNKNOWN with `Wsl/E_ACCESSDENIED`.
+- The [AI system architecture](architecture/AI_SYSTEM_ARCHITECTURE.md) and [ADR](adr/0001-ai-system-foundations.md) describe future work. The later local deterministic controller and physical artifacts remain available. The archived GCD and Ibex runs both missed setup at their original clocks.
+- GitHub returned HTTP 403 for private branch protection under the current plan. Check head CI and the repository's approval workflow at each merge decision. The [roadmap](ROADMAP.md) links the dependent issues.

@@ -1,20 +1,17 @@
 # Roadmap
 
-These labels identify milestones. GitHub assigns issue and PR numbers independently.
+Use one reviewable PR from validated `main` at a time. Each milestone issue records its acceptance criteria and prerequisites. The names and numbers on older local branches identify the prototype sequence. Promote their deterministic code and evidence in dependency order.
 
-| Milestone | Acceptance |
-| --- | --- |
-| 01 Bootstrap | Project state, architecture, and passing lightweight CI |
-| 02 Environment doctor | Report real tool probes, resource discovery, and blockers |
-| 03 RTL manifests | Resolve ordered source sets and validate elaboration and hierarchy |
-| 04 Tool adapters | Execute, validate, checkpoint, and resume fixed ORFS targets |
-| 05 Reference flow | Produce and independently reopen a real Ibex Sky130HD GDS |
-| 06 Reports | Record measured timing, area, congestion, and verification evidence |
-| 07 Recovery | Demonstrate diagnosed missing sources, invalid density, and timing failures |
-| 08 Planning and LLM | Validate bounded proposals against tool capabilities and budgets |
-| 09 PPA optimization | Compare measured valid candidates and preserve rejection evidence |
-| 10 OpenTitan metadata | Capture ordered FuseSoC/Edalize inputs at a pinned revision |
-| 11 OpenTitan IP | Elaborate and implement progressively larger digital blocks |
-| 12 Hierarchy | Harden partitions, export abstracts, and validate integration |
-| 13 Earl Grey 2 | Inventory hard IP views, domains, IO, and technology dependencies |
-| 14 SoC experiments | Evaluate reproducible hierarchical runs where collateral permits |
+| Milestone issue | Acceptance | Depends on |
+| --- | --- | --- |
+| [01 Bootstrap #1](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/1) | Project packaging and lightweight CI published in [PR #2](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/2). | Complete |
+| [02 Environment Doctor #3](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/3) | Verify offline host, pinned backend, resource and path probes with actionable statuses. | 01 |
+| [03 Controller, evidence and provenance #4](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/4) | Promote ordered RTL manifests, fixed ORFS stages and recovery, and artifact-linked reference reports and gate states. | 02 |
+| [04 Read-only MCP #5](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/5) | Demonstrate discovery, scoped invocation, and structured denial over stdio. | 03 |
+| [05 Offline knowledge and retrieval #6](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/6) | Evaluate local hybrid retrieval against BM25 using cited evidence and abstention cases. | 03, 04 |
+| [06 Gateway and supervisor #7](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/7) | Demonstrate typed, resumable read-only diagnosis with optional inference. | 04, 05 |
+| [07 Timing and physical diagnosis #8](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/8) | Compare rule-based and model-assisted diagnoses of reference timing failures with path and stage evidence. | 03, 06 |
+| [08 Budgeted optimization #9](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/9) | Execute validated candidates and compare measured PPA and feasible frontiers. | 03, 06, 07 |
+| [09 Verification and acceptance #10](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/10) | Evaluate configured RTL and physical checks with artifact-linked evidence. | 03, 08 |
+| [10 Larger designs and OpenTitan prerequisites #11](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/11) | Demonstrate a medium-complexity design, then assess pinned native metadata, IP blocks, partition abstracts, and hard IP physical views before hierarchical experiments. | 09 |
+| [11 Telemetry and benchmark reporting #12](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/12) | Reproduce evidence-backed reports and expose structured run telemetry. | 03, 10 |
