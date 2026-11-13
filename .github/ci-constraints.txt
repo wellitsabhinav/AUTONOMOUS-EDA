@@ -1,0 +1,11 @@
+# Transitive development dependencies resolved by both bootstrap CI jobs.
+ast-serialize==0.13.1
+colorama==0.4.6; sys_platform == "win32"
+iniconfig==2.3.1
+librt==0.16.0
+mypy-extensions==1.2.0
+packaging==26.3
+pathspec==1.1.1
+pluggy==1.7.0
+pygments==2.21.0
+typing-extensions==4.16.0

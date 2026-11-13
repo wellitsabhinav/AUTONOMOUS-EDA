@@ -19,7 +19,7 @@ Doctor reports Python, kernel, distribution, host CPU and memory visibility, wor
 | FAIL | The check verified a problem, such as a missing local pinned image or wrong architecture. | 2 |
 | UNKNOWN | The check could not verify its condition. Examples include a permission denial, timeout, or missing prerequisite. | 3 |
 
-An observed required failure takes precedence, followed by an unknown required check and then warnings or optional problems. JSON includes a schema version, expected ORFS revision and image, selected platform and workspace, overall status, and individual check IDs, status, required flag, detail, and remediation where applicable. Check details can include local paths and tool errors.
+An observed required failure takes precedence, followed by an unknown required check and then warnings or optional problems. JSON includes a schema version, expected ORFS revision and image, selected platform and workspace, overall status, and individual check IDs, status, required flag, detail, and remediation where applicable. Diagnostic output redacts recognized credential fields, URL credentials, and values of credential-like environment variables. Check details can still contain local paths and tool errors. Doctor removes its named probe container after completion, timeout, or catchable interruption. It reports blocked cleanup when it can still return a report. Hard termination such as SIGKILL prevents host-side cleanup, and the active in-container probe has its own alarm.
 
 ## Reproducing validation
 

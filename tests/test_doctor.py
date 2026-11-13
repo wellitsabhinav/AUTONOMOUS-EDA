@@ -183,11 +183,17 @@ def test_only_runs_bounded_read_only_container(
                 "PASS",
                 json.dumps([{"RepoDigests": [IMAGE], "Os": "linux", "Architecture": "amd64"}]),
             )
-        assert args[: len(prefix) + 1] == [*prefix, "run"]
-        assert {"--read-only", "--pull=never", "--network=none", "--rm", IMAGE} <= set(args)
-        assert f"type=bind,source={tmp_path},target=/work,readonly" in args
-        assert timeout == 30
-        return CommandResult("PASS", json.dumps(report))
+        command, *rest = args[len(prefix) :]
+        if command == "create":
+            assert {"--read-only", "--pull=never", "--network=none", IMAGE} <= set(rest)
+            assert f"type=bind,source={tmp_path},target=/work,readonly" in rest
+            assert timeout == 10
+        elif command == "start":
+            assert rest[0] == "--attach" and timeout == 30
+            return CommandResult("PASS", json.dumps(report))
+        else:
+            assert command == "rm" and rest[0] == "--force" and timeout == 5
+        return CommandResult("PASS")
 
     monkeypatch.setattr(doctor, "run_probe", probe)
     result = doctor.backend_checks(engine, engine, tmp_path, "sky130hd")
@@ -205,6 +211,61 @@ def test_module_cli_invalid_platform_is_a_usage_error() -> None:
     )
     assert result.returncode == 2
     assert "invalid choice" in result.stderr
+
+
+@pytest.mark.parametrize("interrupted", [False, True])
+def test_probe_cleanup_after_termination(
+    monkeypatch: pytest.MonkeyPatch, interrupted: bool
+) -> None:
+    commands: list[list[str]] = []
+
+    def probe(args: list[str], timeout: int) -> CommandResult:
+        commands.append(args)
+        if args[1] == "start":
+            if interrupted:
+                raise KeyboardInterrupt
+            return CommandResult("UNKNOWN", detail="Probe timed out")
+        return CommandResult("PASS")
+
+    monkeypatch.setattr(doctor, "run_probe", probe)
+    if interrupted:
+        with pytest.raises(KeyboardInterrupt):
+            doctor.probe_container(["docker"], [IMAGE])
+    else:
+        assert doctor.probe_container(["docker"], [IMAGE]).status == "UNKNOWN"
+    name = commands[0][4]
+    assert name.startswith("aeda-doctor-")
+    assert commands == [
+        ["docker", "create", "--rm", "--name", name, IMAGE],
+        ["docker", "start", "--attach", name],
+        ["docker", "rm", "--force", name],
+    ]
+
+
+def test_failed_cleanup_is_reported(monkeypatch: pytest.MonkeyPatch) -> None:
+    def probe(args: list[str], timeout: int) -> CommandResult:
+        if args[1] == "rm":
+            return CommandResult("UNKNOWN", detail="access denied")
+        return CommandResult("PASS")
+
+    monkeypatch.setattr(doctor, "run_probe", probe)
+    result = doctor.probe_container(["docker"], [IMAGE])
+    assert result.status == "UNKNOWN"
+    assert "failed: access denied" in result.detail
+
+
+@pytest.mark.parametrize("output", [[], ["--json"]])
+def test_doctor_redacts_credentials(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str], output: list[str]
+) -> None:
+    monkeypatch.setenv("FIXTURE_TOKEN", "sensitive-environment-value")
+    detail = "Access denied sensitive-environment-value https://login:private@host\nToken=hidden"
+    report = Report("sky130hd", "/work", [Check("fixture", "UNKNOWN", detail)])
+    monkeypatch.setattr(doctor, "diagnose_environment", lambda *_args: report)
+    assert main(["doctor", *output]) == 3
+    text = capsys.readouterr().out
+    assert "Access denied" in text and "[redacted]" in text
+    assert all(value not in text for value in ("sensitive-environment-value", "private", "hidden"))
 
 
 @pytest.mark.parametrize("platform_name", ["sky130hd", "nangate45"])
