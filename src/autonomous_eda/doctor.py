@@ -9,9 +9,12 @@ import os
 import platform
 import re
 import shutil
+import signal
 import stat
 import subprocess
 import sys
+import uuid
+from collections.abc import Iterable
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Literal
@@ -38,6 +41,14 @@ ENGINE_UNAVAILABLE = re.compile(
     r"cannot connect .*?(?:daemon|socket)|connection refused|no such file or directory",
     re.IGNORECASE,
 )
+SECRET_KEY = re.compile(
+    r"token|pass(?:word|wd|phrase)|secret|credential|auth|(?:api|access|private)[_-]?key", re.I
+)
+SECRET_FIELD = re.compile(
+    r"(?im)(\b[\w-]*(?:token|password|passwd|secret|credential|authorization|api[_-]?key)"
+    r"[\w-]*[\"']?\s*[:=]\s*)[^\r\n]+"
+)
+URL_AUTH = re.compile(r"(\b[a-z][a-z0-9+.-]*://)[^/\s@]+@", re.I)
 
 
 @dataclass(frozen=True)
@@ -83,6 +94,21 @@ def output_text(value: bytes) -> str:
     return value.decode("utf-8", errors="replace").strip()
 
 
+def redact_diagnostics(value: str, secrets: Iterable[str]) -> str:
+    for secret in secrets:
+        value = value.replace(secret, "[redacted]")
+    value = URL_AUTH.sub(r"\1[redacted]@", value)
+    return SECRET_FIELD.sub(r"\1[redacted]", value)
+
+
+def environment_secrets() -> list[str]:
+    return sorted(
+        {value for name, value in os.environ.items() if value and SECRET_KEY.search(name)},
+        key=len,
+        reverse=True,
+    )
+
+
 def run_probe(arguments: list[str], timeout: int = 5) -> CommandResult:
     try:
         result = subprocess.run(arguments, capture_output=True, timeout=timeout, check=False)
@@ -95,7 +121,8 @@ def run_probe(arguments: list[str], timeout: int = 5) -> CommandResult:
     if result.returncode == 0:
         return CommandResult("PASS", stdout, stderr=stderr)
     output = "\n".join(part for part in (stderr, stdout) if part)
-    detail = f"exit {result.returncode}: {output[:1200] or 'no output'}"
+    safe_output = redact_diagnostics(output, environment_secrets())[:1200]
+    detail = f"exit {result.returncode}: {safe_output or 'no output'}"
     return CommandResult("UNKNOWN" if PERMISSION.search(output) else "FAIL", stdout, detail, stderr)
 
 
@@ -481,6 +508,26 @@ def unavailable_backend(reason: str, *, image: bool = True) -> list[Check]:
     return [Check(check_id, "UNKNOWN", reason, check_id != "backend.tool.sta") for check_id in ids]
 
 
+def probe_container(prefix: list[str], options: list[str]) -> CommandResult:
+    name = f"aeda-doctor-{uuid.uuid4().hex}"
+    result: CommandResult
+    cleanup: CommandResult
+    try:
+        # Register a known identity before starting the attached process.
+        result = run_probe([*prefix, "create", "--rm", "--name", name, *options], timeout=10)
+        if result.status == "PASS":
+            result = run_probe([*prefix, "start", "--attach", name], timeout=30)
+    finally:
+        cleanup = run_probe([*prefix, "rm", "--force", name], timeout=5)
+    if cleanup.status != "PASS" and not re.search(
+        r"no such container|no container with", cleanup.detail, re.I
+    ):
+        return CommandResult(
+            "UNKNOWN", detail=f"{result.detail} Cleanup of {name} failed: {cleanup.detail}".strip()
+        )
+    return result
+
+
 def backend_checks(name: str, executable: str, workspace: Path, platform_name: str) -> list[Check]:
     checks = [Check("backend.engine", "PASS", name)]
     prefix = [executable] if name == "docker" else [executable, "--remote=false"]
@@ -528,11 +575,9 @@ def backend_checks(name: str, executable: str, workspace: Path, platform_name: s
     user: list[str] = []
     if sys.platform != "win32":
         user = ["--user", f"{os.getuid()}:{os.getgid()}"]
-    result = run_probe(
+    result = probe_container(
+        prefix,
         [
-            *prefix,
-            "run",
-            "--rm",
             "--pull=never",
             "--network=none",
             "--read-only",
@@ -552,7 +597,6 @@ def backend_checks(name: str, executable: str, workspace: Path, platform_name: s
             json.dumps(TOOLS),
             json.dumps(ORFS_TOOL_FOLDERS),
         ],
-        timeout=30,
     )
     if result.status != "PASS":
         return checks + [
@@ -671,13 +715,30 @@ def configure_doctor(parser: argparse.ArgumentParser) -> None:
 
 
 def doctor_main(args: argparse.Namespace) -> int:
-    report = diagnose_environment(args.workspace, args.orfs_root, args.platform, args.engine)
+    def stop(_signum: int, _frame: object) -> None:
+        raise KeyboardInterrupt
+
+    previous = signal.signal(signal.SIGTERM, stop)
+    try:
+        report = diagnose_environment(args.workspace, args.orfs_root, args.platform, args.engine)
+    except KeyboardInterrupt:
+        print("Environment Doctor interrupted", file=sys.stderr)
+        return 130
+    finally:
+        signal.signal(signal.SIGTERM, previous)
+    secrets = environment_secrets()
     if args.json:
-        print(json.dumps({**asdict(report), "status": report.status}, indent=2))
+        data = asdict(report)
+        data["workspace"] = redact_diagnostics(report.workspace, secrets)
+        for check in data["checks"]:
+            for field in ("detail", "remediation"):
+                if check[field] is not None:
+                    check[field] = redact_diagnostics(check[field], secrets)
+        print(json.dumps({**data, "status": report.status}, indent=2))
     else:
         print(f"Environment Doctor {report.status}")
         for check in report.checks:
-            print(f"{check.status:7} {check.id}  {check.detail}")
+            print(f"{check.status:7} {check.id}  {redact_diagnostics(check.detail, secrets)}")
             if check.remediation and check.status != "PASS":
-                print(f"        {check.remediation}")
+                print(f"        {redact_diagnostics(check.remediation, secrets)}")
     return {"PASS": 0, "WARN": 0, "FAIL": 2, "UNKNOWN": 3}[report.status]
