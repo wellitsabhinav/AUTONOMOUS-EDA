@@ -10,12 +10,13 @@ jobs:
     name: Python checks
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-24.04]
         python: ["3.11.18", "3.12.16"]
         include:
           - os: windows-2025
-            python: "3.12.16"
+            python: "3.12.10"
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
