@@ -441,7 +441,7 @@ def build(
         {key: [a["sha256"], a["availability"]] for key, a in experiment["artifacts"].items()},
         sorted(sources),
     )
-    context = Context(
+    return Context(
         task,
         question,
         experiment_id,
@@ -456,5 +456,3 @@ def build(
         sufficient,
         snapshot,
     )
-    check_sensitive(context.prompt())
-    return context

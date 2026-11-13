@@ -461,6 +461,18 @@ def test_cli_offline_and_replay(
     assert replay["historical"] and replay["output"] == original["output"]
 
 
+def test_generated_choice_ids_are_not_scanned_as_source_text(
+    lab: tuple[Settings, Path, Path],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    settings, path, _ = lab
+    # Generic environment secret-name heuristics can match short CI setting
+    # values that also occur in the fixed internal choice catalog.
+    monkeypatch.setenv("FIXTURE_AUTH_MODE", "delay_breakdown")
+    result = Supervisor(Journal(path), settings).start("gcd", "Why did setup fail?")
+    assert result["state"] == State.COMPLETED
+
+
 def test_optional_live_model(tmp_path: Path) -> None:
     endpoint = os.environ.get("AEDA_AI_LOCAL_ENDPOINT")
     model = os.environ.get("AEDA_AI_LOCAL_MODEL")
