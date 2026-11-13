@@ -1,0 +1,35 @@
+{
+  "corner": "tt_025C_1v80",
+  "directory": "controller-gcd",
+  "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+  "library": "sky130_fd_sc_hd__tt_025C_1v80.lib",
+  "manifest": {
+    "backend": "orfs",
+    "clock_period_ns": 1.1,
+    "config": "designs/sky130hd/gcd/config.mk",
+    "cores": 2,
+    "design": "gcd",
+    "platform": "sky130hd",
+    "revision": "23341145f0fc92a522de26d5244a4a0013818f97",
+    "stage_timeout_seconds": 900,
+    "top": "gcd"
+  },
+  "recorded_by": "controller",
+  "schema_version": 1,
+  "sha256": {
+    "attempts/aeda-fe48129f7a744a70908f2bdc27356eaa/gds-validation.log": "7036f10544ad3a6e4c3f5bed91eca6f2ea1be83675595dbdf5c02017fcab8c62",
+    "logs/sky130hd/gcd/base/1_2_yosys.log": "9ddfd2dda8ca2ba59291d8c4dd34fee22098c9e7ab46cfaed007d2311df613c4",
+    "logs/sky130hd/gcd/base/5_1_grt.log": "b0a2cc75d9a58b814ec58a5f702a4c9d916f7344a38312e293502b6983b3fc17",
+    "logs/sky130hd/gcd/base/5_2_route.json": "107801e836eb1ad52d10d695a02b3695c34b0fc34d90d7c5287bb95a8c8b119b",
+    "logs/sky130hd/gcd/base/6_lvs.log": "9a50a2cd6140f490da105bc3a07210e1ef2486e5b6672cf9f80ef4d02c247441",
+    "logs/sky130hd/gcd/base/6_report.json": "c0735a7028ab2b0ff27b0f6a22122c0f12b78fbcb5ece00ed4f499dc11a83c3c",
+    "logs/sky130hd/gcd/base/6_report.log": "65a53205a0d3fce07c508e9db75376e052cba60e71f8f45a47aed8ad61717cf8",
+    "reports/sky130hd/gcd/base/6_drc.lyrdb": "0b1f5f9ea92c90dbadd8b7e8c49e597b9b1d1148b37db26adba44f8c842fcdbf",
+    "reports/sky130hd/gcd/base/6_drc_count.rpt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "reports/sky130hd/gcd/base/6_finish.rpt": "2d5632d0df4a388002b93a986f0f9a1841f3371d59428a49216e7b72c57d8fdd",
+    "results/sky130hd/gcd/base/1_synth.sdc": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+    "results/sky130hd/gcd/base/6_final.gds": "45705592447dff3f1b6da5292177a64d4e83d47db37a0b822e4b942c2c9a987a",
+    "results/sky130hd/gcd/base/6_final.sdc": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+    "results/sky130hd/gcd/base/6_lvs.lvsdb": "de588d48abc5191914e2847e799f40b891a8a80c4019c45dd2109424623b4367"
+  }
+}

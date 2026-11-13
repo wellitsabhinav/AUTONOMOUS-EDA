@@ -5,7 +5,7 @@ Use one reviewable PR from validated `main` at a time. Each milestone issue reco
 | Milestone issue | Acceptance | Depends on |
 | --- | --- | --- |
 | [01 Bootstrap #1](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/1) | Project packaging and lightweight CI published in [PR #2](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/2). | Complete |
-| [02 Environment Doctor #3](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/3) | Verify offline host, pinned backend, resource and path probes with actionable statuses. | 01 |
+| [02 Environment Doctor #3](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/3) | Offline probes published in [PR #13](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/13). | Complete |
 | [03 Controller, evidence and provenance #4](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/4) | Promote ordered RTL manifests, fixed ORFS stages and recovery, and artifact-linked reference reports and gate states. | 02 |
 | [04 Read-only MCP #5](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/5) | Demonstrate discovery, scoped invocation, and structured denial over stdio. | 03 |
 | [05 Offline knowledge and retrieval #6](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/6) | Evaluate local hybrid retrieval against BM25 using cited evidence and abstention cases. | 03, 04 |
