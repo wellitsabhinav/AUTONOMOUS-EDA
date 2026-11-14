@@ -1,0 +1,12 @@
+schema_version = 1
+timeout_seconds = 30
+
+[simulation]
+testbench = "logic_tb.sv"
+top = "logic_tb"
+pass_marker = "LOGIC_PASS"
+fail_marker = "LOGIC_MISMATCH"
+
+[equivalence]
+reference = "reference.toml"
+correspondence = "exact_ports"

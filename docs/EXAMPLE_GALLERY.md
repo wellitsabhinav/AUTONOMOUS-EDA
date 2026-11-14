@@ -50,6 +50,16 @@ Campaign `3563e8e28ec145239fc5f6f1a0ab9f69`. Four candidates completed, and all 
 
 *Candidate run `599c45ae7f4c` used 30% core utilization. Its GDS extent was 89.815 µm × 89.815 µm, compared with the baseline’s 80.025 µm × 80.025 µm. Each preview is fitted to its own extent.* [PNG provenance](images/examples/optimization/provenance.json)
 
+## Configurable verification
+
+![GCD verification gate matrix](images/examples/verification-gcd/acceptance_gate_matrix.png)
+
+The GCD reference retains independent setup failure, hold pass, DRC, LVS and GDS reopening. Its audited reference index leaves full coverage blocked. [Timing](images/examples/verification-gcd/acceptance_timing.png) · [Verdicts](images/examples/verification-gcd/acceptance_verdicts.png) · [Integrity](images/examples/verification-gcd/acceptance_integrity.png) · [Matrix JSON](images/examples/verification-gcd/acceptance.json) · [PNG provenance](images/examples/verification-gcd/provenance.json)
+
+![Icarus regression failure](images/examples/verification-regression/acceptance_regression.png)
+
+The isolated XOR-to-OR defect emitted the configured Icarus failure marker. Yosys independently found a counterexample. [Regression matrix](images/examples/verification-regression/acceptance.json) · [PNG provenance](images/examples/verification-regression/provenance.json) · [Reproduction](VERIFICATION_EVALUATION.md)
+
 ## Regenerate
 
 ~~~sh

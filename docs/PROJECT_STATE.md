@@ -1,5 +1,8 @@
 # Project state
 
+- Milestone 09 adds [configurable verification and acceptance](VERIFICATION_AND_ACCEPTANCE.md) for [issue #10](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/10). The [evaluation](VERIFICATION_EVALUATION.md) records real Icarus regression and Yosys proof failure and correction, OpenSTA coverage on retained GCD controller runs, and the unchanged GCD and Ibex setup failures.
+- Optional ICeWall chip assembly is tracked in [Patch 09A](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/20). The pinned image has ICeWall and SKY130 IO LEFs. Its bundled IO library lacks matching GDS and contains dummy Liberty, so chip-level signoff requires additional views and verification.
+
 - Milestone 08 implements [budgeted physical optimization](OPTIMIZATION.md) for [issue #9](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/9). Four isolated GCD candidates ran at the original 1.1 ns clock. All passed hold, DRC and LVS and failed setup. The [evaluation](OPTIMIZATION_EVALUATION.md) records the empty frontiers, the deterministic and live-guided measurements, and the interrupted campaign.
 - The [example gallery](EXAMPLE_GALLERY.md) contains verified GCD and Ibex KLayout layouts and real campaign charts with PNG and source provenance.
 

@@ -9,6 +9,7 @@ from .manifest import fingerprint
 from .metrics import Number
 from .optimization_policy import FULL, OBJECTIVES, PHYSICAL, Plan, candidate_manifest
 from .reference import IMAGE, REVISION
+from .verification.policy import verdict as acceptance_verdict
 
 
 @dataclass(frozen=True)
@@ -28,9 +29,8 @@ class Outcome:
 
 def verdict(gates: dict[str, GateState], required: tuple[str, ...]) -> GateState:
     states = [gates.get(name, "NOT_CHECKED") for name in required]
-    if "FAILED" in states:
-        return "FAILED"
-    return "PASSED" if all(state == "PASSED" for state in states) else "BLOCKED"
+    value = acceptance_verdict(["UNKNOWN" if state == "NOT_CHECKED" else state for state in states])
+    return value if value in {"PASSED", "FAILED"} else "BLOCKED"
 
 
 def metric(evidence: Experiment, name: str) -> Number | None:

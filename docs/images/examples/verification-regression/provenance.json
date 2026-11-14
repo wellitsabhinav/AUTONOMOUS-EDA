@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+  "images": {
+    "acceptance_regression": {
+      "schema_version": 1,
+      "visualization_type": "acceptance_regression",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "filename": "acceptance_regression.png",
+      "source_artifacts": [
+        "acceptance.json"
+      ],
+      "source_sha256": [
+        "60c46f720397e3de47f2c7e2ec21a7c2826d91d5d943784750b6965c95867153"
+      ],
+      "image_sha256": "e483e91bf8f0096e2905c5efc3a325663abfde88cb0c98ad6a80488b5f5c65f7",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "Functional regression",
+        "detail": "logic_unit  |  rtl-formal  |  Run 05571bbbd3fc"
+      },
+      "image_width": 1700,
+      "image_height": 1054,
+      "generated_at": "2026-11-14T03:37:22.240555+00:00",
+      "evidence_status": "VERIFIED"
+    }
+  },
+  "unavailable": {}
+}

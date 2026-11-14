@@ -65,10 +65,11 @@ def bars(ax: Any, labels: list[str], values: list[float | None], unit: str) -> N
     ax.margins(x=0.25)
 
 
-def table(ax: Any, columns: list[str], rows: list[list[str]]) -> None:
+def table(
+    ax: Any, columns: list[str], rows: list[list[str]], *, widths: list[float] | None = None
+) -> None:
     ax.set_axis_off()
-    widths = None
-    if len(columns) == 2:
+    if widths is None and len(columns) == 2:
         widths = [0.34, 0.66]
     grid = ax.table(
         cellText=rows,
@@ -80,7 +81,7 @@ def table(ax: Any, columns: list[str], rows: list[list[str]]) -> None:
     )
     grid.auto_set_font_size(False)
     grid.set_fontsize(11)
-    grid.scale(1, 1.8)
+    grid.scale(1, min(1.8, 27 / (len(rows) + 1)))
     for (row, _column), cell in grid.get_celld().items():
         cell.set_edgecolor("#d6dee8")
         cell.set_facecolor("#e4eefb" if row == 0 else "#ffffff" if row % 2 else "#f3f6fa")

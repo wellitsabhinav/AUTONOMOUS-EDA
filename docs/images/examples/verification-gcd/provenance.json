@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "run_id": "fadc5e06093b5d1976aa2d5e35b5b77a394d54c5b45d271ff6acc91bb4e79131",
+  "images": {
+    "acceptance_gate_matrix": {
+      "schema_version": 1,
+      "visualization_type": "acceptance_gate_matrix",
+      "run_id": "fadc5e06093b5d1976aa2d5e35b5b77a394d54c5b45d271ff6acc91bb4e79131",
+      "filename": "acceptance_gate_matrix.png",
+      "source_artifacts": [
+        "acceptance.json"
+      ],
+      "source_sha256": [
+        "4ca4f73cf830b6f6e2084ce3f1aa4f29275233cd4b85d990472b16a690d7cebb"
+      ],
+      "image_sha256": "0678b19eda8826c5ff3dcb19ae886decdd8913a6202e1e4b41f83a1f960c3a9a",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "Verification gate matrix",
+        "detail": "gcd  |  full  |  Run fadc5e06093b"
+      },
+      "image_width": 1700,
+      "image_height": 1054,
+      "generated_at": "2026-11-14T03:37:06.114299+00:00",
+      "evidence_status": "VERIFIED"
+    },
+    "acceptance_timing": {
+      "schema_version": 1,
+      "visualization_type": "acceptance_timing",
+      "run_id": "fadc5e06093b5d1976aa2d5e35b5b77a394d54c5b45d271ff6acc91bb4e79131",
+      "filename": "acceptance_timing.png",
+      "source_artifacts": [
+        "acceptance.json"
+      ],
+      "source_sha256": [
+        "4ca4f73cf830b6f6e2084ce3f1aa4f29275233cd4b85d990472b16a690d7cebb"
+      ],
+      "image_sha256": "a901b9e8aa53e1671d766dced3b15670b4834a8a7d2fefc66beebe72777b6ec1",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "Final setup and hold",
+        "detail": "gcd  |  full  |  Run fadc5e06093b  |  Coverage BLOCKED"
+      },
+      "image_width": 1700,
+      "image_height": 1054,
+      "generated_at": "2026-11-14T03:37:06.966136+00:00",
+      "evidence_status": "VERIFIED"
+    },
+    "acceptance_integrity": {
+      "schema_version": 1,
+      "visualization_type": "acceptance_integrity",
+      "run_id": "fadc5e06093b5d1976aa2d5e35b5b77a394d54c5b45d271ff6acc91bb4e79131",
+      "filename": "acceptance_integrity.png",
+      "source_artifacts": [
+        "acceptance.json"
+      ],
+      "source_sha256": [
+        "4ca4f73cf830b6f6e2084ce3f1aa4f29275233cd4b85d990472b16a690d7cebb"
+      ],
+      "image_sha256": "a2d1446b41eab1d836a1e826e282c31b06d4b6eb892792be97dce4f96a710afb",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "Evidence integrity",
+        "detail": "gcd  |  full  |  Run fadc5e06093b"
+      },
+      "image_width": 1700,
+      "image_height": 1054,
+      "generated_at": "2026-11-14T03:37:06.646009+00:00",
+      "evidence_status": "VERIFIED"
+    },
+    "acceptance_verdicts": {
+      "schema_version": 1,
+      "visualization_type": "acceptance_verdicts",
+      "run_id": "fadc5e06093b5d1976aa2d5e35b5b77a394d54c5b45d271ff6acc91bb4e79131",
+      "filename": "acceptance_verdicts.png",
+      "source_artifacts": [
+        "acceptance.json"
+      ],
+      "source_sha256": [
+        "4ca4f73cf830b6f6e2084ce3f1aa4f29275233cd4b85d990472b16a690d7cebb"
+      ],
+      "image_sha256": "449933cd42103457558bfc6b849453fa225c01124bbf5181bc6183b1e3176dbb",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "Acceptance verdicts",
+        "detail": "gcd  |  full  |  Run fadc5e06093b"
+      },
+      "image_width": 1700,
+      "image_height": 1054,
+      "generated_at": "2026-11-14T03:37:06.384575+00:00",
+      "evidence_status": "VERIFIED"
+    }
+  },
+  "unavailable": {}
+}

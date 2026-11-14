@@ -47,6 +47,7 @@ def write_reference(root: Path, design: str) -> Path:
     variant = f"sky130hd/{design}/base"
     final = f"logs/{variant}/6_report.json"
     setup, hold = (-1.20488, 0.429847) if design == "gcd" else (-0.377013, 0.426791)
+    sdc = f"create_clock -name core -period {index['manifest']['clock_period_ns']} clk"
     files = {
         final: json.dumps(
             {
@@ -57,9 +58,8 @@ def write_reference(root: Path, design: str) -> Path:
                 "finish__design__instance__count": 9,
             }
         ),
-        f"results/{variant}/1_synth.sdc": (
-            f"create_clock -name core -period {index['manifest']['clock_period_ns']} clk"
-        ),
+        f"results/{variant}/1_synth.sdc": sdc,
+        f"results/{variant}/6_final.sdc": sdc,
         f"results/{variant}/6_final.gds": "fixture GDS",
         f"results/{variant}/6_lvs.lvsdb": "fixture LVS",
         f"reports/{variant}/6_drc.lyrdb": "fixture DRC",
@@ -219,9 +219,12 @@ def test_legacy_stdio_rechecks_changed_and_missing_evidence(
         async with Client(target, mode="legacy", read_timeout_seconds=20) as client:
             assert client.protocol_version == "2025-11-25"
             args: dict[str, object] = {"experiment_id": "gcd"}
-            assert len((await client.list_tools()).tools) == 9
+            assert [tool.name for tool in (await client.list_tools()).tools] == list(TOOLS)
             original = await invoke(client, "get_timing_summary", args)
             assert isinstance(original, api.TimingSummary)
+            acceptance = await invoke(client, "get_acceptance_summary", args)
+            assert isinstance(acceptance, api.AcceptanceSummary)
+            assert acceptance.gates["setup"] == "FAILED"
             gcd.write_text("{}", encoding="utf-8")
             changed = await invoke(client, "get_timing_summary", args)
             assert isinstance(changed, api.TimingSummary)
@@ -234,6 +237,9 @@ def test_legacy_stdio_rechecks_changed_and_missing_evidence(
             assert gates.gates["setup"].state == "BLOCKED"
             assert gates.gates["setup"].evidence[0].availability == "MISSING"
             assert gates.gates["platform_drc"].state == "PASSED"
+            changed_acceptance = await invoke(client, "get_acceptance_summary", args)
+            assert isinstance(changed_acceptance, api.AcceptanceSummary)
+            assert changed_acceptance.gates["setup"] == "BLOCKED"
 
     asyncio.run(conversation())
 

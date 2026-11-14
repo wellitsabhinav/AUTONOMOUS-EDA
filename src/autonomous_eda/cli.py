@@ -54,8 +54,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     for name in ("resume", "report", "verify"):
         command = commands.add_parser(name)
         command.add_argument("directory", type=Path)
+        command.add_argument("--profile", help="evaluate a named verification profile")
+        command.add_argument("--markdown", action="store_true", help="print the acceptance matrix")
         if name == "verify":
             command.add_argument("--render", action="store_true", help="export verified PNGs")
+            command.add_argument(
+                "--coverage", action="store_true", help="run pinned OpenSTA coverage"
+            )
+            command.add_argument("--decks", action="store_true", help="rerun platform DRC and LVS")
     experiments = commands.add_parser("experiments")
     actions = experiments.add_subparsers(dest="action", required=True)
     actions.add_parser("list").add_argument("directory", type=Path)
@@ -137,7 +143,42 @@ def controller_main(args: argparse.Namespace) -> int:
                 success = continue_run(args.directory)
                 result = get_experiment(args.directory)
     else:
+        from .verification.report import LATEST, native_run, report_run, verify_run
+
+        selected = (args.directory / LATEST).is_file()
+        configured = bool(args.profile or args.markdown or selected and args.command == "report")
+        if configured or args.command == "verify" and (args.coverage or args.decks):
+            from .verification.report import markdown
+
+            if args.command == "verify":
+                matrix = verify_run(
+                    args.directory, args.profile or "full", coverage=args.coverage, decks=args.decks
+                )
+                if args.render:
+                    from .verification.figures import render
+
+                    render(args.directory, matrix)
+            elif args.command == "resume" and native_run(args.directory):
+                profile = args.profile or report_run(args.directory)["profile"]
+                matrix = verify_run(args.directory, profile)
+                success = matrix["verdicts"]["full_acceptance"] == "PASSED"
+            else:
+                if args.command == "resume":
+                    success = continue_run(args.directory)
+                matrix = report_run(args.directory, args.profile)
+            if args.markdown:
+                print(markdown(matrix), end="")
+            else:
+                print(json.dumps(matrix, indent=2, allow_nan=False))
+            if args.command == "verify":
+                return 0 if matrix["verdicts"]["full_acceptance"] == "PASSED" else 1
+            return 0 if success else 1
         if args.command == "resume":
+            if selected and native_run(args.directory):
+                matrix = report_run(args.directory)
+                matrix = verify_run(args.directory, matrix["profile"])
+                print(json.dumps(matrix, indent=2, allow_nan=False))
+                return 0 if matrix["verdicts"]["full_acceptance"] == "PASSED" else 1
             success = continue_run(args.directory)
         if args.command == "verify":
             verify(args.directory)

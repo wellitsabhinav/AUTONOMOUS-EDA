@@ -153,6 +153,14 @@ class Gates(Model):
     gates: dict[str, Gate]
 
 
+class AcceptanceSummary(Model):
+    run_id: str
+    profile: str
+    decision_sha256: str
+    verdicts: dict[str, str]
+    gates: dict[str, str]
+
+
 class Denied(ValueError):
     """An identifier is unavailable under this server's policy."""
 

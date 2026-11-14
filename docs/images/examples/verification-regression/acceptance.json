@@ -1,0 +1,548 @@
+{
+  "schema_version": 1,
+  "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+  "design": "logic_unit",
+  "profile": "rtl-formal",
+  "profile_sha256": "990a0665fd0a103940281d6d97d3daf8bd498e995ec756c592c3e931a297b0bd",
+  "attempt": "c225f66da2974db38f4bb22cc8792d4d",
+  "toolchain": {},
+  "timing_context": {},
+  "run_inputs": {
+    "rtl_identity": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9"
+  },
+  "verdicts": {
+    "implementation_completion": "NOT_APPLICABLE",
+    "verification": "FAILED",
+    "physical_feasibility": "NOT_APPLICABLE",
+    "optimization_objectives": "NOT_APPLICABLE",
+    "full_acceptance": "FAILED"
+  },
+  "gates": {
+    "artifact_integrity": {
+      "gate": "artifact_integrity",
+      "applicable": true,
+      "applicability": "Gate applies to this evidence scope",
+      "requirement": "required",
+      "status": "PASSED",
+      "diagnostic": "Current RTL manifest inputs are hashable",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "attempt": null,
+      "tool": null,
+      "tool_version": null,
+      "execution": [],
+      "inputs": {
+        "logic.sv": "5ce468e22c6bbf7bc5cf9de1665f83cf56629ff69ec59086c8cb7324b2d9cfe9",
+        "manifest.toml": "afad0d37f845756258cbbc1cafa24007260464d7d2869e17fcb6db5cfdb64dda"
+      },
+      "outputs": {},
+      "evidence_references": [
+        "logic.sv",
+        "manifest.toml"
+      ],
+      "recorded_at": null
+    },
+    "elaboration": {
+      "gate": "elaboration",
+      "applicable": true,
+      "applicability": "Gate applies to this evidence scope",
+      "requirement": "required",
+      "status": "PASSED",
+      "diagnostic": "Yosys elaboration and structural check completed",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "attempt": "c225f66da2974db38f4bb22cc8792d4d",
+      "tool": null,
+      "tool_version": null,
+      "execution": [
+        {
+          "command": [
+            "/mnt/f/AgenticAI/.local/m9-icarus-linux/extracted/usr/bin/yosys",
+            "-V"
+          ],
+          "return_code": 0,
+          "runtime_seconds": 0.17418576200000047,
+          "started_at": "2026-11-14T03:37:13.527054+00:00",
+          "stderr": "yosys-version.stderr.log",
+          "stdout": "yosys-version.stdout.log",
+          "stop": null
+        },
+        {
+          "command": [
+            "/mnt/f/AgenticAI/.local/m9-icarus-linux/extracted/usr/bin/yosys",
+            "-Q",
+            "-T",
+            "-s",
+            "elaborate.ys"
+          ],
+          "return_code": 0,
+          "runtime_seconds": 0.27822606999999877,
+          "started_at": "2026-11-14T03:37:13.732266+00:00",
+          "stderr": "elaborate.stderr.log",
+          "stdout": "elaborate.stdout.log",
+          "stop": null
+        }
+      ],
+      "inputs": {
+        "logic.sv": "5ce468e22c6bbf7bc5cf9de1665f83cf56629ff69ec59086c8cb7324b2d9cfe9",
+        "manifest.toml": "afad0d37f845756258cbbc1cafa24007260464d7d2869e17fcb6db5cfdb64dda"
+      },
+      "outputs": {
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/elaboration/receipt.json": "231b01d603f5207b2dcbbf1237e96a042dd2a8dd5513ac43baf51eeb44d3214f",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/elaboration/design.json": "e5450bca17c201546ce4f1894ac128f56e8ab0a39ad7c0f3c7f80f555de14e0d",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/elaboration/elaborate.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/elaboration/elaborate.stdout.log": "985ae7fc275bcad432a9363edf7beba28eff0423ef1c9df5ee0641383b3454bc",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/elaboration/elaborate.ys": "555fdb2c2935a90d96da26a31e4da6894cb2fe49a8761b1d2ac32d4b0a5a89f6",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/elaboration/yosys-version.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/elaboration/yosys-version.stdout.log": "14022961a7564dcc908f30f8b52cc1289449e8f25a95ed5c2d2afb88c4bde4fa"
+      },
+      "evidence_references": [
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/elaboration/receipt.json",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/elaboration/design.json",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/elaboration/elaborate.stderr.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/elaboration/elaborate.stdout.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/elaboration/elaborate.ys",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/elaboration/yosys-version.stderr.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/elaboration/yosys-version.stdout.log"
+      ],
+      "recorded_at": "2026-11-14T03:37:14.145508+00:00",
+      "tools": {
+        "yosys": {
+          "path": "/mnt/f/AgenticAI/.local/m9-icarus-linux/extracted/usr/bin/yosys",
+          "sha256": "88c0a12bb814a1a8716b1ae10b482e35d3005ed558e1f5f626b3dc983ea3abd0",
+          "version": "Yosys 0.33 (git sha1 2584903a060)"
+        }
+      }
+    },
+    "functional_regression": {
+      "gate": "functional_regression",
+      "applicable": true,
+      "applicability": "Gate applies to this evidence scope",
+      "requirement": "required",
+      "status": "FAILED",
+      "diagnostic": "Regression oracle emitted LOGIC_MISMATCH",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "attempt": "c225f66da2974db38f4bb22cc8792d4d",
+      "tool": null,
+      "tool_version": null,
+      "execution": [
+        {
+          "command": [
+            "/mnt/f/AgenticAI/.local/m9-icarus-linux/extracted/usr/bin/iverilog",
+            "-V"
+          ],
+          "return_code": 0,
+          "runtime_seconds": 0.21928125199999826,
+          "started_at": "2026-11-14T03:37:14.579926+00:00",
+          "stderr": "iverilog-version.stderr.log",
+          "stdout": "iverilog-version.stdout.log",
+          "stop": null
+        },
+        {
+          "command": [
+            "/mnt/f/AgenticAI/.local/m9-icarus-linux/extracted/usr/bin/vvp",
+            "-V"
+          ],
+          "return_code": 0,
+          "runtime_seconds": 0.06698524899999825,
+          "started_at": "2026-11-14T03:37:14.870924+00:00",
+          "stderr": "vvp-version.stderr.log",
+          "stdout": "vvp-version.stdout.log",
+          "stop": null
+        },
+        {
+          "command": [
+            "/mnt/f/AgenticAI/.local/m9-icarus-linux/extracted/usr/bin/iverilog",
+            "-g2012",
+            "-s",
+            "logic_tb",
+            "-o",
+            "test.vvp",
+            "inputs/logic.sv",
+            "inputs/logic_tb.sv"
+          ],
+          "return_code": 0,
+          "runtime_seconds": 0.21874498599999725,
+          "started_at": "2026-11-14T03:37:14.950777+00:00",
+          "stderr": "compile.stderr.log",
+          "stdout": "compile.stdout.log",
+          "stop": null
+        },
+        {
+          "command": [
+            "/mnt/f/AgenticAI/.local/m9-icarus-linux/extracted/usr/bin/vvp",
+            "test.vvp"
+          ],
+          "return_code": 1,
+          "runtime_seconds": 0.1688714640000022,
+          "started_at": "2026-11-14T03:37:15.169569+00:00",
+          "stderr": "simulate.stderr.log",
+          "stdout": "simulate.stdout.log",
+          "stop": null
+        }
+      ],
+      "inputs": {
+        "logic.sv": "5ce468e22c6bbf7bc5cf9de1665f83cf56629ff69ec59086c8cb7324b2d9cfe9",
+        "logic_tb.sv": "34224351ad235d53045ff5c14c7aeacd8380372e770c4658eae13ab957be4ab4",
+        "manifest.toml": "afad0d37f845756258cbbc1cafa24007260464d7d2869e17fcb6db5cfdb64dda"
+      },
+      "outputs": {
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/receipt.json": "5af97d2ec3975469d0314d8c8cb2fb0e49b525314d361fa6d92ce704e20cef27",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/compile.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/compile.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/iverilog-version.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/iverilog-version.stdout.log": "f9199cc8658f4afcec3edeb93f29f23bb2aebf66d3eeb217cdc728aaa692f946",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/simulate.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/simulate.stdout.log": "dde6bf572c94c1ac925e7af0123ae49f8ac623e55cabd71753bfaa17f3d30e11",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/test.vvp": "6394756938f7d6b010ed83e4d92029a17672c9f7f165b2104ffe196501092fc1",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/vvp-version.stderr.log": "c9010a85df9399c2adb11b59115cdc285ea6f0a399802944367c3813c6772a42",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/vvp-version.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "evidence_references": [
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/receipt.json",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/compile.stderr.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/compile.stdout.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/iverilog-version.stderr.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/iverilog-version.stdout.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/simulate.stderr.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/simulate.stdout.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/test.vvp",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/vvp-version.stderr.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/functional_regression/vvp-version.stdout.log"
+      ],
+      "recorded_at": "2026-11-14T03:37:15.486507+00:00",
+      "tools": {
+        "iverilog": {
+          "path": "/mnt/f/AgenticAI/.local/m9-icarus-linux/extracted/usr/bin/iverilog",
+          "sha256": "a6071e4b4a68feafca0c8ee0e6aa275eee9a43a108c62801cfd1eca6eab6d8a3",
+          "version": "Icarus Verilog version 12.0 (stable) ()"
+        },
+        "vvp": {
+          "path": "/mnt/f/AgenticAI/.local/m9-icarus-linux/extracted/usr/bin/vvp",
+          "sha256": "a10bd7d4a0850308ac8c2c98115b6a3084f9be978307610f2a521190c28f4023",
+          "version": "Icarus Verilog runtime version 12.0 (stable) ()"
+        }
+      }
+    },
+    "equivalence": {
+      "gate": "equivalence",
+      "applicable": true,
+      "applicability": "Gate applies to this evidence scope",
+      "requirement": "required",
+      "status": "FAILED",
+      "diagnostic": "SAT found a two-state output counterexample",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "attempt": "c225f66da2974db38f4bb22cc8792d4d",
+      "tool": null,
+      "tool_version": null,
+      "execution": [
+        {
+          "command": [
+            "/mnt/f/AgenticAI/.local/m9-icarus-linux/extracted/usr/bin/yosys",
+            "-V"
+          ],
+          "return_code": 0,
+          "runtime_seconds": 0.16931179099999838,
+          "started_at": "2026-11-14T03:37:16.200738+00:00",
+          "stderr": "yosys-version.stderr.log",
+          "stdout": "yosys-version.stdout.log",
+          "stop": null
+        },
+        {
+          "command": [
+            "/mnt/f/AgenticAI/.local/m9-icarus-linux/extracted/usr/bin/yosys",
+            "-Q",
+            "-T",
+            "-s",
+            "candidate.ys"
+          ],
+          "return_code": 0,
+          "runtime_seconds": 0.22077968299999995,
+          "started_at": "2026-11-14T03:37:16.536536+00:00",
+          "stderr": "candidate.stderr.log",
+          "stdout": "candidate.stdout.log",
+          "stop": null
+        },
+        {
+          "command": [
+            "/mnt/f/AgenticAI/.local/m9-icarus-linux/extracted/usr/bin/yosys",
+            "-Q",
+            "-T",
+            "-s",
+            "reference.ys"
+          ],
+          "return_code": 0,
+          "runtime_seconds": 0.22012564399999945,
+          "started_at": "2026-11-14T03:37:16.764057+00:00",
+          "stderr": "reference.stderr.log",
+          "stdout": "reference.stdout.log",
+          "stop": null
+        },
+        {
+          "command": [
+            "/mnt/f/AgenticAI/.local/m9-icarus-linux/extracted/usr/bin/yosys",
+            "-Q",
+            "-T",
+            "-s",
+            "prove.ys"
+          ],
+          "return_code": 0,
+          "runtime_seconds": 0.21975964700000006,
+          "started_at": "2026-11-14T03:37:17.003826+00:00",
+          "stderr": "prove.stderr.log",
+          "stdout": "prove.stdout.log",
+          "stop": null
+        }
+      ],
+      "inputs": {
+        "logic.sv": "5ce468e22c6bbf7bc5cf9de1665f83cf56629ff69ec59086c8cb7324b2d9cfe9",
+        "manifest.toml": "afad0d37f845756258cbbc1cafa24007260464d7d2869e17fcb6db5cfdb64dda",
+        "reference.sv": "f30129d9b691efbc074354eaa3ee774c997271fe8bb617145271466f85abcff0",
+        "reference.toml": "8de66b5a122f2a84ca0573b27041c0a7a61772a69095b1b654bcf53d4113fb8e"
+      },
+      "outputs": {
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/receipt.json": "4273fe85956e6f390f5bc64e95517cba40f66dcf7cb135abc330de0bd3e000c9",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/candidate.json": "e5450bca17c201546ce4f1894ac128f56e8ab0a39ad7c0f3c7f80f555de14e0d",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/candidate.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/candidate.stdout.log": "25b8711521d923b2f4ecacdf8865981d8d8f99667432a638bd26910c75042152",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/candidate.ys": "18cd3bebee70ab068fe9696934904e45c31eb81e26f2eab4ff498378f9596319",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/prove.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/prove.stdout.log": "5f5ac3583397fd8d0377355da5e495a4a8c676c5223201a869435a90fbca7370",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/prove.ys": "7daee260620f9003cc32f51181bf237e685d2e3ef2fd583719961be01928fa07",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/reference.json": "135d05a41e96c9401e7dd1e0eabf1f9604629ae15f288f890aed7705806ac392",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/reference.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/reference.stdout.log": "de0f98c59b32774709d7443a45c8741611c20671c97c269adfafb14961b36f20",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/reference.ys": "ce47759dd3846c1cbff311f7130b213d28736078f42e9266a5c322085c9e09e1",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/yosys-version.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/yosys-version.stdout.log": "14022961a7564dcc908f30f8b52cc1289449e8f25a95ed5c2d2afb88c4bde4fa"
+      },
+      "evidence_references": [
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/receipt.json",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/candidate.json",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/candidate.stderr.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/candidate.stdout.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/candidate.ys",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/prove.stderr.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/prove.stdout.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/prove.ys",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/reference.json",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/reference.stderr.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/reference.stdout.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/reference.ys",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/yosys-version.stderr.log",
+        "verification/attempts/c225f66da2974db38f4bb22cc8792d4d/equivalence/yosys-version.stdout.log"
+      ],
+      "recorded_at": "2026-11-14T03:37:17.382315+00:00",
+      "tools": {
+        "yosys": {
+          "path": "/mnt/f/AgenticAI/.local/m9-icarus-linux/extracted/usr/bin/yosys",
+          "sha256": "88c0a12bb814a1a8716b1ae10b482e35d3005ed558e1f5f626b3dc983ea3abd0",
+          "version": "Yosys 0.33 (git sha1 2584903a060)"
+        }
+      }
+    },
+    "synthesis": {
+      "gate": "synthesis",
+      "applicable": false,
+      "applicability": "Core-only RTL run",
+      "requirement": "optional",
+      "status": "NOT_APPLICABLE",
+      "diagnostic": "RTL-only runs have no physical layout",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "attempt": null,
+      "tool": null,
+      "tool_version": null,
+      "execution": [],
+      "inputs": {},
+      "outputs": {},
+      "evidence_references": [],
+      "recorded_at": null
+    },
+    "setup": {
+      "gate": "setup",
+      "applicable": false,
+      "applicability": "Core-only RTL run",
+      "requirement": "optional",
+      "status": "NOT_APPLICABLE",
+      "diagnostic": "RTL-only runs have no physical layout",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "attempt": null,
+      "tool": null,
+      "tool_version": null,
+      "execution": [],
+      "inputs": {},
+      "outputs": {},
+      "evidence_references": [],
+      "recorded_at": null
+    },
+    "hold": {
+      "gate": "hold",
+      "applicable": false,
+      "applicability": "Core-only RTL run",
+      "requirement": "optional",
+      "status": "NOT_APPLICABLE",
+      "diagnostic": "RTL-only runs have no physical layout",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "attempt": null,
+      "tool": null,
+      "tool_version": null,
+      "execution": [],
+      "inputs": {},
+      "outputs": {},
+      "evidence_references": [],
+      "recorded_at": null
+    },
+    "timing_coverage": {
+      "gate": "timing_coverage",
+      "applicable": false,
+      "applicability": "Core-only RTL run",
+      "requirement": "optional",
+      "status": "NOT_APPLICABLE",
+      "diagnostic": "RTL-only runs have no physical layout",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "attempt": null,
+      "tool": null,
+      "tool_version": null,
+      "execution": [],
+      "inputs": {},
+      "outputs": {},
+      "evidence_references": [],
+      "recorded_at": null
+    },
+    "gds_generation": {
+      "gate": "gds_generation",
+      "applicable": false,
+      "applicability": "Core-only RTL run",
+      "requirement": "optional",
+      "status": "NOT_APPLICABLE",
+      "diagnostic": "RTL-only runs have no physical layout",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "attempt": null,
+      "tool": null,
+      "tool_version": null,
+      "execution": [],
+      "inputs": {},
+      "outputs": {},
+      "evidence_references": [],
+      "recorded_at": null
+    },
+    "gds_reopen": {
+      "gate": "gds_reopen",
+      "applicable": false,
+      "applicability": "Core-only RTL run",
+      "requirement": "optional",
+      "status": "NOT_APPLICABLE",
+      "diagnostic": "RTL-only runs have no physical layout",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "attempt": null,
+      "tool": null,
+      "tool_version": null,
+      "execution": [],
+      "inputs": {},
+      "outputs": {},
+      "evidence_references": [],
+      "recorded_at": null
+    },
+    "router": {
+      "gate": "router",
+      "applicable": false,
+      "applicability": "Core-only RTL run",
+      "requirement": "optional",
+      "status": "NOT_APPLICABLE",
+      "diagnostic": "RTL-only runs have no physical layout",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "attempt": null,
+      "tool": null,
+      "tool_version": null,
+      "execution": [],
+      "inputs": {},
+      "outputs": {},
+      "evidence_references": [],
+      "recorded_at": null
+    },
+    "platform_drc": {
+      "gate": "platform_drc",
+      "applicable": false,
+      "applicability": "Core-only RTL run",
+      "requirement": "optional",
+      "status": "NOT_APPLICABLE",
+      "diagnostic": "RTL-only runs have no physical layout",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "attempt": null,
+      "tool": null,
+      "tool_version": null,
+      "execution": [],
+      "inputs": {},
+      "outputs": {},
+      "evidence_references": [],
+      "recorded_at": null
+    },
+    "lvs": {
+      "gate": "lvs",
+      "applicable": false,
+      "applicability": "Core-only RTL run",
+      "requirement": "optional",
+      "status": "NOT_APPLICABLE",
+      "diagnostic": "RTL-only runs have no physical layout",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "attempt": null,
+      "tool": null,
+      "tool_version": null,
+      "execution": [],
+      "inputs": {},
+      "outputs": {},
+      "evidence_references": [],
+      "recorded_at": null
+    },
+    "connectivity": {
+      "gate": "connectivity",
+      "applicable": false,
+      "applicability": "Core-only RTL run",
+      "requirement": "optional",
+      "status": "NOT_APPLICABLE",
+      "diagnostic": "RTL-only runs have no physical layout",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "attempt": null,
+      "tool": null,
+      "tool_version": null,
+      "execution": [],
+      "inputs": {},
+      "outputs": {},
+      "evidence_references": [],
+      "recorded_at": null
+    },
+    "sequential_equivalence": {
+      "gate": "sequential_equivalence",
+      "applicable": true,
+      "applicability": "Gate applies to this evidence scope",
+      "requirement": "optional",
+      "status": "UNKNOWN",
+      "diagnostic": "No supported verification evidence",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "attempt": null,
+      "tool": null,
+      "tool_version": null,
+      "execution": [],
+      "inputs": {},
+      "outputs": {},
+      "evidence_references": [],
+      "recorded_at": null
+    },
+    "formal_properties": {
+      "gate": "formal_properties",
+      "applicable": true,
+      "applicability": "Gate applies to this evidence scope",
+      "requirement": "optional",
+      "status": "UNKNOWN",
+      "diagnostic": "No supported verification evidence",
+      "run_id": "05571bbbd3fcbf711e36ee0490d4d645c6edacb1b8962599d04908b383a91fa9",
+      "attempt": null,
+      "tool": null,
+      "tool_version": null,
+      "execution": [],
+      "inputs": {},
+      "outputs": {},
+      "evidence_references": [],
+      "recorded_at": null
+    }
+  },
+  "decision_sha256": "9dda0342ca1d0b146d3f4c22dfaafcb89cfd76dd4a811617b47782e95b9f83ab"
+}

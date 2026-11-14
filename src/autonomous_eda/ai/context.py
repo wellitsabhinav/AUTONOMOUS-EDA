@@ -60,6 +60,8 @@ def source_refs(experiment: Experiment, paths: list[str]) -> list[ArtifactRef]:
 
 
 def observation(experiment: Experiment) -> dict[str, object]:
+    from ..verification.policy import verdict
+
     metrics: dict[str, MetricValue] = {}
     for key in METRICS:
         metric = experiment["metrics"][key]
@@ -82,6 +84,12 @@ def observation(experiment: Experiment) -> dict[str, object]:
         "run_id": experiment["run_id"],
         "origin": experiment["origin"],
         "acceptance": experiment["acceptance"],
+        "recorded_verification": verdict(
+            [
+                "UNKNOWN" if row["state"] == "NOT_CHECKED" else row["state"]
+                for row in experiment["verification_gates"].values()
+            ]
+        ),
         "corner": experiment["corner"],
         "metrics": metrics,
         "gates": {key: gate["state"] for key, gate in experiment["verification_gates"].items()},

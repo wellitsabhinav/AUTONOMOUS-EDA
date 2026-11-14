@@ -74,6 +74,11 @@ TOOLS = {
     "get_verification_gates": ToolSpec(
         "Inspect independent verification gates.", api.ExperimentArgs, api.Gates
     ),
+    "get_acceptance_summary": ToolSpec(
+        "Evaluate the full profile from approved schema 1 evidence without tool execution.",
+        api.ExperimentArgs,
+        api.AcceptanceSummary,
+    ),
     "list_artifacts": ToolSpec(
         "Page through artifact identifiers and integrity metadata.",
         api.ExperimentPageArgs,
