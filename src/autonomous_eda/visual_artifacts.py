@@ -19,7 +19,8 @@ from .layout_render import VIEWS, render_layout
 from .manifest import fingerprint, identifier, sha256
 from .mcp.snapshot import Snapshot, Source, collect_evidence, ordinary, relative_parts
 from .optimization import Campaign, campaign_report
-from .visual_charts import BLUE, GRAY, GREEN, RED, bars, chart, table
+from .visual_charts import bars, chart, table
+from .visual_theme import BLUE, GRAY, GREEN, RED, settings
 
 SIGNATURE = b"\x89PNG\r\n\x1a\n"
 MANIFEST = "visualization_manifest.json"
@@ -107,13 +108,7 @@ class Export:
                 "matplotlib-agg",
                 version,
                 sources,
-                {
-                    "dpi": 170,
-                    "figure_inches": [10, 6.2],
-                    "typography": "DejaVu Sans",
-                    "title": title,
-                    "detail": detail,
-                },
+                settings(title, detail),
             )
         except ModuleNotFoundError:
             self.unavailable[name] = "Install the visuals extra"

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "run_id": "fadc5e06093b5d1976aa2d5e35b5b77a394d54c5b45d271ff6acc91bb4e79131",
+  "images": {
+    "acceptance_gate_matrix": {
+      "schema_version": 1,
+      "visualization_type": "acceptance_gate_matrix",
+      "run_id": "fadc5e06093b5d1976aa2d5e35b5b77a394d54c5b45d271ff6acc91bb4e79131",
+      "filename": "acceptance_gate_matrix.png",
+      "source_artifacts": [
+        "acceptance.json"
+      ],
+      "source_sha256": [
+        "4ca4f73cf830b6f6e2084ce3f1aa4f29275233cd4b85d990472b16a690d7cebb"
+      ],
+      "image_sha256": "a58927923910b4bf16eab374b68b272f99bccef15264db229652c3f6506b043f",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "theme_version": 1,
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "Verification gate matrix",
+        "detail": "gcd  |  full  |  Run fadc5e06093b"
+      },
+      "image_width": 1700,
+      "image_height": 1054,
+      "generated_at": "2026-11-14T03:50:10.345423+00:00",
+      "evidence_status": "VERIFIED"
+    },
+    "acceptance_timing": {
+      "schema_version": 1,
+      "visualization_type": "acceptance_timing",
+      "run_id": "fadc5e06093b5d1976aa2d5e35b5b77a394d54c5b45d271ff6acc91bb4e79131",
+      "filename": "acceptance_timing.png",
+      "source_artifacts": [
+        "acceptance.json"
+      ],
+      "source_sha256": [
+        "4ca4f73cf830b6f6e2084ce3f1aa4f29275233cd4b85d990472b16a690d7cebb"
+      ],
+      "image_sha256": "88935a72581cd12bd03cf3e1be776ad6a5027ecee979d89a32ad9641db011878",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "theme_version": 1,
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "Final setup and hold",
+        "detail": "gcd  |  full  |  Run fadc5e06093b  |  Coverage BLOCKED"
+      },
+      "image_width": 1700,
+      "image_height": 1054,
+      "generated_at": "2026-11-14T03:50:11.129773+00:00",
+      "evidence_status": "VERIFIED"
+    }
+  },
+  "unavailable": {}
+}
