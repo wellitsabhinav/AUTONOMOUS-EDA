@@ -7,7 +7,7 @@ from pathlib import Path
 
 from pydantic import Field
 
-from .api import Denied, ExperimentArgs, Model, UnsupportedCorner, View
+from .api import AcceptanceSummary, Denied, ExperimentArgs, Model, UnsupportedCorner, View
 from .snapshot import Source, load_evidence
 from .tools import TOOLS, bounded, failure, project
 
@@ -26,6 +26,18 @@ def read(request: Request, target: Path) -> Model:
         raise ValueError("Expected evidence tool")
     source = Source(Path(request.source_path), (request.source_device, request.source_inode))
     evidence = load_evidence(source, target)
+    if request.tool == "get_acceptance_summary":
+        from ..verification.policy import Policy
+        from ..verification.report import evaluate
+
+        result = evaluate(target, evidence, target, Policy("full"), None, recorded_only=True)
+        return AcceptanceSummary(
+            run_id=result["run_id"],
+            profile=result["profile"],
+            decision_sha256=result["decision_sha256"],
+            verdicts=result["verdicts"],
+            gates={name: row["status"] for name, row in result["gates"].items()},
+        )
     return project(request.tool, View(args.experiment_id, evidence), args)
 
 

@@ -675,13 +675,26 @@ def gallery(root: Path) -> dict[str, Any]:
             else {}
         )
     else:
-        with TemporaryDirectory(prefix="aeda-gallery-") as temp:
-            evidence = collect_evidence(Snapshot(source, Path(temp)))
-        approved = {
-            key: item["sha256"]
-            for key, item in evidence["artifacts"].items()
-            if item["availability"] == "VERIFIED"
-        }
+        from .verification.report import native_run, read_json, report_run
+
+        approved = {}
+        if not native_run(source.root):
+            with TemporaryDirectory(prefix="aeda-gallery-") as temp:
+                evidence = collect_evidence(Snapshot(source, Path(temp)))
+            approved.update(
+                (key, item["sha256"])
+                for key, item in evidence["artifacts"].items()
+                if item["availability"] == "VERIFIED"
+            )
+        acceptance = source.root / "acceptance.json"
+        if acceptance.is_file():
+            try:
+                saved = read_json(acceptance)
+                fresh = report_run(source.root, saved["profile"])
+                if fingerprint(saved) == fingerprint(fresh):
+                    approved[acceptance.name] = sha256(acceptance)
+            except (OSError, ValueError, TypeError, KeyError):
+                pass
     for name, image in record["images"].items():
         filename = f"{name}.png"
         if image["filename"] != filename or len(relative_parts(filename)) != 1:

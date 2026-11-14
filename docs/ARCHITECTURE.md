@@ -1,5 +1,7 @@
 # Architecture
 
+The [verification evaluator](VERIFICATION_AND_ACCEPTANCE.md) combines schema 1 checkpoints with separately versioned attempts. Native RTL tools receive staged manifest inputs. The pinned OpenSTA probe receives verified final physical inputs. Profiles use independent gate states and objective bounds. MCP exposes a read-only summary from approved archives.
+
 Adapters turn authoritative design metadata into an ordered manifest. The planner emits explicit stage dependencies, tool targets, required artifacts, and validation rules. The executor invokes fixed tool arguments, records evidence, and validates outputs before checkpointing. Reports carry measured metrics and independent gate states. Optimization and model providers consume those observations through typed interfaces and validated configuration changes.
 
 ORFS owns physical algorithms and platform-specific build logic. OpenROAD provides placement and routing, OpenSTA handles timing, OpenDB supplies physical database access, and KLayout handles stream-out and applicable verification. See the [ORFS tutorial](https://openroad-flow-scripts.readthedocs.io/en/latest/tutorials/FlowTutorial.html).

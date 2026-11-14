@@ -13,7 +13,7 @@ autonomous-eda resume experiments/gcd-run
 autonomous-eda report experiments/gcd-run
 ```
 
-RTL inspection uses a local Yosys executable. Physical execution and deck verification use the locally cached pinned image with Docker on Linux or WSL2. A successful `run` or `resume` means the stage plan completed. `verify` reports platform DRC and LVS. Read the independent gates and acceptance verdict in the [evidence contract](docs/EVIDENCE_CONTRACT.md).
+RTL inspection uses a local Yosys executable. Physical execution and deck verification use the locally cached pinned image with Docker on Linux or WSL2. A successful `run` or `resume` means the stage plan completed. Use `verify RUN --profile full` for configured acceptance and `report RUN --profile full --markdown` for the decision and its evidence. The standalone `verify RUN` command runs platform DRC and LVS. See the [verification guide](docs/VERIFICATION_AND_ACCEPTANCE.md).
 
 Install the optional MCP extra with `python -m pip install -e '.[mcp]'`. Run `autonomous-eda mcp inspect --config mcp.toml` to discover the local server's tools. The [MCP guide](docs/MCP.md) includes the experiment allowlist, stdio client configuration, and CLI reference.
 

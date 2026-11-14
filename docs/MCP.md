@@ -1,5 +1,7 @@
 # Read-only MCP
 
+`get_acceptance_summary` returns the deterministic full-profile verdict and gate states from the allowlisted schema 1 snapshot.
+
 AUTONOMOUS-EDA serves recorded experiment evidence to a local MCP client over stdio. The official Python SDK handles discovery, tool calls, and cancellation. An operator-owned registry maps experiment IDs to directories. A short-lived worker captures the approved evidence and calls the same schema 1 read API as the deterministic CLI. It returns typed summaries of the recorded design, attempts, metrics, verification gates, and artifact integrity. The [evidence contract](EVIDENCE_CONTRACT.md) defines the underlying measurements.
 
 ## Local setup
