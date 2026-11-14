@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "run_id": "b162fa09cf9442dda08b0b31cb58c728",
+  "starting_commit": "797fdf2ed2197abb9ac4ccd9edea6a8778c05a26",
+  "toolchain": {
+    "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+    "orfs_revision": "23341145f0fc92a522de26d5244a4a0013818f97",
+    "library": "sky130_fd_sc_hd__tt_025C_1v80.lib",
+    "yosys": "0.68+post",
+    "openroad": "unknown"
+  },
+  "corner": "tt_025C_1v80",
+  "clock_period_ns": 1.1,
+  "attempts": [
+    {
+      "id": 1,
+      "stage": "synth",
+      "state": "passed",
+      "runtime_seconds": 10.555723433000011,
+      "artifacts": {
+        "results/sky130hd/gcd/base/1_synth.odb": "9c1a97e023970950802af5d024cadb2a1541f34953b9753083f5c29e1659f09f",
+        "results/sky130hd/gcd/base/1_synth.sdc": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+        "attempts/aeda-815000ab37a9492784dc8f25759648ac/synth.log": "82177a4ce48acc6a14083caeacc332240699e5245fb0791ff6db98d5c4d67356",
+        "logs/sky130hd/gcd/base/1_2_yosys.log": "f109bd60ee47805fdf14aa6b40360f61cb9125fd8d9e6b051879f22437400e58",
+        "logs/sky130hd/gcd/base/1_synth.json": "897e5bb3a4be24c642115b3dbdff1fee4f44dfb29954473157f4738ffe5e726e"
+      }
+    },
+    {
+      "id": 2,
+      "stage": "floorplan",
+      "state": "passed",
+      "runtime_seconds": 12.538220105999997,
+      "artifacts": {
+        "results/sky130hd/gcd/base/2_floorplan.odb": "f9a70a830094e143bfe694328ad360fb60a4a534461d1a658cef141d2e04a561",
+        "results/sky130hd/gcd/base/2_floorplan.sdc": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+        "attempts/aeda-01ea1401d28f443d9db9f4fcbcd2f357/floorplan.log": "b90c2a41d84dbfbd57f3d8912e2ea0ae97fde27d249f7f4b347aca874ad0e963",
+        "logs/sky130hd/gcd/base/2_1_floorplan.json": "6898bb7236bb0786463416480e41a59b9459aef8f79dd61f10f04628d852f7ec",
+        "reports/sky130hd/gcd/base/2_floorplan_final.rpt": "cd85e940e2e88ecc5ee936e0e732dda7a69daf1b228f5d63da0aef2c17c94950"
+      }
+    },
+    {
+      "id": 3,
+      "stage": "place",
+      "state": "passed",
+      "runtime_seconds": 20.800336102000003,
+      "artifacts": {
+        "results/sky130hd/gcd/base/3_place.odb": "e42c29405d7cfb4dd95183812e477455c797cc028936f8127253b3f05a3b3c1f",
+        "results/sky130hd/gcd/base/3_place.sdc": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+        "attempts/aeda-5fdf9bf873364221b76197808b67902a/place.log": "8d1c8b4e7d1fe59ad020632e9bbfa6efb496b79b2c8d23a661746d9f10a3a931",
+        "logs/sky130hd/gcd/base/3_5_place_dp.json": "9bbe4c06b23e0a381e90c8e29baf846854f6397bd0c380c3ac1d976e383a196c",
+        "reports/sky130hd/gcd/base/3_detailed_place.rpt": "e57fc2756ff221708646963afd569b5f532ea23a2d8f645466145213e9bfe38c"
+      }
+    },
+    {
+      "id": 4,
+      "stage": "cts",
+      "state": "passed",
+      "runtime_seconds": 13.567283955999997,
+      "artifacts": {
+        "results/sky130hd/gcd/base/4_cts.odb": "9f050de335fd7c3be91036244af2af7930b5ded907210705a15ffde36e663d40",
+        "results/sky130hd/gcd/base/4_cts.sdc": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+        "attempts/aeda-efc8615a0d534a378d7edc46806d4b89/cts.log": "7baaad689af76d2328cd317b98fed849b59c4858092a1cb41bf6c7b4a68d9605",
+        "logs/sky130hd/gcd/base/4_1_cts.json": "5bc2e75119dec5b90dfae3efd5f47896b529006bb5c2fbd02ae55deb90bef1d1",
+        "reports/sky130hd/gcd/base/4_cts_final.rpt": "a9169ed801c33c865fa8416b4fb38c2fc0a1b915e73a2d7962a453c0cec645a6"
+      }
+    },
+    {
+      "id": 5,
+      "stage": "grt",
+      "state": "passed",
+      "runtime_seconds": 21.446128459999983,
+      "artifacts": {
+        "results/sky130hd/gcd/base/5_1_grt.odb": "932d792b26f00a9405b663f938a2db883a5769595f47ab2de3b7c80f628d4b30",
+        "results/sky130hd/gcd/base/5_1_grt.sdc": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+        "attempts/aeda-15ae38bbd1fb44f79fa0f6188e806805/grt.log": "5095e88c4e002dc1db8db7af47db971cf26e6df6ceb8f3d7937b5b59b7eb4450",
+        "logs/sky130hd/gcd/base/5_1_grt.json": "1db25c8a5a72eda49d0fe101cd9f0b73e9cd9f08ce2df2ffd7e1a2c5537c98bf",
+        "reports/sky130hd/gcd/base/5_global_route.rpt": "6f4ef35c5e06df282e0e03f3b599c8e26e6bc21be4e3b1063466dd7f3dcf97a2"
+      }
+    },
+    {
+      "id": 6,
+      "stage": "route",
+      "state": "passed",
+      "runtime_seconds": 45.832338599999986,
+      "artifacts": {
+        "results/sky130hd/gcd/base/5_route.odb": "26d74dfd9c4f78df59d3545be101771a660c3f4a8e5bacefa1a8509b6ebf5818",
+        "results/sky130hd/gcd/base/5_route.sdc": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+        "logs/sky130hd/gcd/base/5_1_grt.log": "93f964ae66f79d3de716c9f5cc4529d22b1885d9a917690f95066bd68b254b45",
+        "logs/sky130hd/gcd/base/5_2_route.json": "107801e836eb1ad52d10d695a02b3695c34b0fc34d90d7c5287bb95a8c8b119b",
+        "attempts/aeda-c9b23e57114a4d8dba2e8e8c42aab51a/route.log": "ce470e592efde03c9ecf3b2a697cf266c8d2bfe7eb618b55b176018493675b6d"
+      }
+    },
+    {
+      "id": 7,
+      "stage": "finish",
+      "state": "passed",
+      "runtime_seconds": 20.468280040999986,
+      "artifacts": {
+        "results/sky130hd/gcd/base/6_final.gds": "b93cf7db22a9293f4697866dab9377765051c6a1d10c2a2c4b480939d5474b7f",
+        "results/sky130hd/gcd/base/6_final.odb": "19d15a42a312949cbfcf10fda80fd43238733fb0abecd791c7d460cf4cc1587d",
+        "results/sky130hd/gcd/base/6_final.v": "5fe44acee42aa0d6221f9195a1657270c9fabf2791dfba0e370da86f9a672cca",
+        "results/sky130hd/gcd/base/6_final.sdc": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+        "results/sky130hd/gcd/base/6_final.spef": "438d134907b67966557c6cb4a1bac85bebbfaa8fe91b915b31342a2430fb3ebf",
+        "logs/sky130hd/gcd/base/6_report.json": "c0735a7028ab2b0ff27b0f6a22122c0f12b78fbcb5ece00ed4f499dc11a83c3c",
+        "logs/sky130hd/gcd/base/6_report.log": "dc99aa6dd4efa15d213e5858c479f987f96acd54e506895a303ca4bdd2508f8c",
+        "attempts/aeda-a719be75d32a4273af40710418edbab4/finish.log": "5bbce7de3d22796178a948769fc942a12d2d1de569b4cb7b1dfb830bde672547",
+        "attempts/aeda-a719be75d32a4273af40710418edbab4/gds-validation.log": "948e53b363e422e33d7b56b16159a9d386105ee49f2aadff60df9da3b29a2b7d",
+        "reports/sky130hd/gcd/base/6_finish.rpt": "2d5632d0df4a388002b93a986f0f9a1841f3371d59428a49216e7b72c57d8fdd"
+      }
+    }
+  ],
+  "run_json_sha256": "f7dc323f3c51049e6e8a7c5000c20ffe2623427efb399b9cf00927816c61637c",
+  "resume_json_sha256": "f7dc323f3c51049e6e8a7c5000c20ffe2623427efb399b9cf00927816c61637c",
+  "verification_exit_code": 1,
+  "verification_decision_sha256": "6315627a4ff17d3cce7c8ebeb19d55d72143ee7440005c9a91f091708f143ca0",
+  "setup_metric": {
+    "name": "setup_worst_slack_ns",
+    "value": -1.20488,
+    "unit": "ns",
+    "stage": "finish",
+    "corner": "tt_025C_1v80",
+    "artifact": "logs/sky130hd/gcd/base/6_report.json",
+    "reference": "finish__timing__setup__ws",
+    "method": "orfs-normalization-v1",
+    "status": "MEASURED"
+  },
+  "publication_sha256": {
+    "6_report.json": "c0735a7028ab2b0ff27b0f6a22122c0f12b78fbcb5ece00ed4f499dc11a83c3c",
+    "diagnosis.txt": "67a901f5a4ddaa3e538f4834bbde2cfaa096d7da83010f8b2ab01bc21a7377b4",
+    "plan.json": "dea24ab0f5aa8888a4a84cb65aada4aedb69831a5cf1f82760110747ed7c67b8",
+    "verification.txt": "31a4910f0473071a1d26b75dfbcd682cc7a67fd38d9f9ef2070da034da74e91b"
+  }
+}

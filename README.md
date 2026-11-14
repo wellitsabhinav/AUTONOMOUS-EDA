@@ -1,68 +1,111 @@
 # AUTONOMOUS-EDA
 
-AUTONOMOUS-EDA is a deterministic Python controller for reproducible RTL-to-GDSII experiments with OpenROAD Flow Scripts (ORFS). It records tool inputs, implementation checkpoints, and independent verification results so you can reproduce and compare physical-design runs.
+AUTONOMOUS-EDA is a Python controller for reproducible RTL-to-GDSII experiments with OpenROAD Flow Scripts (ORFS). It records tool inputs, stage attempts, artifact hashes and verification outcomes. The controller can resume from verified checkpoints, compare compatible runs and expose bounded evidence to an optional read-only AI supervisor.
 
-The retained SkyWater 130 HD GCD and Ibex designs produced GDSII that reopened in KLayout. Both passed hold, design rule checking (DRC), and layout versus schematic (LVS). GCD missed setup by 1.20488 ns at a 1.1 ns clock. Ibex missed setup by 0.377013 ns at an 8 ns clock. All four GCD optimization candidates also missed setup. [Measured results](docs/VERIFICATION_EVALUATION.md)
+- [How the flow works](#how-the-flow-works)
+- [Engineering capabilities](#engineering-capabilities)
+- [Installation and quickstart](#installation-and-quickstart)
+- [Run and inspect GCD](#run-and-inspect-gcd)
+- [Diagnosis and AI assistance](#diagnosis-and-ai-assistance)
+- [Examples and measured results](#examples-and-measured-results)
+- [Architecture and development](#architecture-and-development)
 
-## Capabilities
+## How the flow works
 
-- Inspect ordered RTL sources with Yosys and plan the fixed ORFS stages.
-- Run and resume implementation using hash-validated checkpoints.
-- Evaluate independent timing, DRC, LVS, regression, equivalence, and artifact checks.
-- Compare compatible power, performance, and area (PPA) results in bounded campaigns.
-- Read approved evidence over MCP, search offline engineering references, or use a local model to explain recorded findings.
+```mermaid
+flowchart TD
+    RTL["Ordered RTL manifest"] --> Native["Yosys elaboration and SAT · Icarus regression"]
+    Config["Pinned ORFS design and constraints"] --> Run["Controller · Yosys and OpenROAD"]
+    Run --> Physical["OpenSTA timing · KLayout verification and reopening"]
+    Native --> Evidence["Attempt records, reports and artifact hashes"]
+    Physical --> Evidence
+    Evidence --> Inspection["Acceptance matrix · timing diagnosis · PNG export"]
+    Evidence --> Supervisor["Read-only MCP and optional AI supervisor"]
+```
 
-## Installation and quick start
+Use the RTL workflow to check an explicitly declared source set and testbench. Use the pinned ORFS workflow to run a supported physical design. Verification evaluates independent gates against recorded evidence. The optional supervisor can help interpret supported observations and suggest follow-up measurements. [Evidence contract](docs/EVIDENCE_CONTRACT.md) · [Verification profiles](docs/VERIFICATION_AND_ACCEPTANCE.md)
 
-Install Python 3.11 or later and run the environment checks. Native Yosys supports RTL inspection. Physical execution and coverage require Linux or WSL2, Docker, and the cached pinned ORFS image. [Environment Doctor](docs/ENVIRONMENT_DOCTOR.md)
+## Engineering capabilities
+
+| Capability | Status | Evidence or scope |
+| --- | --- | --- |
+| RTL elaboration and functional regression | Implemented | Yosys hierarchy and Icarus regression with an explicit testbench and oracle |
+| Formal checks | Partially validated | Exact-port combinational two-state SAT with a real mismatch and correction |
+| Synthesis, floorplan, placement, clock-tree synthesis (CTS), global and detailed routing | Implemented | Pinned ORFS checkpoints for Sky130HD GCD and Ibex |
+| Static timing analysis (STA) | Implemented | Setup and hold evaluated independently. Both reference designs fail setup at their original clocks. |
+| Timing constraint coverage | Partially validated | Pinned OpenSTA probe on eligible controller checkpoints. The historical indexes lack the required recorded inputs. |
+| GDSII generation and independent reopening | Implemented | Core GCD and Ibex layouts reopened in KLayout |
+| Design rule checking (DRC) and layout versus schematic (LVS) | Implemented | Independent pinned platform checks for the retained core layouts |
+| IO pad-ring placement | Experimental | Real Sky130 IO abstracts placed with ICeWall |
+| Full-chip connectivity and signoff | Blocked | Qualified pad geometry, electrical views and chip-level evidence are required |
+| Reporting and AI assistance | Implemented | Deterministic reports, comparisons, verified PNGs and optional bounded model interpretation |
+| Interactive physical explorer and execution console | Planned | Stage geometry, object inspection and runtime events are tracked in Patch 09D |
+
+[Measured verification](docs/VERIFICATION_EVALUATION.md) · [IO evaluation](docs/IO_PAD_RING_EVALUATION.md) · [Roadmap](docs/ROADMAP.md)
+
+## Installation and quickstart
+
+Run these commands from the repository root with Python 3.11 or newer. The base package supports planning and reading existing evidence on Linux and Windows. Install Yosys on the host running RTL inspection. The RTL verification fixture also requires Icarus Verilog and `vvp`. Run physical implementation and KLayout PNG capture on Linux or inside WSL2 Ubuntu with Docker and the pinned Linux/amd64 ORFS image. The image supplies Sky130HD platform views. [Environment Doctor](docs/ENVIRONMENT_DOCTOR.md)
 
 ~~~sh
+git clone https://github.com/wellitsabhinav/AUTONOMOUS-EDA.git
+cd AUTONOMOUS-EDA
 python -m pip install -e .
 autonomous-eda doctor
 autonomous-eda inspect examples/counter.toml
 autonomous-eda plan configs/gcd-sky130hd.toml
 ~~~
 
-## Run and verify a design
+The counter inspection reads the ordered files from its [RTL manifest](examples/counter.toml). A Windows Yosys run returned this excerpt from its JSON.
 
-~~~sh
-autonomous-eda run configs/gcd-sky130hd.toml experiments/gcd-run --memory-mib 1200
-autonomous-eda verify experiments/gcd-run
-autonomous-eda verify experiments/gcd-run --profile full --coverage
-autonomous-eda report experiments/gcd-run --profile full --markdown
-autonomous-eda resume experiments/gcd-run
+~~~json
+"count": {
+  "direction": "output",
+  "width": 8
+}
 ~~~
 
-The stage planner defines synthesis, floorplanning, placement, clock-tree synthesis, global routing, detailed routing, and finish. The controller verifies checkpoint inputs and outputs before reuse. Static timing analysis (STA) reports setup and hold independently. A complete stage plan and a passing acceptance profile are separate outcomes. [Architecture](docs/ARCHITECTURE.md) · [Evidence contract](docs/EVIDENCE_CONTRACT.md)
+The [verification fixture](examples/verification/manifest.toml) is an independent combinational example with a testbench and a reference design. Use a fresh experiment directory. In PowerShell, use `Copy-Item -Recurse` for the copy.
 
-For an RTL-only exercise, copy the [verification fixture](examples/verification/manifest.toml) and use the `rtl-formal` profile. For physical optimization, approve a bounded plan and inspect the feasible frontier. [Verification](docs/VERIFICATION_AND_ACCEPTANCE.md) · [Optimization](docs/OPTIMIZATION.md)
+~~~sh
+mkdir -p experiments
+cp -R examples/verification experiments/logic-verification
+autonomous-eda verify experiments/logic-verification --profile rtl-formal --markdown
+~~~
 
-## Example results
+The [verification evaluation](docs/VERIFICATION_EVALUATION.md) records the Icarus oracle failure and SAT counterexample when the candidate's XOR becomes OR, and the pass after restoring XOR. See the [CLI reference](docs/CLI_REFERENCE.md) for entry points and help.
 
-<img src="docs/images/examples/gcd/layout_overview.png" alt="Retained GCD final GDSII geometry rendered by KLayout" width="480">
+## Run and inspect GCD
 
-*GCD layout. KLayout reopened the retained SkyWater 130 HD GDSII.*
+Use the [GCD walkthrough](docs/tutorials/GCD_WALKTHROUGH.md) for the pinned image, implementation commands, stage checkpoints, real output and timing interpretation. The `run` command evaluates implementation completion. A profiled `verify` returns exit code 1 when an acceptance gate fails or is blocked. Use `report` to read the matrix and `resume` to reuse valid checkpoints.
 
-<img src="docs/images/examples/gcd/timing_setup_summary.png" alt="Final GCD setup timing at the original clock" width="480">
+<img src="docs/images/examples/gcd/layout_overview.png" alt="KLayout view of the retained Sky130HD GCD final GDSII layout" width="600">
 
-*GCD timing. Final setup worst slack was −1.20488 ns at the original 1.1 ns clock.*
+*Historical GCD final GDSII rendered by KLayout. This is the recorded core layout from the gallery.* [Run and figure provenance](docs/EXAMPLE_GALLERY.md#physical-implementation)
 
-<img src="docs/images/examples/optimization/area_timing_tradeoff.png" alt="Measured standard-cell area and setup slack across the GCD campaign" width="480">
+## Diagnosis and AI assistance
 
-*GCD optimization. The baseline and four candidates all have negative setup slack.*
+Use `diagnose RUN --check setup` to read supported timing observations and their report locations. A negative worst slack establishes a timing violation. Identifying its cause requires path-local evidence, such as cell and net delay observations, clock insertion and comparable endpoints.
 
-[Gallery and figure provenance](docs/EXAMPLE_GALLERY.md)
+The optional `ai` workflow reads an explicit experiment allowlist and records evidence collection, inference and replay in its own journal. Observe mode requires no model. Explain mode uses a configured provider and validates the model's selections against deterministic findings. A local provider supports offline operation once its model and runtime are available. [Timing diagnosis](docs/TIMING_DIAGNOSIS.md) · [AI supervisor](docs/AI_SUPERVISOR.md) · [Observed AI runs](docs/DIAGNOSIS_EVALUATION.md)
 
-## Documentation
+## Examples and measured results
+
+| Design | Original clock (ns) | Final setup worst slack (ns) | Measured outcome |
+| --- | ---: | ---: | --- |
+| GCD | 1.1 | −1.20488 | Hold, platform DRC, LVS and GDS reopening passed |
+| Ibex | 8.0 | −0.377013 | Hold, platform DRC, LVS and GDS reopening passed |
+| GCD optimization candidates | 1.1 | See evaluation | Four completed candidates, zero setup-feasible candidates |
+| ICeWall pad placement example | — | — | Four pads, four corners and 156 continuity cells. Chip-level acceptance blocked. |
+
+[Source indexes and images](docs/EXAMPLE_GALLERY.md) · [Optimization evaluation](docs/OPTIMIZATION_EVALUATION.md) · [IO walkthrough](docs/IO_PAD_RING.md)
+
+## Architecture and development
 
 | Topic | Guide |
 | --- | --- |
-| System architecture and evidence | [Architecture](docs/ARCHITECTURE.md) · [Evidence contract](docs/EVIDENCE_CONTRACT.md) |
-| Experiments and recovery | [Experiment protocol](docs/EXPERIMENT_PROTOCOL.md) · [Environment Doctor](docs/ENVIRONMENT_DOCTOR.md) |
-| Timing, verification, and optimization | [Timing diagnosis](docs/TIMING_DIAGNOSIS.md) · [Verification](docs/VERIFICATION_AND_ACCEPTANCE.md) · [Optimization](docs/OPTIMIZATION.md) |
-| Read-only interfaces | [MCP](docs/MCP.md) · [Offline knowledge](docs/KNOWLEDGE.md) · [AI supervisor](docs/AI_SUPERVISOR.md) |
-| Project direction and contributions | [Project state](docs/PROJECT_STATE.md) · [Roadmap](docs/ROADMAP.md) · [Contributing](CONTRIBUTING.md) · [Design system](docs/DESIGN_SYSTEM.md) |
-
-See the [architecture](docs/ARCHITECTURE.md), [roadmap](docs/ROADMAP.md), [project state](docs/PROJECT_STATE.md), and [experiment protocol](docs/EXPERIMENT_PROTOCOL.md).
-
-The optional [IO pad-ring adapter](docs/IO_PAD_RING.md) runs ICeWall with verified Sky130 LEF abstracts and reports the remaining chip-level verification gaps.
+| Controller, tool adapters and run evidence | [Architecture](docs/ARCHITECTURE.md) · [Evidence contract](docs/EVIDENCE_CONTRACT.md) |
+| Experiments and recovery | [Experiment protocol](docs/EXPERIMENT_PROTOCOL.md) · [Optimization](docs/OPTIMIZATION.md) |
+| Timing, verification and debugging | [Physical diagnosis](docs/PHYSICAL_DIAGNOSIS.md) · [Verification profiles](docs/VERIFICATION_AND_ACCEPTANCE.md) |
+| Read-only evidence and model integration | [MCP](docs/MCP.md) · [Offline knowledge](docs/KNOWLEDGE.md) · [Model gateway](docs/MODEL_GATEWAY.md) |
+| Development and validation | [Contributing](CONTRIBUTING.md) · [Documentation design system](docs/DESIGN_SYSTEM.md) · [Project state](docs/PROJECT_STATE.md) · [Roadmap](docs/ROADMAP.md) |

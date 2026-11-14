@@ -1,0 +1,77 @@
+[
+  {
+    "name": "synth",
+    "after": [],
+    "outputs": [
+      "results/sky130hd/gcd/base/1_synth.odb",
+      "results/sky130hd/gcd/base/1_synth.sdc"
+    ]
+  },
+  {
+    "name": "floorplan",
+    "after": [
+      "synth"
+    ],
+    "outputs": [
+      "results/sky130hd/gcd/base/2_floorplan.odb",
+      "results/sky130hd/gcd/base/2_floorplan.sdc"
+    ]
+  },
+  {
+    "name": "place",
+    "after": [
+      "floorplan"
+    ],
+    "outputs": [
+      "results/sky130hd/gcd/base/3_place.odb",
+      "results/sky130hd/gcd/base/3_place.sdc"
+    ]
+  },
+  {
+    "name": "cts",
+    "after": [
+      "place"
+    ],
+    "outputs": [
+      "results/sky130hd/gcd/base/4_cts.odb",
+      "results/sky130hd/gcd/base/4_cts.sdc"
+    ]
+  },
+  {
+    "name": "grt",
+    "after": [
+      "cts"
+    ],
+    "outputs": [
+      "results/sky130hd/gcd/base/5_1_grt.odb",
+      "results/sky130hd/gcd/base/5_1_grt.sdc"
+    ]
+  },
+  {
+    "name": "route",
+    "after": [
+      "grt"
+    ],
+    "outputs": [
+      "results/sky130hd/gcd/base/5_route.odb",
+      "results/sky130hd/gcd/base/5_route.sdc",
+      "logs/sky130hd/gcd/base/5_1_grt.log",
+      "logs/sky130hd/gcd/base/5_2_route.json"
+    ]
+  },
+  {
+    "name": "finish",
+    "after": [
+      "route"
+    ],
+    "outputs": [
+      "results/sky130hd/gcd/base/6_final.gds",
+      "results/sky130hd/gcd/base/6_final.odb",
+      "results/sky130hd/gcd/base/6_final.v",
+      "results/sky130hd/gcd/base/6_final.sdc",
+      "results/sky130hd/gcd/base/6_final.spef",
+      "logs/sky130hd/gcd/base/6_report.json",
+      "logs/sky130hd/gcd/base/6_report.log"
+    ]
+  }
+]
