@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import shutil
 from dataclasses import replace
 from pathlib import Path
 
@@ -27,6 +28,7 @@ PLACEMENT = EXAMPLES / "placement.toml"
     [
         ('pad = "pad_out"', 'pad = "pad_in"', "duplicate"),
         ('external_port = "pad_y"', 'external_port = "pad_a"', "duplicate"),
+        ('external_port = "pad_y"', 'external_port = "a"', "collides with another core port"),
         ('core_pin = "OUT"', 'core_pin = "PAD"', "expected core-facing pin OUT"),
         ('pad = "pad_out"', 'pad = "pad_ground"', "exactly one mapping"),
         ('min_layer = "met1"', 'min_layer = "met3"', "contain the met2"),
@@ -157,6 +159,18 @@ def test_real_chip_routes_reuses_and_invalidates(tmp_path: Path) -> None:
     assert mapped["stages"]["connect"]["key"] != first["stages"]["connect"]["key"]
     assert mapped["stages"]["route"]["key"] != first["stages"]["route"]["key"]
 
+    config.write_text(config.read_text().replace('max_layer = "met4"', 'max_layer = "met5"'))
+    changed_route = assemble(placement, config, output)
+    assert changed_route["stages"]["connect"] == mapped["stages"]["connect"]
+    assert changed_route["stages"]["route"]["key"] != mapped["stages"]["route"]["key"]
+
+    config.write_text(config.read_text().replace('"required"', '"excluded"'))
+    changed_policy = assemble(placement, config, output)
+    assert changed_policy["stages"] == changed_route["stages"]
+    assert changed_policy["signoff_policy_sha256"] != changed_route["signoff_policy_sha256"]
+    assert changed_policy["gates"]["sta"]["status"] == "SKIPPED"
+    assert changed_policy["acceptance"] == "BLOCKED"
+
     (placement / "io-attempts" / reference["attempt"] / "placement.def").write_text("changed")
     stale = assemble(placement, config, output)
     assert stale["gates"]["pad_placement"]["status"] == "BLOCKED"
@@ -169,7 +183,17 @@ def test_real_reopen_upstream_gds(tmp_path: Path) -> None:
     proposal = plan(PLACEMENT, placement)
     approve(placement, proposal["plan_digest"])
     run(placement)
-    chip = assemble(placement, Path(os.environ["AEDA_TEST_CHIP_VIEWS"]), tmp_path / "chip")
+    source = Path(os.environ["AEDA_TEST_CHIP_VIEWS"]).resolve()
+    config = load(source)
+    assert config.pad_liberty is not None and config.pad_gds
+    for view in (*config.pad_gds, config.pad_liberty):
+        destination = tmp_path / view.relative_to(source.parent)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(view, destination)
+    manifest = tmp_path / "chip.toml"
+    manifest.write_bytes(source.read_bytes())
+    root = tmp_path / "chip"
+    chip = assemble(placement, manifest, root)
     assert chip["gates"]["pad_gds_views"]["status"] == "PASS"
     assert chip["gates"]["pad_liberty_interface"]["status"] == "PASS"
     assert chip["gates"]["chip_gds"]["status"] == "PASS"
@@ -179,3 +203,18 @@ def test_real_reopen_upstream_gds(tmp_path: Path) -> None:
     assert chip["reopened_layout"]["empty_references"] == []
     assert chip["reopened_layout"]["masters"]["sky130_ef_io__corner_pad"] == 4
     assert chip["gates"]["lvs"]["status"] == "BLOCKED"
+
+    mutable = load(manifest)
+    assert mutable.pad_liberty is not None
+    mutable.pad_liberty.write_text("library (bad) { }")
+    bad_timing = assemble(placement, manifest, root)
+    assert bad_timing["gates"]["pad_liberty_interface"]["status"] == "FAIL"
+    assert bad_timing["stages"]["route"] == chip["stages"]["route"]
+    assert bad_timing["stages"]["chip_gds"] == chip["stages"]["chip_gds"]
+
+    mutable.pad_gds[-1].write_bytes(b"invalid GDS")
+    bad_gds = assemble(placement, manifest, root)
+    assert bad_gds["gates"]["pad_gds_views"]["status"] == "FAIL"
+    assert bad_gds["stages"]["route"] == chip["stages"]["route"]
+    assert bad_gds["stages"]["pad_gds_views"]["key"] != chip["stages"]["pad_gds_views"]["key"]
+    assert bad_gds["gates"]["chip_gds"]["status"] == "BLOCKED"

@@ -74,6 +74,7 @@ def abstract_script(placement: dict[str, Any]) -> str:
 
 def checked_mapping(config: ChipConfig, placement: dict[str, Any]) -> list[tuple[str, ...]]:
     signals = {p["name"]: p for p in placement["pads"] if p["kind"] in SIGNAL_PINS}
+    ports = {pad["port"] for pad in signals.values()}
     if set(signals) != {entry.pad for entry in config.mappings}:
         raise ValueError("provide exactly one mapping for each signal pad in placement")
     result: list[tuple[str, ...]] = []
@@ -81,6 +82,8 @@ def checked_mapping(config: ChipConfig, placement: dict[str, Any]) -> list[tuple
         pad = signals[entry.pad]
         if entry.core_pin != SIGNAL_PINS[pad["kind"]]:
             raise ValueError(f"{entry.pad}: expected core-facing pin {SIGNAL_PINS[pad['kind']]}")
+        if entry.external_port in ports - {pad["port"]}:
+            raise ValueError(f"{entry.pad}: external port collides with another core port")
         result.append(
             (
                 entry.pad,

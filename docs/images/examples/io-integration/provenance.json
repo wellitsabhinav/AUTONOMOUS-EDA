@@ -1,17 +1,17 @@
 {
   "schema_version": 1,
-  "run_id": "2b748a1e8701e93a2fdce202d70e95ce",
+  "run_id": "a03090ce9545a3aa0a5b6a1013edf44a",
   "images": {
     "signoff_gate_matrix": {
       "schema_version": 1,
       "visualization_type": "signoff_gate_matrix",
-      "run_id": "2b748a1e8701e93a2fdce202d70e95ce",
+      "run_id": "a03090ce9545a3aa0a5b6a1013edf44a",
       "filename": "signoff_gate_matrix.png",
       "source_artifacts": [
         "chip-report.json"
       ],
       "source_sha256": [
-        "2b748a1e8701e93a2fdce202d70e95ce15a46069e0a814e28aae4358ab3d934c"
+        "a03090ce9545a3aa0a5b6a1013edf44a9e6dacee6c65635a12a8a0fe59b692d0"
       ],
       "image_sha256": "5e056a600806b131ed3f00d8e516a6dff1e5cb1e7898893410e5d1e905b70f02",
       "renderer": "matplotlib-agg",
@@ -32,19 +32,19 @@
       },
       "image_width": 1700,
       "image_height": 1054,
-      "generated_at": "2026-11-14T07:57:06.609064+00:00",
+      "generated_at": "2026-11-14T08:06:38.350335+00:00",
       "evidence_status": "VERIFIED"
     },
     "connectivity_matrix": {
       "schema_version": 1,
       "visualization_type": "connectivity_matrix",
-      "run_id": "2b748a1e8701e93a2fdce202d70e95ce",
+      "run_id": "a03090ce9545a3aa0a5b6a1013edf44a",
       "filename": "connectivity_matrix.png",
       "source_artifacts": [
         "chip-report.json"
       ],
       "source_sha256": [
-        "2b748a1e8701e93a2fdce202d70e95ce15a46069e0a814e28aae4358ab3d934c"
+        "a03090ce9545a3aa0a5b6a1013edf44a9e6dacee6c65635a12a8a0fe59b692d0"
       ],
       "image_sha256": "30170cd40bf4d9a9bcac7b40aa7387bf4fca59a45a3e151c60cf81a461a22004",
       "renderer": "matplotlib-agg",
@@ -65,20 +65,20 @@
       },
       "image_width": 1700,
       "image_height": 1054,
-      "generated_at": "2026-11-14T07:57:06.882371+00:00",
+      "generated_at": "2026-11-14T08:06:38.630152+00:00",
       "evidence_status": "VERIFIED"
     },
     "layout_overview": {
       "schema_version": 1,
       "visualization_type": "layout_overview",
-      "run_id": "2b748a1e8701e93a2fdce202d70e95ce",
+      "run_id": "a03090ce9545a3aa0a5b6a1013edf44a",
       "filename": "layout_overview.png",
       "source_artifacts": [
         "chip-report.json",
         "stages/chip_gds/f68ac5a5cdfe40cc90ad228997093d28/chip.gds"
       ],
       "source_sha256": [
-        "2b748a1e8701e93a2fdce202d70e95ce15a46069e0a814e28aae4358ab3d934c",
+        "a03090ce9545a3aa0a5b6a1013edf44a9e6dacee6c65635a12a8a0fe59b692d0",
         "689af13a976360823b8c17f3b7a54fa616e9ab0496fc8c6f614315b075d42c40"
       ],
       "image_sha256": "c060b5a3f6212f48c75abeb1a12df0238f5fa56d48ece06988f49c9844bff304",
@@ -117,20 +117,20 @@
       },
       "image_width": 1600,
       "image_height": 1400,
-      "generated_at": "2026-11-14T07:57:13.495078+00:00",
+      "generated_at": "2026-11-14T08:06:46.050150+00:00",
       "evidence_status": "VERIFIED"
     },
     "layout_routing": {
       "schema_version": 1,
       "visualization_type": "layout_routing",
-      "run_id": "2b748a1e8701e93a2fdce202d70e95ce",
+      "run_id": "a03090ce9545a3aa0a5b6a1013edf44a",
       "filename": "layout_routing.png",
       "source_artifacts": [
         "chip-report.json",
         "stages/chip_gds/f68ac5a5cdfe40cc90ad228997093d28/chip.gds"
       ],
       "source_sha256": [
-        "2b748a1e8701e93a2fdce202d70e95ce15a46069e0a814e28aae4358ab3d934c",
+        "a03090ce9545a3aa0a5b6a1013edf44a9e6dacee6c65635a12a8a0fe59b692d0",
         "689af13a976360823b8c17f3b7a54fa616e9ab0496fc8c6f614315b075d42c40"
       ],
       "image_sha256": "4f30a5824dace92f15278a9ac3342d2d66e4688fa7f04ca40565ce5560b04a72",
@@ -169,7 +169,7 @@
       },
       "image_width": 1600,
       "image_height": 1400,
-      "generated_at": "2026-11-14T07:57:13.544345+00:00",
+      "generated_at": "2026-11-14T08:06:46.091281+00:00",
       "evidence_status": "VERIFIED"
     }
   },

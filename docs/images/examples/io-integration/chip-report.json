@@ -24,7 +24,7 @@
       "status": "BLOCKED"
     },
     "database_signal_connectivity": {
-      "reason": "Tool completed and produced hash-bound evidence",
+      "reason": "Reopened OpenDB verified all mapped pad terminals",
       "status": "PASS"
     },
     "documentation": {
@@ -76,7 +76,7 @@
       "status": "FAIL"
     },
     "signal_routing": {
-      "reason": "Tool completed and produced hash-bound evidence",
+      "reason": "Detailed router completed and mapped routes were read back",
       "status": "PASS"
     },
     "sta": {
@@ -232,6 +232,7 @@
     }
   ],
   "signoff_policy": "required",
+  "signoff_policy_sha256": "7c07febcb9aaf76170d7583ec87b7f3f3a9e6799edbcbf7f26f8ddd96caa6ad5",
   "stages": {
     "chip_gds": {
       "attempt": "f68ac5a5cdfe40cc90ad228997093d28",
@@ -1188,6 +1189,16 @@
       "use": "GROUND"
     }
   ],
+  "tools": {
+    "KLayout": {
+      "sha256": "31a96d91aba374297adda37a096d02133e40b160da77c9f0c3da2895f19f98e5",
+      "version": "KLayout 0.30.12"
+    },
+    "OpenROAD": {
+      "sha256": "ea71aa83f98af35c5bdc55b6587a89e8dc9d698ff8f00ac84eec2787efb2d4df",
+      "version": "unknown"
+    }
+  },
   "top": "io_demo",
   "total_signal_wire_length_um": 1317.0,
   "unconnected_controls": [

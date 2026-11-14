@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
+import subprocess
 from collections import Counter
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -31,9 +33,16 @@ from .io_chip_layout import (
     reopened,
     stream_args,
 )
-from .io_chip_run import Stage, dispatch, image_hashes, openroad_args
+from .io_chip_run import (
+    Stage,
+    dispatch,
+    image_hashes,
+    openroad_args,
+    pinned_version,
+    verified_stage,
+)
 from .layout_render import LAYER_MAP, render_layout
-from .manifest import sha256
+from .manifest import fingerprint, sha256
 from .orfs import preflight
 from .reference import IMAGE, REVISION
 from .verification.report import atomic, read_json, writer
@@ -181,6 +190,7 @@ def assemble(placement_root: Path, config_path: Path, root: Path) -> dict[str, A
         "orfs_revision": REVISION,
         "library_provenance": config.provenance,
         "signoff_policy": config.signoff,
+        "signoff_policy_sha256": fingerprint({"schema_version": 1, "signoff": config.signoff}),
         "gates": report.gates,
         "stages": report.stages,
     }
@@ -193,7 +203,7 @@ def assemble(placement_root: Path, config_path: Path, root: Path) -> dict[str, A
         atomic(root / "chip-report.json", {**result, "acceptance": "BLOCKED"})
         try:
             evaluate(placement_root.resolve(), root, config, result, report)
-        except (OSError, ValueError, KeyError, TypeError) as error:
+        except (OSError, ValueError, KeyError, TypeError, subprocess.TimeoutExpired) as error:
             result["diagnostic"] = str(error)
         result["acceptance"] = verdict(report.gates)
         library = {name: report.gates[name] for name in LIBRARY_GATES}
@@ -201,6 +211,9 @@ def assemble(placement_root: Path, config_path: Path, root: Path) -> dict[str, A
             name: result[name]
             for name in ("schema_version", "image", "orfs_revision", "library_provenance")
         }
+        for name in ("tools", "pinned_library", "pad_gds_inventory", "pad_liberty_interface"):
+            if name in result:
+                qualification[name] = result[name]
         qualification["gates"] = library
         qualification["stages"] = {
             name: report.stages[name] for name in LIBRARY_GATES if name in report.stages
@@ -230,6 +243,8 @@ def evaluate(
             report.set(gate, "SKIPPED", "Placement manifest disables chip IO")
         return
     result.update(top=placement["top"], platform=placement["platform"])
+    if read_json(placement_root / "approval.json") != {"plan_digest": plan["plan_digest"]}:
+        raise ValueError("placement plan approval is missing or differs from the plan")
     try:
         mappings = checked_mapping(config, placement)
     except ValueError as error:
@@ -246,6 +261,13 @@ def evaluate(
         )
     ]
     backend = image_hashes(docker, [*views, TRACKS, CORE_GDS, TECH, STREAM, KLAYOUT, *deck_paths])
+    result["tools"] = {
+        "OpenROAD": {
+            "version": pinned_version(docker, io_ring.ENGINE, "-version"),
+            "sha256": backend[io_ring.ENGINE],
+        },
+        "KLayout": {"version": pinned_version(docker, KLAYOUT, "-v"), "sha256": backend[KLAYOUT]},
+    }
     engine_hash = {io_ring.ENGINE: backend[io_ring.ENGINE]}
     lef_hashes = {name: backend[name] for name in sorted(views) if name.endswith((".lef", ".tlef"))}
     result["core_only_collateral"] = {name: backend[name] for name in deck_paths}
@@ -388,13 +410,17 @@ def evaluate(
         "connected.def",
         "connectivity.tsv",
     ):
-        if "AEDA_MAPPING_VIOLATION" in connection.stdout():
+        if (
+            "tool.stdout.log" in connection.receipt["outputs"]
+            and "AEDA_MAPPING_VIOLATION" in connection.stdout()
+        ):
             report.set(
                 "logical_connectivity",
                 "FAIL",
                 "OpenDB reported an invalid mapped port, pin or driver",
             )
         return
+    report.set("database_signal_connectivity", "BLOCKED", "Waiting for connected OpenDB readback")
     prerequisites = tsv_prerequisites(connection)
     result["unconnected_controls"] = [
         r for r in prerequisites if r["use"] == "SIGNAL" and r["net"] is None
@@ -407,18 +433,25 @@ def evaluate(
             "OpenDB abutment associates POWER and GROUND terminals on shared nets",
         )
 
-    def observe(name: str, checkpoint: Stage, filename: str) -> list[dict[str, Any]]:
+    def observe(
+        name: str, checkpoint: Stage, filename: str, gate: str
+    ) -> list[dict[str, Any]] | None:
         probe = openroad(
             name,
             observe_script(mappings, filename),
             ("observed.tsv",),
             {filename: checkpoint.output(filename)},
         )
-        if not probe.complete("AEDA_OBSERVATION_COMPLETE", "observed.tsv"):
-            raise ValueError(f"{name} could not independently read the exported OpenDB")
+        if not check_tool(report, gate, probe, "AEDA_OBSERVATION_COMPLETE", "observed.tsv"):
+            return None
+        report.set(gate, "BLOCKED", "Validating required terminal and net observations")
         return signal_readback(probe, mappings)
 
-    samples = observe("connected_readback", connection, "connected.odb")
+    samples = observe(
+        "connected_readback", connection, "connected.odb", "database_signal_connectivity"
+    )
+    if samples is None:
+        return
     result["signal_connections"] = samples
     if len(samples) != len(mappings) or any(not row["associated"] for row in samples):
         report.set(
@@ -427,6 +460,9 @@ def evaluate(
             "Reopened OpenDB is missing required pad terminals",
         )
         return
+    report.set(
+        "database_signal_connectivity", "PASS", "Reopened OpenDB verified all mapped pad terminals"
+    )
     report.set("checkpoint_integrity", "PASS", "Verified artifact hashes at each completed stage")
     if not config.route:
         report.set("signal_routing", "SKIPPED", "Manifest explicitly disables detailed routing")
@@ -442,9 +478,12 @@ def evaluate(
         report, "signal_routing", route, "AEDA_ROUTING_COMPLETE", "routed.odb", "routed.def"
     ):
         return
+    report.set("signal_routing", "BLOCKED", "Waiting for routed OpenDB readback")
     drvs = re.findall(r"(?m)^AEDA_ROUTE_VIOLATIONS ([0-9]+)$", route.stdout())
     length = re.findall(r"(?m)^Total wire length = ([\d.]+) um\.$", route.stdout())
-    routed = observe("route_readback", route, "routed.odb")
+    routed = observe("route_readback", route, "routed.odb", "signal_routing")
+    if routed is None:
+        return
     result["routed_signal_connections"] = routed
     result["detailed_router_violations"] = int(drvs[0]) if len(drvs) == 1 else None
     result["total_signal_wire_length_um"] = float(length[-1]) if length else None
@@ -459,6 +498,9 @@ def evaluate(
             "Reopened routing has missing terminal/wire evidence or router violations",
         )
         return
+    report.set(
+        "signal_routing", "PASS", "Detailed router completed and mapped routes were read back"
+    )
     if report.gates["pad_gds_views"]["status"] != "PASS":
         return
 
@@ -559,8 +601,6 @@ def render(root: Path) -> dict[str, Any]:
         receipt = root / stage["receipt"]
         if not receipt.resolve().is_relative_to(root.resolve()):
             raise ValueError("chip stage receipt escapes the run")
-        from .io_chip_run import verified_stage
-
         current = verified_stage(receipt.parent.parent, stage["key"])
         if current.folder != receipt.parent or sha256(receipt) != stage["receipt_sha256"]:
             raise ValueError("stale chip report. Rerun the chip probe before rendering.")
@@ -612,8 +652,6 @@ def render(root: Path) -> dict[str, Any]:
         if result["gates"]["independent_reopening"]["status"] == "PASS":
             stage = result["stages"]["chip_gds"]
             relative_gds = Path(stage["receipt"]).parent / "chip.gds"
-            import shutil
-
             shutil.copyfile(root / relative_gds, work / "source.gds")
             staged_gds = sha256(work / "source.gds")
             if staged_gds != stage["outputs"]["chip.gds"]:

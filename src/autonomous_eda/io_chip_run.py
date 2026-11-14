@@ -8,6 +8,7 @@ import subprocess
 import time
 import uuid
 from dataclasses import asdict, dataclass
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -154,6 +155,30 @@ def dispatch(
 
 def openroad_args(script: str = "stage.tcl") -> list[str]:
     return ["-no_init", "-threads", "1", "-exit", f"/work/{script}"]
+
+
+@lru_cache(maxsize=4)
+def pinned_version(docker: str, tool: str, flag: str) -> str:
+    result = subprocess.run(
+        [
+            docker,
+            "run",
+            "--rm",
+            "--pull=never",
+            "--network=none",
+            "--entrypoint",
+            tool,
+            IMAGE,
+            flag,
+        ],
+        capture_output=True,
+        text=True,
+        timeout=30,
+        check=False,
+    )
+    if result.returncode:
+        raise ValueError(f"could not identify the pinned tool version: {tool}")
+    return result.stdout.strip()
 
 
 def image_hashes(docker: str, files: list[str]) -> dict[str, str]:
