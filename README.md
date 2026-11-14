@@ -65,4 +65,4 @@ For an RTL-only exercise, copy the [verification fixture](examples/verification/
 
 See the [architecture](docs/ARCHITECTURE.md), [roadmap](docs/ROADMAP.md), [project state](docs/PROJECT_STATE.md), and [experiment protocol](docs/EXPERIMENT_PROTOCOL.md).
 
-The optional [IO pad-ring adapter](docs/IO_PAD_RING.md) runs ICeWall with verified Sky130 LEF abstracts and reports the remaining chip-level verification gaps.
+The optional ICeWall chip flow routed two SKY130 core-to-pad signals and independently reopened the assembled GDS. Power connectivity and full-chip signoff remain open. [Chip integration](docs/IO_CHIP_INTEGRATION.md) · [Measured results](docs/IO_CHIP_EVALUATION.md)

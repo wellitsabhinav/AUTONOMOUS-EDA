@@ -75,3 +75,29 @@ def test_published_acceptance_sources_match_figure_receipts() -> None:
             assert sha256(folder / image["filename"]) == image["image_sha256"]
             assert image["source_artifacts"] == ["acceptance.json"]
             assert image["source_sha256"] == [sha256(folder / "acceptance.json")]
+
+
+def test_chip_figure_sources_match_run_and_receipts() -> None:
+    folder = ROOT / "docs/images/examples/io-integration"
+    source = folder / "chip-report.json"
+    report = json.loads(source.read_bytes())
+    provenance = json.loads((folder / "provenance.json").read_bytes())
+    digest = sha256(source)
+    gds = report["stages"]["chip_gds"]
+    gds_path = (Path(gds["receipt"]).parent / "chip.gds").as_posix()
+    assert provenance["local_source_artifacts"][gds_path]["sha256"] == gds["outputs"]["chip.gds"]
+    assert (
+        gds["outputs"]["chip.gds"]
+        == report["stages"]["independent_reopening"]["inputs"]["chip.gds"]
+    )
+    for image in provenance["images"].values():
+        assert image["run_id"] == provenance["run_id"] == digest[:32]
+        assert image["image_sha256"] == sha256(folder / image["filename"])
+        assert image["render_configuration"]["command"]
+        assert image["render_configuration"]["top"] == report["top"]
+        assert image["render_configuration"]["platform"] == report["platform"]
+        sources = dict(zip(image["source_artifacts"], image["source_sha256"], strict=True))
+        expected = {source.name: digest}
+        if image["renderer"] == "klayout":
+            expected[gds_path] = gds["outputs"]["chip.gds"]
+        assert sources == expected

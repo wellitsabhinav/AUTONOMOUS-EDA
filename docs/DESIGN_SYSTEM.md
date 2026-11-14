@@ -26,6 +26,8 @@ Put units in table column headings or axis labels. Use ns for timing, µm for le
 | `UNKNOWN` | The evidence does not establish an outcome. |
 | `NOT_APPLICABLE` | An explicit applicability rule excludes the check. |
 
+The chip integration report uses `PASS`, `FAIL`, `BLOCKED`, and `SKIPPED`. The first two correspond to verified completion and observed violations. `SKIPPED` identifies an explicit exclusion by the manifest.
+
 Keep command output stable for automation. Use plain text in scripts and non-interactive sessions. Reserve color for an explicitly styled terminal view and honor `NO_COLOR`.
 
 Use informative alt text, a short caption, and comparable display widths for gallery figures. Captions state the run, toolchain or corner where relevant, and the measured outcome. Link the source evidence and provenance. Published output and raw tool logs retain their original bytes. New renders carry their actual renderer settings and hashes.

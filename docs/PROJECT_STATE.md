@@ -1,5 +1,7 @@
 # Project state
 
+- Patch 09C routes two SKY130 core-to-pad nets and independently reopens the assembled chip GDS. The inset run retains four pads, four corners and 168 fillers. OpenDB flagged mixed power and ground associations, and full-chip acceptance remains blocked. [Measured evidence](IO_CHIP_EVALUATION.md) · [Draft PR #26](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/26)
+
 - Patch 09A runs [pinned ICeWall placement](IO_PAD_RING_EVALUATION.md) with real Sky130 IO abstracts. The probe recorded four corners, four pads and 156 continuity cells. Chip-level acceptance remains blocked.
 
 - Milestone 09 adds [configurable verification and acceptance](VERIFICATION_AND_ACCEPTANCE.md) for [issue #10](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/10). The [evaluation](VERIFICATION_EVALUATION.md) records real Icarus regression and Yosys proof failure and correction, OpenSTA coverage on retained GCD controller runs, and the unchanged GCD and Ibex setup failures.

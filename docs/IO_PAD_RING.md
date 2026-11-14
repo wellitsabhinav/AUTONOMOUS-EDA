@@ -29,3 +29,5 @@ The fixed Tcl uses `make_io_sites`, `place_corners`, `place_pad`, `place_io_fill
 The bundled `sky130io` directory supplies LEF abstracts, black-box Verilog and dummy Liberty. The pinned image lacks matching pad GDS. The adapter exports placement evidence and charts. Chip GDS, independent reopening, pad DRC and LVS, routed signal connectivity, and supply continuity stay blocked. Chip acceptance requires qualified timing, geometry, connectivity, ESD and package evidence.
 
 See the [measured evaluation](IO_PAD_RING_EVALUATION.md), [OpenROAD ICeWall documentation](https://openroad.readthedocs.io/en/latest/main/src/pad/README.html), and [ORFS tutorial](https://openroad-flow-scripts.readthedocs.io/en/latest/tutorials/FlowTutorial.html).
+
+The [chip integration command](IO_CHIP_INTEGRATION.md) consumes the placement checkpoint and adds routed signal and independently reopened layout evidence.

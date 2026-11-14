@@ -70,6 +70,12 @@ The isolated XOR-to-OR defect emitted the configured Icarus failure marker. Yosy
 
 Pinned OpenROAD placed four SKY130 pads, four corners and 156 continuity cells in an isolated OpenDB and DEF checkpoint. Chip GDS and electrical signoff remain blocked. [Filler counts](images/examples/io-placement/io_fillers.png) · [Placement report](images/examples/io-placement/io-report.json) · [PNG provenance](images/examples/io-placement/provenance.json) · [Reproduction](IO_PAD_RING_EVALUATION.md)
 
+### ICeWall chip integration
+
+<img src="images/examples/io-integration/layout_overview.png" alt="KLayout overview of the independently reopened SKY130 chip GDS and its inset pad ring" width="600">
+
+KLayout reopened the 1,200 × 1,200 µm chip outline with four pads, four corner cells and 168 filler instances. [Routed metal view](images/examples/io-integration/layout_routing.png) · [Connectivity matrix](images/examples/io-integration/connectivity_matrix.png) · [Gate status](images/examples/io-integration/signoff_gate_matrix.png) · [PNG provenance](images/examples/io-integration/provenance.json) · [Reproduction](IO_CHIP_EVALUATION.md)
+
 ## Regenerate
 
 ~~~sh
