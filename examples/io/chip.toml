@@ -1,0 +1,17 @@
+schema_version = 1
+signoff = "required"
+
+[[signals]]
+pad = "pad_in"
+core_pin = "IN"
+external_port = "pad_a"
+
+[[signals]]
+pad = "pad_out"
+core_pin = "OUT"
+external_port = "pad_y"
+
+[routing]
+enabled = true
+min_layer = "met1"
+max_layer = "met4"
