@@ -1,0 +1,44 @@
+gcd / sky130hd | setup | corner tt_025C_1v80 | VERIFIED
+Verification setup FAILED, hold PASSED, platform_drc PASSED, lvs PASSED
+finish 96cb89b29896595c43b8 dpath.b_reg.out[2]$_DFFE_PP_ -> dpath.a_reg.out[10]$_DFFE_PP_
+  register-to-register / core_clock | arrival 2.35 ns | required 1.14 ns | slack -1.2 ns
+  reports/sky130hd/gcd/base/6_finish.rpt:132-205
+  data path delay 2.06 +/- 0.01 ns
+  cell delay 2.04 +/- 0.055 ns
+  net delay 0 +/- 0.055 ns
+  launch clock 0.29 +/- 0.01 ns
+  capture clock 0.28 +/- 0.01 ns
+  clock effect -0.01 +/- 0.02 ns
+finish 119e024b4edf42d6ab34 dpath.b_reg.out[2]$_DFFE_PP_ -> resp_msg[10]
+  register-to-output / vclk_core_clock | arrival 2.36 ns | required 1.17 ns | slack -1.19 ns
+  reports/sky130hd/gcd/base/6_finish.rpt:208-271
+  data path delay 2.07 +/- 0.01 ns
+  cell delay 2.06 +/- 0.055 ns
+  net delay 0 +/- 0.055 ns
+  launch clock 0.29 +/- 0.01 ns
+  capture clock 0.29 +/- 0.01 ns
+synth physical metrics standard cell area 2313.47 um2, instance count 222 count, standard cell count 222 count, flow errors 0 count, stage runtime.1 10.5557 s
+floorplan worst slack -1.10564 ns | WNS -1.10564 ns (logs/sky130hd/gcd/base/2_1_floorplan.json, JSON key floorplan__timing__setup__ws)
+floorplan physical metrics standard cell area 2801.44 um2, instance count 266 count, standard cell count 266 count, utilization 0.475978 fraction, setup repair buffers reported 0 count, flow errors 0 count, stage runtime.2 12.5382 s
+place worst slack -1.18414 ns | WNS -1.18414 ns | Delta WNS -0.0785 ns from floorplan (logs/sky130hd/gcd/base/3_5_place_dp.json, JSON key detailedplace__timing__setup__ws)
+place physical metrics standard cell area 3980.07 um2, instance count 502 count, standard cell count 502 count, utilization 0.676233 fraction, max slew violations 0 count, max capacitance violations 0 count, max fanout violations 0 count, flow errors 0 count, stage runtime.3 20.8003 s
+cts worst slack -1.19621 ns | WNS -1.19621 ns | Delta WNS -0.01207 ns from place (logs/sky130hd/gcd/base/4_1_cts.json, JSON key cts__timing__setup__ws)
+cts physical metrics standard cell area 4375.45 um2, instance count 521 count, standard cell count 521 count, utilization 0.74341 fraction, setup repair buffers reported 13 count, hold repair buffers reported 0 count, max slew violations 0 count, max capacitance violations 0 count, max fanout violations 0 count, reported setup skew 0.00387237 ns, reported hold skew 0.00387237 ns, flow errors 0 count, stage runtime.4 13.5673 s
+grt worst slack -1.23073 ns | WNS -1.23073 ns | Delta WNS -0.03452 ns from cts (logs/sky130hd/gcd/base/5_1_grt.json, JSON key globalroute__timing__setup__ws)
+grt physical metrics standard cell area 4414.23 um2, instance count 524 count, standard cell count 524 count, utilization 0.75 fraction, setup repair buffers reported 5 count, hold repair buffers reported 0 count, max slew violations 0 count, max capacitance violations 0 count, max fanout violations 0 count, reported setup skew 0.00423905 ns, reported hold skew 0.00423905 ns, global route wirelength 11854 um, flow errors 0 count, stage runtime.5 21.4461 s, global route total overflow 0 count
+route physical metrics detailed route wirelength 7425 um, router drc errors 0 count, flow errors 0 count, stage runtime.6 45.8323 s
+finish worst slack -1.20488 ns | WNS -1.20488 ns | Delta WNS +0.02585 ns from grt (logs/sky130hd/gcd/base/6_report.json, JSON key finish__timing__setup__ws)
+finish physical metrics standard cell area 4414.23 um2, instance count 930 count, standard cell count 524 count, utilization 0.75 fraction, clock buffer inventory 7 count, timing repair buffer inventory 175 count, max slew violations 0 count, max capacitance violations 0 count, max fanout violations 0 count, reported setup skew 0.00718658 ns, reported hold skew 0.00718658 ns, flow errors 0 count, stage runtime.7 20.4683 s, platform drc violations 0 count
+Matched floorplan e9f74f53400de2086a3c -> place 1becc511aa68c297ed2e | Delta slack -0.36 +/- 0.01 ns
+Matched grt e4d6c8c0d461f496a49f -> finish 96cb89b29896595c43b8 | Delta slack +0.03 +/- 0.01 ns
+Matched grt 4e6f3bf99be36eda29e8 -> finish 119e024b4edf42d6ab34 | Delta slack +0.04 +/- 0.01 ns
+[finish COVERAGE_UNVERIFIED] Timing coverage has not been independently established.
+[synth WORST_SLACK_UNAVAILABLE] No verified aggregate for the selected check.
+[route WORST_SLACK_UNAVAILABLE] No verified aggregate for the selected check.
+[all PATH_LOCAL_CONGESTION_UNAVAILABLE] The archive has no verified congestion map joined to critical cells.
+[all CELL_SIZING_HISTORY_UNAVAILABLE] The archive does not track per-instance sizing changes.
+[finish CAUSE_UNRESOLVED] Delay accounting does not identify the effect of individual placement, sizing, or parasitic changes.
+[SUPPORTED_HYPOTHESIS] Cell arc delay is a candidate for further investigation. The reported increments include the effects of the realized input transitions and output loads.
+[NEXT] Generate a higher-precision full timing report for the listed path. The path violates the selected check and the report prints rounded increments. Which cell and net increments are significant after accounting for rounding?
+[NEXT] Report the final limiting endpoint pair at each implementation checkpoint. The retained path reports sample selected checks and aggregate extrema can change endpoints. Where did the final limiting endpoint check change, and did its logic, load, or clock arrival change?
+[NEXT] Measure net RC, pin capacitance and transition at the largest data cell arcs. The full report exposes fanout and loads at the path's driving pins. How much of the observed cell delay is associated with load or input slew?

@@ -2,9 +2,11 @@
 
 import json
 import re
+import shlex
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
+from autonomous_eda.cli import build_parser
 from autonomous_eda.manifest import sha256
 
 ROOT = Path(__file__).resolve().parents[1]
