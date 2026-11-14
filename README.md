@@ -87,6 +87,13 @@ The [verification evaluation](docs/VERIFICATION_EVALUATION.md) records the Icaru
 
 Use the [GCD walkthrough](docs/tutorials/GCD_WALKTHROUGH.md) for the pinned image, implementation commands, stage checkpoints, real output and timing interpretation. The `run` command evaluates implementation completion. A profiled `verify` returns exit code 1 when an acceptance gate fails or is blocked. Use `report` to read the matrix and `resume` to reuse valid checkpoints.
 
+Export the recorded stage checkpoints, then open the [Physical Design Explorer and Execution Console](docs/PHYSICAL_WORKSPACE.md).
+
+~~~sh
+autonomous-eda artifacts snapshots experiments/gcd-walkthrough experiments/gcd-snapshots
+autonomous-eda artifacts workspace experiments/gcd-snapshots --run experiments/gcd-walkthrough
+~~~
+
 <img src="docs/images/examples/gcd/layout_overview.png" alt="KLayout view of the retained Sky130HD GCD final GDSII layout" width="600">
 
 *Historical GCD final GDSII rendered by KLayout. This is the recorded core layout from the gallery.* [Run and figure provenance](docs/EXAMPLE_GALLERY.md#physical-implementation)
@@ -98,6 +105,8 @@ Use `diagnose RUN --check setup` to read supported timing observations and their
 The optional `ai` workflow reads an explicit experiment allowlist and records evidence collection, inference and replay in its own journal. Observe mode requires no model. Explain mode uses a configured provider and validates the model's selections against deterministic findings. A local provider supports offline operation once its model and runtime are available. [Timing diagnosis](docs/TIMING_DIAGNOSIS.md) · [AI supervisor](docs/AI_SUPERVISOR.md) · [Observed AI runs](docs/DIAGNOSIS_EVALUATION.md)
 
 The [GCD walkthrough](docs/tutorials/GCD_WALKTHROUGH.md#read-the-same-run-with-the-ai-supervisor) shows how to configure a local evidence registry and replay a recorded observation.
+
+The [log diagnostics walkthrough](docs/PHYSICAL_WORKSPACE.md#diagnose-the-retained-openroad-failure) classifies the preserved OpenROAD teardown crash and shows how to review the proposed correction.
 
 ## Examples and measured results
 

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AUTONOMOUS-EDA | Physical workspace</title>
+  <link rel="stylesheet" href="/workspace.css">
+  <script src="/workspace.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="identity"><span class="mark" aria-hidden="true">◈</span><strong>AUTONOMOUS<span class="cyan">–</span>EDA</strong></div>
+    <nav aria-label="Workspace views">
+      <button id="explore-tab" aria-pressed="true">Physical Explorer</button>
+      <button id="console-tab" aria-pressed="false">Execution Console</button>
+    </nav>
+    <span class="local"><i></i> Local workspace</span>
+  </header>
+  <main>
+    <div class="heading"><div><p class="eyebrow" id="run"></p><h1 id="title">Physical Design Explorer</h1></div><p id="feedback" role="status"></p></div>
+    <section id="explore" aria-label="Physical Design Explorer">
+      <div id="timeline" class="timeline" aria-label="Physical checkpoints"></div>
+      <div class="workbench">
+        <aside class="sidebar"><h2>Display</h2><div id="display"></div><h2>Layers</h2><div id="layers" class="layers"></div></aside>
+        <div class="views">
+          <div class="toolbar">
+            <button id="fit">Fit design</button><button id="minus" aria-label="Zoom out">−</button><button id="plus" aria-label="Zoom in">+</button>
+            <button id="png">Checkpoint PNG</button><button id="view-png">Export view</button>
+            <label>Compare <select id="compare"><option value="">Off</option></select></label>
+          </div>
+          <div class="canvases">
+            <div class="panel"><p id="stage-label"></p><canvas id="layout" aria-label="Physical layout"></canvas></div>
+            <div class="panel" id="compare-panel" hidden><p id="compare-label"></p><canvas id="comparison" aria-label="Comparison layout"></canvas></div>
+          </div>
+          <div class="legend" id="coordinates">Drag to pan · Scroll to zoom · Select an object to inspect</div>
+        </div>
+        <aside class="inspector"><h2>Inspector</h2><label for="find">Find cell, pin or net</label><input id="find" type="search" placeholder="Search names…" autocomplete="off"><div id="matches"></div><div id="selection"></div><h2>Stage evidence</h2><div id="evidence"></div></aside>
+      </div>
+    </section>
+    <section id="console" aria-label="Agentic Execution Console" hidden>
+      <div class="console-grid">
+        <div class="card"><h2>Context acquisition</h2><div id="context" aria-live="polite"></div></div>
+        <div class="card"><h2>Live status</h2><div id="live-status" aria-live="polite"></div><h2>Agent transitions</h2><div id="agents"></div></div>
+      </div>
+      <div class="card history"><h2>Execution history</h2><div id="attempts"></div></div>
+    </section>
+  </main>
+</body>
+</html>
