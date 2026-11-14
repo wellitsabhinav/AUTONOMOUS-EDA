@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "run_id": "b24d61edea794200be099bac1e9784e4",
+  "images": {
+    "io_verification": {
+      "schema_version": 1,
+      "visualization_type": "io_verification",
+      "run_id": "b24d61edea794200be099bac1e9784e4",
+      "filename": "io_verification.png",
+      "source_artifacts": [
+        "io-report.json"
+      ],
+      "source_sha256": [
+        "d02591af0492b7e55a789a3b330bb375d09374910543d3d556cd44e72b3141ea"
+      ],
+      "image_sha256": "36e02f28918271b304c12b1a1e69b0039d2aa33abbc220aec003a339de7f6ab3",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "IO placement and verification",
+        "detail": "Sky130 IO abstracts  |  Attempt b24d61edea79"
+      },
+      "image_width": 1700,
+      "image_height": 1054,
+      "generated_at": "2026-11-14T04:01:59.422904+00:00",
+      "evidence_status": "VERIFIED"
+    },
+    "io_fillers": {
+      "schema_version": 1,
+      "visualization_type": "io_fillers",
+      "run_id": "b24d61edea794200be099bac1e9784e4",
+      "filename": "io_fillers.png",
+      "source_artifacts": [
+        "io-report.json"
+      ],
+      "source_sha256": [
+        "d02591af0492b7e55a789a3b330bb375d09374910543d3d556cd44e72b3141ea"
+      ],
+      "image_sha256": "d7d250727272d3d4648e41621470b352a60f02b6247d1257d3968c45f752b6d5",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "Placed continuity cells",
+        "detail": "Sky130 IO abstracts  |  Attempt b24d61edea79"
+      },
+      "image_width": 1700,
+      "image_height": 1054,
+      "generated_at": "2026-11-14T04:01:59.650045+00:00",
+      "evidence_status": "VERIFIED"
+    }
+  },
+  "unavailable": {}
+}

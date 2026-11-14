@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "plan_digest": "42083c57c3cd2abcf56d92db8b249567dc0eee1cf5f2eab6a49723f29d6ca29b",
+  "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+  "gates": {
+    "PAD_LIBRARY_VALID": "BLOCKED",
+    "PAD_MAPPING_VALID": "PASSED",
+    "PAD_PLACEMENT_LEGAL": "PASSED",
+    "PAD_CORNER_COMPLETENESS": "PASSED",
+    "PAD_FILLER_CONTINUITY": "BLOCKED",
+    "PAD_SIGNAL_CONNECTIVITY": "BLOCKED",
+    "PAD_POWER_CONNECTIVITY": "BLOCKED",
+    "PAD_GEOMETRY_VALID": "BLOCKED",
+    "PAD_GDS_REOPEN": "BLOCKED",
+    "PAD_DRC": "BLOCKED",
+    "PAD_LVS": "BLOCKED"
+  },
+  "acceptance": "BLOCKED",
+  "diagnostic": "The pinned IO library has no matching pad GDS or qualified Liberty. The placement probe leaves routed connectivity and chip decks unresolved.",
+  "attempt": "b24d61edea794200be099bac1e9784e4",
+  "artifacts": {
+    "openroad.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "openroad.stdout.log": "b99bea6774e2f52c723448e2a9e5042bb6826b69664fd6618ad374c6fb33d8be",
+    "placement.def": "d887fd0e29c0d2a522768fae7ee06a3ba9179cec020b149fe253440394115d11",
+    "placement.odb": "3bf181e2daddcd771e6fdfbd3acfa82e586142f13e6e4805314af9ed3998b87b"
+  },
+  "execution": {
+    "command": [
+      "/usr/bin/docker",
+      "run",
+      "--rm",
+      "--pull",
+      "never",
+      "--network",
+      "none",
+      "--name",
+      "aeda-io-b24d61edea794200be099bac1e9784e4",
+      "--cpus",
+      "1",
+      "--memory",
+      "1200m",
+      "--pids-limit",
+      "128",
+      "-v",
+      "/mnt/f/AgenticAI/experiments/m9-icewall-final/io-attempts/b24d61edea794200be099bac1e9784e4:/work",
+      "--entrypoint",
+      "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad",
+      "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+      "-no_init",
+      "-threads",
+      "1",
+      "-exit",
+      "/work/placement.tcl"
+    ],
+    "return_code": 0,
+    "runtime_seconds": 1.281777624,
+    "started_at": "2026-11-14T04:00:14.910750+00:00",
+    "stderr": "openroad.stderr.log",
+    "stdout": "openroad.stdout.log",
+    "stop": null
+  },
+  "placement": {
+    "dbu_per_um": 1000,
+    "placement_matches": true,
+    "corners": [
+      "IO_CORNER_NORTH_EAST_INST",
+      "IO_CORNER_NORTH_WEST_INST",
+      "IO_CORNER_SOUTH_EAST_INST",
+      "IO_CORNER_SOUTH_WEST_INST"
+    ],
+    "fillers_by_side": {
+      "north": 39,
+      "south": 39,
+      "east": 39,
+      "west": 39
+    },
+    "pads": {
+      "pad_power": {
+        "master": "sky130_ef_io__vccd_lvc_pad",
+        "x_dbu": 1001965,
+        "y_dbu": 550000,
+        "orientation": "W"
+      },
+      "pad_in": {
+        "master": "sky130_ef_io__gpiov2_pad_wrapped",
+        "x_dbu": 550000,
+        "y_dbu": 989035,
+        "orientation": "FS"
+      },
+      "pad_out": {
+        "master": "sky130_ef_io__gpiov2_pad_wrapped",
+        "x_dbu": 550000,
+        "y_dbu": 0,
+        "orientation": "N"
+      },
+      "pad_ground": {
+        "master": "sky130_ef_io__vssd_lvc_pad",
+        "x_dbu": 0,
+        "y_dbu": 550000,
+        "orientation": "FW"
+      }
+    }
+  },
+  "abstract_library": "VERIFIED",
+  "abstract_fillers_present": true
+}

@@ -1,5 +1,7 @@
 # Verification and acceptance
 
+The optional [IO placement workflow](IO_PAD_RING.md) reports independent chip-assembly gates from its own checkpoint. A core-only run carries no chip-level qualification.
+
 The acceptance matrix is a separate schema 1 report derived from controller evidence and verification attempts. Existing experiment JSON, deck commands, checkpoints and optimization campaign records remain compatible.
 
 ~~~sh

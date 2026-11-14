@@ -1,5 +1,7 @@
 # Experiment evidence contract
 
+The [IO placement report](IO_PAD_RING.md) binds the plan digest, library views, OpenROAD invocation and independently parsed DEF observations.
+
 The [verification matrix](VERIFICATION_AND_ACCEPTANCE.md) has its own schema version. It references original experiment evidence and carries policy, run and attempt identities, tool receipts, current hashes, and separate verdicts. Historical experiment JSON remains valid under the existing schema 1 decoder.
 
 `autonomous_eda.evidence` exposes `get_experiment(directory)`, `import_reference(directory, index)`, `compare_experiments(baseline, candidate)`, and canonical JSON encoding and decoding. `autonomous-eda report DIRECTORY` emits the same evidence fields. These operations use the standard library and can read a completed run without an EDA backend or API key.

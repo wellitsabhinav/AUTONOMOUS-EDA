@@ -63,4 +63,6 @@ For an RTL-only exercise, copy the [verification fixture](examples/verification/
 | Read-only interfaces | [MCP](docs/MCP.md) · [Offline knowledge](docs/KNOWLEDGE.md) · [AI supervisor](docs/AI_SUPERVISOR.md) |
 | Project direction and contributions | [Project state](docs/PROJECT_STATE.md) · [Roadmap](docs/ROADMAP.md) · [Contributing](CONTRIBUTING.md) · [Design system](docs/DESIGN_SYSTEM.md) |
 
-The reported GCD and Ibex results describe core implementations. Full verification and larger hierarchical designs depend on available proof obligations and physical views. [Verification evaluation](docs/VERIFICATION_EVALUATION.md) · [Roadmap](docs/ROADMAP.md)
+See the [architecture](docs/ARCHITECTURE.md), [roadmap](docs/ROADMAP.md), [project state](docs/PROJECT_STATE.md), and [experiment protocol](docs/EXPERIMENT_PROTOCOL.md).
+
+The optional [IO pad-ring adapter](docs/IO_PAD_RING.md) runs ICeWall with verified Sky130 LEF abstracts and reports the remaining chip-level verification gaps.

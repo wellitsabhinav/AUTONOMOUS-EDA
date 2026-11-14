@@ -1,6 +1,6 @@
 # Project state
 
-- Patch 09B documents the [editorial and visual system](DESIGN_SYSTEM.md), standardizes the README and gallery, and checks Markdown links, heading structure, image alt text and provenance.
+- Patch 09A runs [pinned ICeWall placement](IO_PAD_RING_EVALUATION.md) with real Sky130 IO abstracts. The probe recorded four corners, four pads and 156 continuity cells. Chip-level acceptance remains blocked.
 
 - Milestone 09 adds [configurable verification and acceptance](VERIFICATION_AND_ACCEPTANCE.md) for [issue #10](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/10). The [evaluation](VERIFICATION_EVALUATION.md) records real Icarus regression and Yosys proof failure and correction, OpenSTA coverage on retained GCD controller runs, and the unchanged GCD and Ibex setup failures.
 - Optional ICeWall chip assembly is tracked in [Patch 09A](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/20). The pinned image has ICeWall and SKY130 IO LEFs. Its bundled IO library lacks matching GDS and contains dummy Liberty, so chip-level signoff requires additional views and verification.
