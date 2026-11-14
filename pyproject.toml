@@ -22,6 +22,9 @@ autonomous-eda = "autonomous_eda.cli:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+autonomous_eda = ["workspace/*.html", "workspace/*.css", "workspace/*.js"]
+
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]

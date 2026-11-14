@@ -13,7 +13,7 @@ Run `autonomous-eda COMMAND --help` for current arguments and defaults. The same
 | `report` | Read run evidence or evaluate an acceptance profile | [Verification and acceptance](VERIFICATION_AND_ACCEPTANCE.md) |
 | `verify` | Run platform decks or evaluate a named verification profile | [Verification and acceptance](VERIFICATION_AND_ACCEPTANCE.md) |
 | `experiments` | List, import or compare run evidence | [Evidence contract](EVIDENCE_CONTRACT.md) |
-| `artifacts` | Render supported images and rehash their evidence | [Gallery](EXAMPLE_GALLERY.md#regenerate) |
+| `artifacts` | Render images and stage bundles, open the local workspace, or classify tool logs | [Physical workspace](PHYSICAL_WORKSPACE.md) · [Gallery](EXAMPLE_GALLERY.md#regenerate) |
 | `diagnose` | Read deterministic timing analysis with report citations | [Timing diagnosis](TIMING_DIAGNOSIS.md) |
 | `io` | Plan, approve, execute and inspect ICeWall placement | [IO pad-ring placement](IO_PAD_RING.md) |
 | `optimize` | Plan and run approved bounded optimization campaigns | [Optimization](OPTIMIZATION.md) |
@@ -29,4 +29,5 @@ Run `autonomous-eda COMMAND --help` for current arguments and defaults. The same
 - A profiled `verify` accepts `--markdown` and returns 0 for acceptance and 1 for failed or blocked acceptance. `report RUN --profile PROFILE` reads the verdict for an existing run without executing physical stages.
 - `report RUN --engineering` writes Markdown with retained attempts, runtime, verified native process RSS where available, implementation measurements and independent gate status. Unprofiled `report RUN` keeps its JSON format.
 - `diagnose RUN --json` emits structured evidence. A successful diagnosis can report a failed gate.
+- `artifacts snapshots RUN OUTPUT` emits a stage inventory and returns 1 when a selected checkpoint is missing or fails export. `artifacts triage` emits classified messages and evidence without evaluating acceptance.
 - The controller uses 2 for invalid inputs and 130 for interruption. Doctor has its own [host readiness exit codes](ENVIRONMENT_DOCTOR.md).

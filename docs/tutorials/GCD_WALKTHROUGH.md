@@ -106,7 +106,16 @@ autonomous-eda artifacts gallery experiments/gcd-walkthrough
 
 *GCD run `b162fa09cf9442dda08b0b31cb58c728`, finish stage. KLayout 0.30.12 rendered the recorded GDSII. The full-resolution capture remains with the run.* [Figure provenance](../images/examples/gcd-walkthrough/provenance.json)
 
-The renderer generates four KLayout PNGs from the hash-verified final GDSII. Find them in the run's `visualizations/` directory beside `visualization_manifest.json`. Use the overview for hierarchy and geometry, the routing image for selected metal layers, and the placement image for a preview of instance bounding boxes derived from GDSII. Individual floorplan, placement, clock-tree and route checkpoints require stage-specific rendering. [Gallery and figure semantics](../EXAMPLE_GALLERY.md)
+The renderer generates four KLayout PNGs from the hash-verified final GDSII. Find them in the run's `visualizations/` directory beside `visualization_manifest.json`. Use the overview for hierarchy and geometry, the routing image for selected metal layers, and the placement image for a preview of instance bounding boxes derived from GDSII. [Gallery and figure semantics](../EXAMPLE_GALLERY.md)
+
+## Explore implementation checkpoints
+
+~~~sh
+autonomous-eda artifacts snapshots experiments/gcd-walkthrough experiments/gcd-snapshots
+autonomous-eda artifacts workspace experiments/gcd-snapshots --run experiments/gcd-walkthrough
+~~~
+
+Select CTS and enable clock topology, then compare against global routing. The [stage gallery](../PHYSICAL_WORKSPACE.md#measured-gcd-export) publishes the measured GCD snapshots. The [workspace guide](../PHYSICAL_WORKSPACE.md) explains the layout controls, retained log inspection and diagnostic bundle.
 
 ## Read the same run with the AI supervisor
 
