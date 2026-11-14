@@ -1,0 +1,1458 @@
+{
+  "acceptance": "BLOCKED",
+  "core_only_collateral": {
+    "/OpenROAD-flow-scripts/flow/platforms/sky130hd/drc/sky130hd.lydrc": "029722ea1fc2cf8c48f09fc670c0b72efb295f799c4eb236b7e9767930ecf772",
+    "/OpenROAD-flow-scripts/flow/platforms/sky130hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib": "ec0e1067a35c8bf20b11e58d1e8ac53326067e4dac84a125cc1b917a3518d0d9",
+    "/OpenROAD-flow-scripts/flow/platforms/sky130hd/lvs/sky130hd.lylvs": "d2d231d7cd00a8261d6653c5f3757badefb1dc0aba29441d8406272e75cd8b90"
+  },
+  "detailed_router_violations": 0,
+  "gates": {
+    "checkpoint_integrity": {
+      "reason": "Verified artifact hashes at each completed stage",
+      "status": "PASS"
+    },
+    "chip_gds": {
+      "reason": "ORFS and KLayout stream-out produced a nonempty GDS",
+      "status": "PASS"
+    },
+    "chip_geometry_extent": {
+      "reason": "Reopened geometrical bounds fit the outline",
+      "status": "PASS"
+    },
+    "ci": {
+      "reason": "Evaluated by GitHub Actions for the reviewed commit",
+      "status": "BLOCKED"
+    },
+    "database_signal_connectivity": {
+      "reason": "Reopened OpenDB verified all mapped pad terminals",
+      "status": "PASS"
+    },
+    "documentation": {
+      "reason": "Evaluated by repository documentation tests",
+      "status": "BLOCKED"
+    },
+    "drc": {
+      "reason": "Requires a full-chip qualified DRC deck, supply network, and assembled layout",
+      "status": "BLOCKED"
+    },
+    "independent_reopening": {
+      "reason": "Tool completed and produced hash-bound evidence",
+      "status": "PASS"
+    },
+    "lef_abstracts": {
+      "reason": "Tool completed and produced hash-bound evidence",
+      "status": "PASS"
+    },
+    "logical_connectivity": {
+      "reason": "Requires complete chip mapping, functional GPIO modes and supplies",
+      "status": "BLOCKED"
+    },
+    "lvs": {
+      "reason": "Requires full-chip extraction and an independent schematic including pad devices",
+      "status": "BLOCKED"
+    },
+    "pad_gds_views": {
+      "reason": "Tool completed and produced hash-bound evidence",
+      "status": "PASS"
+    },
+    "pad_liberty": {
+      "reason": "Pad modes, voltage domains, and chip timing corner remain unqualified",
+      "status": "BLOCKED"
+    },
+    "pad_liberty_interface": {
+      "reason": "Tool completed and produced hash-bound evidence",
+      "status": "PASS"
+    },
+    "pad_library_qualified": {
+      "reason": "Requires pin geometry equivalence and qualified timing views",
+      "status": "BLOCKED"
+    },
+    "pad_placement": {
+      "reason": "Fixed pad orientations, locations, four corners and fillers verified",
+      "status": "PASS"
+    },
+    "power_connectivity": {
+      "reason": "OpenDB abutment associates POWER and GROUND terminals on shared nets",
+      "status": "FAIL"
+    },
+    "signal_routing": {
+      "reason": "Detailed router completed and mapped routes were read back",
+      "status": "PASS"
+    },
+    "sta": {
+      "reason": "Requires pad modes, characterized models, extracted parasitics and chip constraints",
+      "status": "BLOCKED"
+    }
+  },
+  "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+  "library_provenance": "open-pdks e7a6777d157a9d94c7ac757457b9e4309e9e9000 and LambdaPDK 51ac6529207ce9b161a637fe596133a8b111928a",
+  "orfs_revision": "23341145f0fc92a522de26d5244a4a0013818f97",
+  "pad_gds_inventory": {
+    "master_views": {
+      "sky130_ef_io__com_bus_slice_10um": 1,
+      "sky130_ef_io__com_bus_slice_1um": 1,
+      "sky130_ef_io__com_bus_slice_20um": 1,
+      "sky130_ef_io__com_bus_slice_5um": 1,
+      "sky130_ef_io__corner_pad": 1,
+      "sky130_ef_io__gpiov2_pad_wrapped": 1,
+      "sky130_ef_io__vccd_lvc_pad": 1,
+      "sky130_ef_io__vssd_lvc_pad": 1
+    }
+  },
+  "pad_liberty_interface": {
+    "gpio_timing_arc_sets": 102
+  },
+  "pinned_library": {
+    "/OpenROAD-flow-scripts/flow/platforms/sky130hd/lef/sky130_fd_sc_hd.tlef": "8e99b4e8b016db0713029ebcae6b2cc2aedd9c2c49682e2f23521dd0b1a2085e",
+    "/OpenROAD-flow-scripts/flow/platforms/sky130hd/lef/sky130_fd_sc_hd_merged.lef": "44180aaa0068b1fcb0789f128b090304c01ad48f511d3f7afa66c90b3e176ec5",
+    "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__com_bus_slice_10um.lef": "c065383d90d03b51ef668b7365d22d6f21ae166e48b9edf9e3fb84dcceb270aa",
+    "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__com_bus_slice_1um.lef": "9ac6a3eb359dd01736c8b61e9cce85916b6b98f019b1e5a70afd233a4544dc02",
+    "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__com_bus_slice_20um.lef": "73ef9cd0bc842387651cd23f2fdcf67a5d02cd54dafc4e0a68149aa845b9c9e3",
+    "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__com_bus_slice_5um.lef": "f9a57aa9d08c810aa00210d83a2b6f1af4399066bb913ed8f97ee94775b4aae3",
+    "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__corner_pad.lef": "8b2faf0c17579630c82c6d9a1fca32712c9831c636ac61c8e443c82e38cd7fe2",
+    "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__gpiov2_pad_wrapped.lef": "3f8d9d1ffcebc30905b097f04bf15f4f639bda87bc01acf5c6ace07067f8ae86",
+    "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__vccd_lvc_pad.lef": "a036d7dc315d50c24a24016f7546903fdbfa2abc93fe2ea3c9e82018ffb06be4",
+    "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__vssd_lvc_pad.lef": "d9a9857d55670f6a399ac357111cfa50987539f9bb0edb17988eae4080c1ff76",
+    "/OpenROAD-flow-scripts/flow/platforms/sky130io/lib/sky130_dummy_io.lib": "6b7589ec90fb90deffe4a79eb24e1f9bf127cf2238887101ee15e3dda25c6be2",
+    "/OpenROAD-flow-scripts/flow/platforms/sky130io/verilog/sky130_io.blackbox.v": "9e1b0dee58487a15eb464e8408aa8c3994fed49772b87c0c99000cd33c8dafb5"
+  },
+  "placement": {
+    "corners": [
+      "IO_CORNER_NORTH_EAST_INST",
+      "IO_CORNER_NORTH_WEST_INST",
+      "IO_CORNER_SOUTH_EAST_INST",
+      "IO_CORNER_SOUTH_WEST_INST"
+    ],
+    "dbu_per_um": 1000,
+    "fillers_by_side": {
+      "east": 44,
+      "north": 40,
+      "south": 40,
+      "west": 44
+    },
+    "pads": {
+      "pad_ground": {
+        "master": "sky130_ef_io__vssd_lvc_pad",
+        "orientation": "FW",
+        "x_dbu": 2000,
+        "y_dbu": 550000
+      },
+      "pad_in": {
+        "master": "sky130_ef_io__gpiov2_pad_wrapped",
+        "orientation": "FS",
+        "x_dbu": 550000,
+        "y_dbu": 987035
+      },
+      "pad_out": {
+        "master": "sky130_ef_io__gpiov2_pad_wrapped",
+        "orientation": "N",
+        "x_dbu": 550000,
+        "y_dbu": 2000
+      },
+      "pad_power": {
+        "master": "sky130_ef_io__vccd_lvc_pad",
+        "orientation": "W",
+        "x_dbu": 999965,
+        "y_dbu": 550000
+      }
+    },
+    "placement_matches": true
+  },
+  "placement_artifacts": {
+    "openroad.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "openroad.stdout.log": "b99bea6774e2f52c723448e2a9e5042bb6826b69664fd6618ad374c6fb33d8be",
+    "placement.def": "e67397ba2474cbf145bc04ab70570a049405a95eeea50d55a0b6b212b7d56951",
+    "placement.odb": "e470ca8433dc2f99f3d1ff2af21f3b008be96a06428f14b37b8f5f35c88bbce9"
+  },
+  "placement_plan_digest": "e2a61bb1b526599da5c9476f55d282b848cb8229e91272923ef910d1d2e13426",
+  "platform": "sky130hd",
+  "reopened_layout": {
+    "boundary": true,
+    "boundary_boxes": [
+      "(0,0;1200000,1200000)"
+    ],
+    "database_unit_um": 0.001,
+    "empty_references": [],
+    "extent_inside_die": true,
+    "geometry_bbox_dbu": "(0,0;1200000,1200000)",
+    "hierarchical_cells": 545,
+    "masters": {
+      "VIA_L1M1_PR_MR": 2,
+      "VIA_M1M2_PR": 8,
+      "sky130_ef_io__com_bus_slice_1um": 24,
+      "sky130_ef_io__com_bus_slice_20um": 138,
+      "sky130_ef_io__com_bus_slice_5um": 6,
+      "sky130_ef_io__corner_pad": 4,
+      "sky130_ef_io__gpiov2_pad_wrapped": 2,
+      "sky130_ef_io__vccd_lvc_pad": 1,
+      "sky130_ef_io__vssd_lvc_pad": 1,
+      "sky130_fd_sc_hd__buf_1": 1
+    },
+    "top": "io_demo",
+    "top_geometry_shapes": 13,
+    "top_levels": [
+      "io_demo"
+    ]
+  },
+  "routed_signal_connections": [
+    {
+      "associated": true,
+      "core_net": "a",
+      "external_port": "pad_a",
+      "pad": "pad_in",
+      "pin": "IN",
+      "wire_opcode_count": 61
+    },
+    {
+      "associated": true,
+      "core_net": "y",
+      "external_port": "pad_y",
+      "pad": "pad_out",
+      "pin": "OUT",
+      "wire_opcode_count": 46
+    }
+  ],
+  "schema_version": 1,
+  "signal_connections": [
+    {
+      "associated": true,
+      "core_net": "a",
+      "external_port": "pad_a",
+      "pad": "pad_in",
+      "pin": "IN",
+      "wire_opcode_count": 0
+    },
+    {
+      "associated": true,
+      "core_net": "y",
+      "external_port": "pad_y",
+      "pad": "pad_out",
+      "pin": "OUT",
+      "wire_opcode_count": 0
+    }
+  ],
+  "signoff_policy": "required",
+  "signoff_policy_sha256": "7c07febcb9aaf76170d7583ec87b7f3f3a9e6799edbcbf7f26f8ddd96caa6ad5",
+  "stages": {
+    "chip_gds": {
+      "attempt": "f68ac5a5cdfe40cc90ad228997093d28",
+      "backend": {
+        "/OpenROAD-flow-scripts/flow/platforms/sky130hd/gds/sky130_fd_sc_hd.gds": "15240e34c50e42419336c0f3f498aaeac1e1e403c62134c0eee088225b69dc13",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130hd/lef/sky130_fd_sc_hd.tlef": "8e99b4e8b016db0713029ebcae6b2cc2aedd9c2c49682e2f23521dd0b1a2085e",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130hd/lef/sky130_fd_sc_hd_merged.lef": "44180aaa0068b1fcb0789f128b090304c01ad48f511d3f7afa66c90b3e176ec5",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130hd/sky130hd.lyt": "8f1b3d1679f3d195658bea0359eb01f32694628858eda1a8a5c6bf1b30da836a",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__com_bus_slice_10um.lef": "c065383d90d03b51ef668b7365d22d6f21ae166e48b9edf9e3fb84dcceb270aa",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__com_bus_slice_1um.lef": "9ac6a3eb359dd01736c8b61e9cce85916b6b98f019b1e5a70afd233a4544dc02",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__com_bus_slice_20um.lef": "73ef9cd0bc842387651cd23f2fdcf67a5d02cd54dafc4e0a68149aa845b9c9e3",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__com_bus_slice_5um.lef": "f9a57aa9d08c810aa00210d83a2b6f1af4399066bb913ed8f97ee94775b4aae3",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__corner_pad.lef": "8b2faf0c17579630c82c6d9a1fca32712c9831c636ac61c8e443c82e38cd7fe2",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__gpiov2_pad_wrapped.lef": "3f8d9d1ffcebc30905b097f04bf15f4f639bda87bc01acf5c6ace07067f8ae86",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__vccd_lvc_pad.lef": "a036d7dc315d50c24a24016f7546903fdbfa2abc93fe2ea3c9e82018ffb06be4",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__vssd_lvc_pad.lef": "d9a9857d55670f6a399ac357111cfa50987539f9bb0edb17988eae4080c1ff76",
+        "/OpenROAD-flow-scripts/flow/util/def2stream.py": "3d6a851764ab590a55ad51f6726b6954562560c9cd2d098d8bc53caad8a51209",
+        "/usr/bin/klayout": "31a96d91aba374297adda37a096d02133e40b160da77c9f0c3da2895f19f98e5"
+      },
+      "execution": {
+        "command": [
+          "/usr/bin/docker",
+          "run",
+          "--rm",
+          "--pull=never",
+          "--network=none",
+          "--name",
+          "aeda-chip-f68ac5a5cdfe40cc90ad228997093d28",
+          "--cpus",
+          "1",
+          "--memory",
+          "2400m",
+          "--memory-swap",
+          "2400m",
+          "--user",
+          "0:0",
+          "--env",
+          "HOME=/tmp",
+          "--mount",
+          "type=bind,source=/mnt/f/AgenticAI/experiments/m9c-inset/stages/chip_gds/f68ac5a5cdfe40cc90ad228997093d28,target=/work",
+          "--workdir",
+          "/OpenROAD-flow-scripts/flow",
+          "--pids-limit",
+          "128",
+          "--entrypoint",
+          "/bin/sh",
+          "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+          "/work/stream.sh",
+          "-b",
+          "-r",
+          "/OpenROAD-flow-scripts/flow/util/def2stream.py",
+          "-rd",
+          "tech_file=/work/technology.lyt",
+          "-rd",
+          "layer_map=",
+          "-rd",
+          "in_def=/work/routed.def",
+          "-rd",
+          "design_name=io_demo",
+          "-rd",
+          "in_files=/OpenROAD-flow-scripts/flow/platforms/sky130hd/gds/sky130_fd_sc_hd.gds /work/pad-0.gds /work/pad-1.gds /work/pad-2.gds",
+          "-rd",
+          "seal_file=",
+          "-rd",
+          "out_file=/work/chip.gds"
+        ],
+        "return_code": 0,
+        "runtime_seconds": 6.856177754000001,
+        "started_at": "2026-11-14T07:56:49.196423+00:00",
+        "stderr": "tool.stderr.log",
+        "stdout": "tool.stdout.log",
+        "stop": null
+      },
+      "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+      "inputs": {
+        "pad-0.gds": "f51b3ae7b5bb4829fb5b896a64fe42effd7d1af6bd41aba02b6e0dd865762697",
+        "pad-1.gds": "75addb378b498e2fa0f04870c7f7ece761e13047ce235fe8f42fbf6e828502a8",
+        "pad-2.gds": "cc9d1a0a11c0a3e4fe879051d09a15662b86f2be05d42b2c34a11071c1290e07",
+        "routed.def": "1cd990c11f2adb57e1ed79e21b507774ea0e873acafbbc6be6a13dfa3091583b"
+      },
+      "key": "1bfa210802c9639b7be12b1e5c08a9c53fc0682e18895c3a346de95f3ba4e21b",
+      "outputs": {
+        "chip.gds": "689af13a976360823b8c17f3b7a54fa616e9ab0496fc8c6f614315b075d42c40",
+        "tool.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tool.stdout.log": "652afd7424c5c782e8ed6ea7113d943448d8c15fd19e211713ec7d0bc1d7357e"
+      },
+      "receipt": "stages/chip_gds/f68ac5a5cdfe40cc90ad228997093d28/receipt.json",
+      "receipt_sha256": "602dec3c7b9f070745697448b875476bec5332eacb78b7ad732ebac05d6b8871",
+      "scripts": {
+        "stream.sh": "f8f45a342abf2f85cefd705b4779173f46eb94ce60109c175f0e576678b8b82f"
+      }
+    },
+    "connect": {
+      "attempt": "7c3eb87386f14801acb8150cf0ad2154",
+      "backend": {
+        "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad": "ea71aa83f98af35c5bdc55b6587a89e8dc9d698ff8f00ac84eec2787efb2d4df"
+      },
+      "execution": {
+        "command": [
+          "/usr/bin/docker",
+          "run",
+          "--rm",
+          "--pull=never",
+          "--network=none",
+          "--name",
+          "aeda-chip-7c3eb87386f14801acb8150cf0ad2154",
+          "--cpus",
+          "1",
+          "--memory",
+          "2400m",
+          "--memory-swap",
+          "2400m",
+          "--user",
+          "0:0",
+          "--env",
+          "HOME=/tmp",
+          "--mount",
+          "type=bind,source=/mnt/f/AgenticAI/experiments/m9c-inset/stages/connect/7c3eb87386f14801acb8150cf0ad2154,target=/work",
+          "--workdir",
+          "/OpenROAD-flow-scripts/flow",
+          "--pids-limit",
+          "128",
+          "--entrypoint",
+          "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad",
+          "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+          "-no_init",
+          "-threads",
+          "1",
+          "-exit",
+          "/work/stage.tcl"
+        ],
+        "return_code": 0,
+        "runtime_seconds": 1.0841373919999988,
+        "started_at": "2026-11-14T07:56:38.237144+00:00",
+        "stderr": "tool.stderr.log",
+        "stdout": "tool.stdout.log",
+        "stop": null
+      },
+      "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+      "inputs": {
+        "core.v": "57de40bb190cd11cf3855312d6bb9eaff0831265063b8463701b7dac2f214844",
+        "placement.def": "e67397ba2474cbf145bc04ab70570a049405a95eeea50d55a0b6b212b7d56951",
+        "placement.odb": "e470ca8433dc2f99f3d1ff2af21f3b008be96a06428f14b37b8f5f35c88bbce9"
+      },
+      "key": "0d072e19c88e7522ab4f75edc0f76cb9b43ebe8f556c4756d70b9bb9118043cb",
+      "outputs": {
+        "connected.def": "9f0596195bf30e32f7c1d9e454dfab0e3e00c29b83cb706e900b80625369abd1",
+        "connected.odb": "579d7fcd750eef58b4c6d339559f484ee02e13f0e84b38b59ae7f6a590f9c4f5",
+        "connectivity.tsv": "83456320c426d6f6487d193bf8c3e999b3902f0922ea826cee6f4c2560bd59e9",
+        "tool.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tool.stdout.log": "590f0fe44c4efd5e3af6a8e30ec75537ac902a59222763cd55141980006452e1"
+      },
+      "receipt": "stages/connect/7c3eb87386f14801acb8150cf0ad2154/receipt.json",
+      "receipt_sha256": "5a252e13c141771724035c3c94ffd74cea5ccade73167dde5c1ac38d95cd53a1",
+      "scripts": {
+        "stage.tcl": "0db52a705546e4148f358cb0054ed32e7ce80a294e22b57571fa55212e6d794b"
+      }
+    },
+    "connected_readback": {
+      "attempt": "cce91761325140388c9ac721be94927d",
+      "backend": {
+        "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad": "ea71aa83f98af35c5bdc55b6587a89e8dc9d698ff8f00ac84eec2787efb2d4df"
+      },
+      "execution": {
+        "command": [
+          "/usr/bin/docker",
+          "run",
+          "--rm",
+          "--pull=never",
+          "--network=none",
+          "--name",
+          "aeda-chip-cce91761325140388c9ac721be94927d",
+          "--cpus",
+          "1",
+          "--memory",
+          "2400m",
+          "--memory-swap",
+          "2400m",
+          "--user",
+          "0:0",
+          "--env",
+          "HOME=/tmp",
+          "--mount",
+          "type=bind,source=/mnt/f/AgenticAI/experiments/m9c-inset/stages/connected_readback/cce91761325140388c9ac721be94927d,target=/work",
+          "--workdir",
+          "/OpenROAD-flow-scripts/flow",
+          "--pids-limit",
+          "128",
+          "--entrypoint",
+          "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad",
+          "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+          "-no_init",
+          "-threads",
+          "1",
+          "-exit",
+          "/work/stage.tcl"
+        ],
+        "return_code": 0,
+        "runtime_seconds": 0.9786634979999995,
+        "started_at": "2026-11-14T07:56:39.698959+00:00",
+        "stderr": "tool.stderr.log",
+        "stdout": "tool.stdout.log",
+        "stop": null
+      },
+      "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+      "inputs": {
+        "connected.odb": "579d7fcd750eef58b4c6d339559f484ee02e13f0e84b38b59ae7f6a590f9c4f5"
+      },
+      "key": "af6309a18f96e263e0cd30cac6a084a52cd5fd1a422486909be2b48ecf4436c6",
+      "outputs": {
+        "observed.tsv": "9c62cbe2cb8992a7506c4b83e0ea558007b561ac417a2f741013f57300d8c523",
+        "tool.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tool.stdout.log": "02321e844df0a89a574df4d7885be01736d022c5cfad15b561b8476e80974129"
+      },
+      "receipt": "stages/connected_readback/cce91761325140388c9ac721be94927d/receipt.json",
+      "receipt_sha256": "16d0c53ce42a1936ce747605d47f031caf3cbbfd19586b53a0f0194484a75b7b",
+      "scripts": {
+        "stage.tcl": "098a6838dab468345385e8b18fae8b9334c93a70d7b779ff0f2552c6a68bee31"
+      }
+    },
+    "independent_reopening": {
+      "attempt": "3db1e477890649d3b1e54cc130d6d7fb",
+      "backend": {
+        "/usr/bin/klayout": "31a96d91aba374297adda37a096d02133e40b160da77c9f0c3da2895f19f98e5"
+      },
+      "execution": {
+        "command": [
+          "/usr/bin/docker",
+          "run",
+          "--rm",
+          "--pull=never",
+          "--network=none",
+          "--name",
+          "aeda-chip-3db1e477890649d3b1e54cc130d6d7fb",
+          "--cpus",
+          "1",
+          "--memory",
+          "2400m",
+          "--memory-swap",
+          "2400m",
+          "--user",
+          "0:0",
+          "--env",
+          "HOME=/tmp",
+          "--mount",
+          "type=bind,source=/mnt/f/AgenticAI/experiments/m9c-inset/stages/independent_reopening/3db1e477890649d3b1e54cc130d6d7fb,target=/work",
+          "--workdir",
+          "/OpenROAD-flow-scripts/flow",
+          "--pids-limit",
+          "128",
+          "--entrypoint",
+          "/usr/bin/klayout",
+          "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+          "-b",
+          "-r",
+          "/work/probe.rb"
+        ],
+        "return_code": 0,
+        "runtime_seconds": 4.542963288000003,
+        "started_at": "2026-11-14T07:56:57.368327+00:00",
+        "stderr": "tool.stderr.log",
+        "stdout": "tool.stdout.log",
+        "stop": null
+      },
+      "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+      "inputs": {
+        "chip.gds": "689af13a976360823b8c17f3b7a54fa616e9ab0496fc8c6f614315b075d42c40"
+      },
+      "key": "94aecbe2017ccb1b35634d12a55ddace6b77ed24b3ec0752ca08fcc0de6b1fcd",
+      "outputs": {
+        "layout-result.json": "6abd7480534294b91d60e1d59f1a4be9c341439b41c2c0f153ddaff31d192bd6",
+        "tool.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tool.stdout.log": "987326c67fb9b7558739ee8aba4fcd920d8be786418a6abe9de905dec348bc17"
+      },
+      "receipt": "stages/independent_reopening/3db1e477890649d3b1e54cc130d6d7fb/receipt.json",
+      "receipt_sha256": "8d4e5f5aee6f4202ba59b73a589970260912624d7a360825efafabe7533240f9",
+      "scripts": {
+        "layout.json": "37a723d693541bfb2138dd142e5e6907f05f9fe43d809580347a1d1fb43c3d79",
+        "probe.rb": "081f95aebc3d4e9eb33ab87cc5c376ae275d7b6c3aade375ec75b6ffd8bd125a"
+      }
+    },
+    "lef_abstracts": {
+      "attempt": "c1e65b3e017c4ec79e371e87caccff87",
+      "backend": {
+        "/OpenROAD-flow-scripts/flow/platforms/sky130hd/lef/sky130_fd_sc_hd.tlef": "8e99b4e8b016db0713029ebcae6b2cc2aedd9c2c49682e2f23521dd0b1a2085e",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130hd/lef/sky130_fd_sc_hd_merged.lef": "44180aaa0068b1fcb0789f128b090304c01ad48f511d3f7afa66c90b3e176ec5",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__com_bus_slice_10um.lef": "c065383d90d03b51ef668b7365d22d6f21ae166e48b9edf9e3fb84dcceb270aa",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__com_bus_slice_1um.lef": "9ac6a3eb359dd01736c8b61e9cce85916b6b98f019b1e5a70afd233a4544dc02",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__com_bus_slice_20um.lef": "73ef9cd0bc842387651cd23f2fdcf67a5d02cd54dafc4e0a68149aa845b9c9e3",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__com_bus_slice_5um.lef": "f9a57aa9d08c810aa00210d83a2b6f1af4399066bb913ed8f97ee94775b4aae3",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__corner_pad.lef": "8b2faf0c17579630c82c6d9a1fca32712c9831c636ac61c8e443c82e38cd7fe2",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__gpiov2_pad_wrapped.lef": "3f8d9d1ffcebc30905b097f04bf15f4f639bda87bc01acf5c6ace07067f8ae86",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__vccd_lvc_pad.lef": "a036d7dc315d50c24a24016f7546903fdbfa2abc93fe2ea3c9e82018ffb06be4",
+        "/OpenROAD-flow-scripts/flow/platforms/sky130io/lef/sky130_ef_io__vssd_lvc_pad.lef": "d9a9857d55670f6a399ac357111cfa50987539f9bb0edb17988eae4080c1ff76",
+        "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad": "ea71aa83f98af35c5bdc55b6587a89e8dc9d698ff8f00ac84eec2787efb2d4df"
+      },
+      "execution": {
+        "command": [
+          "/usr/bin/docker",
+          "run",
+          "--rm",
+          "--pull=never",
+          "--network=none",
+          "--name",
+          "aeda-chip-c1e65b3e017c4ec79e371e87caccff87",
+          "--cpus",
+          "1",
+          "--memory",
+          "2400m",
+          "--memory-swap",
+          "2400m",
+          "--user",
+          "0:0",
+          "--env",
+          "HOME=/tmp",
+          "--mount",
+          "type=bind,source=/mnt/f/AgenticAI/experiments/m9c-inset/stages/lef_abstracts/c1e65b3e017c4ec79e371e87caccff87,target=/work",
+          "--workdir",
+          "/OpenROAD-flow-scripts/flow",
+          "--pids-limit",
+          "128",
+          "--entrypoint",
+          "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad",
+          "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+          "-no_init",
+          "-threads",
+          "1",
+          "-exit",
+          "/work/stage.tcl"
+        ],
+        "return_code": 0,
+        "runtime_seconds": 1.344482365000001,
+        "started_at": "2026-11-14T07:56:24.941556+00:00",
+        "stderr": "tool.stderr.log",
+        "stdout": "tool.stdout.log",
+        "stop": null
+      },
+      "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+      "inputs": {},
+      "key": "faa6c70dbb1278a46e9243a45ebd9c25e534fd84b484d0e258d7284416931913",
+      "outputs": {
+        "abstracts.tsv": "59df300dd541ee4fca55032f0647a1a8bbe77bf1ccb1654c73ab1dfc9692df8f",
+        "tool.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tool.stdout.log": "eceea35b58027650841cfa7e281cf93285ce4465e5141ab0d219912609829750"
+      },
+      "receipt": "stages/lef_abstracts/c1e65b3e017c4ec79e371e87caccff87/receipt.json",
+      "receipt_sha256": "a7faff063b3dc9858e5ef6b1bba5cbec1233a65c2495ee207eff1dba81c472ee",
+      "scripts": {
+        "stage.tcl": "c7a3caefbd63d6126aef0a5177ab914e8c5e0a288d2e2c6dd04d0b1cda27dc3e"
+      }
+    },
+    "pad_gds_views": {
+      "attempt": "34d6e199f4f64b8eafec69f66dd4224b",
+      "backend": {
+        "/usr/bin/klayout": "31a96d91aba374297adda37a096d02133e40b160da77c9f0c3da2895f19f98e5"
+      },
+      "execution": {
+        "command": [
+          "/usr/bin/docker",
+          "run",
+          "--rm",
+          "--pull=never",
+          "--network=none",
+          "--name",
+          "aeda-chip-34d6e199f4f64b8eafec69f66dd4224b",
+          "--cpus",
+          "1",
+          "--memory",
+          "2400m",
+          "--memory-swap",
+          "2400m",
+          "--user",
+          "0:0",
+          "--env",
+          "HOME=/tmp",
+          "--mount",
+          "type=bind,source=/mnt/f/AgenticAI/experiments/m9c-inset/stages/pad_gds_views/34d6e199f4f64b8eafec69f66dd4224b,target=/work",
+          "--workdir",
+          "/OpenROAD-flow-scripts/flow",
+          "--pids-limit",
+          "128",
+          "--entrypoint",
+          "/usr/bin/klayout",
+          "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+          "-b",
+          "-r",
+          "/work/probe.rb"
+        ],
+        "return_code": 0,
+        "runtime_seconds": 6.49279125,
+        "started_at": "2026-11-14T07:56:29.905462+00:00",
+        "stderr": "tool.stderr.log",
+        "stdout": "tool.stdout.log",
+        "stop": null
+      },
+      "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+      "inputs": {
+        "pad-0.gds": "f51b3ae7b5bb4829fb5b896a64fe42effd7d1af6bd41aba02b6e0dd865762697",
+        "pad-1.gds": "75addb378b498e2fa0f04870c7f7ece761e13047ce235fe8f42fbf6e828502a8",
+        "pad-2.gds": "cc9d1a0a11c0a3e4fe879051d09a15662b86f2be05d42b2c34a11071c1290e07"
+      },
+      "key": "19bbbc3e8d7d1f9d98184373c9d8afc457e288b82ae9990f7e7cfb5baf8532c0",
+      "outputs": {
+        "layout-result.json": "16193cf28122d7d4cf4bf37b1057c8092c9ecf203dc01b0cbfb2f3c0655b3c72",
+        "tool.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tool.stdout.log": "987326c67fb9b7558739ee8aba4fcd920d8be786418a6abe9de905dec348bc17"
+      },
+      "receipt": "stages/pad_gds_views/34d6e199f4f64b8eafec69f66dd4224b/receipt.json",
+      "receipt_sha256": "6749259dcbf67563d11af2cf569a0d8e6776bc01a99c2118e89b31e7cf8a0117",
+      "scripts": {
+        "layout.json": "10f53142a6251b9ecac19eccbb933b76330e3c5d1316a5f31272b4c5b55d8b46",
+        "probe.rb": "081f95aebc3d4e9eb33ab87cc5c376ae275d7b6c3aade375ec75b6ffd8bd125a"
+      }
+    },
+    "pad_liberty_interface": {
+      "attempt": "7667de06b4704057bb8ae09e788971c3",
+      "backend": {
+        "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad": "ea71aa83f98af35c5bdc55b6587a89e8dc9d698ff8f00ac84eec2787efb2d4df"
+      },
+      "execution": {
+        "command": [
+          "/usr/bin/docker",
+          "run",
+          "--rm",
+          "--pull=never",
+          "--network=none",
+          "--name",
+          "aeda-chip-7667de06b4704057bb8ae09e788971c3",
+          "--cpus",
+          "1",
+          "--memory",
+          "2400m",
+          "--memory-swap",
+          "2400m",
+          "--user",
+          "0:0",
+          "--env",
+          "HOME=/tmp",
+          "--mount",
+          "type=bind,source=/mnt/f/AgenticAI/experiments/m9c-inset/stages/pad_liberty_interface/7667de06b4704057bb8ae09e788971c3,target=/work",
+          "--workdir",
+          "/OpenROAD-flow-scripts/flow",
+          "--pids-limit",
+          "128",
+          "--entrypoint",
+          "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad",
+          "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+          "-no_init",
+          "-threads",
+          "1",
+          "-exit",
+          "/work/stage.tcl"
+        ],
+        "return_code": 0,
+        "runtime_seconds": 1.1307697799999978,
+        "started_at": "2026-11-14T07:56:36.622767+00:00",
+        "stderr": "tool.stderr.log",
+        "stdout": "tool.stdout.log",
+        "stop": null
+      },
+      "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+      "inputs": {
+        "pad.lib": "f91bef7e38bc5670b0036982ea0b0212469c19f4b1214259d34ba5d6eb767d2e"
+      },
+      "key": "b252dc817746a9b33b67443e7186d173825ef597dfeeb83ddec17a1bd0a72256",
+      "outputs": {
+        "tool.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tool.stdout.log": "4d9df367c86d553d99dbadf0d0dff09a97958c5b476b085433afcf8c8b55b1fc"
+      },
+      "receipt": "stages/pad_liberty_interface/7667de06b4704057bb8ae09e788971c3/receipt.json",
+      "receipt_sha256": "c9a69511cfa2c32a29ee73af7a58bf9dae4f9ab576a3b20c702b3aaa4f26fa13",
+      "scripts": {
+        "stage.tcl": "c643787b8fdb2c5c992d13f5a11b61dcff0763b9cc0a3cd2189fff88d176d2d6"
+      }
+    },
+    "route": {
+      "attempt": "f4313076a7a94961898b1ff92ff6707c",
+      "backend": {
+        "/OpenROAD-flow-scripts/flow/platforms/sky130hd/make_tracks.tcl": "b4b280f0d5f3d52007e2531d2abd74d7f4aa600ceb9fffdf3041c781fe82ad8c",
+        "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad": "ea71aa83f98af35c5bdc55b6587a89e8dc9d698ff8f00ac84eec2787efb2d4df"
+      },
+      "execution": {
+        "command": [
+          "/usr/bin/docker",
+          "run",
+          "--rm",
+          "--pull=never",
+          "--network=none",
+          "--name",
+          "aeda-chip-f4313076a7a94961898b1ff92ff6707c",
+          "--cpus",
+          "1",
+          "--memory",
+          "2400m",
+          "--memory-swap",
+          "2400m",
+          "--user",
+          "0:0",
+          "--env",
+          "HOME=/tmp",
+          "--mount",
+          "type=bind,source=/mnt/f/AgenticAI/experiments/m9c-inset/stages/route/f4313076a7a94961898b1ff92ff6707c,target=/work",
+          "--workdir",
+          "/OpenROAD-flow-scripts/flow",
+          "--pids-limit",
+          "128",
+          "--entrypoint",
+          "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad",
+          "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+          "-no_init",
+          "-threads",
+          "1",
+          "-exit",
+          "/work/stage.tcl"
+        ],
+        "return_code": 0,
+        "runtime_seconds": 3.1182472010000026,
+        "started_at": "2026-11-14T07:56:40.994062+00:00",
+        "stderr": "tool.stderr.log",
+        "stdout": "tool.stdout.log",
+        "stop": null
+      },
+      "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+      "inputs": {
+        "connected.odb": "579d7fcd750eef58b4c6d339559f484ee02e13f0e84b38b59ae7f6a590f9c4f5"
+      },
+      "key": "aad138fde71a4f029e10e230430b5613eb9a693ef77c8512419fa9111a9b47e8",
+      "outputs": {
+        "route-drc.rpt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "route.guide": "409f039a0cf4c75d3e178b6e5b7fb3f6486ca8b41fcf2ad9c31b0d3994c0675c",
+        "routed.def": "1cd990c11f2adb57e1ed79e21b507774ea0e873acafbbc6be6a13dfa3091583b",
+        "routed.odb": "9e584dfda5266c53714d5dc3707892972842a73ddcc4a8be27745c24793ffbc8",
+        "tool.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tool.stdout.log": "8a251603bb85bcc07145998245bc43b41266d4a2823db0452bf382036a0adb2f"
+      },
+      "receipt": "stages/route/f4313076a7a94961898b1ff92ff6707c/receipt.json",
+      "receipt_sha256": "13a1713c1e0185d5b29f39e953bb0c80319236b76d6c923b175f2389a1becedf",
+      "scripts": {
+        "stage.tcl": "95c03644b07b729ff9387d402202d51ff0bb69c698870a23dabfc77b76a36d53"
+      }
+    },
+    "route_readback": {
+      "attempt": "90a2b9de79dd42798dd2adeaaefd1550",
+      "backend": {
+        "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad": "ea71aa83f98af35c5bdc55b6587a89e8dc9d698ff8f00ac84eec2787efb2d4df"
+      },
+      "execution": {
+        "command": [
+          "/usr/bin/docker",
+          "run",
+          "--rm",
+          "--pull=never",
+          "--network=none",
+          "--name",
+          "aeda-chip-90a2b9de79dd42798dd2adeaaefd1550",
+          "--cpus",
+          "1",
+          "--memory",
+          "2400m",
+          "--memory-swap",
+          "2400m",
+          "--user",
+          "0:0",
+          "--env",
+          "HOME=/tmp",
+          "--mount",
+          "type=bind,source=/mnt/f/AgenticAI/experiments/m9c-inset/stages/route_readback/90a2b9de79dd42798dd2adeaaefd1550,target=/work",
+          "--workdir",
+          "/OpenROAD-flow-scripts/flow",
+          "--pids-limit",
+          "128",
+          "--entrypoint",
+          "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad",
+          "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+          "-no_init",
+          "-threads",
+          "1",
+          "-exit",
+          "/work/stage.tcl"
+        ],
+        "return_code": 0,
+        "runtime_seconds": 1.0278792779999932,
+        "started_at": "2026-11-14T07:56:44.596109+00:00",
+        "stderr": "tool.stderr.log",
+        "stdout": "tool.stdout.log",
+        "stop": null
+      },
+      "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+      "inputs": {
+        "routed.odb": "9e584dfda5266c53714d5dc3707892972842a73ddcc4a8be27745c24793ffbc8"
+      },
+      "key": "7e276f61d9ad0e824a717aed8fbbc2c8e33f396b8e39f92bb0667d9a7e16ba62",
+      "outputs": {
+        "observed.tsv": "2dd7586afed310c3f86b95c3f283f07c74ad895475b00d6425278e53a8009480",
+        "tool.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tool.stdout.log": "02321e844df0a89a574df4d7885be01736d022c5cfad15b561b8476e80974129"
+      },
+      "receipt": "stages/route_readback/90a2b9de79dd42798dd2adeaaefd1550/receipt.json",
+      "receipt_sha256": "b9db0c1fabc6c340a646c4812980f8994c0ccf92e2e4693945e34cc1d3a0bd20",
+      "scripts": {
+        "stage.tcl": "82c414266ab7229614ec3f2d6214fa13395a486a3d55c85eca754755ed748c85"
+      }
+    }
+  },
+  "supply_terminals": [
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_power",
+      "pin": "DRN_LVC1",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_power",
+      "pin": "DRN_LVC2",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_power",
+      "pin": "SRC_BDY_LVC1",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_power",
+      "pin": "SRC_BDY_LVC2",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_power",
+      "pin": "BDY2_B2B",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_power.VSSA_RING",
+      "pad": "pad_power",
+      "pin": "VSSA",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_power.VDDA_RING",
+      "pad": "pad_power",
+      "pin": "VDDA",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_power.VSWITCH_RING",
+      "pad": "pad_power",
+      "pin": "VSWITCH",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_power.VDDIO_Q_RING",
+      "pad": "pad_power",
+      "pin": "VDDIO_Q",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_power.VCCHIB_RING",
+      "pad": "pad_power",
+      "pin": "VCCHIB",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_power.VDDIO_RING",
+      "pad": "pad_power",
+      "pin": "VDDIO",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "IO_CORNER_NORTH_EAST_INST.VSSIO_RING",
+      "pad": "pad_power",
+      "pin": "VCCD",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_power.VSSIO_RING",
+      "pad": "pad_power",
+      "pin": "VSSIO",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_power.VSSD_RING",
+      "pad": "pad_power",
+      "pin": "VSSD",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_power.VSSIO_Q_RING",
+      "pad": "pad_power",
+      "pin": "VSSIO_Q",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_in.AMUXBUS_A_RING",
+      "pad": "pad_in",
+      "pin": "VCCD",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_in.AMUXBUS_A_RING",
+      "pad": "pad_in",
+      "pin": "VCCHIB",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_in.AMUXBUS_A_RING",
+      "pad": "pad_in",
+      "pin": "VDDA",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_in.AMUXBUS_A_RING",
+      "pad": "pad_in",
+      "pin": "VDDIO",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_in.AMUXBUS_A_RING",
+      "pad": "pad_in",
+      "pin": "VDDIO_Q",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_in.AMUXBUS_A_RING",
+      "pad": "pad_in",
+      "pin": "VSSA",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_in.AMUXBUS_A_RING",
+      "pad": "pad_in",
+      "pin": "VSSD",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_in.AMUXBUS_A_RING",
+      "pad": "pad_in",
+      "pin": "VSSIO",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_in.AMUXBUS_A_RING",
+      "pad": "pad_in",
+      "pin": "VSSIO_Q",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_in.AMUXBUS_A_RING",
+      "pad": "pad_in",
+      "pin": "VSWITCH",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_out.AMUXBUS_A_RING",
+      "pad": "pad_out",
+      "pin": "VCCD",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_out.AMUXBUS_A_RING",
+      "pad": "pad_out",
+      "pin": "VCCHIB",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_out.AMUXBUS_A_RING",
+      "pad": "pad_out",
+      "pin": "VDDA",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_out.AMUXBUS_A_RING",
+      "pad": "pad_out",
+      "pin": "VDDIO",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_out.AMUXBUS_A_RING",
+      "pad": "pad_out",
+      "pin": "VDDIO_Q",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_out.AMUXBUS_A_RING",
+      "pad": "pad_out",
+      "pin": "VSSA",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_out.AMUXBUS_A_RING",
+      "pad": "pad_out",
+      "pin": "VSSD",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_out.AMUXBUS_A_RING",
+      "pad": "pad_out",
+      "pin": "VSSIO",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_out.AMUXBUS_A_RING",
+      "pad": "pad_out",
+      "pin": "VSSIO_Q",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "pad_out.AMUXBUS_A_RING",
+      "pad": "pad_out",
+      "pin": "VSWITCH",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_ground",
+      "pin": "DRN_LVC1",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_ground",
+      "pin": "DRN_LVC2",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_ground",
+      "pin": "SRC_BDY_LVC1",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_ground",
+      "pin": "SRC_BDY_LVC2",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_ground",
+      "pin": "BDY2_B2B",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_ground.VSSA_RING",
+      "pad": "pad_ground",
+      "pin": "VSSA",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_ground.VDDA_RING",
+      "pad": "pad_ground",
+      "pin": "VDDA",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_ground.VSWITCH_RING",
+      "pad": "pad_ground",
+      "pin": "VSWITCH",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_ground.VDDIO_Q_RING",
+      "pad": "pad_ground",
+      "pin": "VDDIO_Q",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": true,
+      "net": "IO_CORNER_NORTH_WEST_INST.VSSIO_RING",
+      "pad": "pad_ground",
+      "pin": "VCCHIB",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_ground.VDDIO_RING",
+      "pad": "pad_ground",
+      "pin": "VDDIO",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_ground.VCCD_RING",
+      "pad": "pad_ground",
+      "pin": "VCCD",
+      "use": "POWER"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_ground.VSSIO_RING",
+      "pad": "pad_ground",
+      "pin": "VSSIO",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_ground.VSSD_RING",
+      "pad": "pad_ground",
+      "pin": "VSSD",
+      "use": "GROUND"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": "pad_ground.VSSIO_Q_RING",
+      "pad": "pad_ground",
+      "pin": "VSSIO_Q",
+      "use": "GROUND"
+    }
+  ],
+  "tools": {
+    "KLayout": {
+      "sha256": "31a96d91aba374297adda37a096d02133e40b160da77c9f0c3da2895f19f98e5",
+      "version": "KLayout 0.30.12"
+    },
+    "OpenROAD": {
+      "sha256": "ea71aa83f98af35c5bdc55b6587a89e8dc9d698ff8f00ac84eec2787efb2d4df",
+      "version": "unknown"
+    }
+  },
+  "top": "io_demo",
+  "total_signal_wire_length_um": 1317.0,
+  "unconnected_controls": [
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "ANALOG_EN",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "ANALOG_POL",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "ANALOG_SEL",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "DM[2]",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "DM[1]",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "DM[0]",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "ENABLE_H",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "ENABLE_INP_H",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "ENABLE_VDDA_H",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "ENABLE_VDDIO",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "ENABLE_VSWITCH_H",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "HLD_H_N",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "HLD_OVR",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "IB_MODE_SEL",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "INP_DIS",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "OE_N",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "SLOW",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_in",
+      "pin": "VTRIP_SEL",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "ANALOG_EN",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "ANALOG_POL",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "ANALOG_SEL",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "DM[2]",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "DM[1]",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "DM[0]",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "ENABLE_H",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "ENABLE_INP_H",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "ENABLE_VDDA_H",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "ENABLE_VDDIO",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "ENABLE_VSWITCH_H",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "HLD_H_N",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "HLD_OVR",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "IB_MODE_SEL",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "INP_DIS",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "OE_N",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "SLOW",
+      "use": "SIGNAL"
+    },
+    {
+      "mixed_power_ground": false,
+      "net": null,
+      "pad": "pad_out",
+      "pin": "VTRIP_SEL",
+      "use": "SIGNAL"
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "run_id": "a03090ce9545a3aa0a5b6a1013edf44a",
+  "images": {
+    "signoff_gate_matrix": {
+      "schema_version": 1,
+      "visualization_type": "signoff_gate_matrix",
+      "run_id": "a03090ce9545a3aa0a5b6a1013edf44a",
+      "filename": "signoff_gate_matrix.png",
+      "source_artifacts": [
+        "chip-report.json"
+      ],
+      "source_sha256": [
+        "a03090ce9545a3aa0a5b6a1013edf44a9e6dacee6c65635a12a8a0fe59b692d0"
+      ],
+      "image_sha256": "5e056a600806b131ed3f00d8e516a6dff1e5cb1e7898893410e5d1e905b70f02",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "theme_version": 1,
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "Chip integration gates",
+        "detail": "io_demo  |  sky130hd  |  ICeWall chip probe",
+        "command": "autonomous-eda io chip-render RUN_DIRECTORY",
+        "top": "io_demo",
+        "platform": "sky130hd"
+      },
+      "image_width": 1700,
+      "image_height": 1054,
+      "generated_at": "2026-11-14T08:06:38.350335+00:00",
+      "evidence_status": "VERIFIED"
+    },
+    "connectivity_matrix": {
+      "schema_version": 1,
+      "visualization_type": "connectivity_matrix",
+      "run_id": "a03090ce9545a3aa0a5b6a1013edf44a",
+      "filename": "connectivity_matrix.png",
+      "source_artifacts": [
+        "chip-report.json"
+      ],
+      "source_sha256": [
+        "a03090ce9545a3aa0a5b6a1013edf44a9e6dacee6c65635a12a8a0fe59b692d0"
+      ],
+      "image_sha256": "30170cd40bf4d9a9bcac7b40aa7387bf4fca59a45a3e151c60cf81a461a22004",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "theme_version": 1,
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "Core-to-pad signal connectivity",
+        "detail": "io_demo  |  sky130hd  |  ICeWall chip probe",
+        "command": "autonomous-eda io chip-render RUN_DIRECTORY",
+        "top": "io_demo",
+        "platform": "sky130hd"
+      },
+      "image_width": 1700,
+      "image_height": 1054,
+      "generated_at": "2026-11-14T08:06:38.630152+00:00",
+      "evidence_status": "VERIFIED"
+    },
+    "layout_overview": {
+      "schema_version": 1,
+      "visualization_type": "layout_overview",
+      "run_id": "a03090ce9545a3aa0a5b6a1013edf44a",
+      "filename": "layout_overview.png",
+      "source_artifacts": [
+        "chip-report.json",
+        "stages/chip_gds/f68ac5a5cdfe40cc90ad228997093d28/chip.gds"
+      ],
+      "source_sha256": [
+        "a03090ce9545a3aa0a5b6a1013edf44a9e6dacee6c65635a12a8a0fe59b692d0",
+        "689af13a976360823b8c17f3b7a54fa616e9ab0496fc8c6f614315b075d42c40"
+      ],
+      "image_sha256": "c060b5a3f6212f48c75abeb1a12df0238f5fa56d48ece06988f49c9844bff304",
+      "renderer": "klayout",
+      "renderer_version": "0.30.12",
+      "render_configuration": {
+        "container": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "layer_mapping": "/OpenROAD-flow-scripts/flow/platforms/sky130hd/sky130hd.lyp",
+        "routing_layer_numbers": [
+          67,
+          68,
+          69,
+          70,
+          71,
+          72
+        ],
+        "placement_layer": "GDS instance bounding boxes, excluding fill, decap and tap cells",
+        "top": "io_demo",
+        "bbox_um": [
+          1200.0,
+          1200.0
+        ],
+        "detail": "central quarter by width and height",
+        "script": "\"\\ninclude RBA\\nv = LayoutView.new\\nv.set_config(\\\"background-color\\\", \\\"#0b1220\\\")\\nv.set_config(\\\"grid-visible\\\", \\\"false\\\")\\nv.load_layout(\\\"/work/source.gds\\\", 0)\\nv.load_layer_props($layer_map)\\ncv = v.active_cellview\\nraise \\\"Unexpected layout top\\\" unless cv.cell.name == $top\\nv.max_hier\\nbbox = cv.cell.bbox.to_dtype(cv.layout.dbu)\\nraise \\\"Empty layout\\\" if bbox.empty?\\ndef visibility(v, layers, boundary)\\n  it = v.begin_layers\\n  until it.at_end?\\n    node = it.current\\n    node.visible = layers.include?(node.source_layer) ||\\n      (boundary && node.source_layer == 235 && node.source_datatype == 4)\\n    v.set_layer_properties(it, node)\\n    it.next\\n  end\\nend\\nv.zoom_fit\\nv.save_image(\\\"/work/layout_overview.png\\\", 1600, 1400)\\nvisibility(v, [67,68,69,70,71,72], true)\\nv.save_image(\\\"/work/layout_routing.png\\\", 1600, 1400)\\nv.zoom_box(DBox.new(bbox.center.x - bbox.width / 8, bbox.center.y - bbox.height / 8,\\n  bbox.center.x + bbox.width / 8, bbox.center.y + bbox.height / 8))\\nv.save_image(\\\"/work/layout_detail.png\\\", 1600, 1400)\\nboxes = Layout.new\\nboxes.dbu = cv.layout.dbu\\noutline = boxes.create_cell(\\\"PLACEMENT\\\")\\ncells = boxes.layer(236, 0)\\ncount = 0\\ndef placed(cell, transform, output, depth)\\n  raise \\\"Layout hierarchy is too deep\\\" if depth > 16\\n  count = 0\\n  cell.each_inst do |inst|\\n    child = inst.cell\\n    next if child.name =~ /__(fill|decap|tapvpwr)/\\n    inst.cell_inst.each_cplx_trans do |position|\\n      absolute = transform * position\\n      if child.name.start_with?(\\\"sky130_fd_sc_hd__\\\")\\n        output.insert(absolute * child.bbox)\\n        count += 1\\n      else\\n        count += placed(child, absolute, output, depth + 1)\\n      end\\n    end\\n  end\\n  count\\nend\\ncount = placed(cv.cell, ICplxTrans.new, outline.shapes(cells), 0)\\nraise \\\"No standard-cell placements\\\" if count == 0\\nboxes.write(\\\"/work/placement-preview.gds\\\")\\nplacement = LayoutView.new\\nplacement.set_config(\\\"background-color\\\", \\\"#0b1220\\\")\\nplacement.set_config(\\\"grid-visible\\\", \\\"false\\\")\\nplacement.load_layout(\\\"/work/placement-preview.gds\\\", 0)\\nplacement.max_hier\\nit = placement.begin_layers\\nuntil it.at_end?\\n  node = it.current\\n  node.visible = true\\n  node.frame_color = 0x8de1e6\\n  node.fill_color = 0x245a77\\n  node.dither_pattern = 0\\n  placement.set_layer_properties(it, node)\\n  it.next\\nend\\nplacement.zoom_box(bbox)\\nplacement.save_image(\\\"/work/layout_placement.png\\\", 1600, 1400)\\nputs \\\"AEDA_LAYOUT #{Application.instance.version} #{bbox.width} #{bbox.height}\\\"\\n\"",
+        "platform": "sky130hd",
+        "command": [
+          "klayout",
+          "-zz",
+          "-r",
+          "/work/render.rb",
+          "-rd",
+          "layer_map=/OpenROAD-flow-scripts/flow/platforms/sky130hd/sky130hd.lyp",
+          "-rd",
+          "top=io_demo"
+        ]
+      },
+      "image_width": 1600,
+      "image_height": 1400,
+      "generated_at": "2026-11-14T08:06:46.050150+00:00",
+      "evidence_status": "VERIFIED"
+    },
+    "layout_routing": {
+      "schema_version": 1,
+      "visualization_type": "layout_routing",
+      "run_id": "a03090ce9545a3aa0a5b6a1013edf44a",
+      "filename": "layout_routing.png",
+      "source_artifacts": [
+        "chip-report.json",
+        "stages/chip_gds/f68ac5a5cdfe40cc90ad228997093d28/chip.gds"
+      ],
+      "source_sha256": [
+        "a03090ce9545a3aa0a5b6a1013edf44a9e6dacee6c65635a12a8a0fe59b692d0",
+        "689af13a976360823b8c17f3b7a54fa616e9ab0496fc8c6f614315b075d42c40"
+      ],
+      "image_sha256": "4f30a5824dace92f15278a9ac3342d2d66e4688fa7f04ca40565ce5560b04a72",
+      "renderer": "klayout",
+      "renderer_version": "0.30.12",
+      "render_configuration": {
+        "container": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "layer_mapping": "/OpenROAD-flow-scripts/flow/platforms/sky130hd/sky130hd.lyp",
+        "routing_layer_numbers": [
+          67,
+          68,
+          69,
+          70,
+          71,
+          72
+        ],
+        "placement_layer": "GDS instance bounding boxes, excluding fill, decap and tap cells",
+        "top": "io_demo",
+        "bbox_um": [
+          1200.0,
+          1200.0
+        ],
+        "detail": "central quarter by width and height",
+        "script": "\"\\ninclude RBA\\nv = LayoutView.new\\nv.set_config(\\\"background-color\\\", \\\"#0b1220\\\")\\nv.set_config(\\\"grid-visible\\\", \\\"false\\\")\\nv.load_layout(\\\"/work/source.gds\\\", 0)\\nv.load_layer_props($layer_map)\\ncv = v.active_cellview\\nraise \\\"Unexpected layout top\\\" unless cv.cell.name == $top\\nv.max_hier\\nbbox = cv.cell.bbox.to_dtype(cv.layout.dbu)\\nraise \\\"Empty layout\\\" if bbox.empty?\\ndef visibility(v, layers, boundary)\\n  it = v.begin_layers\\n  until it.at_end?\\n    node = it.current\\n    node.visible = layers.include?(node.source_layer) ||\\n      (boundary && node.source_layer == 235 && node.source_datatype == 4)\\n    v.set_layer_properties(it, node)\\n    it.next\\n  end\\nend\\nv.zoom_fit\\nv.save_image(\\\"/work/layout_overview.png\\\", 1600, 1400)\\nvisibility(v, [67,68,69,70,71,72], true)\\nv.save_image(\\\"/work/layout_routing.png\\\", 1600, 1400)\\nv.zoom_box(DBox.new(bbox.center.x - bbox.width / 8, bbox.center.y - bbox.height / 8,\\n  bbox.center.x + bbox.width / 8, bbox.center.y + bbox.height / 8))\\nv.save_image(\\\"/work/layout_detail.png\\\", 1600, 1400)\\nboxes = Layout.new\\nboxes.dbu = cv.layout.dbu\\noutline = boxes.create_cell(\\\"PLACEMENT\\\")\\ncells = boxes.layer(236, 0)\\ncount = 0\\ndef placed(cell, transform, output, depth)\\n  raise \\\"Layout hierarchy is too deep\\\" if depth > 16\\n  count = 0\\n  cell.each_inst do |inst|\\n    child = inst.cell\\n    next if child.name =~ /__(fill|decap|tapvpwr)/\\n    inst.cell_inst.each_cplx_trans do |position|\\n      absolute = transform * position\\n      if child.name.start_with?(\\\"sky130_fd_sc_hd__\\\")\\n        output.insert(absolute * child.bbox)\\n        count += 1\\n      else\\n        count += placed(child, absolute, output, depth + 1)\\n      end\\n    end\\n  end\\n  count\\nend\\ncount = placed(cv.cell, ICplxTrans.new, outline.shapes(cells), 0)\\nraise \\\"No standard-cell placements\\\" if count == 0\\nboxes.write(\\\"/work/placement-preview.gds\\\")\\nplacement = LayoutView.new\\nplacement.set_config(\\\"background-color\\\", \\\"#0b1220\\\")\\nplacement.set_config(\\\"grid-visible\\\", \\\"false\\\")\\nplacement.load_layout(\\\"/work/placement-preview.gds\\\", 0)\\nplacement.max_hier\\nit = placement.begin_layers\\nuntil it.at_end?\\n  node = it.current\\n  node.visible = true\\n  node.frame_color = 0x8de1e6\\n  node.fill_color = 0x245a77\\n  node.dither_pattern = 0\\n  placement.set_layer_properties(it, node)\\n  it.next\\nend\\nplacement.zoom_box(bbox)\\nplacement.save_image(\\\"/work/layout_placement.png\\\", 1600, 1400)\\nputs \\\"AEDA_LAYOUT #{Application.instance.version} #{bbox.width} #{bbox.height}\\\"\\n\"",
+        "platform": "sky130hd",
+        "command": [
+          "klayout",
+          "-zz",
+          "-r",
+          "/work/render.rb",
+          "-rd",
+          "layer_map=/OpenROAD-flow-scripts/flow/platforms/sky130hd/sky130hd.lyp",
+          "-rd",
+          "top=io_demo"
+        ]
+      },
+      "image_width": 1600,
+      "image_height": 1400,
+      "generated_at": "2026-11-14T08:06:46.091281+00:00",
+      "evidence_status": "VERIFIED"
+    }
+  },
+  "unavailable": {},
+  "local_source_artifacts": {
+    "stages/chip_gds/f68ac5a5cdfe40cc90ad228997093d28/chip.gds": {
+      "path": "stages/chip_gds/f68ac5a5cdfe40cc90ad228997093d28/chip.gds",
+      "sha256": "689af13a976360823b8c17f3b7a54fa616e9ab0496fc8c6f614315b075d42c40",
+      "size_bytes": 16361700
+    }
+  }
+}

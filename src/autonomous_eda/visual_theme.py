@@ -18,6 +18,9 @@ FONT = "DejaVu Sans"
 THEME_VERSION = 1
 
 STATUS_COLORS = {
+    "PASS": GREEN,
+    "FAIL": RED,
+    "SKIPPED": GRAY,
     "PASSED": GREEN,
     "FEASIBLE": GREEN,
     "FAILED": RED,

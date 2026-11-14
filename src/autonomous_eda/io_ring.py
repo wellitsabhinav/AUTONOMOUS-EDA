@@ -562,6 +562,16 @@ def configure(parser: argparse.ArgumentParser) -> None:
     render = actions.add_parser("render")
     render.add_argument("directory", type=Path)
     render.add_argument("--all", action="store_true", help="export all available IO charts")
+    chip = actions.add_parser(
+        "chip", help="connect and route the approved SKY130 pad-ring checkpoint"
+    )
+    chip.add_argument("placement", type=Path)
+    chip.add_argument("config", type=Path)
+    chip.add_argument("directory", type=Path)
+    chip.add_argument("--require-acceptance", action="store_true")
+    actions.add_parser("chip-render", help="render verified chip experiment outputs").add_argument(
+        "directory", type=Path
+    )
 
 
 def render_report(root: Path) -> dict[str, Any]:
@@ -639,6 +649,22 @@ def main(args: argparse.Namespace) -> int:
         result = run(args.directory)
     elif args.action == "render":
         result = render_report(args.directory)
+    elif args.action == "chip":
+        from .io_chip import assemble
+
+        result = assemble(args.placement, args.config, args.directory)
+        print(json.dumps(result, indent=2, allow_nan=False))
+        if args.require_acceptance:
+            return 0 if result["acceptance"] == "PASS" else 1
+        directly_checked = ("database_signal_connectivity", "signal_routing")
+        return int(
+            result["gates"][directly_checked[0]]["status"] != "PASS"
+            or result["gates"][directly_checked[1]]["status"] not in {"PASS", "SKIPPED"}
+        )
+    elif args.action == "chip-render":
+        from .io_chip import render
+
+        result = render(args.directory.resolve())
     else:
         result = report(args.directory)
     print(json.dumps(result, indent=2, allow_nan=False))

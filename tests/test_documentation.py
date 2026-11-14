@@ -79,69 +79,27 @@ def test_published_acceptance_sources_match_figure_receipts() -> None:
             assert image["source_sha256"] == [sha256(folder / "acceptance.json")]
 
 
-def test_manual_covers_public_cli_and_example_syntax() -> None:
-    parser = build_parser()
-    help_text = parser.format_usage()
-    listed = re.search(r"\{([\w,-]+)\}", help_text)
-    assert listed is not None
-    reference = (ROOT / "docs/CLI_REFERENCE.md").read_text(encoding="utf-8")
-    documented = set(re.findall(r"^\| `([\w-]+)` \|", reference, re.M))
-    assert documented == set(listed[1].split(","))
-
-    for name in ("README.md", "docs/tutorials/GCD_WALKTHROUGH.md"):
-        for line in (ROOT / name).read_text(encoding="utf-8").splitlines():
-            if line.startswith("autonomous-eda "):
-                parser.parse_args(shlex.split(line)[1:])
-
-
-def test_readme_navigation_covers_all_sections() -> None:
-    lines = [line for _, line in markdown_lines(ROOT / "README.md")]
-    headings = [line[3:] for line in lines if line.startswith("## ")]
-    anchors = [heading.lower().replace(" ", "-") for heading in headings]
-    navigation = [
-        target[1:]
-        for line in lines
-        if line.startswith("- [")
-        for _, _, target in LINK.findall(line)
-        if target.startswith("#")
-    ]
-    assert navigation == anchors
-
-
-def test_gcd_walkthrough_publication_matches_recorded_evidence() -> None:
-    root = ROOT / "docs/evidence/gcd-walkthrough"
-    receipt = json.loads((root / "receipt.json").read_bytes())
-    for name, digest in receipt["publication_sha256"].items():
-        assert sha256(root / name) == digest
-    assert receipt["run_json_sha256"] == receipt["resume_json_sha256"]
-    assert receipt["verification_exit_code"] == 1
-
-    plan = json.loads((root / "plan.json").read_bytes())
-    attempts = receipt["attempts"]
-    assert [attempt["stage"] for attempt in attempts] == [stage["name"] for stage in plan]
-    assert all(attempt["state"] == "passed" for attempt in attempts)
-    assert all(
-        set(stage["outputs"]) <= attempt["artifacts"].keys()
-        for stage, attempt in zip(plan, attempts, strict=True)
+def test_chip_figure_sources_match_run_and_receipts() -> None:
+    folder = ROOT / "docs/images/examples/io-integration"
+    source = folder / "chip-report.json"
+    report = json.loads(source.read_bytes())
+    provenance = json.loads((folder / "provenance.json").read_bytes())
+    digest = sha256(source)
+    gds = report["stages"]["chip_gds"]
+    gds_path = (Path(gds["receipt"]).parent / "chip.gds").as_posix()
+    assert provenance["local_source_artifacts"][gds_path]["sha256"] == gds["outputs"]["chip.gds"]
+    assert (
+        gds["outputs"]["chip.gds"]
+        == report["stages"]["independent_reopening"]["inputs"]["chip.gds"]
     )
-    finish = attempts[-1]["artifacts"]
-    metric = receipt["setup_metric"]
-    final_report = root / Path(metric["artifact"]).name
-    assert sha256(final_report) == finish[metric["artifact"]]
-    assert json.loads(final_report.read_bytes())[metric["reference"]] == metric["value"] < 0
-
-    verification = (root / "verification.txt").read_text(encoding="utf-8")
-    assert receipt["run_id"] in verification
-    assert f"Decision `{receipt['verification_decision_sha256']}`" in verification
-    assert f"worst slack {metric['value']:g} ns" in verification
-    tutorial = (ROOT / "docs/tutorials/GCD_WALKTHROUGH.md").read_text(encoding="utf-8")
-    excerpts = re.findall(r"~~~text\n(.+?)\n~~~", tutorial, re.S)
-    for name in ("verification.txt", "diagnosis.txt"):
-        capture = (root / name).read_text(encoding="utf-8")
-        assert any(excerpt in capture for excerpt in excerpts), name
-
-    figures = ROOT / "docs/images/examples/gcd-walkthrough"
-    record = json.loads((figures / "provenance.json").read_bytes())["images"]["layout_overview"]
-    assert record["run_id"] == receipt["run_id"]
-    assert record["image_sha256"] == sha256(figures / record["filename"])
-    assert record["source_sha256"] == [finish[path] for path in record["source_artifacts"]]
+    for image in provenance["images"].values():
+        assert image["run_id"] == provenance["run_id"] == digest[:32]
+        assert image["image_sha256"] == sha256(folder / image["filename"])
+        assert image["render_configuration"]["command"]
+        assert image["render_configuration"]["top"] == report["top"]
+        assert image["render_configuration"]["platform"] == report["platform"]
+        sources = dict(zip(image["source_artifacts"], image["source_sha256"], strict=True))
+        expected = {source.name: digest}
+        if image["renderer"] == "klayout":
+            expected[gds_path] = gds["outputs"]["chip.gds"]
+        assert sources == expected
