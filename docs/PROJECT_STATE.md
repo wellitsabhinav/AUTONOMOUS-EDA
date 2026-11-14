@@ -1,5 +1,8 @@
 # Project state
 
+- Milestone 08 implements [budgeted physical optimization](OPTIMIZATION.md) for [issue #9](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/9). Four isolated GCD candidates ran at the original 1.1 ns clock. All passed hold, DRC and LVS and failed setup. The [evaluation](OPTIMIZATION_EVALUATION.md) records the empty frontiers, the deterministic and live-guided measurements, and the interrupted campaign.
+- The [example gallery](EXAMPLE_GALLERY.md) contains verified GCD and Ibex KLayout layouts and real campaign charts with PNG and source provenance.
+
 - Milestone 07 implements [timing and physical diagnosis](TIMING_DIAGNOSIS.md) for [issue #8](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/8). The original GCD and Ibex setup failures remain at −1.20488 ns and −0.377013 ns. Independent hold, platform DRC and LVS passed. The [physical analysis](PHYSICAL_DIAGNOSIS.md) documents changing stage extrema, matching endpoint checks and unavailable path-local measurements.
 - The [diagnosis evaluation](DIAGNOSIS_EVALUATION.md) preserved the deterministic report in mock and live CPU Qwen workflows. Both abstained without inference for malformed, ambiguous and missing timing reports. Windows validation exercised the retained MCP run, MiniLM and the loopback model. The two cached ORFS Doctor checks were skipped.
 

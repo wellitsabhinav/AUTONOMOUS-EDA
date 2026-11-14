@@ -12,6 +12,8 @@ from pathlib import Path
 from . import __version__
 from .ai.cli import configure as configure_ai
 from .ai.cli import main as ai_main
+from .artifact_cli import configure as configure_artifacts
+from .artifact_cli import main as artifacts_main
 from .diagnostic_cli import configure as configure_diagnosis
 from .diagnostic_cli import main as diagnosis_main
 from .discovery import inspect_rtl
@@ -22,6 +24,8 @@ from .knowledge.cli import main as knowledge_main
 from .manifest import ORFSManifest, RTLManifest, load_manifest
 from .mcp.cli import configure as configure_mcp
 from .mcp.cli import main as mcp_main
+from .optimization_cli import configure as configure_optimization
+from .optimization_cli import main as optimization_main
 from .orfs import stage_plan
 
 
@@ -35,6 +39,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     configure_knowledge(commands.add_parser("knowledge", help="search approved local EDA sources"))
     configure_ai(commands.add_parser("ai", help="observe and explain approved run evidence"))
     configure_diagnosis(commands.add_parser("diagnose", help="analyze retained timing evidence"))
+    configure_artifacts(commands.add_parser("artifacts", help="render verified PNG evidence"))
+    configure_optimization(
+        commands.add_parser("optimize", help="plan and run bounded optimization")
+    )
     for name in ("inspect", "plan", "run"):
         item = commands.add_parser(name)
         item.add_argument("manifest", type=Path)
@@ -44,7 +52,10 @@ def main(argv: Sequence[str] | None = None) -> int:
             item.add_argument("directory", type=Path)
             item.add_argument("--memory-mib", type=int, default=3500)
     for name in ("resume", "report", "verify"):
-        commands.add_parser(name).add_argument("directory", type=Path)
+        command = commands.add_parser(name)
+        command.add_argument("directory", type=Path)
+        if name == "verify":
+            command.add_argument("--render", action="store_true", help="export verified PNGs")
     experiments = commands.add_parser("experiments")
     actions = experiments.add_subparsers(dest="action", required=True)
     actions.add_parser("list").add_argument("directory", type=Path)
@@ -70,6 +81,10 @@ def main(argv: Sequence[str] | None = None) -> int:
             return ai_main(args)
         if args.command == "diagnose":
             return diagnosis_main(args)
+        if args.command == "optimize":
+            return optimization_main(args)
+        if args.command == "artifacts":
+            return artifacts_main(args)
         return controller_main(args)
     except KeyboardInterrupt:
         print(
@@ -132,6 +147,10 @@ def controller_main(args: argparse.Namespace) -> int:
                 evidence["verification_gates"][name]["state"] == "PASSED"
                 for name in ("platform_drc", "lvs")
             )
+            if args.render:
+                from .visual_artifacts import render_run
+
+                render_run(args.directory)
         result = evidence
     print(json.dumps(result, indent=2, allow_nan=False))
     return 0 if success else 1

@@ -21,6 +21,7 @@ from .manifest import ORFSManifest, fingerprint, integer, load_manifest, sha256
 from .metrics import summarize
 from .orfs import (
     GDS_CHECK,
+    DispatchGuard,
     Stage,
     artifact_hashes,
     container_command,
@@ -150,7 +151,7 @@ def check_inputs(root: Path, db: sqlite3.Connection, manifest: ORFSManifest) -> 
     return integer(limit, "memory_mib", 1048576)
 
 
-def continue_run(root: Path) -> bool:
+def continue_run(root: Path, *, guard: DispatchGuard | None = None) -> bool:
     root = root.resolve()
     if not (root / "run.sqlite3").is_file():
         raise ValueError(f"experiment database missing in {root}")
@@ -167,7 +168,7 @@ def continue_run(root: Path) -> bool:
             raise ValueError("configured memory exceeds the visible host limit")
         docker = preflight()
         cleanup_verification(root, docker)
-        return run_stages(root, db, manifest, docker, memory_mib)
+        return run_stages(root, db, manifest, docker, memory_mib, guard=guard)
 
 
 def cleanup_verification(root: Path, docker: str) -> None:
@@ -180,7 +181,13 @@ def cleanup_verification(root: Path, docker: str) -> None:
 
 
 def run_stages(
-    root: Path, db: sqlite3.Connection, manifest: ORFSManifest, docker: str, memory_mib: int
+    root: Path,
+    db: sqlite3.Connection,
+    manifest: ORFSManifest,
+    docker: str,
+    memory_mib: int,
+    *,
+    guard: DispatchGuard | None = None,
 ) -> bool:
     version = db_version(db)
     for (log,) in db.execute("SELECT log FROM attempts WHERE state='running'"):
@@ -195,6 +202,8 @@ def run_stages(
     dirty = False
     passed: set[str] = set()
     for stage in stage_plan(manifest, legacy=version == 0):
+        if guard is not None:
+            guard()
         if not set(stage.after).issubset(passed):
             raise ValueError(f"unmet dependency for {stage.name}")
         previous = db.execute(
@@ -249,11 +258,9 @@ def run_stages(
         state, detail, elapsed, hashes = "failed", None, 0.0, None
         code: int | None = None
         try:
+            options = {"guard": guard} if guard is not None else {}
             code, elapsed = execute(
-                commands[0],
-                manifest.stage_timeout_seconds,
-                log,
-                name,
+                commands[0], manifest.stage_timeout_seconds, log, name, **options
             )
             if code:
                 raise ValueError(f"ORFS {stage.name} exited {code}")
@@ -272,6 +279,7 @@ def run_stages(
                     manifest.stage_timeout_seconds,
                     attempt / "gds-validation.log",
                     name,
+                    **options,
                 )
                 elapsed += duration
                 if version == 2 and code == 0:
@@ -435,7 +443,7 @@ def report(root: Path) -> dict[str, Any]:
     return data
 
 
-def verify(root: Path) -> dict[str, Any]:
+def verify(root: Path, *, guard: DispatchGuard | None = None) -> dict[str, Any]:
     if sys.platform != "linux":
         raise ValueError("physical verification requires Linux")
     root = root.resolve()
@@ -457,6 +465,24 @@ def verify(root: Path) -> dict[str, Any]:
         relative = f"results/{manifest.platform}/{manifest.design}/base/6_final.gds"
         variant = f"{manifest.platform}/{manifest.design}/base"
         for target in ("drc", "lvs"):
+            if guard is not None:
+                guard()
+                previous_status = root / f"verification-{target}.json"
+                if previous_status.is_file():
+                    record = json.loads(previous_status.read_bytes())
+                    if (
+                        record.get("exit_code") == 0
+                        and record.get("gds_sha256") == finish["artifacts"][relative]
+                        and set(verification_files(variant, target))
+                        <= record.get("artifacts", {}).keys()
+                        and all(
+                            (root / path).resolve().is_relative_to(root)
+                            and (root / path).is_file()
+                            and sha256(root / path) == digest
+                            for path, digest in record["artifacts"].items()
+                        )
+                    ):
+                        continue
             name = f"aeda-{uuid.uuid4().hex}"
             attempt = root / "attempts" / name
             attempt.mkdir(parents=True)
@@ -483,6 +509,7 @@ def verify(root: Path) -> dict[str, Any]:
                 manifest.stage_timeout_seconds,
                 attempt / f"{target}.log",
                 name,
+                **({"guard": guard} if guard is not None else {}),
             )
             result.update(exit_code=code, runtime_seconds=elapsed)
             result.update(
