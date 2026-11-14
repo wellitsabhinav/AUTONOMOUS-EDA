@@ -44,7 +44,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         commands.add_parser("optimize", help="plan and run bounded optimization")
     )
     for name in ("inspect", "plan", "run"):
-        item = commands.add_parser(name)
+        item = commands.add_parser(
+            name,
+            help={
+                "inspect": "elaborate and inspect ordered RTL sources",
+                "plan": "show the physical implementation stage plan",
+                "run": "initialize and execute a physical implementation",
+            }[name],
+        )
         item.add_argument("manifest", type=Path)
         if name == "inspect":
             item.add_argument("--netlist", type=Path)
@@ -52,7 +59,14 @@ def main(argv: Sequence[str] | None = None) -> int:
             item.add_argument("directory", type=Path)
             item.add_argument("--memory-mib", type=int, default=3500)
     for name in ("resume", "report", "verify"):
-        command = commands.add_parser(name)
+        command = commands.add_parser(
+            name,
+            help={
+                "resume": "continue an experiment from verified checkpoints",
+                "report": "read current experiment evidence",
+                "verify": "run platform decks or evaluate an acceptance profile",
+            }[name],
+        )
         command.add_argument("directory", type=Path)
         command.add_argument("--profile", help="evaluate a named verification profile")
         command.add_argument("--markdown", action="store_true", help="print the acceptance matrix")

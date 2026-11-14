@@ -61,6 +61,6 @@ jobs:
           for path in docs/{TIMING_DIAGNOSIS,PHYSICAL_DIAGNOSIS,DIAGNOSIS_SCHEMA,DIAGNOSIS_EVALUATION}.md; do
             test -s "$path" || exit 1
           done
-          for path in docs/{OPTIMIZATION,OPTIMIZATION_POLICY,OPTIMIZATION_SCHEMA,OPTIMIZATION_EVALUATION,EXAMPLE_GALLERY}.md; do
+          for path in docs/{OPTIMIZATION,OPTIMIZATION_POLICY,OPTIMIZATION_SCHEMA,OPTIMIZATION_EVALUATION,EXAMPLE_GALLERY,DESIGN_SYSTEM}.md; do
             test -s "$path" || exit 1
           done

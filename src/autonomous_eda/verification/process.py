@@ -60,6 +60,9 @@ def execute(
     stdout, stderr = cwd / f"{label}.stdout.log", cwd / f"{label}.stderr.log"
     reason = None
     code = None
+    creation_flags = 0
+    if sys.platform == "win32":
+        creation_flags = subprocess.CREATE_NEW_PROCESS_GROUP
     with stdout.open("xb") as out, stderr.open("xb") as err:
         process = None
         try:
@@ -75,7 +78,7 @@ def execute(
                     stdout=out,
                     stderr=err,
                     start_new_session=os.name != "nt",
-                    creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0,
+                    creationflags=creation_flags,
                 )
                 while True:
                     code = process.poll()

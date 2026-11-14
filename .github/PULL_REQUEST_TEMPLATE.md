@@ -7,6 +7,7 @@
 - [ ] Relevant tests and tool runs completed
 - [ ] Evidence and limitations recorded
 - [ ] Project state updated
+- [ ] Documentation links, image alt text and figure provenance checked where applicable
 
 ## Validation and evidence
 
