@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "images": {
+    "optimization_summary": {
+      "schema_version": 1,
+      "visualization_type": "optimization_summary",
+      "run_id": "3563e8e28ec145239fc5f6f1a0ab9f69",
+      "filename": "optimization_summary.png",
+      "source_artifacts": [
+        "report.json"
+      ],
+      "source_sha256": [
+        "046c27a25d19d53c3b74a17f90313bed8dd74c204859e53d7fa761901dd291de"
+      ],
+      "image_sha256": "d173f6bf159d9ed17b081a91ae91ccd44849ba4a8a17783db6363dbc3243fe21",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "GCD budgeted optimization",
+        "detail": "tt_025C_1v80  |  MAX_CANDIDATES_REACHED"
+      },
+      "image_width": 1000,
+      "image_height": 620,
+      "generated_at": "2026-11-13T19:23:42.055715+00:00",
+      "evidence_status": "VERIFIED",
+      "source_image_sha256": "0a5514ec3149e1755c98ec344ba7ce024e34b5a51b09543d16f0c040071b80bb",
+      "publication_derivative": {
+        "resize_max": [
+          1000,
+          875
+        ],
+        "resampling": "Lanczos",
+        "palette": null
+      }
+    },
+    "area_timing_tradeoff": {
+      "schema_version": 1,
+      "visualization_type": "area_timing_tradeoff",
+      "run_id": "3563e8e28ec145239fc5f6f1a0ab9f69",
+      "filename": "area_timing_tradeoff.png",
+      "source_artifacts": [
+        "report.json"
+      ],
+      "source_sha256": [
+        "046c27a25d19d53c3b74a17f90313bed8dd74c204859e53d7fa761901dd291de"
+      ],
+      "image_sha256": "e221bbe6370813229401d06bf02b9cd8b535b2e68c4136437ddc01856a22e2ca",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "GCD area and timing",
+        "detail": "Comparable measured points  |  Red points fail physical feasibility"
+      },
+      "image_width": 1000,
+      "image_height": 620,
+      "generated_at": "2026-11-13T19:23:42.750879+00:00",
+      "evidence_status": "VERIFIED",
+      "source_image_sha256": "1465cd8bf8afaf3c856f363b88ddfd1d7add9ef3ac8928971877c4793d47f6ca",
+      "publication_derivative": {
+        "resize_max": [
+          1000,
+          875
+        ],
+        "resampling": "Lanczos",
+        "palette": null
+      }
+    },
+    "feasibility_matrix": {
+      "schema_version": 1,
+      "visualization_type": "feasibility_matrix",
+      "run_id": "3563e8e28ec145239fc5f6f1a0ab9f69",
+      "filename": "feasibility_matrix.png",
+      "source_artifacts": [
+        "report.json"
+      ],
+      "source_sha256": [
+        "046c27a25d19d53c3b74a17f90313bed8dd74c204859e53d7fa761901dd291de"
+      ],
+      "image_sha256": "27d367be871b64b9162c9e18166e4e2bc03bd0538e25525e145b7bef986ff871",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "GCD feasibility",
+        "detail": "Physical frontier: 0 candidates"
+      },
+      "image_width": 1000,
+      "image_height": 620,
+      "generated_at": "2026-11-13T19:23:43.039734+00:00",
+      "evidence_status": "VERIFIED",
+      "source_image_sha256": "c26ec8fe3a888b79e0c6f5f3ce11c84e01cbac2838db0fdb10bbc716d3909e28",
+      "publication_derivative": {
+        "resize_max": [
+          1000,
+          875
+        ],
+        "resampling": "Lanczos",
+        "palette": null
+      }
+    },
+    "budget_usage": {
+      "schema_version": 1,
+      "visualization_type": "budget_usage",
+      "run_id": "3563e8e28ec145239fc5f6f1a0ab9f69",
+      "filename": "budget_usage.png",
+      "source_artifacts": [
+        "report.json"
+      ],
+      "source_sha256": [
+        "046c27a25d19d53c3b74a17f90313bed8dd74c204859e53d7fa761901dd291de"
+      ],
+      "image_sha256": "c2e0ec8ea23dce127e155b043bb9dd9d8059ae72d37acd840ab20e5a2e2ffb0a",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "GCD search budget",
+        "detail": "One running implementation at a time"
+      },
+      "image_width": 1000,
+      "image_height": 620,
+      "generated_at": "2026-11-13T19:23:43.536357+00:00",
+      "evidence_status": "VERIFIED",
+      "source_image_sha256": "9fba5d5fe8bb6ca52a6af2aba38a84f8915843951c4b226929b44045fd434ae5",
+      "publication_derivative": {
+        "resize_max": [
+          1000,
+          875
+        ],
+        "resampling": "Lanczos",
+        "palette": null
+      }
+    },
+    "search_history": {
+      "schema_version": 1,
+      "visualization_type": "search_history",
+      "run_id": "3563e8e28ec145239fc5f6f1a0ab9f69",
+      "filename": "search_history.png",
+      "source_artifacts": [
+        "report.json"
+      ],
+      "source_sha256": [
+        "046c27a25d19d53c3b74a17f90313bed8dd74c204859e53d7fa761901dd291de"
+      ],
+      "image_sha256": "ec139d232029aa107bd69bd54ba5a78ab5f39fca418a078e1e71674404cc0db6",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "GCD search history",
+        "detail": "MAX_CANDIDATES_REACHED"
+      },
+      "image_width": 1000,
+      "image_height": 620,
+      "generated_at": "2026-11-13T19:23:43.295201+00:00",
+      "evidence_status": "VERIFIED",
+      "source_image_sha256": "482afbc0b1e98804568b7360f42eb3ca97fe4e39c2e505e6948f107340c1c300",
+      "publication_derivative": {
+        "resize_max": [
+          1000,
+          875
+        ],
+        "resampling": "Lanczos",
+        "palette": null
+      }
+    },
+    "strategy_comparison": {
+      "schema_version": 1,
+      "visualization_type": "strategy_comparison",
+      "run_id": "3563e8e28ec145239fc5f6f1a0ab9f69",
+      "filename": "strategy_comparison.png",
+      "source_artifacts": [
+        "report.json"
+      ],
+      "source_sha256": [
+        "046c27a25d19d53c3b74a17f90313bed8dd74c204859e53d7fa761901dd291de"
+      ],
+      "image_sha256": "a7fced575381ac2829dbe9ea8a2aba742f261828cea51d24b5a77b91066a1d00",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "GCD strategy results",
+        "detail": "Executed proposals at the same clock and corner"
+      },
+      "image_width": 1000,
+      "image_height": 620,
+      "generated_at": "2026-11-13T19:23:43.788759+00:00",
+      "evidence_status": "VERIFIED",
+      "source_image_sha256": "d16c5c1e0fea335f078f5d72e7177600c73aeb1aa757930ca756a7d9d5a5087e",
+      "publication_derivative": {
+        "resize_max": [
+          1000,
+          875
+        ],
+        "resampling": "Lanczos",
+        "palette": null
+      }
+    },
+    "candidate_30_layout": {
+      "schema_version": 1,
+      "visualization_type": "layout_overview",
+      "run_id": "599c45ae7f4c4620acbadd066fd5d31a",
+      "filename": "candidate_30_layout.png",
+      "source_artifacts": [
+        "results/sky130hd/gcd/base/6_final.gds"
+      ],
+      "source_sha256": [
+        "32a0e60d101d0a0e21e3bd4abba3411e42a58bd331b591c00d5a167d97e286ec"
+      ],
+      "image_sha256": "e20ad3e8f6bd211e59dae69753bf074ed99acb38794f2952388af9ffb50d7353",
+      "renderer": "klayout",
+      "renderer_version": "0.30.12",
+      "render_configuration": {
+        "container": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "layer_mapping": "/OpenROAD-flow-scripts/flow/platforms/sky130hd/sky130hd.lyp",
+        "routing_layer_numbers": [
+          67,
+          68,
+          69,
+          70,
+          71,
+          72
+        ],
+        "placement_layer": "GDS instance bounding boxes, excluding fill, decap and tap cells",
+        "top": "gcd",
+        "bbox_um": [
+          89.81499999999998,
+          89.81499999999998
+        ],
+        "detail": "central quarter by width and height",
+        "script": "\"\\ninclude RBA\\nv = LayoutView.new\\nv.set_config(\\\"background-color\\\", \\\"#0b1220\\\")\\nv.set_config(\\\"grid-visible\\\", \\\"false\\\")\\nv.load_layout(\\\"/work/source.gds\\\", 0)\\nv.load_layer_props($layer_map)\\ncv = v.active_cellview\\nraise \\\"Unexpected layout top\\\" unless cv.cell.name == $top\\nv.max_hier\\nbbox = cv.cell.bbox.to_dtype(cv.layout.dbu)\\nraise \\\"Empty layout\\\" if bbox.empty?\\ndef visibility(v, layers, boundary)\\n  it = v.begin_layers\\n  until it.at_end?\\n    node = it.current\\n    node.visible = layers.include?(node.source_layer) ||\\n      (boundary && node.source_layer == 235 && node.source_datatype == 4)\\n    v.set_layer_properties(it, node)\\n    it.next\\n  end\\nend\\nv.zoom_fit\\nv.save_image(\\\"/work/layout_overview.png\\\", 1600, 1400)\\nvisibility(v, [67,68,69,70,71,72], true)\\nv.save_image(\\\"/work/layout_routing.png\\\", 1600, 1400)\\nv.zoom_box(DBox.new(bbox.center.x - bbox.width / 8, bbox.center.y - bbox.height / 8,\\n  bbox.center.x + bbox.width / 8, bbox.center.y + bbox.height / 8))\\nv.save_image(\\\"/work/layout_detail.png\\\", 1600, 1400)\\nboxes = Layout.new\\nboxes.dbu = cv.layout.dbu\\noutline = boxes.create_cell(\\\"PLACEMENT\\\")\\ncells = boxes.layer(236, 0)\\ncount = 0\\ndef placed(cell, transform, output, depth)\\n  raise \\\"Layout hierarchy is too deep\\\" if depth > 16\\n  count = 0\\n  cell.each_inst do |inst|\\n    child = inst.cell\\n    next if child.name =~ /__(fill|decap|tapvpwr)/\\n    inst.cell_inst.each_cplx_trans do |position|\\n      absolute = transform * position\\n      if child.name.start_with?(\\\"sky130_fd_sc_hd__\\\")\\n        output.insert(absolute * child.bbox)\\n        count += 1\\n      else\\n        count += placed(child, absolute, output, depth + 1)\\n      end\\n    end\\n  end\\n  count\\nend\\ncount = placed(cv.cell, ICplxTrans.new, outline.shapes(cells), 0)\\nraise \\\"No standard-cell placements\\\" if count == 0\\nboxes.write(\\\"/work/placement-preview.gds\\\")\\nplacement = LayoutView.new\\nplacement.set_config(\\\"background-color\\\", \\\"#0b1220\\\")\\nplacement.set_config(\\\"grid-visible\\\", \\\"false\\\")\\nplacement.load_layout(\\\"/work/placement-preview.gds\\\", 0)\\nplacement.max_hier\\nit = placement.begin_layers\\nuntil it.at_end?\\n  node = it.current\\n  node.visible = true\\n  node.frame_color = 0x8de1e6\\n  node.fill_color = 0x245a77\\n  node.dither_pattern = 0\\n  placement.set_layer_properties(it, node)\\n  it.next\\nend\\nplacement.zoom_box(bbox)\\nplacement.save_image(\\\"/work/layout_placement.png\\\", 1600, 1400)\\nputs \\\"AEDA_LAYOUT #{Application.instance.version} #{bbox.width} #{bbox.height}\\\"\\n\""
+      },
+      "image_width": 900,
+      "image_height": 788,
+      "generated_at": "2026-11-13T19:19:02.681703+00:00",
+      "evidence_status": "VERIFIED",
+      "source_image_sha256": "875a1646f3ba1a9bd3090cfbe3f21b727318fa0de7212a157c3c17db6da5bb13",
+      "publication_derivative": {
+        "resize_max": [
+          900,
+          790
+        ],
+        "resampling": "Lanczos",
+        "palette": 96
+      }
+    }
+  }
+}

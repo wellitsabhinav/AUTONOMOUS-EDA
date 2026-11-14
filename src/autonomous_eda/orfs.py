@@ -11,6 +11,7 @@ import signal
 import subprocess
 import sys
 import time
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -148,15 +149,43 @@ def make_command(manifest: ORFSManifest, target: str) -> list[str]:
     return [*arguments, target]
 
 
-def execute(command: list[str], timeout: int, log_path: Path, container: str) -> tuple[int, float]:
+DispatchGuard = Callable[[], float]
+
+
+def execute(
+    command: list[str],
+    timeout: int,
+    log_path: Path,
+    container: str,
+    *,
+    guard: DispatchGuard | None = None,
+) -> tuple[int, float]:
     start = time.monotonic()
     with log_path.open("wb") as log:
         log.write((json.dumps(command) + "\n").encode())
         log.flush()
         try:
-            result = subprocess.run(
-                command, stdout=log, stderr=subprocess.STDOUT, timeout=timeout, check=False
-            )
+            if guard is None:
+                result = subprocess.run(
+                    command, stdout=log, stderr=subprocess.STDOUT, timeout=timeout, check=False
+                )
+                return result.returncode, time.monotonic() - start
+            guard()
+            with subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT) as process:
+                try:
+                    while True:
+                        remaining = min(timeout - (time.monotonic() - start), guard())
+                        if remaining <= 0:
+                            raise subprocess.TimeoutExpired(command, timeout)
+                        try:
+                            return process.wait(
+                                timeout=min(remaining, 0.5)
+                            ), time.monotonic() - start
+                        except subprocess.TimeoutExpired:
+                            continue
+                except BaseException:
+                    process.kill()
+                    raise
         except (subprocess.TimeoutExpired, KeyboardInterrupt) as error:
             subprocess.run(
                 [command[0], "rm", "-f", container],
@@ -165,10 +194,13 @@ def execute(command: list[str], timeout: int, log_path: Path, container: str) ->
                 timeout=30,
                 check=False,
             )
-            if isinstance(error, KeyboardInterrupt):
+            if not isinstance(error, subprocess.TimeoutExpired):
                 raise
             return 124, time.monotonic() - start
-    return result.returncode, time.monotonic() - start
+
+
+class DispatchStopped(KeyboardInterrupt):
+    """An operator or campaign budget stopped a named container."""
 
 
 def artifact_hashes(root: Path, stage: Stage) -> dict[str, str]:

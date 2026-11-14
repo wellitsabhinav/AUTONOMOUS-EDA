@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "images": {
+    "layout_overview": {
+      "schema_version": 1,
+      "visualization_type": "layout_overview",
+      "run_id": "820d1810648fa05464cd2f796ae14fc1ff5571f4702825ad93750c75d473800d",
+      "filename": "layout_overview.png",
+      "source_artifacts": [
+        "results/sky130hd/ibex/base/6_final.gds"
+      ],
+      "source_sha256": [
+        "b48946994806243d92a9b29a55d2ff6169d45add6905615e49809b7056189b0c"
+      ],
+      "image_sha256": "b381cb130c92bed21339339a1c47aa7d8ba059c25be6d556b0b7620121857aed",
+      "renderer": "klayout",
+      "renderer_version": "0.30.12",
+      "render_configuration": {
+        "container": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "layer_mapping": "/OpenROAD-flow-scripts/flow/platforms/sky130hd/sky130hd.lyp",
+        "routing_layer_numbers": [
+          67,
+          68,
+          69,
+          70,
+          71,
+          72
+        ],
+        "placement_layer": "GDS instance bounding boxes, excluding fill, decap and tap cells",
+        "top": "ibex_core",
+        "bbox_um": [
+          510.5549999999999,
+          510.5549999999999
+        ],
+        "detail": "central quarter by width and height",
+        "script": "\"\\ninclude RBA\\nv = LayoutView.new\\nv.set_config(\\\"background-color\\\", \\\"#0b1220\\\")\\nv.set_config(\\\"grid-visible\\\", \\\"false\\\")\\nv.load_layout(\\\"/work/source.gds\\\", 0)\\nv.load_layer_props($layer_map)\\ncv = v.active_cellview\\nraise \\\"Unexpected layout top\\\" unless cv.cell.name == $top\\nv.max_hier\\nbbox = cv.cell.bbox.to_dtype(cv.layout.dbu)\\nraise \\\"Empty layout\\\" if bbox.empty?\\ndef visibility(v, layers, boundary)\\n  it = v.begin_layers\\n  until it.at_end?\\n    node = it.current\\n    node.visible = layers.include?(node.source_layer) ||\\n      (boundary && node.source_layer == 235 && node.source_datatype == 4)\\n    v.set_layer_properties(it, node)\\n    it.next\\n  end\\nend\\nv.zoom_fit\\nv.save_image(\\\"/work/layout_overview.png\\\", 1600, 1400)\\nvisibility(v, [67,68,69,70,71,72], true)\\nv.save_image(\\\"/work/layout_routing.png\\\", 1600, 1400)\\nv.zoom_box(DBox.new(bbox.center.x - bbox.width / 8, bbox.center.y - bbox.height / 8,\\n  bbox.center.x + bbox.width / 8, bbox.center.y + bbox.height / 8))\\nv.save_image(\\\"/work/layout_detail.png\\\", 1600, 1400)\\nboxes = Layout.new\\nboxes.dbu = cv.layout.dbu\\noutline = boxes.create_cell(\\\"PLACEMENT\\\")\\ncells = boxes.layer(236, 0)\\ncount = 0\\ndef placed(cell, transform, output, depth)\\n  raise \\\"Layout hierarchy is too deep\\\" if depth > 16\\n  count = 0\\n  cell.each_inst do |inst|\\n    child = inst.cell\\n    next if child.name =~ /__(fill|decap|tapvpwr)/\\n    inst.cell_inst.each_cplx_trans do |position|\\n      absolute = transform * position\\n      if child.name.start_with?(\\\"sky130_fd_sc_hd__\\\")\\n        output.insert(absolute * child.bbox)\\n        count += 1\\n      else\\n        count += placed(child, absolute, output, depth + 1)\\n      end\\n    end\\n  end\\n  count\\nend\\ncount = placed(cv.cell, ICplxTrans.new, outline.shapes(cells), 0)\\nraise \\\"No standard-cell placements\\\" if count == 0\\nboxes.write(\\\"/work/placement-preview.gds\\\")\\nplacement = LayoutView.new\\nplacement.set_config(\\\"background-color\\\", \\\"#0b1220\\\")\\nplacement.set_config(\\\"grid-visible\\\", \\\"false\\\")\\nplacement.load_layout(\\\"/work/placement-preview.gds\\\", 0)\\nplacement.max_hier\\nit = placement.begin_layers\\nuntil it.at_end?\\n  node = it.current\\n  node.visible = true\\n  node.frame_color = 0x8de1e6\\n  node.fill_color = 0x245a77\\n  node.dither_pattern = 0\\n  placement.set_layer_properties(it, node)\\n  it.next\\nend\\nplacement.zoom_box(bbox)\\nplacement.save_image(\\\"/work/layout_placement.png\\\", 1600, 1400)\\nputs \\\"AEDA_LAYOUT #{Application.instance.version} #{bbox.width} #{bbox.height}\\\"\\n\""
+      },
+      "image_width": 900,
+      "image_height": 788,
+      "generated_at": "2026-11-13T19:21:04.318322+00:00",
+      "evidence_status": "VERIFIED",
+      "source_image_sha256": "67b1bc40cb2a2ca6a6b8c44e85b5560ce18ef90124c4832742a63ba97bb77677",
+      "publication_derivative": {
+        "resize_max": [
+          900,
+          790
+        ],
+        "resampling": "Lanczos",
+        "palette": 96
+      }
+    },
+    "critical_path_breakdown": {
+      "schema_version": 1,
+      "visualization_type": "critical_path_breakdown",
+      "run_id": "820d1810648fa05464cd2f796ae14fc1ff5571f4702825ad93750c75d473800d",
+      "filename": "critical_path_breakdown.png",
+      "source_artifacts": [
+        "reports/sky130hd/ibex/base/6_finish.rpt",
+        "results/sky130hd/ibex/base/6_final.sdc"
+      ],
+      "source_sha256": [
+        "0c69a9b7ba69b127a13e1ec7dac6705289705036d4878bd5a2b460cc83ee1b87",
+        "8c7f7be8cc3dcae7e4ae1148d93af99bba5be2e6302488d3c480cafd60e562f3"
+      ],
+      "image_sha256": "8053502eb2a6c122cfc96f07bd9a6456ae747d1f115f72a67cfff82a39128629",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "IBEX critical setup path",
+        "detail": "OpenSTA incremental accounting  |  Components use different path segments"
+      },
+      "image_width": 1000,
+      "image_height": 620,
+      "generated_at": "2026-11-13T19:21:09.512323+00:00",
+      "evidence_status": "VERIFIED",
+      "source_image_sha256": "db89f2e22d627b9d60875fe8168c33f29c75c6dbbe9274d187d2c1b87e151812",
+      "publication_derivative": {
+        "resize_max": [
+          1000,
+          875
+        ],
+        "resampling": "Lanczos",
+        "palette": null
+      }
+    },
+    "stage_timing_trend": {
+      "schema_version": 1,
+      "visualization_type": "stage_timing_trend",
+      "run_id": "820d1810648fa05464cd2f796ae14fc1ff5571f4702825ad93750c75d473800d",
+      "filename": "stage_timing_trend.png",
+      "source_artifacts": [
+        "logs/sky130hd/ibex/base/2_1_floorplan.json",
+        "logs/sky130hd/ibex/base/3_5_place_dp.json",
+        "logs/sky130hd/ibex/base/4_1_cts.json",
+        "logs/sky130hd/ibex/base/5_1_grt.json",
+        "logs/sky130hd/ibex/base/6_report.json"
+      ],
+      "source_sha256": [
+        "6c694b9ba1ec4834c510b3c262abd2a8cab3c05f563a5e8763fe513c0998712d",
+        "b10d46c438a7605621e1d906a19db0fb8081bc2867cca670a8a6c88bedf705bf",
+        "999f9769b4f237631a789318fa9fdcf2fba1679cdfff1a8837a0b0913107cc38",
+        "a70c9ae0fa2a487c7f4147a73721abbc1b738c88de76f515812f7c4f9c6253e9",
+        "5ff7ce2d838684f08a1f7bf44f2d42d8d24ad45b956d2c957950b209c16c07d9"
+      ],
+      "image_sha256": "35b631a4be3571a6b20da9e8a00748989c968b9800a4d33d67864014bd198de2",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "IBEX setup WNS by stage",
+        "detail": "tt_025C_1v80  |  Stage extrema may refer to different paths"
+      },
+      "image_width": 1000,
+      "image_height": 620,
+      "generated_at": "2026-11-13T19:21:09.239138+00:00",
+      "evidence_status": "VERIFIED",
+      "source_image_sha256": "cc3b4bc16e8ea120b6fc46ec6c0f4417e9da11d87fff8c0056a9746866855903",
+      "publication_derivative": {
+        "resize_max": [
+          1000,
+          875
+        ],
+        "resampling": "Lanczos",
+        "palette": null
+      }
+    },
+    "verification_summary": {
+      "schema_version": 1,
+      "visualization_type": "verification_summary",
+      "run_id": "820d1810648fa05464cd2f796ae14fc1ff5571f4702825ad93750c75d473800d",
+      "filename": "verification_summary.png",
+      "source_artifacts": [
+        "logs/sky130hd/ibex/base/6_report.json",
+        "results/sky130hd/ibex/base/6_final.gds",
+        "gds-validation.log",
+        "logs/sky130hd/ibex/base/5_2_route.json",
+        "reports/sky130hd/ibex/base/6_drc_count.rpt",
+        "reports/sky130hd/ibex/base/6_drc.lyrdb",
+        "logs/sky130hd/ibex/base/6_lvs.log",
+        "results/sky130hd/ibex/base/6_lvs.lvsdb"
+      ],
+      "source_sha256": [
+        "5ff7ce2d838684f08a1f7bf44f2d42d8d24ad45b956d2c957950b209c16c07d9",
+        "b48946994806243d92a9b29a55d2ff6169d45add6905615e49809b7056189b0c",
+        "d509875df72e3e43c8bd368f5e594f6c457816158d4c23161de936d66d1af21d",
+        "ec96ac912f240528b9bc45055202153076520cfb4998a4bb214ca67244aeaa96",
+        "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "e56db947d8b93a3606af011f8c096b6de1fb4ebd5eef08c1c2431ee8b8b44633",
+        "1875a4833f81dcaeae9f4045272860573b987eee574ac30e750ac0492764711c",
+        "bc5a8da2b3feacb3d81eb06428d236cca5875896c1742e2a46d1ca6ddac41a60"
+      ],
+      "image_sha256": "56567033385771504eb082d146cf33238e797bd12f63a6fd4dd46dd66db9a459",
+      "renderer": "matplotlib-agg",
+      "renderer_version": "3.10.8",
+      "render_configuration": {
+        "dpi": 170,
+        "figure_inches": [
+          10,
+          6.2
+        ],
+        "typography": "DejaVu Sans",
+        "title": "IBEX verification gates",
+        "detail": "Acceptance FAILED  |  tt_025C_1v80"
+      },
+      "image_width": 1000,
+      "image_height": 620,
+      "generated_at": "2026-11-13T19:21:11.703423+00:00",
+      "evidence_status": "VERIFIED",
+      "source_image_sha256": "7ca5b7d426a0f53c4b190b8e57f1c47f56cb10c85f5e43799454e36ac79a0bf8",
+      "publication_derivative": {
+        "resize_max": [
+          1000,
+          875
+        ],
+        "resampling": "Lanczos",
+        "palette": null
+      }
+    }
+  }
+}

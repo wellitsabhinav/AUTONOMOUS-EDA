@@ -1,5 +1,10 @@
 # Changelog
 
+## Budgeted physical optimization
+
+- Added typed utilization proposals, explicit digest-bound approval, bounded grid and model-guided search, checkpoint recovery and gate-qualified Pareto frontiers.
+- Added reproducible KLayout and Agg PNG exports, stale-image detection and an evidence-backed example gallery.
+
 ## Timing and physical diagnosis
 
 - Added offline OpenSTA path parsing, rounding-aware delay accounting, independent stage extrema and matched endpoint checks, and artifact-bound physical observations.
