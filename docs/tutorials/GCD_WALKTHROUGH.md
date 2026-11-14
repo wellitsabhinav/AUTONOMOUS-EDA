@@ -107,3 +107,36 @@ autonomous-eda artifacts gallery experiments/gcd-walkthrough
 *GCD run `b162fa09cf9442dda08b0b31cb58c728`, finish stage. KLayout 0.30.12 rendered the recorded GDSII. The full-resolution capture remains with the run.* [Figure provenance](../images/examples/gcd-walkthrough/provenance.json)
 
 The renderer generates four KLayout PNGs from the hash-verified final GDSII. Find them in the run's `visualizations/` directory beside `visualization_manifest.json`. Use the overview for hierarchy and geometry, the routing image for selected metal layers, and the placement image for a preview of instance bounding boxes derived from GDSII. Individual floorplan, placement, clock-tree and route checkpoints require stage-specific rendering. [Gallery and figure semantics](../EXAMPLE_GALLERY.md)
+
+## Read the same run with the AI supervisor
+
+Create a private `.local` directory. Save this registry in `.local/manual-runs.toml`. Replace the root with the absolute path to your repository's `experiments` directory. Use forward slashes in Windows paths.
+
+~~~toml
+[roots]
+walkthrough = "/absolute/path/to/AUTONOMOUS-EDA/experiments"
+
+[experiments.gcd]
+root = "walkthrough"
+directory = "gcd-walkthrough"
+~~~
+
+Save this policy in `.local/manual-ai.toml`. The policy uses model-free observation.
+
+~~~toml
+experiments = "manual-runs.toml"
+~~~
+
+~~~sh
+autonomous-eda ai --config .local/manual-ai.toml --journal .local/manual-ai.sqlite3 observe --experiment gcd --request-id gcd-manual-observe
+autonomous-eda ai --config .local/manual-ai.toml --journal .local/manual-ai.sqlite3 replay gcd-manual-observe
+~~~
+
+The first two output lines from the recorded observation show that evidence collection completed and the design failed acceptance.
+
+~~~text
+gcd-manual-observe COMPLETED observed
+gcd / sky130hd | Acceptance FAILED
+~~~
+
+The journal retains the observation and its evidence references. Replay reads that historical record. The live run directory remains the source for current gate outcomes. [Configuration and evidence rules](../AI_SUPERVISOR.md)

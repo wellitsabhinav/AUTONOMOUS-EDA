@@ -73,6 +73,14 @@ cp -R examples/verification experiments/logic-verification
 autonomous-eda verify experiments/logic-verification --profile rtl-formal --markdown
 ~~~
 
+On Linux, the fixture returned this acceptance excerpt after Yosys elaboration and SAT and Icarus regression.
+
+~~~text
+| elaboration | required | PASSED | Yosys elaboration and structural check completed (7 evidence references) |
+| functional_regression | required | PASSED | Regression oracle emitted LOGIC_PASS (10 evidence references) |
+| equivalence | required | PASSED | SAT proved all matching outputs for defined two-state inputs (14 evidence references) |
+~~~
+
 The [verification evaluation](docs/VERIFICATION_EVALUATION.md) records the Icarus oracle failure and SAT counterexample when the candidate's XOR becomes OR, and the pass after restoring XOR. See the [CLI reference](docs/CLI_REFERENCE.md) for entry points and help.
 
 ## Run and inspect GCD
@@ -88,6 +96,8 @@ Use the [GCD walkthrough](docs/tutorials/GCD_WALKTHROUGH.md) for the pinned imag
 Use `diagnose RUN --check setup` to read supported timing observations and their report locations. A negative worst slack establishes a timing violation. Identifying its cause requires path-local evidence, such as cell and net delay observations, clock insertion and comparable endpoints.
 
 The optional `ai` workflow reads an explicit experiment allowlist and records evidence collection, inference and replay in its own journal. Observe mode requires no model. Explain mode uses a configured provider and validates the model's selections against deterministic findings. A local provider supports offline operation once its model and runtime are available. [Timing diagnosis](docs/TIMING_DIAGNOSIS.md) · [AI supervisor](docs/AI_SUPERVISOR.md) · [Observed AI runs](docs/DIAGNOSIS_EVALUATION.md)
+
+The [GCD walkthrough](docs/tutorials/GCD_WALKTHROUGH.md#read-the-same-run-with-the-ai-supervisor) shows how to configure a local evidence registry and replay a recorded observation.
 
 ## Examples and measured results
 
