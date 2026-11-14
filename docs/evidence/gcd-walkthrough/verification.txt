@@ -1,0 +1,28 @@
+# Verification for gcd
+
+Run `b162fa09cf9442dda08b0b31cb58c728` · Profile `physical` · Decision `6315627a4ff17d3cce7c8ebeb19d55d72143ee7440005c9a91f091708f143ca0`
+
+- Implementation completion **PASSED**
+- Verification **FAILED**
+- Physical feasibility **FAILED**
+- Optimization objectives **NOT_APPLICABLE**
+- Full acceptance **FAILED**
+
+| Gate | Requirement | Outcome | Evidence and diagnosis |
+| --- | --- | --- | --- |
+| elaboration | optional | UNKNOWN | No recorded check for this gate |
+| functional_regression | optional | UNKNOWN | No recorded check for this gate |
+| equivalence | optional | UNKNOWN | No recorded check for this gate |
+| synthesis | required | PASSED | Verified schema 1 tool evidence passed (5 evidence references) |
+| setup | required | FAILED | Final setup violation, worst slack -1.20488 ns (1 evidence references) |
+| hold | required | PASSED | Verified schema 1 tool evidence passed (1 evidence references) |
+| timing_coverage | required | PASSED | OpenSTA completed all configured final coverage checks (4 evidence references) |
+| gds_generation | required | PASSED | Verified schema 1 tool evidence passed (1 evidence references) |
+| gds_reopen | required | PASSED | Verified schema 1 tool evidence passed (2 evidence references) |
+| router | required | PASSED | Verified schema 1 tool evidence passed (1 evidence references) |
+| platform_drc | required | PASSED | Verified schema 1 tool evidence passed (3 evidence references) |
+| lvs | required | PASSED | Verified schema 1 tool evidence passed (3 evidence references) |
+| connectivity | optional | UNKNOWN | No recorded check for this gate |
+| artifact_integrity | required | PASSED | Recorded artifact hashes match |
+| sequential_equivalence | optional | UNKNOWN | No supported verification evidence |
+| formal_properties | optional | UNKNOWN | No supported verification evidence |
