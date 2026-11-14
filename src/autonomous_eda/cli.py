@@ -19,6 +19,8 @@ from .diagnostic_cli import main as diagnosis_main
 from .discovery import inspect_rtl
 from .doctor import configure_doctor, doctor_main, environment_secrets, redact_diagnostics
 from .experiment import continue_run, initialize, verify
+from .io_ring import configure as configure_io
+from .io_ring import main as io_main
 from .knowledge.cli import configure as configure_knowledge
 from .knowledge.cli import main as knowledge_main
 from .manifest import ORFSManifest, RTLManifest, load_manifest
@@ -40,6 +42,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     configure_ai(commands.add_parser("ai", help="observe and explain approved run evidence"))
     configure_diagnosis(commands.add_parser("diagnose", help="analyze retained timing evidence"))
     configure_artifacts(commands.add_parser("artifacts", help="render verified PNG evidence"))
+    configure_io(commands.add_parser("io", help="plan and inspect pinned ICeWall pad placement"))
     configure_optimization(
         commands.add_parser("optimize", help="plan and run bounded optimization")
     )
@@ -91,6 +94,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             return optimization_main(args)
         if args.command == "artifacts":
             return artifacts_main(args)
+        if args.command == "io":
+            return io_main(args)
         return controller_main(args)
     except KeyboardInterrupt:
         print(

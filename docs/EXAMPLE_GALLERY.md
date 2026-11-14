@@ -60,6 +60,12 @@ The GCD reference retains independent setup failure, hold pass, DRC, LVS and GDS
 
 The isolated XOR-to-OR defect emitted the configured Icarus failure marker. Yosys independently found a counterexample. [Regression matrix](images/examples/verification-regression/acceptance.json) · [PNG provenance](images/examples/verification-regression/provenance.json) · [Reproduction](VERIFICATION_EVALUATION.md)
 
+## IO pad placement
+
+![Verification matrix for the real ICeWall abstract placement](images/examples/io-placement/io_verification.png)
+
+Pinned OpenROAD placed four SKY130 pads, four corners and 156 continuity cells in an isolated OpenDB and DEF checkpoint. Chip GDS and electrical signoff remain blocked. [Filler counts](images/examples/io-placement/io_fillers.png) · [Placement report](images/examples/io-placement/io-report.json) · [PNG provenance](images/examples/io-placement/provenance.json) · [Reproduction](IO_PAD_RING_EVALUATION.md)
+
 ## Regenerate
 
 ~~~sh

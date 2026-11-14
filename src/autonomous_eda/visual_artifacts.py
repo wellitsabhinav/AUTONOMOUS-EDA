@@ -674,6 +674,16 @@ def gallery(root: Path) -> dict[str, Any]:
             if fingerprint(fresh) == fingerprint(json.loads(report.read_bytes()))
             else {}
         )
+    elif (source.root / "io-report.json").is_file():
+        from .io_ring import report as io_report
+
+        path = source.root / "io-report.json"
+        ordinary(path, directory=False)
+        approved = (
+            {path.name: sha256(path)}
+            if fingerprint(io_report(source.root)) == fingerprint(json.loads(path.read_bytes()))
+            else {}
+        )
     else:
         from .verification.report import native_run, read_json, report_run
 

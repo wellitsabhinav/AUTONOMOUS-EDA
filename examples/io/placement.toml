@@ -1,0 +1,46 @@
+schema_version = 1
+enabled = true
+platform = "sky130hd"
+top = "io_demo"
+netlist = "core.v"
+width_um = 1200
+height_um = 1200
+clearance_um = 280
+offset_um = 0
+corner = "sky130_ef_io__corner_pad"
+fillers = [
+    "sky130_ef_io__com_bus_slice_20um",
+    "sky130_ef_io__com_bus_slice_10um",
+    "sky130_ef_io__com_bus_slice_5um",
+    "sky130_ef_io__com_bus_slice_1um",
+]
+
+[[pads]]
+name = "pad_in"
+kind = "input"
+master = "sky130_ef_io__gpiov2_pad_wrapped"
+side = "north"
+location_um = 550
+port = "a"
+
+[[pads]]
+name = "pad_out"
+kind = "output"
+master = "sky130_ef_io__gpiov2_pad_wrapped"
+side = "south"
+location_um = 550
+port = "y"
+
+[[pads]]
+name = "pad_power"
+kind = "power"
+master = "sky130_ef_io__vccd_lvc_pad"
+side = "east"
+location_um = 550
+
+[[pads]]
+name = "pad_ground"
+kind = "ground"
+master = "sky130_ef_io__vssd_lvc_pad"
+side = "west"
+location_um = 550

@@ -38,3 +38,5 @@ autonomous-eda artifacts render experiments/optimization-gcd-m8 --all
 See the [optimization commands](docs/OPTIMIZATION.md) to plan, approve and reproduce a bounded campaign.
 
 See the [architecture](docs/ARCHITECTURE.md), [roadmap](docs/ROADMAP.md), [project state](docs/PROJECT_STATE.md), and [experiment protocol](docs/EXPERIMENT_PROTOCOL.md).
+
+The optional [IO pad-ring adapter](docs/IO_PAD_RING.md) runs ICeWall with verified Sky130 LEF abstracts and reports the remaining chip-level verification gaps.
