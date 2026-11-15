@@ -80,13 +80,13 @@
     {
       "id": 6,
       "stage": "route",
-      "state": "running",
-      "runtime_seconds": null,
-      "detail": null,
+      "state": "failed",
+      "runtime_seconds": 900.8390783859998,
+      "detail": "ORFS route exited 124",
       "log": "attempts/aeda-e7dbb5bf108e4d179026726ecfb6bb3f/route.log",
       "started_at": "2026-11-15T04:18:00.679096+00:00",
-      "ended_at": null,
-      "exit_code": null
+      "ended_at": "2026-11-15T04:33:01.554317+00:00",
+      "exit_code": 124
     }
   ],
   "metrics": {
@@ -672,6 +672,17 @@
       "reference": "maximum native timed subprocess RSS in the attempt log",
       "method": "orfs-native-time-v1",
       "status": "MEASURED"
+    },
+    "stage_runtime.6": {
+      "name": "stage_runtime.6",
+      "value": 900.8390783859998,
+      "unit": "s",
+      "stage": "route",
+      "corner": null,
+      "artifact": "attempts/aeda-e7dbb5bf108e4d179026726ecfb6bb3f/route.log",
+      "reference": "attempt runtime",
+      "method": "monotonic-wall-v1",
+      "status": "MEASURED"
     }
   },
   "artifact_sha256": {
@@ -700,6 +711,7 @@
     "attempts/aeda-8d1cfa332dd7493d89db21ddb1335144/grt.log": "df04ee22050797b77e8598dc3051caa0c90673e22ce6c8839924e94779fab7a1",
     "logs/sky130hd/opentitan_aes/base/5_1_grt.json": "6c3622861406c08bb586fd66b4061ba8dcd61a62d340f237acccade47df9a883",
     "reports/sky130hd/opentitan_aes/base/5_global_route.rpt": "36b34600f47f6e0ffb43ba9ae130e215f95e69c663417dcb1ec8bb88af41493d",
+    "attempts/aeda-e7dbb5bf108e4d179026726ecfb6bb3f/route.log": "7db2d84c86521bb58570d982ab325b5653ce669d4c58ca7732d3795b004e14a5",
     "aes-input/aes.v": "f2adfd17f78bbdbe0ecad10a61e08d8a574aa706feb0a2c7b818775fd5f944a8",
     "aes-input/config.mk": "cc39e0ef8e5595c9c836d73eee57de3bc8dabac11a86891183efe606035196e5",
     "aes-input/block.sdc": "c9469d7e34cb05c457c8951806a15754f7c785dda43bdd6f80aa1525ddb020cc"
@@ -819,6 +831,90 @@
       "tool": "OpenROAD",
       "tool_version": "OpenROAD unknown",
       "top": "aes"
+    }
+  },
+  "detailed_route_blocker": {
+    "classification": "stage_timeout",
+    "limit_seconds": 900,
+    "elapsed_seconds": 900.8390783859998,
+    "attempt": 6,
+    "log": "attempts/aeda-e7dbb5bf108e4d179026726ecfb6bb3f/route.log",
+    "log_sha256": "7db2d84c86521bb58570d982ab325b5653ce669d4c58ca7732d3795b004e14a5"
+  },
+  "physical_profile": {
+    "decision_sha256": "fef89d28f563a64762cb68e905a6488ca90a0a875750a86a5f7a0e8971f9f16c",
+    "verdicts": {
+      "implementation_completion": "FAILED",
+      "verification": "BLOCKED",
+      "physical_feasibility": "BLOCKED",
+      "optimization_objectives": "NOT_APPLICABLE",
+      "full_acceptance": "FAILED"
+    },
+    "gates": {
+      "elaboration": {
+        "status": "UNKNOWN",
+        "diagnostic": "No recorded check for this gate"
+      },
+      "functional_regression": {
+        "status": "UNKNOWN",
+        "diagnostic": "No recorded check for this gate"
+      },
+      "equivalence": {
+        "status": "UNKNOWN",
+        "diagnostic": "No recorded check for this gate"
+      },
+      "synthesis": {
+        "status": "PASSED",
+        "diagnostic": "Verified schema 1 tool evidence passed"
+      },
+      "setup": {
+        "status": "BLOCKED",
+        "diagnostic": "No recorded check for this gate"
+      },
+      "hold": {
+        "status": "BLOCKED",
+        "diagnostic": "No recorded check for this gate"
+      },
+      "timing_coverage": {
+        "status": "BLOCKED",
+        "diagnostic": "Final corner or timing toolchain is unavailable or unsupported"
+      },
+      "gds_generation": {
+        "status": "BLOCKED",
+        "diagnostic": "No recorded check for this gate"
+      },
+      "gds_reopen": {
+        "status": "BLOCKED",
+        "diagnostic": "No recorded check for this gate"
+      },
+      "router": {
+        "status": "BLOCKED",
+        "diagnostic": "No recorded check for this gate"
+      },
+      "platform_drc": {
+        "status": "BLOCKED",
+        "diagnostic": "No recorded check for this gate"
+      },
+      "lvs": {
+        "status": "BLOCKED",
+        "diagnostic": "No recorded check for this gate"
+      },
+      "connectivity": {
+        "status": "UNKNOWN",
+        "diagnostic": "No recorded check for this gate"
+      },
+      "artifact_integrity": {
+        "status": "PASSED",
+        "diagnostic": "Recorded artifact hashes match"
+      },
+      "sequential_equivalence": {
+        "status": "UNKNOWN",
+        "diagnostic": "No supported verification evidence"
+      },
+      "formal_properties": {
+        "status": "UNKNOWN",
+        "diagnostic": "No supported verification evidence"
+      }
     }
   }
 }

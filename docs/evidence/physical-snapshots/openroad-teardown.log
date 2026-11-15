@@ -1,0 +1,27 @@
+OpenROAD unknown 
+Features included (+) or not (-): -GPU +GUI
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO ORD-0030] Using 1 thread(s).
+[WARNING ORD-0012] Hierarchical flow (-hier) is currently in development and may cause multiple issues. Do not use in production environments.
+AEDA_STAGE	floorplan	gcd	1000	0	0	80025	80025	28	341	75	304	0
+Signal 11 received
+Stack trace:
+ 0# 0x0000000001FF83D5 in /OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad
+ 1# 0x0000000000045CB0 in /usr/lib/x86_64-linux-gnu/libc.so.6
+ 2# 0x00000000061432D7 in /OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad
+ 3# 0x000000000605402B in /OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad
+ 4# 0x00000000060360F7 in /OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad
+ 5# 0x000000000605ECAC in /OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad
+ 6# 0x00000000027E5AE1 in /OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad
+ 7# 0x0000000006576413 in /OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad
+ 8# 0x0000000006577AD3 in /OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad
+ 9# 0x0000000006668CD2 in /OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad
+10# 0x0000000001FFD5B3 in /OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad
+11# 0x0000000001FFC963 in /OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad
+12# 0x0000000001FF86F2 in /OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad
+13# 0x00000000066840AC in /OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad
+14# 0x0000000001FF8327 in /OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad
+15# 0x000000000002A601 in /usr/lib/x86_64-linux-gnu/libc.so.6
+16# __libc_start_main in /usr/lib/x86_64-linux-gnu/libc.so.6
+17# 0x0000000001FF7B3A in /OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad

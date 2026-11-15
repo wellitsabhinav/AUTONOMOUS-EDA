@@ -14,6 +14,8 @@ from typing import BinaryIO
 
 from ..evidence import Experiment, acceptance, get_experiment
 from ..manifest import identifier
+from ..opentitan_physical import INPUTS as AES_INPUTS
+from ..opentitan_physical import selected as opentitan_aes
 
 MAX_FILES = 512
 MAX_FILE_BYTES = 128 * 1024**2
@@ -280,6 +282,9 @@ class Snapshot:
                     records.append(json.loads(raw) if raw is not None else {})
             for name in ("manifest.toml", "validate_gds.rb"):
                 self.copy(name)
+            if opentitan_aes(manifest["platform"], manifest["design"]):
+                for name in AES_INPUTS:
+                    self.copy(name)
             for name in ("verification-drc.json", "verification-lvs.json"):
                 if self.copy(name):
                     records.append(

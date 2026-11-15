@@ -103,3 +103,9 @@ Mapped synthesis produced 60,206 Sky130HD standard cells and 487,449 µm² of ce
 ![OpenTitan AES Sky130HD placement checkpoint](../images/examples/opentitan-aes/placement.png)
 
 OpenROAD rendered this placement image from the hash-verified `3_place.odb` checkpoint. The physical receipt includes the OpenDB SHA-256, renderer settings and PNG SHA-256.
+
+## Terminal physical result
+
+The controller completed synthesis, floorplanning, pin placement, standard-cell placement, CTS and global routing. The initial global-route report showed 4,446,663 µm of wire and zero overflow. The CTS log recorded 770 clock buffers across the two clock inputs. The final global-route checkpoint has +0.0053717 ns setup worst slack and +0.344325 ns hold worst slack using estimated parasitics. The final setup and hold gates require extracted timing evidence.
+
+Detailed routing expired at its 900-second limit with exit 124. The last native progress row showed 30% of the first optimization iteration and 15,973 interim violations. The run never reached finish, parasitic extraction, GDS stream-out or independent reopening. The reevaluated physical profile passed synthesis and artifact integrity. It blocked final timing, coverage, router, DRC, LVS and reopening, and recorded failed implementation completion and acceptance. The pinned AES block stays at **Level 2**. [Terminal attempt and gate receipt](../evidence/opentitan-aes/physical.json) · [Studio diagnostic screenshot](../images/studio/aes-diagnostic.png)
