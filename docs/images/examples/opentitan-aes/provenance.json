@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "run_id": "0271212dcd2043cbbef05cc59e4dc55e",
+  "images": {
+    "placement": {
+      "schema_version": 1,
+      "visualization_type": "opendb-placement",
+      "run_id": "0271212dcd2043cbbef05cc59e4dc55e",
+      "filename": "placement.png",
+      "source_artifacts": [
+        "results/sky130hd/opentitan_aes/base/3_place.odb"
+      ],
+      "source_sha256": [
+        "82f237ac8bf329013796707ae2a51f82fd140a66ba7bbf6fcb053c2bc9b634d9"
+      ],
+      "image_sha256": "3f28b27d9ebb848c4865e6516b5090f833d62f3cd2e91aed81254d1eb6159237",
+      "image_width": 859,
+      "image_height": 859,
+      "renderer": "openroad",
+      "renderer_version": "OpenROAD unknown",
+      "render_configuration": {
+        "collateral": [],
+        "container_image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "environment": {
+          "AEDA_FORMAT": "odb",
+          "AEDA_WIDTH": "860",
+          "QT_QPA_PLATFORM": "offscreen"
+        },
+        "generation_command": [
+          "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad",
+          "-no_init",
+          "-threads",
+          "1",
+          "-gui",
+          "-exit",
+          "/work/render.tcl"
+        ],
+        "run_id": "0271212dcd2043cbbef05cc59e4dc55e",
+        "schema_version": 1,
+        "script_sha256": "c21f3609a9057b3d70ba93532ce6942ac4e39de5418b88764970102444f491f2",
+        "source": {
+          "attempt": "3",
+          "evidence": "recorded",
+          "path": "results/sky130hd/opentitan_aes/base/3_place.odb",
+          "sha256": "82f237ac8bf329013796707ae2a51f82fd140a66ba7bbf6fcb053c2bc9b634d9",
+          "stage": "place",
+          "timing": [
+            "reports/sky130hd/opentitan_aes/base/3_detailed_place.rpt",
+            "d0b322fe825fe51fe8b5da0cfcc1daf549c44933c9389633dc5849cd8d51b3da"
+          ]
+        },
+        "tool": "OpenROAD",
+        "tool_version": "OpenROAD unknown",
+        "top": "aes"
+      },
+      "evidence_status": "VERIFIED"
+    }
+  }
+}

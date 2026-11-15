@@ -29,7 +29,8 @@ from .mcp.cli import configure as configure_mcp
 from .mcp.cli import main as mcp_main
 from .optimization_cli import configure as configure_optimization
 from .optimization_cli import main as optimization_main
-from .orfs import stage_plan
+from .orfs import DispatchStopped, stage_plan
+from .resource_budget import run_guard
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -69,6 +70,10 @@ def build_parser() -> argparse.ArgumentParser:
         if name == "run":
             item.add_argument("directory", type=Path)
             item.add_argument("--memory-mib", type=int, default=3500)
+            item.add_argument(
+                "--translated-rtl", type=Path, help="pinned OpenTitan AES translation"
+            )
+            add_run_budget_args(item)
     for name in ("resume", "report", "verify"):
         command = commands.add_parser(
             name,
@@ -81,6 +86,12 @@ def build_parser() -> argparse.ArgumentParser:
         command.add_argument("directory", type=Path)
         command.add_argument("--profile", help="evaluate a named verification profile")
         command.add_argument("--markdown", action="store_true", help="print the acceptance matrix")
+        if name == "report":
+            command.add_argument(
+                "--engineering", action="store_true", help="print a run engineering report"
+            )
+        if name == "resume":
+            add_run_budget_args(command)
         if name == "verify":
             command.add_argument("--render", action="store_true", help="export verified PNGs")
             command.add_argument(
@@ -98,6 +109,15 @@ def build_parser() -> argparse.ArgumentParser:
     compare.add_argument("candidate", type=Path)
     compare.add_argument("--descriptive", action="store_true")
     return parser
+
+
+def add_run_budget_args(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument(
+        "--wall-clock-seconds", type=int, help="stop this implementation invocation"
+    )
+    parser.add_argument(
+        "--max-artifact-mib", type=int, help="stop at the sampled retained size limit"
+    )
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -124,6 +144,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         if args.command == "io":
             return io_main(args)
         return controller_main(args)
+    except DispatchStopped as error:
+        print(str(error), file=sys.stderr)
+        return 1
     except KeyboardInterrupt:
         print(
             {"knowledge": "Knowledge operation interrupted", "ai": "AI workflow interrupted"}.get(
@@ -180,12 +203,39 @@ def controller_main(args: argparse.Namespace) -> int:
             else:
                 if not 128 <= args.memory_mib <= 1048576:
                     raise ValueError("memory-mib must be between 128 and 1048576")
-                initialize(args.directory, args.manifest, manifest, args.memory_mib)
-                success = continue_run(args.directory)
+                guard = run_guard(
+                    args.directory,
+                    wall_seconds=args.wall_clock_seconds,
+                    artifact_mib=args.max_artifact_mib,
+                )
+                initialize(
+                    args.directory,
+                    args.manifest,
+                    manifest,
+                    args.memory_mib,
+                    translated_rtl=args.translated_rtl,
+                )
+                success = continue_run(args.directory, guard=guard)
                 result = get_experiment(args.directory)
     else:
         from .verification.report import LATEST, native_run, report_run, verify_run
 
+        if args.command == "report" and args.engineering:
+            from .engineering_report import engineering_markdown
+
+            if args.markdown or args.profile:
+                raise ValueError("--engineering is separate from acceptance profile reporting")
+            print(engineering_markdown(get_experiment(args.directory)), end="")
+            return 0
+        guard = (
+            run_guard(
+                args.directory,
+                wall_seconds=args.wall_clock_seconds,
+                artifact_mib=args.max_artifact_mib,
+            )
+            if args.command == "resume"
+            else None
+        )
         selected = (args.directory / LATEST).is_file()
         configured = bool(args.profile or args.markdown or selected and args.command == "report")
         if configured or args.command == "verify" and (args.coverage or args.decks):
@@ -205,7 +255,7 @@ def controller_main(args: argparse.Namespace) -> int:
                 success = matrix["verdicts"]["full_acceptance"] == "PASSED"
             else:
                 if args.command == "resume":
-                    success = continue_run(args.directory)
+                    success = continue_run(args.directory, guard=guard)
                 matrix = report_run(args.directory, args.profile)
             if args.markdown:
                 print(markdown(matrix), end="")
@@ -220,7 +270,7 @@ def controller_main(args: argparse.Namespace) -> int:
                 matrix = verify_run(args.directory, matrix["profile"])
                 print(json.dumps(matrix, indent=2, allow_nan=False))
                 return 0 if matrix["verdicts"]["full_acceptance"] == "PASSED" else 1
-            success = continue_run(args.directory)
+            success = continue_run(args.directory, guard=guard)
         if args.command == "verify":
             verify(args.directory)
         evidence = get_experiment(args.directory)

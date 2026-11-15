@@ -1,0 +1,10 @@
+schema_version = 1
+backend = "orfs"
+top = "aes"
+design = "opentitan_aes"
+platform = "sky130hd"
+config = "designs/sky130hd/opentitan_aes/config.mk"
+revision = "23341145f0fc92a522de26d5244a4a0013818f97"
+clock_period_ns = 8.5
+cores = 2
+stage_timeout_seconds = 900
