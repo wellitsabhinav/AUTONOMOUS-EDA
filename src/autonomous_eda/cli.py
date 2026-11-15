@@ -19,11 +19,12 @@ from .diagnostic_cli import main as diagnosis_main
 from .discovery import inspect_rtl
 from .doctor import configure_doctor, doctor_main, environment_secrets, redact_diagnostics
 from .experiment import continue_run, initialize, verify
+from .fusesoc import import_edam
 from .io_ring import configure as configure_io
 from .io_ring import main as io_main
 from .knowledge.cli import configure as configure_knowledge
 from .knowledge.cli import main as knowledge_main
-from .manifest import ORFSManifest, RTLManifest, load_manifest
+from .manifest import ORFSManifest, RTLManifest, integer, load_manifest
 from .mcp.cli import configure as configure_mcp
 from .mcp.cli import main as mcp_main
 from .optimization_cli import configure as configure_optimization
@@ -46,6 +47,11 @@ def build_parser() -> argparse.ArgumentParser:
     configure_optimization(
         commands.add_parser("optimize", help="plan and run bounded optimization")
     )
+    ingest = commands.add_parser("ingest", help="import a FuseSoC synthesis EDAM export")
+    ingest.add_argument("edam", type=Path, help="EDAM 0.2.1 converted to JSON")
+    ingest.add_argument("manifest", type=Path, help="new TOML file under the export root")
+    ingest.add_argument("--revision", required=True)
+    ingest.add_argument("--generated-core-prefix", action="append", default=[])
     for name in ("inspect", "plan", "run"):
         item = commands.add_parser(
             name,
@@ -58,6 +64,8 @@ def build_parser() -> argparse.ArgumentParser:
         item.add_argument("manifest", type=Path)
         if name == "inspect":
             item.add_argument("--netlist", type=Path)
+            item.add_argument("--translated-verilog", type=Path)
+            item.add_argument("--timeout", type=int, default=120, help="seconds per frontend tool")
         if name == "run":
             item.add_argument("directory", type=Path)
             item.add_argument("--memory-mib", type=int, default=3500)
@@ -134,7 +142,11 @@ def controller_main(args: argparse.Namespace) -> int:
 
     result: object
     success = True
-    if args.command == "experiments":
+    if args.command == "ingest":
+        result = import_edam(
+            args.edam, args.manifest, args.revision, tuple(args.generated_core_prefix)
+        )
+    elif args.command == "experiments":
         if args.action == "list":
             result = list_experiments(args.directory)
         elif args.action == "import-reference":
@@ -149,11 +161,16 @@ def controller_main(args: argparse.Namespace) -> int:
         manifest = load_manifest(args.manifest)
         if args.command == "inspect":
             if isinstance(manifest, RTLManifest):
-                result = inspect_rtl(manifest, args.netlist)
+                result = inspect_rtl(
+                    manifest,
+                    args.netlist,
+                    timeout=integer(args.timeout, "timeout", 86400),
+                    translated=args.translated_verilog,
+                )
             else:
                 stage_plan(manifest)
-                if args.netlist is not None:
-                    raise ValueError("--netlist requires an explicit RTL manifest")
+                if args.netlist is not None or args.translated_verilog is not None:
+                    raise ValueError("RTL export options require an explicit RTL manifest")
                 result = asdict(manifest)
         else:
             if not isinstance(manifest, ORFSManifest):

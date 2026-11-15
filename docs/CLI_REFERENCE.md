@@ -5,6 +5,7 @@ Run `autonomous-eda COMMAND --help` for current arguments and defaults. The same
 | Command | Use | Guide |
 | --- | --- | --- |
 | `doctor` | Check the host, local container image and platform files | [Environment Doctor](ENVIRONMENT_DOCTOR.md) |
+| `ingest` | Resolve an exported FuseSoC synthesis EDAM into an ordered RTL manifest | [OpenTitan AES](tutorials/OPENTITAN_AES.md) |
 | `inspect` | Elaborate an ordered RTL manifest or validate a pinned ORFS manifest | [Quickstart](../README.md#installation-and-quickstart) |
 | `plan` | Print an ORFS stage plan without invoking synthesis | [GCD walkthrough](tutorials/GCD_WALKTHROUGH.md#plan-the-implementation) |
 | `run` | Start a new implementation in a fresh experiment directory | [GCD walkthrough](tutorials/GCD_WALKTHROUGH.md#run-and-resume) |

@@ -28,6 +28,7 @@ class RTLManifest:
     revision: str | None = None
     synthesis: Literal["elaborate", "synth"] = "elaborate"
     root: Path | None = None
+    frontend: Literal["yosys", "sv2v"] = "yosys"
 
     def inputs(self) -> dict[str, str]:
         root = self.root or self.sources[0].parent
@@ -57,6 +58,7 @@ class RTLManifest:
                 "revision": self.revision,
                 "synthesis": self.synthesis,
                 "files": self.inputs() if files is None else files,
+                **({"frontend": self.frontend} if self.frontend != "yosys" else {}),
             }
         )
 
@@ -119,6 +121,7 @@ def rtl_manifest(path: Path, top: str, data: dict[str, object]) -> RTLManifest:
         "revision",
         "generated_sources",
         "synthesis",
+        "frontend",
     }
     if set(data) - fields:
         raise ValueError(f"unexpected RTL fields: {sorted(set(data) - fields)}")
@@ -145,8 +148,11 @@ def rtl_manifest(path: Path, top: str, data: dict[str, object]) -> RTLManifest:
 
     language = data.get("language", "systemverilog")
     synthesis = data.get("synthesis", "elaborate")
+    frontend = data.get("frontend", "yosys")
     if language not in ("systemverilog", "verilog") or synthesis not in ("elaborate", "synth"):
         raise ValueError("unsupported HDL language or synthesis mode")
+    if frontend not in ("yosys", "sv2v") or frontend == "sv2v" and language != "systemverilog":
+        raise ValueError("sv2v frontend requires SystemVerilog")
     sources = resolve("sources", (".v", ".sv") if language == "systemverilog" else (".v",))
     generated = resolve("generated_sources", (".v", ".sv"))
     if not sources or not set(generated).issubset(sources):
@@ -184,6 +190,7 @@ def rtl_manifest(path: Path, top: str, data: dict[str, object]) -> RTLManifest:
         revision=revision,
         synthesis="synth" if synthesis == "synth" else "elaborate",
         root=root,
+        frontend="sv2v" if frontend == "sv2v" else "yosys",
     )
 
 

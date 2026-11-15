@@ -171,3 +171,22 @@ def test_chip_figure_sources_match_run_and_receipts() -> None:
         if image["renderer"] == "klayout":
             expected[gds_path] = gds["outputs"]["chip.gds"]
         assert sources == expected
+
+
+def test_opentitan_publication_matches_the_resolved_source_receipts() -> None:
+    root = ROOT / "docs/evidence/opentitan-aes"
+    receipt = json.loads((root / "receipt.json").read_bytes())
+    source = json.loads((root / "resolved.json").read_bytes())
+    inspection = json.loads((root / "inspect.json").read_bytes())
+    for name, digest in receipt["published_sha256"].items():
+        assert sha256(root / name) == digest
+    assert receipt["manifest_sha256"] == source["manifest_sha256"] == inspection["manifest_sha256"]
+    assert (
+        receipt["source_resolution"]["independent_build_receipts_sha256"]
+        == [sha256(root / "resolved.json")] * 2
+    )
+    assert source["inputs_sha256"] == inspection["inputs"]
+    assert receipt["source_resolution"]["ordered_sources"] == len(source["ordered_sources"])
+    assert receipt["source_resolution"]["generated_sources"] == len(
+        source["generated_sources_sha256"]
+    )

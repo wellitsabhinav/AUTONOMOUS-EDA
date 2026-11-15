@@ -6,6 +6,8 @@ The [verification evaluator](VERIFICATION_AND_ACCEPTANCE.md) combines schema 1 c
 
 Adapters turn authoritative design metadata into an ordered manifest. The planner emits explicit stage dependencies, tool targets, required artifacts, and validation rules. The executor invokes fixed tool arguments, records evidence, and validates outputs before checkpointing. Reports carry measured metrics and independent gate states. Optimization and model providers consume those observations through typed interfaces and validated configuration changes.
 
+The [FuseSoC EDAM importer](tutorials/OPENTITAN_AES.md) consumes an exported synthesis fileset and records source ownership, dependency order, and generated output hashes. The RTL inspector can stage that manifest and use sv2v before Yosys, emitting a hierarchy and structural clock/reset inventory. The ORFS controller still requires its own implementation manifest and qualified platform inputs.
+
 ORFS owns physical algorithms and platform-specific build logic. OpenROAD provides placement and routing, OpenSTA handles timing, OpenDB supplies physical database access, and KLayout handles stream-out and applicable verification. See the [ORFS tutorial](https://openroad-flow-scripts.readthedocs.io/en/latest/tutorials/FlowTutorial.html).
 
 The optional [local MCP interface](MCP.md) projects recorded schema 1 evidence through a fixed read-only tool catalog. It uses operator-approved experiment IDs, a bounded read worker, and stdio transport.
