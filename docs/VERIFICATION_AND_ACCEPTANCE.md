@@ -16,6 +16,8 @@ autonomous-eda optimize report experiments/gcd-search --json
 
 An RTL directory contains an authoritative `manifest.toml`, sources and optional `verification.toml`. A physical directory is a completed controller run or a historical archive with an audited `reference.json`. On Linux, `--coverage` runs OpenSTA inside the cached ORFS image. `--decks` reruns the controller's existing DRC and LVS targets. The standalone `verify RUN` command still runs those targets and reports their independent outcomes. Profiled verification returns 0 for acceptance, 1 for failed or blocked, 2 for invalid input, and 130 for interruption.
 
+The physical profile can also evaluate a retained failed run. The pinned AES routing attempt preserves independently verified mapped synthesis and input integrity. Its absent finish artifacts block the final setup, hold, coverage, GDS reopening, DRC and LVS checks. [AES terminal run and gate matrix](evidence/opentitan-aes/physical.json)
+
 | Profile | Required evidence |
 | --- | --- |
 | `rtl` | Structural elaboration, explicit regression and artifact integrity |

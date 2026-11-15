@@ -1,5 +1,18 @@
 # Architecture
 
+```mermaid
+flowchart LR
+    Upstream["RTL, EDAM and TopGen metadata"] --> Ingestion["Design ingestion and readiness"]
+    Ingestion --> Controller["Deterministic controller"]
+    Controller --> Tools["Yosys, ORFS, OpenROAD, OpenSTA and KLayout"]
+    Tools --> Evidence["Evidence store and verified checkpoints"]
+    Evidence --> Verification["Independent verification and acceptance"]
+    Verification --> Evidence
+    Evidence --> Supervisor["Read-only AI supervisor"]
+    Evidence --> Studio["Studio 2.0 and reporting"]
+    Supervisor --> Review["Evidence-backed proposals and digest review"]
+```
+
 The optional [IO pad-ring adapter](IO_PAD_RING.md) runs a digest-approved ICeWall floorplan against a mapped interface and pinned library abstracts. Its OpenDB and DEF checkpoints have separate pad gates.
 
 The [verification evaluator](VERIFICATION_AND_ACCEPTANCE.md) combines schema 1 checkpoints with separately versioned attempts. Native RTL tools receive staged manifest inputs. The pinned OpenSTA probe receives verified final physical inputs. Profiles use independent gate states and objective bounds. MCP exposes a read-only summary from approved archives.

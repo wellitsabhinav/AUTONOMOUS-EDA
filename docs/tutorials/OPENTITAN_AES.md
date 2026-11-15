@@ -109,3 +109,31 @@ OpenROAD rendered this placement image from the hash-verified `3_place.odb` chec
 The controller completed synthesis, floorplanning, pin placement, standard-cell placement, CTS and global routing. The initial global-route report showed 4,446,663 µm of wire and zero overflow. The CTS log recorded 770 clock buffers across the two clock inputs. The final global-route checkpoint has +0.0053717 ns setup worst slack and +0.344325 ns hold worst slack using estimated parasitics. The final setup and hold gates require extracted timing evidence.
 
 Detailed routing expired at its 900-second limit with exit 124. The last native progress row showed 30% of the first optimization iteration and 15,973 interim violations. The run never reached finish, parasitic extraction, GDS stream-out or independent reopening. The reevaluated physical profile passed synthesis and artifact integrity. It blocked final timing, coverage, router, DRC, LVS and reopening, and recorded failed implementation completion and acceptance. The pinned AES block stays at **Level 2**. [Terminal attempt and gate receipt](../evidence/opentitan-aes/physical.json) · [Studio diagnostic screenshot](../images/studio/aes-diagnostic.png)
+
+## Run the upstream cipher-core testbench
+
+The upstream pre-DV testbench exercised the masked DOM cipher core with reseeding and encrypt/decrypt round trips. Verilator 5.020 reported 3,297 simulated cycles, two successful oracle messages and exit 0. The build took 79.82 s and the simulation took 0.73 s. This covers the isolated cipher core. The peripheral DV suite, translated RTL equivalence and mapped functional verification remain open. [Native verification receipt](../evidence/earlgrey/aes-cipher-core-dv.json) · [Pinned testbench](https://github.com/lowRISC/opentitan/tree/b2d662157db2802bde0e40dfc96fd0316042d116/hw/ip/aes/pre_dv/aes_cipher_core_tb)
+
+From the tutorial's Linux environment, prepare the native fileset. Download and extract the Ubuntu 24.04 packages into the isolated tool directory. Check the package digests against the receipt.
+
+~~~bash
+(cd "$root/earlgrey" && PYTHONHASHSEED=0 fusesoc --cores-root=. run --setup \
+  --build-root="$root/aes-dv" lowrisc:dv_verilator:aes_cipher_core_tb)
+mkdir "$root/dv-tools"
+(cd "$root/dv-tools" && apt-get download verilator=5.020-1 libelf-dev=0.190-1.1ubuntu0.1 \
+  && for deb in ./*.deb; do dpkg-deb -x "$deb" ./extracted; done && sha256sum ./*.deb)
+image=openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987
+docker run --rm --pull=never --network=none --cpus 2 --memory 2900m \
+  --mount "type=bind,src=$root/dv-tools/extracted,dst=/tools,readonly" \
+  --mount "type=bind,src=$root/aes-dv,dst=/dv" \
+  --workdir /dv/default-verilator --entrypoint bash "$image" -ec '
+    export PATH=/tools/usr/bin:$PATH
+    export VERILATOR_ROOT=/tools/usr/share/verilator
+    export VERILATOR_BIN=../../bin/verilator_bin
+    export CPATH=/tools/usr/include
+    export LIBRARY_PATH=/tools/usr/lib/x86_64-linux-gnu
+    verilator --version
+    make -j2 VERILATOR=/tools/usr/bin/verilator
+    ./Vaes_cipher_core_tb
+  '
+~~~

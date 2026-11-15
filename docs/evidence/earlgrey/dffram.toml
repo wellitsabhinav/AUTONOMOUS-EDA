@@ -1,0 +1,18 @@
+schema_version = 1
+master = "DFFRAM_4K"
+kind = "register_file"
+implementation = "hard_macro"
+width_bits = 32
+depth_words = 1024
+clock = "CLK"
+orientations = ["R0"]
+target_corner = "tt_025C_1v80"
+
+[supplies]
+VPWR = "POWER"
+VGND = "GROUND"
+
+[views]
+verilog = "DFFRAM_4K.v"
+lef = "DFFRAM_4K.lef"
+gds = "DFFRAM_4K.gds"

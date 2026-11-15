@@ -31,6 +31,7 @@ Use the RTL workflow to check an explicitly declared source set and testbench. U
 | --- | --- | --- |
 | RTL elaboration and functional regression | Implemented | Yosys hierarchy and Icarus regression with an explicit testbench and oracle |
 | Hierarchical design ingestion | Implemented | Ordered FuseSoC synthesis export and sv2v/Yosys elaboration verified on [pinned OpenTitan AES](docs/tutorials/OPENTITAN_AES.md) |
+| Macro and partition readiness | Partially validated | [Earl Grey source inventory and DFFRAM view checks](docs/OPENTITAN_READINESS.md) |
 | Formal checks | Partially validated | Exact-port combinational two-state SAT with a real mismatch and correction |
 | Synthesis, floorplan, placement, clock-tree synthesis (CTS), global and detailed routing | Implemented | Pinned ORFS checkpoints for Sky130HD GCD and Ibex |
 | Static timing analysis (STA) | Implemented | Setup and hold evaluated independently. Both reference designs fail setup at their original clocks. |

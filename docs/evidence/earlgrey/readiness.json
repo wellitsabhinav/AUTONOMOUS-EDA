@@ -1,0 +1,3130 @@
+{
+  "schema_version": 1,
+  "readiness_level": 0,
+  "source_revision": "b2d662157db2802bde0e40dfc96fd0316042d116",
+  "topgen_design": "earlgrey",
+  "native_toplevel": "chip_earlgrey_asic",
+  "inputs_sha256": {
+    "topgen_json": "acb246657d975a40fa1250648d03686f66003a9b0a2e9f33fb65c660cde06e0d",
+    "edam_json": "f016c5b0decc713cb33ea4b614ce4d1a0c5f33e5ac74f08ef268dfb14ca49fce"
+  },
+  "native_manifest_file_count": 706,
+  "native_manifest_file_types": {
+    "cSource": 3,
+    "cppSource": 13,
+    "systemVerilogSource": 688,
+    "unspecified": 2
+  },
+  "core_dependencies": {
+    "lowrisc:constants:jtag_id_pkg:0": [],
+    "lowrisc:constants:top_pkg:0": [],
+    "lowrisc:dv:crypto_prince_ref:0.1": [],
+    "lowrisc:dv:dv_fcov_macros:0": [],
+    "lowrisc:dv:dv_macros:0": [],
+    "lowrisc:dv:pins_if:0": [],
+    "lowrisc:dv:scramble_model:0": [
+      "lowrisc:dv:crypto_prince_ref:0.1"
+    ],
+    "lowrisc:dv:secded_enc:0": [],
+    "lowrisc:dv_verilator:memutil_dpi:0": [
+      "lowrisc:dv:secded_enc:0"
+    ],
+    "lowrisc:dv_verilator:memutil_dpi_scrambled:0": [
+      "lowrisc:dv:scramble_model:0",
+      "lowrisc:dv_verilator:memutil_dpi:0"
+    ],
+    "lowrisc:ibex:ibex_core:0.1": [
+      "lowrisc:dv:dv_fcov_macros:0",
+      "lowrisc:ibex:ibex_icache:0.1",
+      "lowrisc:ibex:ibex_pkg:0.1",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:clock_gating:0",
+      "lowrisc:prim:lfsr:0.1",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:tool:check_tool_requirements:0.1"
+    ],
+    "lowrisc:ibex:ibex_icache:0.1": [
+      "lowrisc:ibex:ibex_pkg:0.1",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:secded:0.1"
+    ],
+    "lowrisc:ibex:ibex_pkg:0.1": [],
+    "lowrisc:ibex:ibex_top:0.1": [
+      "lowrisc:ibex:ibex_core:0.1",
+      "lowrisc:ibex:ibex_pkg:0.1",
+      "lowrisc:prim:and2:0",
+      "lowrisc:prim:buf:0",
+      "lowrisc:prim:clock_mux2:0",
+      "lowrisc:prim:count:0",
+      "lowrisc:prim:flop:0",
+      "lowrisc:prim:onehot:0",
+      "lowrisc:prim:onehot_check:0",
+      "lowrisc:prim:ram_1p_scr:0.1",
+      "lowrisc:tool:check_tool_requirements:0.1"
+    ],
+    "lowrisc:ip:adc_ctrl:1.0": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:systems:ast_pkg:0"
+    ],
+    "lowrisc:ip:aes:1.0": [
+      "lowrisc:ip:edn_pkg:0.1",
+      "lowrisc:ip:keymgr_pkg:0.1",
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:lfsr:0.1",
+      "lowrisc:prim:sparse_fsm:0",
+      "lowrisc:prim:trivium:0.1",
+      "lowrisc:prim:util:0.1"
+    ],
+    "lowrisc:ip:alert_handler_component:0.1": [
+      "lowrisc:opentitan:top_earlgrey_alert_handler_reg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:buf:0",
+      "lowrisc:prim:count:0",
+      "lowrisc:prim:double_lfsr:0",
+      "lowrisc:prim:edn_req:0.1",
+      "lowrisc:prim:esc:0",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:prim:sparse_fsm:0"
+    ],
+    "lowrisc:ip:aon_timer:0.1": [
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:edge_detector:0.1",
+      "lowrisc:prim:lc_sync:0.1"
+    ],
+    "lowrisc:ip:csrng:0.1": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:ip:aes:1.0",
+      "lowrisc:ip:csrng_pkg:0.1",
+      "lowrisc:ip:otp_ctrl_pkg:1.0",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:count:0",
+      "lowrisc:prim:edge_detector:0.1",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:onehot:0",
+      "lowrisc:prim:sparse_fsm:0"
+    ],
+    "lowrisc:ip:csrng_pkg:0.1": [
+      "lowrisc:ip:entropy_src_pkg:0.1",
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:tlul:headers:0.1"
+    ],
+    "lowrisc:ip:edn:0.1": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:ip:edn_pkg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:count:0",
+      "lowrisc:prim:edge_detector:0.1",
+      "lowrisc:prim:sparse_fsm:0"
+    ],
+    "lowrisc:ip:edn_pkg:0.1": [
+      "lowrisc:ip:csrng_pkg:0.1",
+      "lowrisc:tlul:headers:0.1"
+    ],
+    "lowrisc:ip:entropy_src:0.1": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:ip:entropy_src_ack_sm_pkg:0.1",
+      "lowrisc:ip:entropy_src_main_sm_pkg:0.1",
+      "lowrisc:ip:entropy_src_pkg:0.1",
+      "lowrisc:ip:otp_ctrl_pkg:1.0",
+      "lowrisc:ip:sha3:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:count:0",
+      "lowrisc:prim:edge_detector:0.1",
+      "lowrisc:prim:lfsr:0.1",
+      "lowrisc:prim:macros:0.1",
+      "lowrisc:prim:max_tree:0",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:prim:sparse_fsm:0",
+      "lowrisc:prim:sum_tree:0"
+    ],
+    "lowrisc:ip:entropy_src_ack_sm_pkg:0.1": [],
+    "lowrisc:ip:entropy_src_main_sm_pkg:0.1": [],
+    "lowrisc:ip:entropy_src_pkg:0.1": [],
+    "lowrisc:ip:flash_ctrl_prim_reg_top:1.0": [
+      "lowrisc:opentitan:top_earlgrey_flash_ctrl_pkg:0.1"
+    ],
+    "lowrisc:ip:gpio:0.1": [
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1"
+    ],
+    "lowrisc:ip:hmac:0.1": [
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1"
+    ],
+    "lowrisc:ip:i2c:0.1": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:ip:i2c_pkg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:ram_1p_adv:0.1",
+      "lowrisc:prim:ram_1p_pkg:0"
+    ],
+    "lowrisc:ip:i2c_pkg:0.1": [],
+    "lowrisc:ip:jtag_pkg:0.1": [],
+    "lowrisc:ip:keymgr:0.1": [
+      "lowrisc:opentitan:top_earlgrey_flash_ctrl_pkg:0.1",
+      "lowrisc:ip:keymgr_pkg:0.1",
+      "lowrisc:ip:kmac_pkg:0.1",
+      "lowrisc:ip:otp_ctrl_pkg:1.0",
+      "lowrisc:ip:rom_ctrl_pkg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:count:0",
+      "lowrisc:prim:edn_req:0.1",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:lfsr:0.1",
+      "lowrisc:prim:msb_extend:0",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:prim:sec_anchor:0.1",
+      "lowrisc:prim:secded:0.1",
+      "lowrisc:prim:sparse_fsm:0"
+    ],
+    "lowrisc:ip:keymgr_pkg:0.1": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:ip:edn_pkg:0.1"
+    ],
+    "lowrisc:ip:kmac:0.1": [
+      "lowrisc:ip:edn_pkg:0.1",
+      "lowrisc:ip:keymgr_pkg:0.1",
+      "lowrisc:ip:kmac_pkg:0.1",
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:ip:sha3:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:arbiter:0",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:count:0",
+      "lowrisc:prim:double_lfsr:0",
+      "lowrisc:prim:edn_req:0.1",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:prim:prim_dom_and_2share:0.1",
+      "lowrisc:prim:sparse_fsm:0",
+      "lowrisc:prim:trivium:0.1"
+    ],
+    "lowrisc:ip:kmac_pkg:0.1": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:ip:sha3:0.1"
+    ],
+    "lowrisc:ip:lc_ctrl:0.1": [
+      "lowrisc:opentitan:top_earlgrey_alert_handler_reg:0.1",
+      "lowrisc:opentitan:top_earlgrey_pwrmgr_pkg:0.1",
+      "lowrisc:ip:kmac_pkg:0.1",
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:ip:otp_ctrl_pkg:1.0",
+      "lowrisc:ip:rv_dm:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:clock_mux2:0",
+      "lowrisc:prim:esc:0",
+      "lowrisc:prim:lc_sender:0.1",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:prim:sparse_fsm:0"
+    ],
+    "lowrisc:ip:lc_ctrl_pkg:0.1": [
+      "lowrisc:ip:lc_ctrl_state_pkg:0.1",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:tlul:headers:0.1"
+    ],
+    "lowrisc:ip:lc_ctrl_state_pkg:0.1": [
+      "lowrisc:prim:util:0.1"
+    ],
+    "lowrisc:ip:otbn:0.1": [
+      "lowrisc:ip:edn_pkg:0.1",
+      "lowrisc:ip:keymgr_pkg:0.1",
+      "lowrisc:ip:otbn_pkg:0.1",
+      "lowrisc:ip:otp_ctrl_pkg:1.0",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:blanker:0",
+      "lowrisc:prim:cipher_pkg:0.1",
+      "lowrisc:prim:crc32:0",
+      "lowrisc:prim:edn_req:0.1",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:lfsr:0.1",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:prim:onehot:0",
+      "lowrisc:prim:onehot_check:0",
+      "lowrisc:prim:ram_1p_scr:0.1",
+      "lowrisc:prim:sparse_fsm:0",
+      "lowrisc:prim:util:0.1",
+      "lowrisc:prim:xoshiro256pp:0"
+    ],
+    "lowrisc:ip:otbn_pkg:0.1": [
+      "lowrisc:ip:otp_ctrl_pkg:1.0",
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:ip:otp_ctrl:1.0": [
+      "lowrisc:ip:edn_pkg:0.1",
+      "lowrisc:opentitan:top_earlgrey_pwrmgr_pkg:0.1",
+      "lowrisc:ip:otp_ctrl_pkg:1.0",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:buf:0",
+      "lowrisc:prim:count:0",
+      "lowrisc:prim:double_lfsr:0",
+      "lowrisc:prim:edn_req:0.1",
+      "lowrisc:prim:flop:0",
+      "lowrisc:prim:lc_sender:0.1",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:otp:0",
+      "lowrisc:prim:ram_1p:0",
+      "lowrisc:prim:sec_anchor:0.1",
+      "lowrisc:prim:secded:0.1",
+      "lowrisc:prim:sparse_fsm:0",
+      "lowrisc:systems:ast_pkg:0"
+    ],
+    "lowrisc:ip:otp_ctrl_pkg:1.0": [
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:tlul:headers:0.1"
+    ],
+    "lowrisc:ip:otp_ctrl_prim_reg_top:1.0": [
+      "lowrisc:ip:otp_ctrl_pkg:1.0"
+    ],
+    "lowrisc:ip:pattgen:0.1": [
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:ip:pinmux:0.1": [
+      "lowrisc:ip:pinmux_component:0.1",
+      "lowrisc:ip:pinmux_reg:0.1"
+    ],
+    "lowrisc:ip:pinmux_component:0.1": [
+      "lowrisc:ip:jtag_pkg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:ip:usbdev:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:buf:0",
+      "lowrisc:prim:clock_buf:0",
+      "lowrisc:prim:lc_dec:0.1",
+      "lowrisc:prim:lc_or_hardened:0.1",
+      "lowrisc:prim:lc_sender:0.1",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:pad_attr:0",
+      "lowrisc:prim:pad_wrapper_pkg:0"
+    ],
+    "lowrisc:ip:pinmux_reg:0.1": [
+      "lowrisc:tlul:headers:0.1"
+    ],
+    "lowrisc:ip:pwm:0.1": [
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:ip:pwrmgr_component:0.1": [
+      "lowrisc:opentitan:top_earlgrey_alert_handler_reg:0.1",
+      "lowrisc:opentitan:top_earlgrey_pwrmgr_pkg:0.1",
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:ip:rom_ctrl_pkg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:clock_buf:0",
+      "lowrisc:prim:esc:0",
+      "lowrisc:prim:lc_sender:0.1",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:measure:0",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:prim:sparse_fsm:0"
+    ],
+    "lowrisc:ip:rom_ctrl:0.1": [
+      "lowrisc:ip:kmac_pkg:0.1",
+      "lowrisc:ip:rom_ctrl_pkg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:alert:0",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:buf:0",
+      "lowrisc:prim:cipher:0",
+      "lowrisc:prim:count:0",
+      "lowrisc:prim:rom_adv:0.1",
+      "lowrisc:prim:sec_anchor:0.1",
+      "lowrisc:prim:sparse_fsm:0",
+      "lowrisc:prim:subreg:0",
+      "lowrisc:prim:util:0.1"
+    ],
+    "lowrisc:ip:rom_ctrl_pkg:0.1": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:mubi:0.1"
+    ],
+    "lowrisc:ip:rstmgr_cnsty_chk:0": [
+      "lowrisc:opentitan:top_earlgrey_rstmgr_pkg:0.1",
+      "lowrisc:ip:rv_core_ibex_pkg:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:sparse_fsm:0"
+    ],
+    "lowrisc:ip:rv_core_ibex:0.1": [
+      "lowrisc:ibex:ibex_top:0.1",
+      "lowrisc:opentitan:top_earlgrey_alert_handler_reg:0.1",
+      "lowrisc:opentitan:top_earlgrey_pwrmgr_pkg:0.1",
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:ip:otp_ctrl_pkg:1.0",
+      "lowrisc:ip:rv_core_ibex_pkg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:clock_gating:0",
+      "lowrisc:prim:edn_req:0.1",
+      "lowrisc:prim:esc:0",
+      "lowrisc:prim:lc_sender:0.1",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:tlul:adapter_host:0.1"
+    ],
+    "lowrisc:ip:rv_core_ibex_pkg:0.1": [
+      "lowrisc:ibex:ibex_pkg:0.1"
+    ],
+    "lowrisc:ip:rv_dm:0.1": [
+      "lowrisc:ip:jtag_pkg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:clock_mux2:0",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:tlul:adapter_host:0.1",
+      "pulp-platform:riscv-dbg:0.1:0"
+    ],
+    "lowrisc:ip:rv_plic_component:0.1": [
+      "lowrisc:prim:alert:0",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:flop_2sync:0",
+      "lowrisc:prim:max_tree:0",
+      "lowrisc:prim:reg_we_check:0"
+    ],
+    "lowrisc:ip:rv_timer:0.1": [
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1"
+    ],
+    "lowrisc:ip:sha3:0.1": [
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:prim:prim_dom_and_2share:0.1"
+    ],
+    "lowrisc:ip:spi_device:0.1": [
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:ip:spi_device_pkg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:clock_buf:0",
+      "lowrisc:prim:clock_gating:0",
+      "lowrisc:prim:clock_inv:0",
+      "lowrisc:prim:edge_detector:0.1",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:prim:ram_1r1w_async_adv:0.1",
+      "lowrisc:prim:ram_2p_async_adv:0.1",
+      "lowrisc:prim:ram_2p_pkg:0",
+      "lowrisc:prim:rst_sync:0"
+    ],
+    "lowrisc:ip:spi_device_pkg:0.1": [],
+    "lowrisc:ip:spi_host:1.0": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:ip:spi_device_pkg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:flop_en:0"
+    ],
+    "lowrisc:ip:sram_ctrl:0.1": [
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:ip:otp_ctrl_pkg:1.0",
+      "lowrisc:ip:sram_ctrl_pkg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:count:0",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:ram_1p_scr:0.1",
+      "lowrisc:prim:util:0.1",
+      "lowrisc:tlul:adapter_sram:0.1"
+    ],
+    "lowrisc:ip:sram_ctrl_pkg:0.1": [
+      "lowrisc:ip:otp_ctrl_pkg:1.0",
+      "lowrisc:tlul:headers:0.1"
+    ],
+    "lowrisc:ip:sysrst_ctrl:1.0": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1"
+    ],
+    "lowrisc:ip:tlul:0.1": [
+      "lowrisc:tlul:adapter_reg:0.1",
+      "lowrisc:tlul:adapter_sram:0.1",
+      "lowrisc:tlul:lc_gate:0.1",
+      "lowrisc:tlul:socket_1n:0.1",
+      "lowrisc:tlul:socket_m1:0.1",
+      "lowrisc:tlul:sram2tlul:0.1"
+    ],
+    "lowrisc:ip:uart:0.1": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1"
+    ],
+    "lowrisc:ip:usb_fs_nb_pe:0.1": [
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:flop:0"
+    ],
+    "lowrisc:ip:usbdev:0.1": [
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:ip:usb_fs_nb_pe:0.1",
+      "lowrisc:ip:usbdev_pkg:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:edge_detector:0.1",
+      "lowrisc:prim:ram_1p_adv:0.1",
+      "lowrisc:tlul:socket_1n:0.1"
+    ],
+    "lowrisc:ip:usbdev_pkg:0.1": [],
+    "lowrisc:opentitan:top_earlgrey_alert_handler:0.1": [
+      "lowrisc:ip:alert_handler_component:0.1",
+      "lowrisc:opentitan:top_earlgrey_alert_handler_reg:0.1"
+    ],
+    "lowrisc:opentitan:top_earlgrey_alert_handler_reg:0.1": [
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:subreg:0",
+      "lowrisc:tlul:headers:0.1"
+    ],
+    "lowrisc:opentitan:top_earlgrey_clkmgr:0.1": [
+      "lowrisc:opentitan:top_earlgrey_pwrmgr_pkg:0.1",
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:opentitan:top_earlgrey_clkmgr_pkg:0.1",
+      "lowrisc:opentitan:top_earlgrey_clkmgr_reg:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:buf:0",
+      "lowrisc:prim:clock_buf:0",
+      "lowrisc:prim:clock_div:0",
+      "lowrisc:prim:clock_gating:0",
+      "lowrisc:prim:edge_detector:0.1",
+      "lowrisc:prim:lc_sender:0.1",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:measure:0"
+    ],
+    "lowrisc:opentitan:top_earlgrey_clkmgr_pkg:0.1": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:opentitan:top_earlgrey_pwrmgr_pkg:0.1",
+      "lowrisc:prim:mubi:0.1"
+    ],
+    "lowrisc:opentitan:top_earlgrey_clkmgr_reg:0.1": [
+      "lowrisc:tlul:headers:0.1"
+    ],
+    "lowrisc:opentitan:top_earlgrey_flash_ctrl:0.1": [
+      "lowrisc:ip:jtag_pkg:0.1",
+      "lowrisc:ip:otp_ctrl_pkg:1.0",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:opentitan:top_earlgrey_flash_ctrl_pkg:0.1",
+      "lowrisc:opentitan:top_earlgrey_flash_ctrl_reg:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:count:0",
+      "lowrisc:prim:edge_detector:0.1",
+      "lowrisc:prim:flash:0",
+      "lowrisc:prim:flop_2sync:0",
+      "lowrisc:prim:gf_mult:0",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:lfsr:0.1",
+      "lowrisc:prim:secded:0.1",
+      "lowrisc:prim:sparse_fsm:0"
+    ],
+    "lowrisc:opentitan:top_earlgrey_flash_ctrl_pkg:0.1": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:ip:edn_pkg:0.1",
+      "lowrisc:opentitan:top_earlgrey_flash_ctrl_reg:0.1",
+      "lowrisc:opentitan:top_earlgrey_pwrmgr_pkg:0.1",
+      "lowrisc:ip:jtag_pkg:0.1",
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:prim:util:0.1",
+      "lowrisc:systems:ast_pkg:0",
+      "lowrisc:tlul:headers:0.1"
+    ],
+    "lowrisc:opentitan:top_earlgrey_flash_ctrl_reg:0.1": [
+      "lowrisc:tlul:headers:0.1"
+    ],
+    "lowrisc:opentitan:top_earlgrey_pwrmgr:0.1": [
+      "lowrisc:ip:pwrmgr_component:0.1",
+      "lowrisc:opentitan:top_earlgrey_pwrmgr_pkg:0.1",
+      "lowrisc:opentitan:top_earlgrey_pwrmgr_reg:0.1"
+    ],
+    "lowrisc:opentitan:top_earlgrey_pwrmgr_pkg:0.1": [
+      "lowrisc:opentitan:top_earlgrey_pwrmgr_reg:0.1"
+    ],
+    "lowrisc:opentitan:top_earlgrey_pwrmgr_reg:0.1": [
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:subreg:0",
+      "lowrisc:tlul:headers:0.1"
+    ],
+    "lowrisc:opentitan:top_earlgrey_rstmgr:0.1": [
+      "lowrisc:ip:alert_handler_component:0.1",
+      "lowrisc:ip:rstmgr_cnsty_chk:0",
+      "lowrisc:ip:rv_core_ibex_pkg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:opentitan:top_earlgrey_rstmgr_pkg:0.1",
+      "lowrisc:opentitan:top_earlgrey_rstmgr_reg:0.1",
+      "lowrisc:prim:clock_buf:0",
+      "lowrisc:prim:clock_mux2:0",
+      "lowrisc:prim:esc:0",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:prim:sparse_fsm:0"
+    ],
+    "lowrisc:opentitan:top_earlgrey_rstmgr_pkg:0.1": [
+      "lowrisc:opentitan:top_earlgrey_alert_handler_reg:0.1",
+      "lowrisc:opentitan:top_earlgrey_pwrmgr_pkg:0.1",
+      "lowrisc:opentitan:top_earlgrey_rstmgr_reg:0.1"
+    ],
+    "lowrisc:opentitan:top_earlgrey_rstmgr_reg:0.1": [
+      "lowrisc:tlul:headers:0.1"
+    ],
+    "lowrisc:opentitan:top_earlgrey_rv_plic:0": [
+      "lowrisc:ip:rv_plic_component:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:subreg:0"
+    ],
+    "lowrisc:prim:alert:0": [
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:buf:0",
+      "lowrisc:prim:diff_decode:0",
+      "lowrisc:prim:flop:0",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:prim:sec_anchor:0.1"
+    ],
+    "lowrisc:prim:all:0.1": [
+      "lowrisc:prim:alert:0",
+      "lowrisc:prim:and2:0",
+      "lowrisc:prim:arbiter:0",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:buf:0",
+      "lowrisc:prim:cipher:0",
+      "lowrisc:prim:clock_inv:0",
+      "lowrisc:prim:clock_mux2:0",
+      "lowrisc:prim:diff_decode:0",
+      "lowrisc:prim:esc:0",
+      "lowrisc:prim:fifo:0",
+      "lowrisc:prim:flop:0",
+      "lowrisc:prim:flop_2sync:0",
+      "lowrisc:prim:flop_en:0",
+      "lowrisc:prim:pad_wrapper:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:reg_we_check:0",
+      "lowrisc:prim:rst_sync:0",
+      "lowrisc:prim:sha2:0",
+      "lowrisc:prim:subreg:0",
+      "lowrisc:prim:util:0.1",
+      "lowrisc:prim:xnor2:0",
+      "lowrisc:prim:xor2:0"
+    ],
+    "lowrisc:prim:and2:0": [
+      "lowrisc:prim_abstract:and2:0",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:arbiter:0": [
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:prim:assert:0.1": [],
+    "lowrisc:prim:blanker:0": [
+      "lowrisc:prim:and2:0"
+    ],
+    "lowrisc:prim:buf:0": [
+      "lowrisc:prim_abstract:buf:0",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:cdc_rand_delay:0": [
+      "lowrisc:dv:dv_macros:0",
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:prim:cipher:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:cipher_pkg:0.1"
+    ],
+    "lowrisc:prim:cipher_pkg:0.1": [],
+    "lowrisc:prim:clock_buf:0": [
+      "lowrisc:prim_abstract:clock_buf:0",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:clock_div:0": [
+      "lowrisc:prim_abstract:clock_div:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:clock_gating:0": [
+      "lowrisc:prim_abstract:clock_gating:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:clock_inv:0": [
+      "lowrisc:prim_abstract:clock_inv:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:clock_mux2:0": [
+      "lowrisc:prim_abstract:clock_mux2:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:count:0": [
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:prim:crc32:0": [],
+    "lowrisc:prim:diff_decode:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:flop_2sync:0",
+      "lowrisc:prim:xnor2:0"
+    ],
+    "lowrisc:prim:double_lfsr:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:buf:0",
+      "lowrisc:prim:lfsr:0.1"
+    ],
+    "lowrisc:prim:edge_detector:0.1": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:flop_2sync:0"
+    ],
+    "lowrisc:prim:edn_req:0.1": [
+      "lowrisc:ip:edn_pkg:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:prim:esc:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:buf:0",
+      "lowrisc:prim:count:0",
+      "lowrisc:prim:diff_decode:0",
+      "lowrisc:prim:flop:0",
+      "lowrisc:prim:sec_anchor:0.1"
+    ],
+    "lowrisc:prim:fifo:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:flop_2sync:0",
+      "lowrisc:prim:util:0.1"
+    ],
+    "lowrisc:prim:flash:0": [
+      "lowrisc:prim_abstract:flash:0",
+      "lowrisc:prim:clock_gating:0",
+      "lowrisc:prim:clock_inv:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1",
+      "lowrisc:prim:ram_1p:0"
+    ],
+    "lowrisc:prim:flop:0": [
+      "lowrisc:prim_abstract:flop:0",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:flop_2sync:0": [
+      "lowrisc:prim_abstract:flop_2sync:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:flop_en:0": [
+      "lowrisc:prim_abstract:flop_en:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:gf_mult:0": [
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:prim:lc_dec:0.1": [
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:prim:buf:0"
+    ],
+    "lowrisc:prim:lc_or_hardened:0.1": [
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:lc_sync:0.1"
+    ],
+    "lowrisc:prim:lc_sender:0.1": [
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:flop:0"
+    ],
+    "lowrisc:prim:lc_sync:0.1": [
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:buf:0",
+      "lowrisc:prim:flop_2sync:0"
+    ],
+    "lowrisc:prim:lfsr:0.1": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:cipher_pkg:0.1"
+    ],
+    "lowrisc:prim:macros:0.1": [],
+    "lowrisc:prim:max_tree:0": [
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:prim:measure:0": [
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:flop_2sync:0"
+    ],
+    "lowrisc:prim:msb_extend:0": [
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:prim:mubi:0.1": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:buf:0",
+      "lowrisc:prim:flop:0"
+    ],
+    "lowrisc:prim:multibit_sync:0.1": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:flop_2sync:0"
+    ],
+    "lowrisc:prim:onehot:0": [
+      "lowrisc:prim:util:0.1"
+    ],
+    "lowrisc:prim:onehot_check:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:util:0.1"
+    ],
+    "lowrisc:prim:otp:0": [
+      "lowrisc:prim_abstract:otp:0",
+      "lowrisc:prim:clock_gating:0",
+      "lowrisc:prim:clock_inv:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:otp_pkg:0.1": [],
+    "lowrisc:prim:pad_attr:0": [
+      "lowrisc:prim_abstract:pad_attr:0",
+      "lowrisc:prim:pad_wrapper_pkg:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:pad_wrapper:0": [
+      "lowrisc:prim_abstract:pad_wrapper:0",
+      "lowrisc:prim:pad_wrapper_pkg:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:pad_wrapper_pkg:0": [],
+    "lowrisc:prim:prim_dom_and_2share:0.1": [
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:prim:prim_pkg:0.1": [
+      "lowrisc:prim_abstract:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:primgen:0.1": [],
+    "lowrisc:prim:ram_1p:0": [
+      "lowrisc:prim_abstract:ram_1p:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1",
+      "lowrisc:prim:ram_1p_pkg:0"
+    ],
+    "lowrisc:prim:ram_1p_adv:0.1": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:ram_1p:0",
+      "lowrisc:prim:secded:0.1",
+      "lowrisc:prim:util:0.1"
+    ],
+    "lowrisc:prim:ram_1p_pkg:0": [],
+    "lowrisc:prim:ram_1p_scr:0.1": [
+      "lowrisc:dv_verilator:memutil_dpi_scrambled:0",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:buf:0",
+      "lowrisc:prim:cipher:0",
+      "lowrisc:prim:lfsr:0.1",
+      "lowrisc:prim:ram_1p_adv:0.1",
+      "lowrisc:prim:util:0.1",
+      "lowrisc:prim:util_get_scramble_params:0"
+    ],
+    "lowrisc:prim:ram_1r1w:0": [
+      "lowrisc:prim_abstract:ram_1r1w:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1",
+      "lowrisc:prim:ram_2p_pkg:0"
+    ],
+    "lowrisc:prim:ram_1r1w_async_adv:0.1": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:ram_1r1w:0",
+      "lowrisc:prim:secded:0.1",
+      "lowrisc:prim:util:0.1"
+    ],
+    "lowrisc:prim:ram_2p:0": [
+      "lowrisc:prim_abstract:ram_2p:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1",
+      "lowrisc:prim:ram_2p_pkg:0"
+    ],
+    "lowrisc:prim:ram_2p_async_adv:0.1": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:ram_2p:0",
+      "lowrisc:prim:secded:0.1",
+      "lowrisc:prim:util:0.1"
+    ],
+    "lowrisc:prim:ram_2p_pkg:0": [],
+    "lowrisc:prim:reg_we_check:0": [
+      "lowrisc:prim:buf:0",
+      "lowrisc:prim:onehot_check:0",
+      "lowrisc:prim:util:0.1"
+    ],
+    "lowrisc:prim:rom:0": [
+      "lowrisc:prim_abstract:rom:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1",
+      "lowrisc:prim:rom_pkg:0"
+    ],
+    "lowrisc:prim:rom_adv:0.1": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:rom:0"
+    ],
+    "lowrisc:prim:rom_pkg:0": [],
+    "lowrisc:prim:rst_sync:0": [
+      "lowrisc:prim:cdc_rand_delay:0",
+      "lowrisc:prim:flop_2sync:0",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:prim:prim_pkg:0.1"
+    ],
+    "lowrisc:prim:sec_anchor:0.1": [
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:prim:secded:0.1": [],
+    "lowrisc:prim:sha2:0": [
+      "lowrisc:prim:sha2_pkg:0"
+    ],
+    "lowrisc:prim:sha2_pkg:0": [],
+    "lowrisc:prim:sparse_fsm:0": [
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:prim:subreg:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:mubi:0.1"
+    ],
+    "lowrisc:prim:sum_tree:0": [
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:prim:trivium:0.1": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:util:0.1"
+    ],
+    "lowrisc:prim:usb_diff_rx:0": [
+      "lowrisc:prim_abstract:usb_diff_rx:0",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:util:0.1": [
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:prim:util_get_scramble_params:0": [],
+    "lowrisc:prim:util_memload:0": [],
+    "lowrisc:prim:xnor2:0": [
+      "lowrisc:prim_abstract:xnor2:0",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:xor2:0": [
+      "lowrisc:prim_abstract:xor2:0",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim:primgen:0.1"
+    ],
+    "lowrisc:prim:xoshiro256pp:0": [
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:prim_abstract:and2:0": [
+      "lowrisc:prim_generic:and2:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim_xilinx:and2:0",
+      "lowrisc:prim_xilinx_ultrascale:and2:0"
+    ],
+    "lowrisc:prim_abstract:buf:0": [
+      "lowrisc:prim_generic:buf:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim_xilinx:buf:0",
+      "lowrisc:prim_xilinx_ultrascale:buf:0"
+    ],
+    "lowrisc:prim_abstract:clock_buf:0": [
+      "lowrisc:prim_generic:clock_buf:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim_xilinx:clock_buf:0",
+      "lowrisc:prim_xilinx_ultrascale:clock_buf:0"
+    ],
+    "lowrisc:prim_abstract:clock_div:0": [
+      "lowrisc:prim_generic:clock_div:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim_xilinx_ultrascale:clock_div:0"
+    ],
+    "lowrisc:prim_abstract:clock_gating:0": [
+      "lowrisc:prim_generic:clock_gating:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim_xilinx:clock_gating:0",
+      "lowrisc:prim_xilinx_ultrascale:clock_gating:0"
+    ],
+    "lowrisc:prim_abstract:clock_inv:0": [
+      "lowrisc:prim_generic:clock_inv:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim_xilinx_ultrascale:clock_inv:0"
+    ],
+    "lowrisc:prim_abstract:clock_mux2:0": [
+      "lowrisc:prim_generic:clock_mux2:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim_xilinx:clock_mux2:0",
+      "lowrisc:prim_xilinx_ultrascale:clock_mux2:0"
+    ],
+    "lowrisc:prim_abstract:flash:0": [
+      "lowrisc:prim_generic:flash:0",
+      "lowrisc:prim:prim_pkg:0.1"
+    ],
+    "lowrisc:prim_abstract:flop:0": [
+      "lowrisc:prim_generic:flop:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim_xilinx:flop:0",
+      "lowrisc:prim_xilinx_ultrascale:flop:0"
+    ],
+    "lowrisc:prim_abstract:flop_2sync:0": [
+      "lowrisc:prim_generic:flop_2sync:0",
+      "lowrisc:prim:prim_pkg:0.1"
+    ],
+    "lowrisc:prim_abstract:flop_en:0": [
+      "lowrisc:prim_generic:flop_en:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim_xilinx:flop_en:0",
+      "lowrisc:prim_xilinx_ultrascale:flop_en:0"
+    ],
+    "lowrisc:prim_abstract:otp:0": [
+      "lowrisc:prim_generic:otp:0",
+      "lowrisc:prim:prim_pkg:0.1"
+    ],
+    "lowrisc:prim_abstract:pad_attr:0": [
+      "lowrisc:prim_generic:pad_attr:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim_xilinx:pad_attr:0",
+      "lowrisc:prim_xilinx_ultrascale:pad_attr:0"
+    ],
+    "lowrisc:prim_abstract:pad_wrapper:0": [
+      "lowrisc:prim_generic:pad_wrapper:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim_xilinx:pad_wrapper:0",
+      "lowrisc:prim_xilinx_ultrascale:pad_wrapper:0"
+    ],
+    "lowrisc:prim_abstract:prim_pkg:0.1": [],
+    "lowrisc:prim_abstract:ram_1p:0": [
+      "lowrisc:prim_badbit:ram_1p:0",
+      "lowrisc:prim_generic:ram_1p:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim_xilinx:ram_1p:0",
+      "lowrisc:prim_xilinx_ultrascale:ram_1p:0"
+    ],
+    "lowrisc:prim_abstract:ram_1r1w:0": [
+      "lowrisc:prim_generic:ram_1r1w:0",
+      "lowrisc:prim:prim_pkg:0.1"
+    ],
+    "lowrisc:prim_abstract:ram_2p:0": [
+      "lowrisc:prim_generic:ram_2p:0",
+      "lowrisc:prim:prim_pkg:0.1"
+    ],
+    "lowrisc:prim_abstract:rom:0": [
+      "lowrisc:prim_generic:rom:0",
+      "lowrisc:prim:prim_pkg:0.1"
+    ],
+    "lowrisc:prim_abstract:usb_diff_rx:0": [
+      "lowrisc:prim_generic:usb_diff_rx:0",
+      "lowrisc:prim:prim_pkg:0.1"
+    ],
+    "lowrisc:prim_abstract:xnor2:0": [
+      "lowrisc:prim_generic:xnor2:0",
+      "lowrisc:prim:prim_pkg:0.1"
+    ],
+    "lowrisc:prim_abstract:xor2:0": [
+      "lowrisc:prim_generic:xor2:0",
+      "lowrisc:prim:prim_pkg:0.1",
+      "lowrisc:prim_xilinx_ultrascale:xor2:0",
+      "lowrisc:prim_xilinx:xor2:0"
+    ],
+    "lowrisc:prim_badbit:ram_1p:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim_generic:ram_1p:0"
+    ],
+    "lowrisc:prim_generic:and2:0": [],
+    "lowrisc:prim_generic:buf:0": [],
+    "lowrisc:prim_generic:clock_buf:0": [],
+    "lowrisc:prim_generic:clock_div:0": [
+      "lowrisc:prim:clock_buf:0",
+      "lowrisc:prim:clock_inv:0",
+      "lowrisc:prim:flop:0",
+      "lowrisc:prim:prim_pkg:0.1"
+    ],
+    "lowrisc:prim_generic:clock_gating:0": [],
+    "lowrisc:prim_generic:clock_inv:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:clock_mux2:0"
+    ],
+    "lowrisc:prim_generic:clock_mux2:0": [
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:prim_generic:flash:0": [
+      "lowrisc:ip:flash_ctrl_prim_reg_top:1.0",
+      "lowrisc:opentitan:top_earlgrey_flash_ctrl_pkg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:ram_1p:0",
+      "lowrisc:systems:ast_pkg:0"
+    ],
+    "lowrisc:prim_generic:flop:0": [],
+    "lowrisc:prim_generic:flop_2sync:0": [
+      "lowrisc:prim:cdc_rand_delay:0",
+      "lowrisc:prim:flop:0"
+    ],
+    "lowrisc:prim_generic:flop_en:0": [
+      "lowrisc:prim:sec_anchor:0.1"
+    ],
+    "lowrisc:prim_generic:otp:0": [
+      "lowrisc:ip:otp_ctrl_prim_reg_top:1.0",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:otp_pkg:0.1",
+      "lowrisc:prim:ram_1p_adv:0.1",
+      "lowrisc:prim:util:0.1",
+      "lowrisc:systems:ast_pkg:0"
+    ],
+    "lowrisc:prim_generic:pad_attr:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:pad_wrapper_pkg:0"
+    ],
+    "lowrisc:prim_generic:pad_wrapper:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:pad_wrapper_pkg:0"
+    ],
+    "lowrisc:prim_generic:ram_1p:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:ram_1p_pkg:0",
+      "lowrisc:prim:util_memload:0"
+    ],
+    "lowrisc:prim_generic:ram_1r1w:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:ram_2p_pkg:0",
+      "lowrisc:prim:util_memload:0"
+    ],
+    "lowrisc:prim_generic:ram_2p:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:ram_2p_pkg:0",
+      "lowrisc:prim:util_memload:0"
+    ],
+    "lowrisc:prim_generic:rom:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:rom_pkg:0",
+      "lowrisc:prim:util_memload:0"
+    ],
+    "lowrisc:prim_generic:usb_diff_rx:0": [],
+    "lowrisc:prim_generic:xnor2:0": [],
+    "lowrisc:prim_generic:xor2:0": [],
+    "lowrisc:prim_xilinx:and2:0": [],
+    "lowrisc:prim_xilinx:buf:0": [],
+    "lowrisc:prim_xilinx:clock_buf:0": [],
+    "lowrisc:prim_xilinx:clock_gating:0": [],
+    "lowrisc:prim_xilinx:clock_mux2:0": [],
+    "lowrisc:prim_xilinx:flop:0": [],
+    "lowrisc:prim_xilinx:flop_en:0": [],
+    "lowrisc:prim_xilinx:pad_attr:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:pad_wrapper_pkg:0"
+    ],
+    "lowrisc:prim_xilinx:pad_wrapper:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:pad_wrapper_pkg:0"
+    ],
+    "lowrisc:prim_xilinx:prim_xilinx_default_pkg:0": [],
+    "lowrisc:prim_xilinx:ram_1p:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim_generic:ram_1p:0",
+      "lowrisc:prim:ram_1p_pkg:0",
+      "lowrisc:prim:util_memload:0",
+      "lowrisc:prim_xilinx:prim_xilinx_default_pkg:0"
+    ],
+    "lowrisc:prim_xilinx:xor2:0": [],
+    "lowrisc:prim_xilinx_ultrascale:and2:0": [],
+    "lowrisc:prim_xilinx_ultrascale:buf:0": [],
+    "lowrisc:prim_xilinx_ultrascale:clock_buf:0": [],
+    "lowrisc:prim_xilinx_ultrascale:clock_div:0": [
+      "lowrisc:prim:clock_buf:0",
+      "lowrisc:prim:clock_inv:0",
+      "lowrisc:prim:flop:0",
+      "lowrisc:prim:prim_pkg:0.1"
+    ],
+    "lowrisc:prim_xilinx_ultrascale:clock_gating:0": [],
+    "lowrisc:prim_xilinx_ultrascale:clock_inv:0": [],
+    "lowrisc:prim_xilinx_ultrascale:clock_mux2:0": [],
+    "lowrisc:prim_xilinx_ultrascale:flop:0": [],
+    "lowrisc:prim_xilinx_ultrascale:flop_en:0": [],
+    "lowrisc:prim_xilinx_ultrascale:pad_attr:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:pad_wrapper_pkg:0"
+    ],
+    "lowrisc:prim_xilinx_ultrascale:pad_wrapper:0": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:pad_wrapper_pkg:0"
+    ],
+    "lowrisc:prim_xilinx_ultrascale:ram_1p:0": [
+      "lowrisc:prim_xilinx:ram_1p:0"
+    ],
+    "lowrisc:prim_xilinx_ultrascale:xor2:0": [],
+    "lowrisc:systems:ast:0.1": [
+      "lowrisc:ip:edn_pkg:0.1",
+      "lowrisc:opentitan:top_earlgrey_alert_handler_reg:0.1",
+      "lowrisc:opentitan:top_earlgrey_clkmgr_pkg:0.1",
+      "lowrisc:opentitan:top_earlgrey_rstmgr_pkg:0.1",
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:ip:pinmux_component:0.1",
+      "lowrisc:ip:pinmux_reg:0.1",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:clock_buf:0",
+      "lowrisc:prim:clock_div:0",
+      "lowrisc:prim:clock_gating:0",
+      "lowrisc:prim:clock_inv:0",
+      "lowrisc:prim:lc_dec:0.1",
+      "lowrisc:prim:lfsr:0.1",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:prim:multibit_sync:0.1",
+      "lowrisc:prim:prim_pkg:0.1"
+    ],
+    "lowrisc:systems:ast_pkg:0": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:ip:lc_ctrl_pkg:0.1"
+    ],
+    "lowrisc:systems:chip_earlgrey_asic:0.1": [
+      "lowrisc:systems:ast:0.1",
+      "lowrisc:systems:padring:0.1",
+      "lowrisc:systems:scan_role_pkg:0.1",
+      "lowrisc:systems:top_earlgrey:0.1",
+      "lowrisc:systems:top_earlgrey_pkg:0.1"
+    ],
+    "lowrisc:systems:padring:0.1": [
+      "lowrisc:ip:pinmux_component:0.1",
+      "lowrisc:systems:physical_pads:0.1",
+      "lowrisc:systems:top_earlgrey_pkg:0.1"
+    ],
+    "lowrisc:systems:physical_pads:0.1": [
+      "lowrisc:prim:assert:0.1"
+    ],
+    "lowrisc:systems:scan_role_pkg:0.1": [
+      "lowrisc:prim:pad_wrapper_pkg:0"
+    ],
+    "lowrisc:systems:sensor_ctrl:0.1": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:edge_detector:0.1",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:prim:pad_wrapper_pkg:0",
+      "lowrisc:systems:sensor_ctrl_pkg:0.1"
+    ],
+    "lowrisc:systems:sensor_ctrl_pkg:0.1": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:systems:ast_pkg:0",
+      "lowrisc:systems:sensor_ctrl_reg:0.1"
+    ],
+    "lowrisc:systems:sensor_ctrl_reg:0.1": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:prim:all:0.1"
+    ],
+    "lowrisc:systems:top_earlgrey:0.1": [
+      "lowrisc:constants:jtag_id_pkg:0",
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:ip:adc_ctrl:1.0",
+      "lowrisc:ip:aes:1.0",
+      "lowrisc:ip:aon_timer:0.1",
+      "lowrisc:ip:csrng:0.1",
+      "lowrisc:ip:edn:0.1",
+      "lowrisc:ip:entropy_src:0.1",
+      "lowrisc:ip:gpio:0.1",
+      "lowrisc:ip:hmac:0.1",
+      "lowrisc:ip:i2c:0.1",
+      "lowrisc:ip:keymgr:0.1",
+      "lowrisc:ip:kmac:0.1",
+      "lowrisc:ip:lc_ctrl:0.1",
+      "lowrisc:ip:otbn:0.1",
+      "lowrisc:ip:otp_ctrl:1.0",
+      "lowrisc:ip:pattgen:0.1",
+      "lowrisc:ip:pinmux:0.1",
+      "lowrisc:ip:pwm:0.1",
+      "lowrisc:ip:rom_ctrl:0.1",
+      "lowrisc:ip:rv_core_ibex:0.1",
+      "lowrisc:ip:rv_dm:0.1",
+      "lowrisc:ip:rv_timer:0.1",
+      "lowrisc:ip:spi_device:0.1",
+      "lowrisc:ip:spi_host:1.0",
+      "lowrisc:ip:sram_ctrl:0.1",
+      "lowrisc:ip:sysrst_ctrl:1.0",
+      "lowrisc:ip:tlul:0.1",
+      "lowrisc:ip:uart:0.1",
+      "lowrisc:ip:usbdev:0.1",
+      "lowrisc:opentitan:top_earlgrey_alert_handler:0.1",
+      "lowrisc:opentitan:top_earlgrey_alert_handler_reg:0.1",
+      "lowrisc:opentitan:top_earlgrey_clkmgr:0.1",
+      "lowrisc:opentitan:top_earlgrey_flash_ctrl:0.1",
+      "lowrisc:opentitan:top_earlgrey_pwrmgr:0.1",
+      "lowrisc:opentitan:top_earlgrey_pwrmgr_pkg:0.1",
+      "lowrisc:opentitan:top_earlgrey_rstmgr:0.1",
+      "lowrisc:opentitan:top_earlgrey_rv_plic:0",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:flash:0",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:prim:ram_1p_scr:0.1",
+      "lowrisc:prim:usb_diff_rx:0",
+      "lowrisc:systems:ast_pkg:0",
+      "lowrisc:systems:sensor_ctrl:0.1",
+      "lowrisc:systems:top_earlgrey_pkg:0.1",
+      "lowrisc:tlul:headers:0.1",
+      "lowrisc:top_earlgrey:xbar_main:0.1",
+      "lowrisc:top_earlgrey:xbar_peri:0.1"
+    ],
+    "lowrisc:systems:top_earlgrey_pkg:0.1": [],
+    "lowrisc:tlul:adapter_host:0.1": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:prim:all:0.1",
+      "lowrisc:tlul:common:0.1",
+      "lowrisc:tlul:trans_intg:0.1"
+    ],
+    "lowrisc:tlul:adapter_reg:0.1": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:secded:0.1",
+      "lowrisc:tlul:common:0.1",
+      "lowrisc:tlul:trans_intg:0.1"
+    ],
+    "lowrisc:tlul:adapter_sram:0.1": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:util:0.1",
+      "lowrisc:tlul:common:0.1"
+    ],
+    "lowrisc:tlul:common:0.1": [
+      "lowrisc:dv:pins_if:0",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:fifo:0",
+      "lowrisc:tlul:headers:0.1",
+      "lowrisc:tlul:trans_intg:0.1"
+    ],
+    "lowrisc:tlul:headers:0.1": [
+      "lowrisc:constants:top_pkg:0",
+      "lowrisc:prim:mubi:0.1",
+      "lowrisc:prim:secded:0.1"
+    ],
+    "lowrisc:tlul:lc_gate:0.1": [
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:blanker:0",
+      "lowrisc:prim:lc_sync:0.1",
+      "lowrisc:prim:sparse_fsm:0",
+      "lowrisc:tlul:common:0.1"
+    ],
+    "lowrisc:tlul:socket_1n:0.1": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:tlul:common:0.1",
+      "lowrisc:tlul:headers:0.1"
+    ],
+    "lowrisc:tlul:socket_m1:0.1": [
+      "lowrisc:prim:arbiter:0",
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:tlul:common:0.1",
+      "lowrisc:tlul:headers:0.1"
+    ],
+    "lowrisc:tlul:sram2tlul:0.1": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:tlul:common:0.1"
+    ],
+    "lowrisc:tlul:trans_intg:0.1": [
+      "lowrisc:prim:assert:0.1",
+      "lowrisc:prim:secded:0.1",
+      "lowrisc:tlul:headers:0.1"
+    ],
+    "lowrisc:tool:check_tool_requirements:0.1": [],
+    "lowrisc:top_earlgrey:xbar_main:0.1": [
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:ip:tlul:0.1"
+    ],
+    "lowrisc:top_earlgrey:xbar_peri:0.1": [
+      "lowrisc:ip:lc_ctrl_pkg:0.1",
+      "lowrisc:ip:tlul:0.1"
+    ],
+    "pulp-platform:riscv-dbg:0.1:0": [
+      "lowrisc:prim:all:0.1",
+      "lowrisc:prim:clock_inv:0"
+    ]
+  },
+  "generated_file_inventory": [
+    {
+      "path": "../src/lowrisc_prim_abstract_prim_pkg_0.1/prim_pkg.sv",
+      "core": "lowrisc:prim_abstract:prim_pkg:0.1"
+    },
+    {
+      "path": "../src/lowrisc_systems_top_earlgrey_pkg_0.1/rtl/autogen/top_earlgrey_pkg.sv",
+      "core": "lowrisc:systems:top_earlgrey_pkg:0.1"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_and2_0/prim_and2.sv",
+      "core": "lowrisc:prim_abstract:and2:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_buf_0/prim_buf.sv",
+      "core": "lowrisc:prim_abstract:buf:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_clock_buf_0/prim_clock_buf.sv",
+      "core": "lowrisc:prim_abstract:clock_buf:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_clock_gating_0/prim_clock_gating.sv",
+      "core": "lowrisc:prim_abstract:clock_gating:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_clock_mux2_0/prim_clock_mux2.sv",
+      "core": "lowrisc:prim_abstract:clock_mux2:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_flop_0/prim_flop.sv",
+      "core": "lowrisc:prim_abstract:flop:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_pad_attr_0/prim_pad_attr.sv",
+      "core": "lowrisc:prim_abstract:pad_attr:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_pad_wrapper_0/prim_pad_wrapper.sv",
+      "core": "lowrisc:prim_abstract:pad_wrapper:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_ram_1r1w_0/prim_ram_1r1w.sv",
+      "core": "lowrisc:prim_abstract:ram_1r1w:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_ram_2p_0/prim_ram_2p.sv",
+      "core": "lowrisc:prim_abstract:ram_2p:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_rom_0/prim_rom.sv",
+      "core": "lowrisc:prim_abstract:rom:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_usb_diff_rx_0/prim_usb_diff_rx.sv",
+      "core": "lowrisc:prim_abstract:usb_diff_rx:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_xnor2_0/prim_xnor2.sv",
+      "core": "lowrisc:prim_abstract:xnor2:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_xor2_0/prim_xor2.sv",
+      "core": "lowrisc:prim_abstract:xor2:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_flop_en_0/prim_flop_en.sv",
+      "core": "lowrisc:prim_abstract:flop_en:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_ram_1p_0/prim_ram_1p.sv",
+      "core": "lowrisc:prim_abstract:ram_1p:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_clock_inv_0/prim_clock_inv.sv",
+      "core": "lowrisc:prim_abstract:clock_inv:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_flop_2sync_0/prim_flop_2sync.sv",
+      "core": "lowrisc:prim_abstract:flop_2sync:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_clock_div_0/prim_clock_div.sv",
+      "core": "lowrisc:prim_abstract:clock_div:0"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_otp_0/prim_otp.sv",
+      "core": "lowrisc:prim_abstract:otp:0"
+    },
+    {
+      "path": "../src/lowrisc_top_earlgrey_xbar_main_0.1/rtl/autogen/tl_main_pkg.sv",
+      "core": "lowrisc:top_earlgrey:xbar_main:0.1"
+    },
+    {
+      "path": "../src/lowrisc_top_earlgrey_xbar_main_0.1/rtl/autogen/xbar_main.sv",
+      "core": "lowrisc:top_earlgrey:xbar_main:0.1"
+    },
+    {
+      "path": "../src/lowrisc_top_earlgrey_xbar_peri_0.1/rtl/autogen/tl_peri_pkg.sv",
+      "core": "lowrisc:top_earlgrey:xbar_peri:0.1"
+    },
+    {
+      "path": "../src/lowrisc_top_earlgrey_xbar_peri_0.1/rtl/autogen/xbar_peri.sv",
+      "core": "lowrisc:top_earlgrey:xbar_peri:0.1"
+    },
+    {
+      "path": "../src/lowrisc_prim_abstract_flash_0/prim_flash.sv",
+      "core": "lowrisc:prim_abstract:flash:0"
+    },
+    {
+      "path": "../src/lowrisc_systems_top_earlgrey_0.1/rtl/autogen/top_earlgrey_rnd_cnst_pkg.sv",
+      "core": "lowrisc:systems:top_earlgrey:0.1"
+    },
+    {
+      "path": "../src/lowrisc_systems_top_earlgrey_0.1/rtl/autogen/top_earlgrey.sv",
+      "core": "lowrisc:systems:top_earlgrey:0.1"
+    },
+    {
+      "path": "../src/lowrisc_systems_chip_earlgrey_asic_0.1/rtl/autogen/chip_earlgrey_asic.sv",
+      "core": "lowrisc:systems:chip_earlgrey_asic:0.1"
+    }
+  ],
+  "topgen_memories": [],
+  "topgen_pinout": {
+    "banks": [
+      "VCC",
+      "AVCC",
+      "VIOA",
+      "VIOB"
+    ],
+    "pads": [
+      {
+        "name": "POR_N",
+        "type": "InputStd",
+        "bank": "VCC",
+        "connection": "manual",
+        "desc": "System reset"
+      },
+      {
+        "name": "USB_P",
+        "type": "DualBidirTol",
+        "bank": "VCC",
+        "connection": "manual",
+        "desc": "USB P signal"
+      },
+      {
+        "name": "USB_N",
+        "type": "DualBidirTol",
+        "bank": "VCC",
+        "connection": "manual",
+        "desc": "USB N signal"
+      },
+      {
+        "name": "CC1",
+        "type": "BidirTol",
+        "bank": "AVCC",
+        "connection": "manual",
+        "desc": "ADC input 1",
+        "port_type": "`INOUT_AI"
+      },
+      {
+        "name": "CC2",
+        "type": "BidirTol",
+        "bank": "AVCC",
+        "connection": "manual",
+        "desc": "ADC input 2",
+        "port_type": "`INOUT_AI"
+      },
+      {
+        "name": "FLASH_TEST_VOLT",
+        "type": "AnalogIn0",
+        "bank": "VCC",
+        "connection": "manual",
+        "desc": "Flash test voltage input"
+      },
+      {
+        "name": "FLASH_TEST_MODE0",
+        "type": "InputStd",
+        "bank": "VCC",
+        "connection": "manual",
+        "desc": "Flash test mode signal"
+      },
+      {
+        "name": "FLASH_TEST_MODE1",
+        "type": "InputStd",
+        "bank": "VCC",
+        "connection": "manual",
+        "desc": "Flash test mode signal"
+      },
+      {
+        "name": "OTP_EXT_VOLT",
+        "type": "AnalogIn1",
+        "bank": "VCC",
+        "connection": "manual",
+        "desc": "OTP external voltage input"
+      },
+      {
+        "name": "SPI_HOST_D0",
+        "type": "BidirStd",
+        "bank": "VIOA",
+        "connection": "direct",
+        "desc": "SPI host data"
+      },
+      {
+        "name": "SPI_HOST_D1",
+        "type": "BidirStd",
+        "bank": "VIOA",
+        "connection": "direct",
+        "desc": "SPI host data"
+      },
+      {
+        "name": "SPI_HOST_D2",
+        "type": "BidirStd",
+        "bank": "VIOA",
+        "connection": "direct",
+        "desc": "SPI host data"
+      },
+      {
+        "name": "SPI_HOST_D3",
+        "type": "BidirStd",
+        "bank": "VIOA",
+        "connection": "direct",
+        "desc": "SPI host data"
+      },
+      {
+        "name": "SPI_HOST_CLK",
+        "type": "BidirStd",
+        "bank": "VIOA",
+        "connection": "direct",
+        "desc": "SPI host clock"
+      },
+      {
+        "name": "SPI_HOST_CS_L",
+        "type": "BidirStd",
+        "bank": "VIOA",
+        "connection": "direct",
+        "desc": "SPI host chip select"
+      },
+      {
+        "name": "SPI_DEV_D0",
+        "type": "BidirStd",
+        "bank": "VIOA",
+        "connection": "direct",
+        "desc": "SPI device data"
+      },
+      {
+        "name": "SPI_DEV_D1",
+        "type": "BidirStd",
+        "bank": "VIOA",
+        "connection": "direct",
+        "desc": "SPI device data"
+      },
+      {
+        "name": "SPI_DEV_D2",
+        "type": "BidirStd",
+        "bank": "VIOA",
+        "connection": "direct",
+        "desc": "SPI device data"
+      },
+      {
+        "name": "SPI_DEV_D3",
+        "type": "BidirStd",
+        "bank": "VIOA",
+        "connection": "direct",
+        "desc": "SPI device data"
+      },
+      {
+        "name": "SPI_DEV_CLK",
+        "type": "InputStd",
+        "bank": "VIOA",
+        "connection": "direct",
+        "desc": "SPI device clock"
+      },
+      {
+        "name": "SPI_DEV_CS_L",
+        "type": "InputStd",
+        "bank": "VIOA",
+        "connection": "direct",
+        "desc": "SPI device chip select"
+      },
+      {
+        "name": "IOA0",
+        "type": "BidirStd",
+        "bank": "VIOA",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOA1",
+        "type": "BidirStd",
+        "bank": "VIOA",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOA2",
+        "type": "BidirStd",
+        "bank": "VIOA",
+        "connection": "muxed",
+        "desc": "Muxed IO pad",
+        "port_type": "`INOUT_AO"
+      },
+      {
+        "name": "IOA3",
+        "type": "BidirStd",
+        "bank": "VIOA",
+        "connection": "muxed",
+        "desc": "Muxed IO pad",
+        "port_type": "`INOUT_AO"
+      },
+      {
+        "name": "IOA4",
+        "type": "BidirStd",
+        "bank": "VIOA",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOA5",
+        "type": "BidirStd",
+        "bank": "VIOA",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOA6",
+        "type": "BidirOd",
+        "bank": "VIOA",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOA7",
+        "type": "BidirOd",
+        "bank": "VIOA",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOA8",
+        "type": "BidirOd",
+        "bank": "VIOA",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOB0",
+        "type": "BidirStd",
+        "bank": "VIOB",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOB1",
+        "type": "BidirStd",
+        "bank": "VIOB",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOB2",
+        "type": "BidirStd",
+        "bank": "VIOB",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOB3",
+        "type": "BidirStd",
+        "bank": "VIOB",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOB4",
+        "type": "BidirStd",
+        "bank": "VIOB",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOB5",
+        "type": "BidirStd",
+        "bank": "VIOB",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOB6",
+        "type": "BidirStd",
+        "bank": "VIOB",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOB7",
+        "type": "BidirStd",
+        "bank": "VIOB",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOB8",
+        "type": "BidirStd",
+        "bank": "VIOB",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOB9",
+        "type": "BidirOd",
+        "bank": "VIOB",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOB10",
+        "type": "BidirOd",
+        "bank": "VIOB",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOB11",
+        "type": "BidirOd",
+        "bank": "VIOB",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOB12",
+        "type": "BidirOd",
+        "bank": "VIOB",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOC0",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOC1",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOC2",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOC3",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOC4",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOC5",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOC6",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOC7",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOC8",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOC9",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOC10",
+        "type": "BidirOd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOC11",
+        "type": "BidirOd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOC12",
+        "type": "BidirOd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOR0",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOR1",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOR2",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOR3",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOR4",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOR5",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOR6",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOR7",
+        "type": "BidirStd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOR8",
+        "type": "BidirOd",
+        "bank": "VCC",
+        "connection": "direct",
+        "desc": "Dedicated sysrst_ctrl output (ec_rst_l)"
+      },
+      {
+        "name": "IOR9",
+        "type": "BidirOd",
+        "bank": "VCC",
+        "connection": "direct",
+        "desc": "Dedicated sysrst_ctrl output (flash_wp_l))"
+      },
+      {
+        "name": "IOR10",
+        "type": "BidirOd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOR11",
+        "type": "BidirOd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOR12",
+        "type": "BidirOd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      },
+      {
+        "name": "IOR13",
+        "type": "BidirOd",
+        "bank": "VCC",
+        "connection": "muxed",
+        "desc": "Muxed IO pad"
+      }
+    ]
+  },
+  "topgen_clocks": {
+    "hier_paths": {
+      "top": "clkmgr_aon_clocks.",
+      "ext": "",
+      "lpg": "clkmgr_aon_cg_en."
+    },
+    "srcs": [
+      {
+        "name": "main",
+        "aon": "no",
+        "freq": "100000000"
+      },
+      {
+        "name": "io",
+        "aon": "no",
+        "freq": "96000000"
+      },
+      {
+        "name": "usb",
+        "aon": "no",
+        "freq": "48000000"
+      },
+      {
+        "name": "aon",
+        "aon": "yes",
+        "freq": "200000",
+        "ref": true
+      }
+    ],
+    "derived_srcs": [
+      {
+        "name": "io_div2",
+        "aon": "no",
+        "div": 2,
+        "src": "io",
+        "freq": "48000000"
+      },
+      {
+        "name": "io_div4",
+        "aon": "no",
+        "div": 4,
+        "src": "io",
+        "freq": "24000000"
+      }
+    ],
+    "groups": [
+      {
+        "name": "ast",
+        "src": "ext",
+        "sw_cg": "no"
+      },
+      {
+        "name": "powerup",
+        "src": "top",
+        "sw_cg": "no"
+      },
+      {
+        "name": "trans",
+        "src": "top",
+        "sw_cg": "hint",
+        "unique": "yes"
+      },
+      {
+        "name": "infra",
+        "src": "top",
+        "sw_cg": "no"
+      },
+      {
+        "name": "secure",
+        "src": "top",
+        "sw_cg": "no"
+      },
+      {
+        "name": "peri",
+        "src": "top",
+        "sw_cg": "yes",
+        "unique": "no"
+      },
+      {
+        "name": "timers",
+        "src": "top",
+        "sw_cg": "no"
+      }
+    ]
+  },
+  "topgen_resets": {
+    "hier_paths": {
+      "top": "rstmgr_aon_resets.",
+      "ext": "",
+      "lpg": "rstmgr_aon_rst_en."
+    },
+    "nodes": [
+      {
+        "name": "por_aon",
+        "gen": false,
+        "type": "top",
+        "clk": "aon"
+      },
+      {
+        "name": "lc_src",
+        "gen": false,
+        "type": "int",
+        "clk": "io_div4"
+      },
+      {
+        "name": "sys_src",
+        "gen": false,
+        "type": "int",
+        "clk": "io_div4"
+      },
+      {
+        "name": "por",
+        "gen": true,
+        "type": "top",
+        "parent": "por_aon",
+        "clk": "main"
+      },
+      {
+        "name": "por_io",
+        "gen": true,
+        "type": "top",
+        "parent": "por_aon",
+        "clk": "io"
+      },
+      {
+        "name": "por_io_div2",
+        "gen": true,
+        "type": "top",
+        "parent": "por_aon",
+        "clk": "io_div2"
+      },
+      {
+        "name": "por_io_div4",
+        "gen": true,
+        "type": "top",
+        "parent": "por_aon",
+        "clk": "io_div4"
+      },
+      {
+        "name": "por_usb",
+        "gen": true,
+        "type": "top",
+        "parent": "por_aon",
+        "clk": "usb"
+      },
+      {
+        "name": "lc",
+        "gen": true,
+        "type": "top",
+        "parent": "lc_src",
+        "clk": "main"
+      },
+      {
+        "name": "lc_aon",
+        "gen": true,
+        "type": "top",
+        "parent": "lc_src",
+        "clk": "aon"
+      },
+      {
+        "name": "lc_io",
+        "gen": true,
+        "type": "top",
+        "parent": "lc_src",
+        "clk": "io"
+      },
+      {
+        "name": "lc_io_div2",
+        "gen": true,
+        "type": "top",
+        "parent": "lc_src",
+        "clk": "io_div2"
+      },
+      {
+        "name": "lc_io_div4",
+        "gen": true,
+        "type": "top",
+        "parent": "lc_src",
+        "clk": "io_div4"
+      },
+      {
+        "name": "lc_usb",
+        "gen": true,
+        "type": "top",
+        "parent": "lc_src",
+        "clk": "usb"
+      },
+      {
+        "name": "sys",
+        "gen": true,
+        "type": "top",
+        "parent": "sys_src",
+        "clk": "main"
+      },
+      {
+        "name": "sys_io_div4",
+        "gen": true,
+        "type": "top",
+        "parent": "sys_src",
+        "clk": "io_div4"
+      },
+      {
+        "name": "spi_device",
+        "gen": true,
+        "type": "top",
+        "parent": "lc_src",
+        "clk": "io_div4",
+        "sw": true
+      },
+      {
+        "name": "spi_host0",
+        "gen": true,
+        "type": "top",
+        "parent": "lc_src",
+        "clk": "io",
+        "sw": true
+      },
+      {
+        "name": "spi_host1",
+        "gen": true,
+        "type": "top",
+        "parent": "lc_src",
+        "clk": "io_div2",
+        "sw": true
+      },
+      {
+        "name": "usb",
+        "gen": true,
+        "type": "top",
+        "parent": "lc_src",
+        "clk": "usb",
+        "sw": true
+      },
+      {
+        "name": "usb_aon",
+        "gen": true,
+        "type": "top",
+        "parent": "lc_src",
+        "clk": "aon",
+        "sw": true
+      },
+      {
+        "name": "i2c0",
+        "gen": true,
+        "type": "top",
+        "parent": "lc_src",
+        "clk": "io_div4",
+        "sw": true
+      },
+      {
+        "name": "i2c1",
+        "gen": true,
+        "type": "top",
+        "parent": "lc_src",
+        "clk": "io_div4",
+        "sw": true
+      },
+      {
+        "name": "i2c2",
+        "gen": true,
+        "type": "top",
+        "parent": "lc_src",
+        "clk": "io_div4",
+        "sw": true
+      }
+    ]
+  },
+  "partitions": {
+    "uart0": {
+      "block": "uart",
+      "clocks": {
+        "clk_i": "io_div4"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4"
+      },
+      "base_addrs": "0x40000000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "uart1": {
+      "block": "uart",
+      "clocks": {
+        "clk_i": "io_div4"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4"
+      },
+      "base_addrs": "0x40010000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "uart2": {
+      "block": "uart",
+      "clocks": {
+        "clk_i": "io_div4"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4"
+      },
+      "base_addrs": "0x40020000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "uart3": {
+      "block": "uart",
+      "clocks": {
+        "clk_i": "io_div4"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4"
+      },
+      "base_addrs": "0x40030000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "gpio": {
+      "block": "gpio",
+      "clocks": {
+        "clk_i": "io_div4"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4"
+      },
+      "base_addrs": "0x40040000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "spi_device": {
+      "block": "spi_device",
+      "clocks": {
+        "clk_i": "io_div4",
+        "scan_clk_i": "io_div2"
+      },
+      "resets": {
+        "rst_ni": "spi_device"
+      },
+      "base_addrs": "0x40050000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "i2c0": {
+      "block": "i2c",
+      "clocks": {
+        "clk_i": "io_div4"
+      },
+      "resets": {
+        "rst_ni": "i2c0"
+      },
+      "base_addrs": "0x40080000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "i2c1": {
+      "block": "i2c",
+      "clocks": {
+        "clk_i": "io_div4"
+      },
+      "resets": {
+        "rst_ni": "i2c1"
+      },
+      "base_addrs": "0x40090000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "i2c2": {
+      "block": "i2c",
+      "clocks": {
+        "clk_i": "io_div4"
+      },
+      "resets": {
+        "rst_ni": "i2c2"
+      },
+      "base_addrs": "0x400A0000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "pattgen": {
+      "block": "pattgen",
+      "clocks": {
+        "clk_i": "io_div4"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4"
+      },
+      "base_addrs": "0x400E0000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "rv_timer": {
+      "block": "rv_timer",
+      "clocks": {
+        "clk_i": "io_div4"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4"
+      },
+      "base_addrs": "0x40100000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "otp_ctrl": {
+      "block": "otp_ctrl",
+      "clocks": {
+        "clk_i": "io_div4",
+        "clk_edn_i": "main"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4",
+        "rst_edn_ni": "lc"
+      },
+      "base_addrs": {
+        "core": "0x40130000",
+        "prim": "0x40138000"
+      },
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "lc_ctrl": {
+      "block": "lc_ctrl",
+      "clocks": {
+        "clk_i": "io_div4",
+        "clk_kmac_i": "main"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4",
+        "rst_kmac_ni": "lc"
+      },
+      "base_addrs": "0x40140000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "alert_handler": {
+      "block": "alert_handler",
+      "clocks": {
+        "clk_i": "io_div4",
+        "clk_edn_i": "main"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4",
+        "rst_edn_ni": "lc"
+      },
+      "base_addrs": "0x40150000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "spi_host0": {
+      "block": "spi_host",
+      "clocks": {
+        "clk_i": "io"
+      },
+      "resets": {
+        "rst_ni": "spi_host0"
+      },
+      "base_addrs": "0x40300000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "spi_host1": {
+      "block": "spi_host",
+      "clocks": {
+        "clk_i": "io_div2"
+      },
+      "resets": {
+        "rst_ni": "spi_host1"
+      },
+      "base_addrs": "0x40310000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "usbdev": {
+      "block": "usbdev",
+      "clocks": {
+        "clk_i": "usb",
+        "clk_aon_i": "aon"
+      },
+      "resets": {
+        "rst_ni": "usb",
+        "rst_aon_ni": "usb_aon"
+      },
+      "base_addrs": "0x40320000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "pwrmgr_aon": {
+      "block": "pwrmgr",
+      "clocks": {
+        "clk_i": "io_div4",
+        "clk_slow_i": "aon",
+        "clk_lc_i": "io_div4",
+        "clk_esc_i": {
+          "clock": "io_div4",
+          "group": "secure"
+        }
+      },
+      "resets": {
+        "rst_ni": {
+          "name": "por_io_div4",
+          "domain": "Aon"
+        },
+        "rst_main_ni": {
+          "name": "por_aon",
+          "domain": "0"
+        },
+        "rst_lc_ni": {
+          "name": "lc_io_div4",
+          "domain": "Aon"
+        },
+        "rst_esc_ni": {
+          "name": "lc_io_div4",
+          "domain": "Aon"
+        },
+        "rst_slow_ni": {
+          "name": "por_aon",
+          "domain": "Aon"
+        }
+      },
+      "base_addrs": "0x40400000",
+      "memory": {},
+      "power_domains": [
+        "Aon",
+        "0"
+      ],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "rstmgr_aon": {
+      "block": "rstmgr",
+      "clocks": {
+        "clk_i": {
+          "clock": "io_div4",
+          "group": "powerup"
+        },
+        "clk_por_i": "io_div4",
+        "clk_aon_i": "aon",
+        "clk_main_i": "main",
+        "clk_io_i": "io",
+        "clk_usb_i": "usb",
+        "clk_io_div2_i": "io_div2",
+        "clk_io_div4_i": "io_div4"
+      },
+      "resets": {
+        "rst_ni": {
+          "name": "lc_io_div4",
+          "domain": "Aon"
+        },
+        "rst_por_ni": {
+          "name": "por_io_div4",
+          "domain": "Aon"
+        }
+      },
+      "base_addrs": "0x40410000",
+      "memory": {},
+      "power_domains": [
+        "Aon",
+        "0"
+      ],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "clkmgr_aon": {
+      "block": "clkmgr",
+      "clocks": {
+        "clk_i": "io_div4",
+        "clk_main_i": {
+          "group": "ast",
+          "clock": "main"
+        },
+        "clk_io_i": {
+          "group": "ast",
+          "clock": "io"
+        },
+        "clk_usb_i": {
+          "group": "ast",
+          "clock": "usb"
+        },
+        "clk_aon_i": {
+          "group": "ast",
+          "clock": "aon"
+        }
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4",
+        "rst_aon_ni": "lc_aon",
+        "rst_io_ni": "lc_io",
+        "rst_io_div2_ni": "lc_io_div2",
+        "rst_io_div4_ni": "lc_io_div4",
+        "rst_main_ni": "lc",
+        "rst_usb_ni": "lc_usb",
+        "rst_root_ni": "por_io_div4",
+        "rst_root_io_ni": "por_io",
+        "rst_root_io_div2_ni": "por_io_div2",
+        "rst_root_io_div4_ni": "por_io_div4",
+        "rst_root_main_ni": "por",
+        "rst_root_usb_ni": "por_usb"
+      },
+      "base_addrs": "0x40420000",
+      "memory": {},
+      "power_domains": [
+        "Aon"
+      ],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "sysrst_ctrl_aon": {
+      "block": "sysrst_ctrl",
+      "clocks": {
+        "clk_i": "io_div4",
+        "clk_aon_i": "aon"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4",
+        "rst_aon_ni": "lc_aon"
+      },
+      "base_addrs": "0x40430000",
+      "memory": {},
+      "power_domains": [
+        "Aon"
+      ],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "adc_ctrl_aon": {
+      "block": "adc_ctrl",
+      "clocks": {
+        "clk_i": "io_div4",
+        "clk_aon_i": "aon"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4",
+        "rst_aon_ni": "lc_aon"
+      },
+      "base_addrs": "0x40440000",
+      "memory": {},
+      "power_domains": [
+        "Aon"
+      ],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "pwm_aon": {
+      "block": "pwm",
+      "clocks": {
+        "clk_i": "io_div4",
+        "clk_core_i": "aon"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4",
+        "rst_core_ni": "lc_aon"
+      },
+      "base_addrs": "0x40450000",
+      "memory": {},
+      "power_domains": [
+        "Aon"
+      ],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "pinmux_aon": {
+      "block": "pinmux",
+      "clocks": {
+        "clk_i": "io_div4",
+        "clk_aon_i": "aon"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4",
+        "rst_aon_ni": "lc_aon",
+        "rst_sys_ni": "sys_io_div4"
+      },
+      "base_addrs": "0x40460000",
+      "memory": {},
+      "power_domains": [
+        "Aon"
+      ],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "aon_timer_aon": {
+      "block": "aon_timer",
+      "clocks": {
+        "clk_i": "io_div4",
+        "clk_aon_i": "aon"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4",
+        "rst_aon_ni": "lc_aon"
+      },
+      "base_addrs": "0x40470000",
+      "memory": {},
+      "power_domains": [
+        "Aon"
+      ],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "ast": {
+      "block": "ast",
+      "clocks": {
+        "clk_ast_tlul_i": {
+          "clock": "io_div4",
+          "group": "infra"
+        },
+        "clk_ast_adc_i": {
+          "clock": "aon",
+          "group": "peri"
+        },
+        "clk_ast_alert_i": {
+          "clock": "io_div4",
+          "group": "secure"
+        },
+        "clk_ast_es_i": {
+          "clock": "main",
+          "group": "secure"
+        },
+        "clk_ast_rng_i": {
+          "clock": "main",
+          "group": "secure"
+        },
+        "clk_ast_usb_i": {
+          "clock": "usb",
+          "group": "peri"
+        }
+      },
+      "resets": {
+        "rst_ast_tlul_ni": {
+          "name": "lc_io_div4",
+          "domain": "0"
+        },
+        "rst_ast_adc_ni": {
+          "name": "lc_aon",
+          "domain": "Aon"
+        },
+        "rst_ast_alert_ni": {
+          "name": "lc_io_div4",
+          "domain": "0"
+        },
+        "rst_ast_es_ni": {
+          "name": "lc",
+          "domain": "0"
+        },
+        "rst_ast_rng_ni": {
+          "name": "lc",
+          "domain": "0"
+        },
+        "rst_ast_usb_ni": {
+          "name": "usb",
+          "domain": "0"
+        }
+      },
+      "base_addrs": "0x40480000",
+      "memory": {},
+      "power_domains": [
+        "Aon",
+        "0"
+      ],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "sensor_ctrl_aon": {
+      "block": "sensor_ctrl",
+      "clocks": {
+        "clk_i": "io_div4",
+        "clk_aon_i": "aon"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4",
+        "rst_aon_ni": "lc_aon"
+      },
+      "base_addrs": "0x40490000",
+      "memory": {},
+      "power_domains": [
+        "Aon"
+      ],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "sram_ctrl_ret_aon": {
+      "block": "sram_ctrl",
+      "clocks": {
+        "clk_i": "io_div4",
+        "clk_otp_i": "io_div4"
+      },
+      "resets": {
+        "rst_ni": "lc_io_div4",
+        "rst_otp_ni": "lc_io_div4"
+      },
+      "base_addrs": {
+        "regs": "0x40500000",
+        "ram": "0x40600000"
+      },
+      "memory": {
+        "ram": {
+          "label": "ram_ret_aon",
+          "swaccess": "rw",
+          "data_intg_passthru": "true",
+          "exec": "True",
+          "byte_write": "True",
+          "size": "0x1000"
+        }
+      },
+      "power_domains": [
+        "Aon"
+      ],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "flash_ctrl": {
+      "block": "flash_ctrl",
+      "clocks": {
+        "clk_i": "main",
+        "clk_otp_i": "io_div4"
+      },
+      "resets": {
+        "rst_ni": "lc",
+        "rst_otp_ni": "lc_io_div4"
+      },
+      "base_addrs": {
+        "core": "0x41000000",
+        "prim": "0x41008000",
+        "mem": "0x20000000"
+      },
+      "memory": {
+        "mem": {
+          "label": "eflash",
+          "swaccess": "ro",
+          "data_intg_passthru": "true",
+          "exec": "True",
+          "byte_write": "False",
+          "config": {
+            "type": "flash",
+            "banks": 2,
+            "pages_per_bank": 256,
+            "program_resolution": 8
+          }
+        }
+      },
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "rv_dm": {
+      "block": "rv_dm",
+      "clocks": {
+        "clk_i": "main",
+        "clk_lc_i": "main"
+      },
+      "resets": {
+        "rst_ni": "sys",
+        "rst_lc_ni": "lc"
+      },
+      "base_addrs": {
+        "mem": "0x00010000",
+        "regs": "0x41200000"
+      },
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "rv_plic": {
+      "block": "rv_plic",
+      "clocks": {
+        "clk_i": "main"
+      },
+      "resets": {
+        "rst_ni": "lc"
+      },
+      "base_addrs": "0x48000000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "aes": {
+      "block": "aes",
+      "clocks": {
+        "clk_i": "main",
+        "clk_edn_i": "main"
+      },
+      "resets": {
+        "rst_ni": "lc",
+        "rst_edn_ni": "lc"
+      },
+      "base_addrs": "0x41100000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "hmac": {
+      "block": "hmac",
+      "clocks": {
+        "clk_i": "main"
+      },
+      "resets": {
+        "rst_ni": "lc"
+      },
+      "base_addrs": "0x41110000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "kmac": {
+      "block": "kmac",
+      "clocks": {
+        "clk_i": "main",
+        "clk_edn_i": "main"
+      },
+      "resets": {
+        "rst_ni": "lc",
+        "rst_edn_ni": "lc"
+      },
+      "base_addrs": "0x41120000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "otbn": {
+      "block": "otbn",
+      "clocks": {
+        "clk_i": {
+          "clock": "main",
+          "group": "trans"
+        },
+        "clk_edn_i": {
+          "clock": "main",
+          "group": "secure"
+        },
+        "clk_otp_i": {
+          "clock": "io_div4",
+          "group": "secure"
+        }
+      },
+      "resets": {
+        "rst_ni": "lc",
+        "rst_edn_ni": "lc",
+        "rst_otp_ni": "lc_io_div4"
+      },
+      "base_addrs": "0x41130000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "keymgr": {
+      "block": "keymgr",
+      "clocks": {
+        "clk_i": "main",
+        "clk_edn_i": "main"
+      },
+      "resets": {
+        "rst_ni": "lc",
+        "rst_edn_ni": "lc"
+      },
+      "base_addrs": "0x41140000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "csrng": {
+      "block": "csrng",
+      "clocks": {
+        "clk_i": "main"
+      },
+      "resets": {
+        "rst_ni": "lc"
+      },
+      "base_addrs": "0x41150000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "entropy_src": {
+      "block": "entropy_src",
+      "clocks": {
+        "clk_i": "main"
+      },
+      "resets": {
+        "rst_ni": "lc"
+      },
+      "base_addrs": "0x41160000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "edn0": {
+      "block": "edn",
+      "clocks": {
+        "clk_i": "main"
+      },
+      "resets": {
+        "rst_ni": "lc"
+      },
+      "base_addrs": "0x41170000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "edn1": {
+      "block": "edn",
+      "clocks": {
+        "clk_i": "main"
+      },
+      "resets": {
+        "rst_ni": "lc"
+      },
+      "base_addrs": "0x41180000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "sram_ctrl_main": {
+      "block": "sram_ctrl",
+      "clocks": {
+        "clk_i": "main",
+        "clk_otp_i": "io_div4"
+      },
+      "resets": {
+        "rst_ni": "lc",
+        "rst_otp_ni": "lc_io_div4"
+      },
+      "base_addrs": {
+        "regs": "0x411C0000",
+        "ram": "0x10000000"
+      },
+      "memory": {
+        "ram": {
+          "label": "ram_main",
+          "swaccess": "rw",
+          "data_intg_passthru": "true",
+          "exec": "True",
+          "byte_write": "True",
+          "size": "0x20000"
+        }
+      },
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "rom_ctrl": {
+      "block": "rom_ctrl",
+      "clocks": {
+        "clk_i": "main"
+      },
+      "resets": {
+        "rst_ni": "lc"
+      },
+      "base_addrs": {
+        "rom": "0x00008000",
+        "regs": "0x411e0000"
+      },
+      "memory": {
+        "rom": {
+          "label": "rom",
+          "swaccess": "ro",
+          "data_intg_passthru": "True",
+          "exec": "True",
+          "byte_write": "False",
+          "size": "0x8000"
+        }
+      },
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    },
+    "rv_core_ibex": {
+      "block": "rv_core_ibex",
+      "clocks": {
+        "clk_i": "main",
+        "clk_edn_i": "main",
+        "clk_esc_i": {
+          "clock": "io_div4",
+          "group": "secure"
+        },
+        "clk_otp_i": {
+          "clock": "io_div4",
+          "group": "secure"
+        }
+      },
+      "resets": {
+        "rst_ni": "lc",
+        "rst_edn_ni": "lc",
+        "rst_esc_ni": "lc_io_div4",
+        "rst_otp_ni": "lc_io_div4"
+      },
+      "base_addrs": "0x411F0000",
+      "memory": {},
+      "power_domains": [],
+      "physical_boundary": "BLOCKED",
+      "acceptance": "BLOCKED"
+    }
+  },
+  "gates": {
+    "source_discovery": "AVAILABLE",
+    "elaboration": "BLOCKED",
+    "interface_and_physical_boundary_qualification": "BLOCKED",
+    "top_level_acceptance": "BLOCKED"
+  }
+}
