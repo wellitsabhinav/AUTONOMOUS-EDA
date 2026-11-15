@@ -1,0 +1,1702 @@
+{
+  "crash_recovery": [
+    {
+      "attempt_id": "aeda-158b0c79189d4aafa63b70512ab8fdaf",
+      "classification": "UNKNOWN_FAILURE",
+      "diagnostic": null,
+      "native_state": {
+        "exit_code": 0,
+        "finished_at": "0001-01-01T00:00:00Z",
+        "id": "8442027bec636db6dbcfa35485b865481b7de246633e2b3a9eb3cdbe4414f8aa",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 50331648,
+        "memory_swap_bytes": 50331648,
+        "nano_cpus": 1000000000,
+        "observed_at": "2026-11-15T14:38:12.491166+00:00",
+        "oom_killed": false,
+        "pid": 1450,
+        "pids_limit": null,
+        "source": "docker container inspect",
+        "started_at": "2026-11-15T14:38:11.472434458Z",
+        "status": "running"
+      },
+      "observed_at": "2026-11-15T14:38:12.494477+00:00",
+      "observed_maxima": {
+        "disk_capacity_bytes": {
+          "observed_at": "2026-11-15T14:38:11.431349+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 362531516416
+        },
+        "disk_free_bytes": {
+          "observed_at": "2026-11-15T14:38:11.431349+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 175818489856
+        },
+        "experiment_bytes": {
+          "observed_at": "2026-11-15T14:38:11.431349+00:00",
+          "source": "bounded experiment tree stat",
+          "value": 709
+        },
+        "host_available_memory_bytes": {
+          "observed_at": "2026-11-15T14:38:11.431349+00:00",
+          "source": "/proc/meminfo",
+          "value": 3497873408
+        },
+        "log_bytes": {
+          "observed_at": "2026-11-15T14:38:11.431349+00:00",
+          "source": "stat attempt log",
+          "value": 709
+        }
+      },
+      "schema_version": 1,
+      "sha256": "c5b2356b9fff53c5f2a39e40c515126e7d789e5575c4c50d19ec2700a0757ba1"
+    }
+  ],
+  "gcd": [
+    {
+      "attempt_id": "aeda-e8cff39c5b784233918a50f83fc46819",
+      "classification": "COMPLETED",
+      "cleanup_succeeded": true,
+      "elapsed_seconds": 11.628646474999996,
+      "exit_code": 0,
+      "native_state": {
+        "exit_code": 0,
+        "finished_at": "2026-11-15T14:28:18.220283707Z",
+        "id": "1b42acabac74349020e51270bfc33af7c56e5df7b55d26b5966a4a6f687b68a1",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 1677721600,
+        "memory_swap_bytes": 1677721600,
+        "nano_cpus": 2000000000,
+        "observed_at": "2026-11-15T14:28:18.663902+00:00",
+        "oom_killed": false,
+        "pid": 0,
+        "pids_limit": null,
+        "source": "docker container inspect",
+        "started_at": "2026-11-15T14:28:07.617750577Z",
+        "status": "exited"
+      },
+      "observed_maxima": {
+        "cpu_throttle_events": {
+          "observed_at": "2026-11-15T14:28:16.281549+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_throttled_usec": {
+          "observed_at": "2026-11-15T14:28:16.281549+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_usage_usec": {
+          "observed_at": "2026-11-15T14:28:16.281549+00:00",
+          "source": "linux cgroup v2",
+          "value": 6773816
+        },
+        "disk_capacity_bytes": {
+          "observed_at": "2026-11-15T14:28:18.385854+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 362531516416
+        },
+        "disk_free_bytes": {
+          "observed_at": "2026-11-15T14:28:07.585647+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 176345964544
+        },
+        "experiment_bytes": {
+          "observed_at": "2026-11-15T14:28:18.385854+00:00",
+          "source": "bounded experiment tree stat",
+          "value": 8079116
+        },
+        "host_available_memory_bytes": {
+          "observed_at": "2026-11-15T14:28:07.585647+00:00",
+          "source": "/proc/meminfo",
+          "value": 3528871936
+        },
+        "log_bytes": {
+          "observed_at": "2026-11-15T14:28:18.385854+00:00",
+          "source": "stat attempt log",
+          "value": 26351
+        },
+        "memory_current_bytes": {
+          "observed_at": "2026-11-15T14:28:16.281549+00:00",
+          "source": "linux cgroup v2",
+          "value": 274259968
+        },
+        "memory_kernel_peak_bytes": {
+          "observed_at": "2026-11-15T14:28:16.281549+00:00",
+          "source": "linux cgroup v2",
+          "value": 323874816
+        },
+        "oom_events": {
+          "observed_at": "2026-11-15T14:28:16.281549+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "oom_kills": {
+          "observed_at": "2026-11-15T14:28:16.281549+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_limit_events": {
+          "observed_at": "2026-11-15T14:28:16.281549+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_rss_sum_bytes": {
+          "observed_at": "2026-11-15T14:28:12.055125+00:00",
+          "source": "cgroup.procs and /proc/PID/status VmRSS",
+          "value": 128716800
+        },
+        "swap_current_bytes": {
+          "observed_at": "2026-11-15T14:28:16.281549+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "temporary_bytes": {
+          "observed_at": "2026-11-15T14:28:16.281549+00:00",
+          "source": "bounded container /tmp tree stat",
+          "value": 2116446
+        }
+      },
+      "path": "attempts/aeda-e8cff39c5b784233918a50f83fc46819/synth.resources.json",
+      "sample_sha256": "4b559b1d80c0019e56b58f1220e616cd1a0533a6a49105b04e8ec8ed9442ac64",
+      "sha256": "89726e17e7e5286befdd684306679c5d3bb7aaa2f27f01d4ddf608974ced9252",
+      "stage": "synth",
+      "timeout": false
+    },
+    {
+      "attempt_id": "aeda-ff0f65e291c248d4be18c53636b4299c",
+      "classification": "COMPLETED",
+      "cleanup_succeeded": true,
+      "elapsed_seconds": 10.976210025,
+      "exit_code": 0,
+      "native_state": {
+        "exit_code": 0,
+        "finished_at": "2026-11-15T14:28:30.169675439Z",
+        "id": "71c58837b889a1069627527d465441b3f010091303b533324d2019aebca2825d",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 1677721600,
+        "memory_swap_bytes": 1677721600,
+        "nano_cpus": 2000000000,
+        "observed_at": "2026-11-15T14:28:30.637198+00:00",
+        "oom_killed": false,
+        "pid": 0,
+        "pids_limit": null,
+        "source": "docker container inspect",
+        "started_at": "2026-11-15T14:28:20.018990841Z",
+        "status": "exited"
+      },
+      "observed_maxima": {
+        "cpu_throttle_events": {
+          "observed_at": "2026-11-15T14:28:28.827839+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_throttled_usec": {
+          "observed_at": "2026-11-15T14:28:28.827839+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_usage_usec": {
+          "observed_at": "2026-11-15T14:28:28.827839+00:00",
+          "source": "linux cgroup v2",
+          "value": 6891461
+        },
+        "disk_capacity_bytes": {
+          "observed_at": "2026-11-15T14:28:28.827839+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 362531516416
+        },
+        "disk_free_bytes": {
+          "observed_at": "2026-11-15T14:28:26.697288+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 176309305344
+        },
+        "experiment_bytes": {
+          "observed_at": "2026-11-15T14:28:28.827839+00:00",
+          "source": "bounded experiment tree stat",
+          "value": 16489104
+        },
+        "host_available_memory_bytes": {
+          "observed_at": "2026-11-15T14:28:19.978317+00:00",
+          "source": "/proc/meminfo",
+          "value": 3438587904
+        },
+        "log_bytes": {
+          "observed_at": "2026-11-15T14:28:28.827839+00:00",
+          "source": "stat attempt log",
+          "value": 19778
+        },
+        "memory_current_bytes": {
+          "observed_at": "2026-11-15T14:28:22.467673+00:00",
+          "source": "linux cgroup v2",
+          "value": 81911808
+        },
+        "memory_kernel_peak_bytes": {
+          "observed_at": "2026-11-15T14:28:28.827839+00:00",
+          "source": "linux cgroup v2",
+          "value": 82423808
+        },
+        "oom_events": {
+          "observed_at": "2026-11-15T14:28:28.827839+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "oom_kills": {
+          "observed_at": "2026-11-15T14:28:28.827839+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_limit_events": {
+          "observed_at": "2026-11-15T14:28:28.827839+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_rss_sum_bytes": {
+          "observed_at": "2026-11-15T14:28:22.467673+00:00",
+          "source": "cgroup.procs and /proc/PID/status VmRSS",
+          "value": 153419776
+        },
+        "swap_current_bytes": {
+          "observed_at": "2026-11-15T14:28:28.827839+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "temporary_bytes": {
+          "observed_at": "2026-11-15T14:28:28.827839+00:00",
+          "source": "bounded container /tmp tree stat",
+          "value": 0
+        }
+      },
+      "path": "attempts/aeda-ff0f65e291c248d4be18c53636b4299c/floorplan.resources.json",
+      "sample_sha256": "031ae315c3016eeaea79216dc2907634caadcc49802ff86943cb1639ab215042",
+      "sha256": "a009cff9ecd9be834295326d30da098ed23f34bc66b3c807f3fa859064c8e4b9",
+      "stage": "floorplan",
+      "timeout": false
+    },
+    {
+      "attempt_id": "aeda-66ffbc10c944473d9e10ad8bd3ef2c5d",
+      "classification": "COMPLETED",
+      "cleanup_succeeded": true,
+      "elapsed_seconds": 19.746977007000012,
+      "exit_code": 0,
+      "native_state": {
+        "exit_code": 0,
+        "finished_at": "2026-11-15T14:28:50.962870949Z",
+        "id": "7b315316a656a14f2a13cb5d6fa59f54b14ea5f9ebb78e489093d2139f8bb9a4",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 1677721600,
+        "memory_swap_bytes": 1677721600,
+        "nano_cpus": 2000000000,
+        "observed_at": "2026-11-15T14:28:51.459796+00:00",
+        "oom_killed": false,
+        "pid": 0,
+        "pids_limit": null,
+        "source": "docker container inspect",
+        "started_at": "2026-11-15T14:28:32.105631075Z",
+        "status": "exited"
+      },
+      "observed_maxima": {
+        "cpu_throttle_events": {
+          "observed_at": "2026-11-15T14:28:49.709420+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_throttled_usec": {
+          "observed_at": "2026-11-15T14:28:49.709420+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_usage_usec": {
+          "observed_at": "2026-11-15T14:28:49.709420+00:00",
+          "source": "linux cgroup v2",
+          "value": 11422958
+        },
+        "disk_capacity_bytes": {
+          "observed_at": "2026-11-15T14:28:49.709420+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 362531516416
+        },
+        "disk_free_bytes": {
+          "observed_at": "2026-11-15T14:28:32.067124+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 176300806144
+        },
+        "experiment_bytes": {
+          "observed_at": "2026-11-15T14:28:49.709420+00:00",
+          "source": "bounded experiment tree stat",
+          "value": 33804786
+        },
+        "host_available_memory_bytes": {
+          "observed_at": "2026-11-15T14:28:41.073760+00:00",
+          "source": "/proc/meminfo",
+          "value": 3493740544
+        },
+        "log_bytes": {
+          "observed_at": "2026-11-15T14:28:49.709420+00:00",
+          "source": "stat attempt log",
+          "value": 36878
+        },
+        "memory_current_bytes": {
+          "observed_at": "2026-11-15T14:28:45.407205+00:00",
+          "source": "linux cgroup v2",
+          "value": 192868352
+        },
+        "memory_kernel_peak_bytes": {
+          "observed_at": "2026-11-15T14:28:49.709420+00:00",
+          "source": "linux cgroup v2",
+          "value": 297762816
+        },
+        "oom_events": {
+          "observed_at": "2026-11-15T14:28:49.709420+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "oom_kills": {
+          "observed_at": "2026-11-15T14:28:49.709420+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_limit_events": {
+          "observed_at": "2026-11-15T14:28:49.709420+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_rss_sum_bytes": {
+          "observed_at": "2026-11-15T14:28:38.915991+00:00",
+          "source": "cgroup.procs and /proc/PID/status VmRSS",
+          "value": 282746880
+        },
+        "swap_current_bytes": {
+          "observed_at": "2026-11-15T14:28:49.709420+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "temporary_bytes": {
+          "observed_at": "2026-11-15T14:28:49.709420+00:00",
+          "source": "bounded container /tmp tree stat",
+          "value": 0
+        }
+      },
+      "path": "attempts/aeda-66ffbc10c944473d9e10ad8bd3ef2c5d/place.resources.json",
+      "sample_sha256": "9f5caadce85ec81f0b4c6368e44b1e13ed01b81b51cefe187049bf289833ad89",
+      "sha256": "5c973a550ebce32bf869c6f9d70e069318777c04f3f67df3b47bb636d941601a",
+      "stage": "place",
+      "timeout": false
+    },
+    {
+      "attempt_id": "aeda-1c03a6d59ae143f383f00c973fbd9163",
+      "classification": "COMPLETED",
+      "cleanup_succeeded": true,
+      "elapsed_seconds": 13.240594212000005,
+      "exit_code": 0,
+      "native_state": {
+        "exit_code": 0,
+        "finished_at": "2026-11-15T14:29:05.294657406Z",
+        "id": "853dc23bcd36de2cd546fea97dd2df2882e21c31e42b6938253c595c91dc7693",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 1677721600,
+        "memory_swap_bytes": 1677721600,
+        "nano_cpus": 2000000000,
+        "observed_at": "2026-11-15T14:29:05.733231+00:00",
+        "oom_killed": false,
+        "pid": 0,
+        "pids_limit": null,
+        "source": "docker container inspect",
+        "started_at": "2026-11-15T14:28:52.941248774Z",
+        "status": "exited"
+      },
+      "observed_maxima": {
+        "cpu_throttle_events": {
+          "observed_at": "2026-11-15T14:29:04.159860+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_throttled_usec": {
+          "observed_at": "2026-11-15T14:29:04.159860+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_usage_usec": {
+          "observed_at": "2026-11-15T14:29:04.159860+00:00",
+          "source": "linux cgroup v2",
+          "value": 9528969
+        },
+        "disk_capacity_bytes": {
+          "observed_at": "2026-11-15T14:29:04.159860+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 362531516416
+        },
+        "disk_free_bytes": {
+          "observed_at": "2026-11-15T14:28:52.891991+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 176283226112
+        },
+        "experiment_bytes": {
+          "observed_at": "2026-11-15T14:29:04.159860+00:00",
+          "source": "bounded experiment tree stat",
+          "value": 39824033
+        },
+        "host_available_memory_bytes": {
+          "observed_at": "2026-11-15T14:28:52.891991+00:00",
+          "source": "/proc/meminfo",
+          "value": 3466014720
+        },
+        "log_bytes": {
+          "observed_at": "2026-11-15T14:29:04.159860+00:00",
+          "source": "stat attempt log",
+          "value": 20321
+        },
+        "memory_current_bytes": {
+          "observed_at": "2026-11-15T14:29:01.973850+00:00",
+          "source": "linux cgroup v2",
+          "value": 262610944
+        },
+        "memory_kernel_peak_bytes": {
+          "observed_at": "2026-11-15T14:29:04.159860+00:00",
+          "source": "linux cgroup v2",
+          "value": 262610944
+        },
+        "oom_events": {
+          "observed_at": "2026-11-15T14:29:04.159860+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "oom_kills": {
+          "observed_at": "2026-11-15T14:29:04.159860+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_limit_events": {
+          "observed_at": "2026-11-15T14:29:04.159860+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_rss_sum_bytes": {
+          "observed_at": "2026-11-15T14:29:04.159860+00:00",
+          "source": "cgroup.procs and /proc/PID/status VmRSS",
+          "value": 300437504
+        },
+        "swap_current_bytes": {
+          "observed_at": "2026-11-15T14:29:04.159860+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "temporary_bytes": {
+          "observed_at": "2026-11-15T14:29:04.159860+00:00",
+          "source": "bounded container /tmp tree stat",
+          "value": 0
+        }
+      },
+      "path": "attempts/aeda-1c03a6d59ae143f383f00c973fbd9163/cts.resources.json",
+      "sample_sha256": "766a4d1de604be30cd9f1f9ac99980edb6c10ff657fff3cb90a4065c6985e514",
+      "sha256": "f47335369818578eb8e1da0514dd06aadbf6835e347b4e55b97318231d8eb91b",
+      "stage": "cts",
+      "timeout": false
+    },
+    {
+      "attempt_id": "aeda-601714b2b3944785aa6d5ee051ea413a",
+      "classification": "COMPLETED",
+      "cleanup_succeeded": true,
+      "elapsed_seconds": 20.56428973199999,
+      "exit_code": 0,
+      "native_state": {
+        "exit_code": 0,
+        "finished_at": "2026-11-15T14:29:26.900513348Z",
+        "id": "a70eab983de422db55491640a55fc0098b5ccaf1154fa3c0b7cdf47c7f897e79",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 1677721600,
+        "memory_swap_bytes": 1677721600,
+        "nano_cpus": 2000000000,
+        "observed_at": "2026-11-15T14:29:27.344416+00:00",
+        "oom_killed": false,
+        "pid": 0,
+        "pids_limit": null,
+        "source": "docker container inspect",
+        "started_at": "2026-11-15T14:29:07.198869302Z",
+        "status": "exited"
+      },
+      "observed_maxima": {
+        "cpu_throttle_events": {
+          "observed_at": "2026-11-15T14:29:24.929350+00:00",
+          "source": "linux cgroup v2",
+          "value": 8
+        },
+        "cpu_throttled_usec": {
+          "observed_at": "2026-11-15T14:29:24.929350+00:00",
+          "source": "linux cgroup v2",
+          "value": 21666
+        },
+        "cpu_usage_usec": {
+          "observed_at": "2026-11-15T14:29:24.929350+00:00",
+          "source": "linux cgroup v2",
+          "value": 25134841
+        },
+        "disk_capacity_bytes": {
+          "observed_at": "2026-11-15T14:29:27.115668+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 362531516416
+        },
+        "disk_free_bytes": {
+          "observed_at": "2026-11-15T14:29:07.159145+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 176277135360
+        },
+        "experiment_bytes": {
+          "observed_at": "2026-11-15T14:29:27.115668+00:00",
+          "source": "bounded experiment tree stat",
+          "value": 49168148
+        },
+        "host_available_memory_bytes": {
+          "observed_at": "2026-11-15T14:29:27.115668+00:00",
+          "source": "/proc/meminfo",
+          "value": 3495563264
+        },
+        "log_bytes": {
+          "observed_at": "2026-11-15T14:29:27.115668+00:00",
+          "source": "stat attempt log",
+          "value": 33150
+        },
+        "memory_current_bytes": {
+          "observed_at": "2026-11-15T14:29:18.374947+00:00",
+          "source": "linux cgroup v2",
+          "value": 231391232
+        },
+        "memory_kernel_peak_bytes": {
+          "observed_at": "2026-11-15T14:29:24.929350+00:00",
+          "source": "linux cgroup v2",
+          "value": 231391232
+        },
+        "oom_events": {
+          "observed_at": "2026-11-15T14:29:24.929350+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "oom_kills": {
+          "observed_at": "2026-11-15T14:29:24.929350+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_limit_events": {
+          "observed_at": "2026-11-15T14:29:24.929350+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_rss_sum_bytes": {
+          "observed_at": "2026-11-15T14:29:18.374947+00:00",
+          "source": "cgroup.procs and /proc/PID/status VmRSS",
+          "value": 307007488
+        },
+        "swap_current_bytes": {
+          "observed_at": "2026-11-15T14:29:24.929350+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "temporary_bytes": {
+          "observed_at": "2026-11-15T14:29:24.929350+00:00",
+          "source": "bounded container /tmp tree stat",
+          "value": 0
+        }
+      },
+      "path": "attempts/aeda-601714b2b3944785aa6d5ee051ea413a/grt.resources.json",
+      "sample_sha256": "8003b2dce8daa08c40af925b7b4df1c1aea643c9a5cce91c95e0dfb73bfd85c1",
+      "sha256": "9e0bcc89138be8ca36ef46fbfd753a8a1e71856af1ed4c9f0f0b7029a13b63fc",
+      "stage": "grt",
+      "timeout": false
+    },
+    {
+      "attempt_id": "aeda-13f99e3e65cb472ebb2a3d2508b593cd",
+      "classification": "COMPLETED",
+      "cleanup_succeeded": true,
+      "elapsed_seconds": 42.32138429099999,
+      "exit_code": 0,
+      "native_state": {
+        "exit_code": 0,
+        "finished_at": "2026-11-15T14:30:10.222081568Z",
+        "id": "1d0e443b4c8b59cb029e6e56aeb55d2e700254a5ef4298ffded3ef77921db1b6",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 1677721600,
+        "memory_swap_bytes": 1677721600,
+        "nano_cpus": 2000000000,
+        "observed_at": "2026-11-15T14:30:10.760283+00:00",
+        "oom_killed": false,
+        "pid": 0,
+        "pids_limit": null,
+        "source": "docker container inspect",
+        "started_at": "2026-11-15T14:29:28.903610905Z",
+        "status": "exited"
+      },
+      "observed_maxima": {
+        "cpu_throttle_events": {
+          "observed_at": "2026-11-15T14:30:08.660430+00:00",
+          "source": "linux cgroup v2",
+          "value": 7
+        },
+        "cpu_throttled_usec": {
+          "observed_at": "2026-11-15T14:30:08.660430+00:00",
+          "source": "linux cgroup v2",
+          "value": 2866
+        },
+        "cpu_usage_usec": {
+          "observed_at": "2026-11-15T14:30:08.660430+00:00",
+          "source": "linux cgroup v2",
+          "value": 45713796
+        },
+        "disk_capacity_bytes": {
+          "observed_at": "2026-11-15T14:30:08.660430+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 362531516416
+        },
+        "disk_free_bytes": {
+          "observed_at": "2026-11-15T14:29:28.865390+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 176273592320
+        },
+        "experiment_bytes": {
+          "observed_at": "2026-11-15T14:30:08.660430+00:00",
+          "source": "bounded experiment tree stat",
+          "value": 52574857
+        },
+        "host_available_memory_bytes": {
+          "observed_at": "2026-11-15T14:29:28.865390+00:00",
+          "source": "/proc/meminfo",
+          "value": 3509600256
+        },
+        "log_bytes": {
+          "observed_at": "2026-11-15T14:30:08.660430+00:00",
+          "source": "stat attempt log",
+          "value": 14810
+        },
+        "memory_current_bytes": {
+          "observed_at": "2026-11-15T14:29:59.870992+00:00",
+          "source": "linux cgroup v2",
+          "value": 359624704
+        },
+        "memory_kernel_peak_bytes": {
+          "observed_at": "2026-11-15T14:30:08.660430+00:00",
+          "source": "linux cgroup v2",
+          "value": 437456896
+        },
+        "oom_events": {
+          "observed_at": "2026-11-15T14:30:08.660430+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "oom_kills": {
+          "observed_at": "2026-11-15T14:30:08.660430+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_limit_events": {
+          "observed_at": "2026-11-15T14:30:08.660430+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_rss_sum_bytes": {
+          "observed_at": "2026-11-15T14:30:06.457198+00:00",
+          "source": "cgroup.procs and /proc/PID/status VmRSS",
+          "value": 433741824
+        },
+        "swap_current_bytes": {
+          "observed_at": "2026-11-15T14:30:08.660430+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "temporary_bytes": {
+          "observed_at": "2026-11-15T14:30:08.660430+00:00",
+          "source": "bounded container /tmp tree stat",
+          "value": 0
+        }
+      },
+      "path": "attempts/aeda-13f99e3e65cb472ebb2a3d2508b593cd/route.resources.json",
+      "sample_sha256": "94c4535f98573f2fe3cb91776178e8950ef7f2049cda256d96b94b5e8a57ab1e",
+      "sha256": "aceaa1cd5e6fe94d047e407f763534dcae0b77e996ba2294880c717890176dd8",
+      "stage": "route",
+      "timeout": false
+    },
+    {
+      "attempt_id": "aeda-645a5bd52be84266ad7e75b14334dd75",
+      "classification": "COMPLETED",
+      "cleanup_succeeded": true,
+      "elapsed_seconds": 17.995069037999997,
+      "exit_code": 0,
+      "native_state": {
+        "exit_code": 0,
+        "finished_at": "2026-11-15T14:30:29.387778634Z",
+        "id": "96aef17728aa99b89201c3e7fc89ebac068d2b516cc271f4a63cde4b85428326",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 1677721600,
+        "memory_swap_bytes": 1677721600,
+        "nano_cpus": 2000000000,
+        "observed_at": "2026-11-15T14:30:29.779800+00:00",
+        "oom_killed": false,
+        "pid": 0,
+        "pids_limit": null,
+        "source": "docker container inspect",
+        "started_at": "2026-11-15T14:30:12.310972951Z",
+        "status": "exited"
+      },
+      "observed_maxima": {
+        "cpu_throttle_events": {
+          "observed_at": "2026-11-15T14:30:28.285831+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_throttled_usec": {
+          "observed_at": "2026-11-15T14:30:28.285831+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_usage_usec": {
+          "observed_at": "2026-11-15T14:30:28.285831+00:00",
+          "source": "linux cgroup v2",
+          "value": 11921872
+        },
+        "disk_capacity_bytes": {
+          "observed_at": "2026-11-15T14:30:28.285831+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 362531516416
+        },
+        "disk_free_bytes": {
+          "observed_at": "2026-11-15T14:30:12.271081+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 176222498816
+        },
+        "experiment_bytes": {
+          "observed_at": "2026-11-15T14:30:28.285831+00:00",
+          "source": "bounded experiment tree stat",
+          "value": 69740896
+        },
+        "host_available_memory_bytes": {
+          "observed_at": "2026-11-15T14:30:23.794486+00:00",
+          "source": "/proc/meminfo",
+          "value": 3460177920
+        },
+        "log_bytes": {
+          "observed_at": "2026-11-15T14:30:28.285831+00:00",
+          "source": "stat attempt log",
+          "value": 7067
+        },
+        "memory_current_bytes": {
+          "observed_at": "2026-11-15T14:30:26.059529+00:00",
+          "source": "linux cgroup v2",
+          "value": 487055360
+        },
+        "memory_kernel_peak_bytes": {
+          "observed_at": "2026-11-15T14:30:28.285831+00:00",
+          "source": "linux cgroup v2",
+          "value": 597123072
+        },
+        "oom_events": {
+          "observed_at": "2026-11-15T14:30:28.285831+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "oom_kills": {
+          "observed_at": "2026-11-15T14:30:28.285831+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_limit_events": {
+          "observed_at": "2026-11-15T14:30:28.285831+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_rss_sum_bytes": {
+          "observed_at": "2026-11-15T14:30:26.059529+00:00",
+          "source": "cgroup.procs and /proc/PID/status VmRSS",
+          "value": 393195520
+        },
+        "swap_current_bytes": {
+          "observed_at": "2026-11-15T14:30:28.285831+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "temporary_bytes": {
+          "observed_at": "2026-11-15T14:30:28.285831+00:00",
+          "source": "bounded container /tmp tree stat",
+          "value": 0
+        }
+      },
+      "path": "attempts/aeda-645a5bd52be84266ad7e75b14334dd75/finish.resources.json",
+      "sample_sha256": "aa71050a6e9b60b2290de5b4cce9e251aabf14f7f6337b344770078dc83249db",
+      "sha256": "e5d7f9dc5f906a45e4eaae193a0427ecafd2d3c89688a88fefce1e8cc9ae874f",
+      "stage": "finish",
+      "timeout": false
+    },
+    {
+      "attempt_id": "aeda-645a5bd52be84266ad7e75b14334dd75",
+      "classification": "COMPLETED",
+      "cleanup_succeeded": true,
+      "elapsed_seconds": 3.5217951209999967,
+      "exit_code": 0,
+      "native_state": {
+        "exit_code": 0,
+        "finished_at": "2026-11-15T14:30:33.838605239Z",
+        "id": "6b07de6a8519ba6f58b008b688c299ad43d26a69accaf359c027d5b85ccbb42c",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 1677721600,
+        "memory_swap_bytes": 1677721600,
+        "nano_cpus": 2000000000,
+        "observed_at": "2026-11-15T14:30:34.253727+00:00",
+        "oom_killed": false,
+        "pid": 0,
+        "pids_limit": null,
+        "source": "docker container inspect",
+        "started_at": "2026-11-15T14:30:31.194698558Z",
+        "status": "exited"
+      },
+      "observed_maxima": {
+        "cpu_throttle_events": {
+          "observed_at": "2026-11-15T14:30:33.748378+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_throttled_usec": {
+          "observed_at": "2026-11-15T14:30:33.748378+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_usage_usec": {
+          "observed_at": "2026-11-15T14:30:33.748378+00:00",
+          "source": "linux cgroup v2",
+          "value": 2433479
+        },
+        "disk_capacity_bytes": {
+          "observed_at": "2026-11-15T14:30:33.748378+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 362531516416
+        },
+        "disk_free_bytes": {
+          "observed_at": "2026-11-15T14:30:33.748378+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 176211935232
+        },
+        "experiment_bytes": {
+          "observed_at": "2026-11-15T14:30:33.748378+00:00",
+          "source": "bounded experiment tree stat",
+          "value": 69750079
+        },
+        "host_available_memory_bytes": {
+          "observed_at": "2026-11-15T14:30:31.154780+00:00",
+          "source": "/proc/meminfo",
+          "value": 3448340480
+        },
+        "log_bytes": {
+          "observed_at": "2026-11-15T14:30:33.748378+00:00",
+          "source": "stat attempt log",
+          "value": 823
+        },
+        "memory_current_bytes": {
+          "observed_at": "2026-11-15T14:30:33.748378+00:00",
+          "source": "linux cgroup v2",
+          "value": 243654656
+        },
+        "memory_kernel_peak_bytes": {
+          "observed_at": "2026-11-15T14:30:33.748378+00:00",
+          "source": "linux cgroup v2",
+          "value": 254808064
+        },
+        "oom_events": {
+          "observed_at": "2026-11-15T14:30:33.748378+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "oom_kills": {
+          "observed_at": "2026-11-15T14:30:33.748378+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_limit_events": {
+          "observed_at": "2026-11-15T14:30:33.748378+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "swap_current_bytes": {
+          "observed_at": "2026-11-15T14:30:33.748378+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        }
+      },
+      "path": "attempts/aeda-645a5bd52be84266ad7e75b14334dd75/gds-validation.resources.json",
+      "sample_sha256": "154d3d4b10438203b110d0c5f49d555828ae97c0e5476d39e0102e33b6b4e235",
+      "sha256": "db03c253f3c7a3a9a2f195e2a14803904f30b0a5f7f28b4b6bdcdf2daa484997",
+      "stage": "finish",
+      "timeout": false
+    },
+    {
+      "attempt_id": "aeda-7e8c6bc5600e46d398a273f168bce77a",
+      "classification": "COMPLETED",
+      "cleanup_succeeded": true,
+      "elapsed_seconds": 15.547346822999998,
+      "exit_code": 0,
+      "native_state": {
+        "exit_code": 0,
+        "finished_at": "2026-11-15T14:33:17.775276511Z",
+        "id": "5a767ea136b475ee14a6c3f93401909990beb9e66041a1bc4730b245c5196718",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 1677721600,
+        "memory_swap_bytes": 1677721600,
+        "nano_cpus": 2000000000,
+        "observed_at": "2026-11-15T14:33:18.259753+00:00",
+        "oom_killed": false,
+        "pid": 0,
+        "pids_limit": null,
+        "source": "docker container inspect",
+        "started_at": "2026-11-15T14:33:03.233869498Z",
+        "status": "exited"
+      },
+      "observed_maxima": {
+        "cpu_throttle_events": {
+          "observed_at": "2026-11-15T14:33:17.372194+00:00",
+          "source": "linux cgroup v2",
+          "value": 22
+        },
+        "cpu_throttled_usec": {
+          "observed_at": "2026-11-15T14:33:17.372194+00:00",
+          "source": "linux cgroup v2",
+          "value": 2698984
+        },
+        "cpu_usage_usec": {
+          "observed_at": "2026-11-15T14:33:17.372194+00:00",
+          "source": "linux cgroup v2",
+          "value": 17012726
+        },
+        "disk_capacity_bytes": {
+          "observed_at": "2026-11-15T14:33:17.372194+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 362531516416
+        },
+        "disk_free_bytes": {
+          "observed_at": "2026-11-15T14:33:03.186291+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 175863169024
+        },
+        "experiment_bytes": {
+          "observed_at": "2026-11-15T14:33:17.372194+00:00",
+          "source": "bounded experiment tree stat",
+          "value": 69916014
+        },
+        "host_available_memory_bytes": {
+          "observed_at": "2026-11-15T14:33:03.186291+00:00",
+          "source": "/proc/meminfo",
+          "value": 3503452160
+        },
+        "log_bytes": {
+          "observed_at": "2026-11-15T14:33:17.372194+00:00",
+          "source": "stat attempt log",
+          "value": 66394
+        },
+        "memory_current_bytes": {
+          "observed_at": "2026-11-15T14:33:17.372194+00:00",
+          "source": "linux cgroup v2",
+          "value": 684703744
+        },
+        "memory_kernel_peak_bytes": {
+          "observed_at": "2026-11-15T14:33:17.372194+00:00",
+          "source": "linux cgroup v2",
+          "value": 685625344
+        },
+        "oom_events": {
+          "observed_at": "2026-11-15T14:33:17.372194+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "oom_kills": {
+          "observed_at": "2026-11-15T14:33:17.372194+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_limit_events": {
+          "observed_at": "2026-11-15T14:33:17.372194+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_rss_sum_bytes": {
+          "observed_at": "2026-11-15T14:33:15.072148+00:00",
+          "source": "cgroup.procs and /proc/PID/status VmRSS",
+          "value": 523403264
+        },
+        "swap_current_bytes": {
+          "observed_at": "2026-11-15T14:33:17.372194+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "temporary_bytes": {
+          "observed_at": "2026-11-15T14:33:17.372194+00:00",
+          "source": "bounded container /tmp tree stat",
+          "value": 0
+        }
+      },
+      "path": "attempts/aeda-7e8c6bc5600e46d398a273f168bce77a/drc.resources.json",
+      "sample_sha256": "b5baf05795f30767336f24b827731deaad5fcabd0984454e65bc086537b2bed4",
+      "sha256": "e532803236b5b77d2f26455ca38049a4076499b0819ba34c440ec937efdf4abc",
+      "stage": "drc",
+      "timeout": false
+    },
+    {
+      "attempt_id": "aeda-b292251710bb449093f071f80e8e63a7",
+      "classification": "COMPLETED",
+      "cleanup_succeeded": true,
+      "elapsed_seconds": 9.745331797000006,
+      "exit_code": 0,
+      "native_state": {
+        "exit_code": 0,
+        "finished_at": "2026-11-15T14:33:28.46205195Z",
+        "id": "aa3d92d548c66a021d7118f11ea5574c3e86c0a624437b340c5a46f73274cd0b",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 1677721600,
+        "memory_swap_bytes": 1677721600,
+        "nano_cpus": 2000000000,
+        "observed_at": "2026-11-15T14:33:28.971598+00:00",
+        "oom_killed": false,
+        "pid": 0,
+        "pids_limit": null,
+        "source": "docker container inspect",
+        "started_at": "2026-11-15T14:33:19.706491275Z",
+        "status": "exited"
+      },
+      "observed_maxima": {
+        "cpu_throttle_events": {
+          "observed_at": "2026-11-15T14:33:26.933827+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_throttled_usec": {
+          "observed_at": "2026-11-15T14:33:26.933827+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_usage_usec": {
+          "observed_at": "2026-11-15T14:33:26.933827+00:00",
+          "source": "linux cgroup v2",
+          "value": 6534797
+        },
+        "disk_capacity_bytes": {
+          "observed_at": "2026-11-15T14:33:26.933827+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 362531516416
+        },
+        "disk_free_bytes": {
+          "observed_at": "2026-11-15T14:33:19.657087+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 175861719040
+        },
+        "experiment_bytes": {
+          "observed_at": "2026-11-15T14:33:26.933827+00:00",
+          "source": "bounded experiment tree stat",
+          "value": 71078828
+        },
+        "host_available_memory_bytes": {
+          "observed_at": "2026-11-15T14:33:19.657087+00:00",
+          "source": "/proc/meminfo",
+          "value": 3515265024
+        },
+        "log_bytes": {
+          "observed_at": "2026-11-15T14:33:26.933827+00:00",
+          "source": "stat attempt log",
+          "value": 15809
+        },
+        "memory_current_bytes": {
+          "observed_at": "2026-11-15T14:33:26.933827+00:00",
+          "source": "linux cgroup v2",
+          "value": 407707648
+        },
+        "memory_kernel_peak_bytes": {
+          "observed_at": "2026-11-15T14:33:26.933827+00:00",
+          "source": "linux cgroup v2",
+          "value": 407707648
+        },
+        "oom_events": {
+          "observed_at": "2026-11-15T14:33:26.933827+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "oom_kills": {
+          "observed_at": "2026-11-15T14:33:26.933827+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_limit_events": {
+          "observed_at": "2026-11-15T14:33:26.933827+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_rss_sum_bytes": {
+          "observed_at": "2026-11-15T14:33:26.933827+00:00",
+          "source": "cgroup.procs and /proc/PID/status VmRSS",
+          "value": 498393088
+        },
+        "swap_current_bytes": {
+          "observed_at": "2026-11-15T14:33:26.933827+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "temporary_bytes": {
+          "observed_at": "2026-11-15T14:33:26.933827+00:00",
+          "source": "bounded container /tmp tree stat",
+          "value": 0
+        }
+      },
+      "path": "attempts/aeda-b292251710bb449093f071f80e8e63a7/lvs.resources.json",
+      "sample_sha256": "e62217b16886eae24c0fd634d173b016e7030b5534e13fdbae97f86768161524",
+      "sha256": "bffe7fa5e52270e0c4c1cd7af153b9a4d18747dd0795378667f8c0126f4bed73",
+      "stage": "lvs",
+      "timeout": false
+    }
+  ],
+  "gcd_synthesis_control_pairs": [
+    {
+      "case": 0,
+      "exit": 0,
+      "observed": false,
+      "seconds": 11.625052815999993
+    },
+    {
+      "case": 1,
+      "exit": 0,
+      "observed": true,
+      "seconds": 10.893541487999983
+    },
+    {
+      "case": 2,
+      "exit": 0,
+      "observed": true,
+      "seconds": 10.54380986800004
+    },
+    {
+      "case": 3,
+      "exit": 0,
+      "observed": false,
+      "seconds": 10.460887071999991
+    }
+  ],
+  "native_probe_directory": "experiments/m11a-native-probes-01",
+  "native_probes": [
+    {
+      "attempt_id": "aeda-a5d2f66a25db466393ec890c58513123",
+      "classification": "COMPLETED",
+      "cleanup_succeeded": true,
+      "elapsed_seconds": 4.338293031000035,
+      "exit_code": 0,
+      "native_state": {
+        "exit_code": 0,
+        "finished_at": "2026-11-15T14:37:50.008883914Z",
+        "id": "0b01220c5cd3c50dfb02951efe77e63b106a28900402d986f6cbe05925f94e4a",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 50331648,
+        "memory_swap_bytes": 50331648,
+        "nano_cpus": 1000000000,
+        "observed_at": "2026-11-15T14:37:50.487298+00:00",
+        "oom_killed": false,
+        "pid": 0,
+        "pids_limit": 32,
+        "source": "docker container inspect",
+        "started_at": "2026-11-15T14:37:46.76933398Z",
+        "status": "exited"
+      },
+      "observed_maxima": {
+        "cpu_throttle_events": {
+          "observed_at": "2026-11-15T14:37:49.073316+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_throttled_usec": {
+          "observed_at": "2026-11-15T14:37:49.073316+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_usage_usec": {
+          "observed_at": "2026-11-15T14:37:49.073316+00:00",
+          "source": "linux cgroup v2",
+          "value": 85182
+        },
+        "disk_capacity_bytes": {
+          "observed_at": "2026-11-15T14:37:49.073316+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 362531516416
+        },
+        "disk_free_bytes": {
+          "observed_at": "2026-11-15T14:37:49.073316+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 175818543104
+        },
+        "experiment_bytes": {
+          "observed_at": "2026-11-15T14:37:49.073316+00:00",
+          "source": "bounded experiment tree stat",
+          "value": 1308
+        },
+        "host_available_memory_bytes": {
+          "observed_at": "2026-11-15T14:37:49.073316+00:00",
+          "source": "/proc/meminfo",
+          "value": 3489435648
+        },
+        "log_bytes": {
+          "observed_at": "2026-11-15T14:37:49.073316+00:00",
+          "source": "stat attempt log",
+          "value": 730
+        },
+        "memory_current_bytes": {
+          "observed_at": "2026-11-15T14:37:49.073316+00:00",
+          "source": "linux cgroup v2",
+          "value": 23400448
+        },
+        "memory_kernel_peak_bytes": {
+          "observed_at": "2026-11-15T14:37:49.073316+00:00",
+          "source": "linux cgroup v2",
+          "value": 23400448
+        },
+        "oom_events": {
+          "observed_at": "2026-11-15T14:37:49.073316+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "oom_kills": {
+          "observed_at": "2026-11-15T14:37:49.073316+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_limit_events": {
+          "observed_at": "2026-11-15T14:37:49.073316+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_rss_sum_bytes": {
+          "observed_at": "2026-11-15T14:37:49.073316+00:00",
+          "source": "cgroup.procs and /proc/PID/status VmRSS",
+          "value": 16568320
+        },
+        "swap_current_bytes": {
+          "observed_at": "2026-11-15T14:37:49.073316+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "temporary_bytes": {
+          "observed_at": "2026-11-15T14:37:49.073316+00:00",
+          "source": "bounded container /tmp tree stat",
+          "value": 0
+        }
+      },
+      "path": "test_native_docker_disposition0/probe.resources.json",
+      "sample_sha256": "d415b50e4d76637afcf3ae6245c33d5b9d011d656a6ff57e6d5f5b2031dd7ff4",
+      "sha256": "a8a1aba513860a2401c6f0cb2466f5084ba104ebc98c866fa6b9b6151b3befe2",
+      "stage": "native-probe",
+      "timeout": false
+    },
+    {
+      "attempt_id": "aeda-b97c892e8d744855aa19c44819db9732",
+      "classification": "UNKNOWN_FAILURE",
+      "cleanup_succeeded": true,
+      "elapsed_seconds": 4.10555127300006,
+      "exit_code": 137,
+      "native_state": {
+        "exit_code": 137,
+        "finished_at": "2026-11-15T14:37:54.968547633Z",
+        "id": "dabdc1d579352db629b25a0c54f1c4b09013c67a4834bfb7a4810b298ecd43e1",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 50331648,
+        "memory_swap_bytes": 50331648,
+        "nano_cpus": 1000000000,
+        "observed_at": "2026-11-15T14:37:55.407887+00:00",
+        "oom_killed": false,
+        "pid": 0,
+        "pids_limit": 32,
+        "source": "docker container inspect",
+        "started_at": "2026-11-15T14:37:51.790881108Z",
+        "status": "exited"
+      },
+      "observed_maxima": {
+        "cpu_throttle_events": {
+          "observed_at": "2026-11-15T14:37:54.094335+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_throttled_usec": {
+          "observed_at": "2026-11-15T14:37:54.094335+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_usage_usec": {
+          "observed_at": "2026-11-15T14:37:54.094335+00:00",
+          "source": "linux cgroup v2",
+          "value": 65244
+        },
+        "disk_capacity_bytes": {
+          "observed_at": "2026-11-15T14:37:54.094335+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 362531516416
+        },
+        "disk_free_bytes": {
+          "observed_at": "2026-11-15T14:37:54.094335+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 175818530816
+        },
+        "experiment_bytes": {
+          "observed_at": "2026-11-15T14:37:54.094335+00:00",
+          "source": "bounded experiment tree stat",
+          "value": 1329
+        },
+        "host_available_memory_bytes": {
+          "observed_at": "2026-11-15T14:37:54.094335+00:00",
+          "source": "/proc/meminfo",
+          "value": 3493974016
+        },
+        "log_bytes": {
+          "observed_at": "2026-11-15T14:37:54.094335+00:00",
+          "source": "stat attempt log",
+          "value": 751
+        },
+        "memory_current_bytes": {
+          "observed_at": "2026-11-15T14:37:54.094335+00:00",
+          "source": "linux cgroup v2",
+          "value": 5517312
+        },
+        "memory_kernel_peak_bytes": {
+          "observed_at": "2026-11-15T14:37:54.094335+00:00",
+          "source": "linux cgroup v2",
+          "value": 5943296
+        },
+        "oom_events": {
+          "observed_at": "2026-11-15T14:37:54.094335+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "oom_kills": {
+          "observed_at": "2026-11-15T14:37:54.094335+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_limit_events": {
+          "observed_at": "2026-11-15T14:37:54.094335+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_rss_sum_bytes": {
+          "observed_at": "2026-11-15T14:37:54.094335+00:00",
+          "source": "cgroup.procs and /proc/PID/status VmRSS",
+          "value": 20000768
+        },
+        "swap_current_bytes": {
+          "observed_at": "2026-11-15T14:37:54.094335+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "temporary_bytes": {
+          "observed_at": "2026-11-15T14:37:54.094335+00:00",
+          "source": "bounded container /tmp tree stat",
+          "value": 0
+        }
+      },
+      "path": "test_native_docker_disposition1/probe.resources.json",
+      "sample_sha256": "007c3b31b6f1acca9193ab47309075eb1a1a1fa8c3db3ce7047d4bfe8f7b555c",
+      "sha256": "c0a0d9c95be5a99bdadb84362a02685f80192dc8e9d830285613847472009938",
+      "stage": "native-probe",
+      "timeout": false
+    },
+    {
+      "attempt_id": "aeda-c8e3842726f74dfc8b4ce87c76fe0657",
+      "classification": "WALL_TIMEOUT",
+      "cleanup_succeeded": true,
+      "elapsed_seconds": 4.003706555999997,
+      "exit_code": 124,
+      "native_state": {
+        "exit_code": 137,
+        "finished_at": "2026-11-15T14:38:00.574760237Z",
+        "id": "6187955f96f24db5a5e767745ae72541e82e36cf500ac78cc6136fbe8e8697c7",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 50331648,
+        "memory_swap_bytes": 50331648,
+        "nano_cpus": 1000000000,
+        "observed_at": "2026-11-15T14:38:01.029678+00:00",
+        "oom_killed": false,
+        "pid": 0,
+        "pids_limit": 32,
+        "source": "docker container inspect",
+        "started_at": "2026-11-15T14:37:56.651936641Z",
+        "status": "exited"
+      },
+      "observed_maxima": {
+        "cpu_throttle_events": {
+          "observed_at": "2026-11-15T14:37:58.952650+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_throttled_usec": {
+          "observed_at": "2026-11-15T14:37:58.952650+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_usage_usec": {
+          "observed_at": "2026-11-15T14:37:58.952650+00:00",
+          "source": "linux cgroup v2",
+          "value": 61727
+        },
+        "disk_capacity_bytes": {
+          "observed_at": "2026-11-15T14:38:00.959003+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 362531516416
+        },
+        "disk_free_bytes": {
+          "observed_at": "2026-11-15T14:37:58.952650+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 175818518528
+        },
+        "experiment_bytes": {
+          "observed_at": "2026-11-15T14:38:00.959003+00:00",
+          "source": "bounded experiment tree stat",
+          "value": 2639
+        },
+        "host_available_memory_bytes": {
+          "observed_at": "2026-11-15T14:38:00.959003+00:00",
+          "source": "/proc/meminfo",
+          "value": 3514494976
+        },
+        "log_bytes": {
+          "observed_at": "2026-11-15T14:38:00.959003+00:00",
+          "source": "stat attempt log",
+          "value": 769
+        },
+        "memory_current_bytes": {
+          "observed_at": "2026-11-15T14:37:58.952650+00:00",
+          "source": "linux cgroup v2",
+          "value": 3497984
+        },
+        "memory_kernel_peak_bytes": {
+          "observed_at": "2026-11-15T14:37:58.952650+00:00",
+          "source": "linux cgroup v2",
+          "value": 4661248
+        },
+        "oom_events": {
+          "observed_at": "2026-11-15T14:37:58.952650+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "oom_kills": {
+          "observed_at": "2026-11-15T14:37:58.952650+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_limit_events": {
+          "observed_at": "2026-11-15T14:37:58.952650+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_rss_sum_bytes": {
+          "observed_at": "2026-11-15T14:37:58.952650+00:00",
+          "source": "cgroup.procs and /proc/PID/status VmRSS",
+          "value": 16003072
+        },
+        "swap_current_bytes": {
+          "observed_at": "2026-11-15T14:37:58.952650+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "temporary_bytes": {
+          "observed_at": "2026-11-15T14:37:58.952650+00:00",
+          "source": "bounded container /tmp tree stat",
+          "value": 0
+        }
+      },
+      "path": "test_native_docker_disposition2/probe.resources.json",
+      "sample_sha256": "3526097a4e16e4cf69dc860a4f36da30e800d75053c36119c2ac671157885440",
+      "sha256": "3a6dae49f2fee270e15de4a7f79b87426e8e5c7ecc3ec197e742ebe7088f2498",
+      "stage": "native-probe",
+      "timeout": true
+    },
+    {
+      "attempt_id": "aeda-d27134990ee841c386ee373b81ec6ebb",
+      "classification": "CONFIRMED_OOM",
+      "cleanup_succeeded": true,
+      "elapsed_seconds": 4.18773940799997,
+      "exit_code": 9,
+      "native_state": {
+        "exit_code": 9,
+        "finished_at": "2026-11-15T14:38:05.568972271Z",
+        "id": "d040c08114f0eaa55fc33db375147b84c453554fa1222a28ad3fe7a50fc103bf",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 50331648,
+        "memory_swap_bytes": 50331648,
+        "nano_cpus": 1000000000,
+        "observed_at": "2026-11-15T14:38:06.013034+00:00",
+        "oom_killed": true,
+        "pid": 0,
+        "pids_limit": 32,
+        "source": "docker container inspect",
+        "started_at": "2026-11-15T14:38:02.291992863Z",
+        "status": "exited"
+      },
+      "observed_maxima": {
+        "cpu_throttle_events": {
+          "observed_at": "2026-11-15T14:38:04.592130+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_throttled_usec": {
+          "observed_at": "2026-11-15T14:38:04.592130+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "cpu_usage_usec": {
+          "observed_at": "2026-11-15T14:38:04.592130+00:00",
+          "source": "linux cgroup v2",
+          "value": 80760
+        },
+        "disk_capacity_bytes": {
+          "observed_at": "2026-11-15T14:38:04.592130+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 362531516416
+        },
+        "disk_free_bytes": {
+          "observed_at": "2026-11-15T14:38:04.592130+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 175818506240
+        },
+        "experiment_bytes": {
+          "observed_at": "2026-11-15T14:38:04.592130+00:00",
+          "source": "bounded experiment tree stat",
+          "value": 1368
+        },
+        "host_available_memory_bytes": {
+          "observed_at": "2026-11-15T14:38:02.250407+00:00",
+          "source": "/proc/meminfo",
+          "value": 3519266816
+        },
+        "log_bytes": {
+          "observed_at": "2026-11-15T14:38:04.592130+00:00",
+          "source": "stat attempt log",
+          "value": 790
+        },
+        "memory_current_bytes": {
+          "observed_at": "2026-11-15T14:38:04.592130+00:00",
+          "source": "linux cgroup v2",
+          "value": 15167488
+        },
+        "memory_kernel_peak_bytes": {
+          "observed_at": "2026-11-15T14:38:04.592130+00:00",
+          "source": "linux cgroup v2",
+          "value": 15167488
+        },
+        "oom_events": {
+          "observed_at": "2026-11-15T14:38:04.592130+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "oom_kills": {
+          "observed_at": "2026-11-15T14:38:04.592130+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_limit_events": {
+          "observed_at": "2026-11-15T14:38:04.592130+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "process_rss_sum_bytes": {
+          "observed_at": "2026-11-15T14:38:04.592130+00:00",
+          "source": "cgroup.procs and /proc/PID/status VmRSS",
+          "value": 17854464
+        },
+        "swap_current_bytes": {
+          "observed_at": "2026-11-15T14:38:04.592130+00:00",
+          "source": "linux cgroup v2",
+          "value": 0
+        },
+        "temporary_bytes": {
+          "observed_at": "2026-11-15T14:38:04.592130+00:00",
+          "source": "bounded container /tmp tree stat",
+          "value": 0
+        }
+      },
+      "path": "test_native_docker_disposition3/probe.resources.json",
+      "sample_sha256": "af028573fd0a929ebbb5fabe0e0ac9c244dafe566e88336e6e0ba52cddf89ec3",
+      "sha256": "fa4d7e19a44aebc5f3de86a94b7d8306f596beb618ee75e835699e908bbb02ec",
+      "stage": "native-probe",
+      "timeout": false
+    },
+    {
+      "attempt_id": "aeda-45045ef9f9394892bcb2b4e576d0ae60",
+      "classification": "SIGNAL_TERMINATED",
+      "cleanup_succeeded": true,
+      "elapsed_seconds": 1.3543260449999934,
+      "exit_code": 137,
+      "native_state": {
+        "exit_code": 137,
+        "finished_at": "2026-11-15T14:38:08.796815412Z",
+        "id": "5663509f631e77af51aa713fff6bdb5447e752b3d7145051db324c68cafa6d0b",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 50331648,
+        "memory_swap_bytes": 50331648,
+        "nano_cpus": 1000000000,
+        "observed_at": "2026-11-15T14:38:09.244822+00:00",
+        "oom_killed": false,
+        "pid": 0,
+        "pids_limit": null,
+        "source": "docker container inspect",
+        "started_at": "2026-11-15T14:38:07.535812523Z",
+        "status": "exited"
+      },
+      "observed_maxima": {
+        "disk_capacity_bytes": {
+          "observed_at": "2026-11-15T14:38:07.496256+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 362531516416
+        },
+        "disk_free_bytes": {
+          "observed_at": "2026-11-15T14:38:07.496256+00:00",
+          "source": "statvfs experiment filesystem",
+          "value": 175818498048
+        },
+        "experiment_bytes": {
+          "observed_at": "2026-11-15T14:38:07.496256+00:00",
+          "source": "bounded experiment tree stat",
+          "value": 709
+        },
+        "host_available_memory_bytes": {
+          "observed_at": "2026-11-15T14:38:07.496256+00:00",
+          "source": "/proc/meminfo",
+          "value": 3503394816
+        },
+        "log_bytes": {
+          "observed_at": "2026-11-15T14:38:07.496256+00:00",
+          "source": "stat attempt log",
+          "value": 709
+        }
+      },
+      "path": "test_native_docker_interruptio0/probe.resources.json",
+      "sample_sha256": "7af932bfea992b40c1fc56a34fba65b0b3fb0d5199b5605e05633b7aca90fc4f",
+      "sha256": "5b0a42e61b71133eadb3d9dbb38c50365dd828c7cd544c5e60b3729ae688b7f0",
+      "stage": "native-interrupt",
+      "timeout": false
+    }
+  ],
+  "physical_verification": {
+    "decision_sha256": "11f29662cd2678924640bb8feaf3cb7ac8073dd3ac3e79e417f08f62d0154c92",
+    "gates": {
+      "artifact_integrity": "PASSED",
+      "connectivity": "UNKNOWN",
+      "elaboration": "UNKNOWN",
+      "equivalence": "UNKNOWN",
+      "formal_properties": "UNKNOWN",
+      "functional_regression": "UNKNOWN",
+      "gds_generation": "PASSED",
+      "gds_reopen": "PASSED",
+      "hold": "PASSED",
+      "lvs": "PASSED",
+      "platform_drc": "PASSED",
+      "router": "PASSED",
+      "sequential_equivalence": "UNKNOWN",
+      "setup": "FAILED",
+      "synthesis": "PASSED",
+      "timing_coverage": "PASSED"
+    },
+    "verdicts": {
+      "full_acceptance": "FAILED",
+      "implementation_completion": "PASSED",
+      "optimization_objectives": "NOT_APPLICABLE",
+      "physical_feasibility": "FAILED",
+      "verification": "FAILED"
+    }
+  },
+  "run_directory": "experiments/m11a-gcd-telemetry-01",
+  "run_id": "7f902b30b15d466eb12ffdb852c39595",
+  "schema_version": 1
+}

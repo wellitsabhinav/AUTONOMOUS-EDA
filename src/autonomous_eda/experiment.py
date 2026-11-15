@@ -33,11 +33,13 @@ from .orfs import (
     make_command,
     preflight,
     preserve_invalid_artifacts,
+    record_interrupted_dispatch,
     remove_interrupted_container,
     stage_plan,
     terminate_on_signal,
 )
 from .reference import IMAGE
+from .telemetry import ResourceContext, receipt_path, samples_path
 
 
 def now() -> str:
@@ -214,6 +216,9 @@ def cleanup_verification(root: Path, docker: str) -> None:
         if status_file.is_file():
             existing = json.loads(status_file.read_text(encoding="utf-8"))
             if existing.get("exit_code") is None and existing.get("attempt"):
+                log = root / "attempts" / existing["attempt"] / f"{target}.log"
+                if log.resolve().is_relative_to(root):
+                    record_interrupted_dispatch(docker, existing["attempt"], log)
                 remove_interrupted_container(docker, existing["attempt"])
 
 
@@ -229,8 +234,22 @@ def run_stages(
     max_retries: int | None = None,
 ) -> bool:
     version = db_version(db)
-    for (log,) in db.execute("SELECT log FROM attempts WHERE state='running'"):
-        remove_interrupted_container(docker, Path(log).parent.name)
+    run_id = db.execute("SELECT run_id FROM run").fetchone()[0] if version == 2 else None
+    for attempt_id, relative in db.execute("SELECT id, log FROM attempts WHERE state='running'"):
+        log = root / relative
+        name = Path(relative).parent.name
+        recovered: dict[str, str] = {}
+        if log.resolve().is_relative_to(root):
+            for dispatched_log in (log, log.with_name("gds-validation.log")):
+                record_interrupted_dispatch(docker, name, dispatched_log)
+                record_dispatch_artifacts(root, recovered, dispatched_log)
+        remove_interrupted_container(docker, name)
+        if recovered:
+            with db:
+                db.execute(
+                    "UPDATE attempts SET artifacts=? WHERE id=?",
+                    (json.dumps(recovered), attempt_id),
+                )
     with db:
         if version == 2:
             db.execute(
@@ -240,6 +259,7 @@ def run_stages(
         db.execute("UPDATE attempts SET state='interrupted' WHERE state='running'")
     dirty = False
     passed: set[str] = set()
+    reused: list[str] = []
     for stage in stage_plan(manifest, legacy=version == 0):
         if guard is not None:
             guard()
@@ -253,18 +273,16 @@ def run_stages(
             try:
                 if checkpoint_valid(root, stage, json.loads(previous[1])):
                     passed.add(stage.name)
+                    reused.append(stage.name)
                     continue
             except (OSError, ValueError):
                 # A lost or modified checkpoint invalidates dependent stages.
                 pass
-        if max_retries is not None:
-            attempts = db.execute(
-                "SELECT COUNT(*) FROM attempts WHERE stage=?", (stage.name,)
-            ).fetchone()[0]
-            if attempts > max_retries:
-                raise DispatchStopped(
-                    f"{stage.name} retry budget exhausted after {attempts} attempts"
-                )
+        attempts = db.execute(
+            "SELECT COUNT(*) FROM attempts WHERE stage=?", (stage.name,)
+        ).fetchone()[0]
+        if max_retries is not None and attempts > max_retries:
+            raise DispatchStopped(f"{stage.name} retry budget exhausted after {attempts} attempts")
         name = f"aeda-{uuid.uuid4().hex}"
         attempt = root / "attempts" / name
         attempt.mkdir(parents=True)
@@ -308,16 +326,30 @@ def run_stages(
         state, detail, elapsed, hashes = "failed", None, 0.0, None
         code: int | None = None
         start = time.monotonic()
+        logs = [log, attempt / "gds-validation.log"] if len(commands) == 2 else [log]
         try:
-            options = {"guard": guard} if guard is not None else {}
+            resources = ResourceContext(
+                root,
+                stage.name,
+                run_id,
+                name,
+                IMAGE,
+                manifest.cores,
+                memory_mib * 2**20,
+                max_processes,
+                attempts,
+                tuple(reused),
+            )
             code, elapsed = execute(
-                commands[0], manifest.stage_timeout_seconds, log, name, **options
+                commands[0],
+                manifest.stage_timeout_seconds,
+                log,
+                name,
+                guard=guard,
+                resources=resources,
             )
             if code:
-                reason = {
-                    124: "stage timeout",
-                    137: "SIGKILL, possible container memory exhaustion",
-                }.get(code)
+                reason = dispatch_classification(log)
                 suffix = f" ({reason})" if reason else ""
                 raise ValueError(f"ORFS {stage.name} exited {code}{suffix}")
             hashes = artifact_hashes(root, stage)
@@ -333,9 +365,10 @@ def run_stages(
                 code, duration = execute(
                     commands[1],
                     manifest.stage_timeout_seconds,
-                    attempt / "gds-validation.log",
+                    logs[1],
                     name,
-                    **options,
+                    guard=guard,
+                    resources=resources,
                 )
                 elapsed += duration
                 if version == 2 and code == 0:
@@ -370,9 +403,9 @@ def run_stages(
         finally:
             with db:
                 if version == 2:
-                    if log.is_file():
-                        hashes = hashes or {}
-                        hashes[log.relative_to(root).as_posix()] = sha256(log)
+                    hashes = hashes or {}
+                    for dispatched_log in logs:
+                        record_dispatch_artifacts(root, hashes, dispatched_log)
                     db.execute(
                         "UPDATE attempts SET ended_at=?, exit_code=? WHERE id=?",
                         (now(), code, cursor.lastrowid),
@@ -387,6 +420,24 @@ def run_stages(
     return True
 
 
+def dispatch_classification(log: Path) -> str | None:
+    if not receipt_path(log).is_file():
+        return None
+    value = json.loads(receipt_path(log).read_bytes()).get("classification")
+    return value if isinstance(value, str) else None
+
+
+def record_dispatch_artifacts(root: Path, hashes: dict[str, str], log: Path) -> None:
+    for path in (
+        log,
+        receipt_path(log),
+        samples_path(log),
+        log.with_suffix(".resources-recovery.json"),
+    ):
+        if path.resolve().is_relative_to(root) and path.is_file():
+            hashes[path.relative_to(root).as_posix()] = sha256(path)
+
+
 def checkpoint_valid(root: Path, stage: Stage, hashes: dict[str, str]) -> bool:
     if not hashes:
         return False
@@ -396,7 +447,9 @@ def checkpoint_valid(root: Path, stage: Stage, hashes: dict[str, str]) -> bool:
     return all(hashes.get(path) == digest for path, digest in actual.items()) and all(
         (root / path).resolve().is_relative_to(root) and sha256(root / path) == digest
         for path, digest in hashes.items()
-        if path not in actual and path not in optional
+        if path not in actual
+        and path not in optional
+        and not path.endswith((".resources.json", ".resources.ndjson"))
     )
 
 
@@ -549,6 +602,7 @@ def verify(root: Path, *, guard: DispatchGuard | None = None) -> dict[str, Any]:
             name = f"aeda-{uuid.uuid4().hex}"
             attempt = root / "attempts" / name
             attempt.mkdir(parents=True)
+            retries = sum(1 for path in (root / "attempts").glob(f"aeda-*/{target}.log"))
             command = container_command(docker, root, name, manifest.cores, memory_mib)
             status = root / f"verification-{target}.json"
             started = now()
@@ -567,12 +621,26 @@ def verify(root: Path, *, guard: DispatchGuard | None = None) -> dict[str, Any]:
                     preserved = attempt / "previous" / path
                     preserved.parent.mkdir(parents=True, exist_ok=True)
                     original.rename(preserved)
+            log = attempt / f"{target}.log"
+            resources = ResourceContext(
+                root,
+                target,
+                baseline.get("run_id"),
+                name,
+                IMAGE,
+                manifest.cores,
+                memory_mib * 2**20,
+                None,
+                retries,
+                ("finish",),
+            )
             code, elapsed = execute(
                 command + make_command(manifest, target),
                 manifest.stage_timeout_seconds,
-                attempt / f"{target}.log",
+                log,
                 name,
-                **({"guard": guard} if guard is not None else {}),
+                guard=guard,
+                resources=resources,
             )
             result.update(exit_code=code, runtime_seconds=elapsed)
             result.update(
@@ -582,9 +650,7 @@ def verify(root: Path, *, guard: DispatchGuard | None = None) -> dict[str, Any]:
                 command=command + make_command(manifest, target),
                 artifacts={path: sha256(root / path) for path in files if (root / path).is_file()},
             )
-            log = attempt / f"{target}.log"
-            if log.is_file():
-                result["artifacts"][log.relative_to(root).as_posix()] = sha256(log)
+            record_dispatch_artifacts(root, result["artifacts"], log)
             snapshot = json.dumps(result)
             (attempt / "verification.json").write_text(snapshot, encoding="utf-8")
             write_verification_status(status, result)
