@@ -118,10 +118,40 @@ def test_stage_process_crash_does_not_publish_partial_png_or_poison_next_stage(
         assert provenance["source"]["sha256"] == sha256(root / provenance["source"]["path"])
     workspace = Workspace(out, root, None, None)
     assert workspace.status()["events"][0]["status"] == "idle"
+    assert workspace.status()["schema_version"] == 1
+    assert workspace.status()["timeline"] == []
+    assert workspace.verification() is None
     assert workspace.asset("route", "png") == (out / "route.png").read_bytes()
     (out / "route.png").write_bytes(b"changed")
     with pytest.raises(ValueError, match="hash changed"):
         workspace.asset("route", "png")
+
+
+def test_studio_event_stream_preserves_controller_identity(tmp_path: Path) -> None:
+    (tmp_path / "snapshots.json").write_text(
+        '{"schema_version":1,"run_id":"bound","order":["place"],"stages":{"place":{}}}',
+        encoding="utf-8",
+    )
+    workspace = Workspace(tmp_path, tmp_path, None, None)
+    events = workspace.timeline(
+        [
+            {
+                "id": 8,
+                "stage": "place",
+                "state": "failed",
+                "started_at": "2026-11-15T04:00:00+00:00",
+                "ended_at": "2026-11-15T04:01:00+00:00",
+                "artifacts": {"attempts/placement.log": "a" * 64},
+            }
+        ],
+        [],
+    )
+    assert events[0]["event_id"] == "controller:bound:8:failed"
+    assert events[0]["source"] == "controller"
+    assert events[0]["severity"] == "error"
+    assert events[0]["evidence_references"] == ["attempts/placement.log"]
+    with pytest.raises(ValueError, match="does not match"):
+        workspace.check_run("unrelated")
 
 
 def test_recorded_crash_evidence_and_log_filter(tmp_path: Path) -> None:
@@ -180,3 +210,22 @@ def test_published_stage_images_bind_the_retained_run() -> None:
         assert metadata["run_id"] == receipt["run_id"]
         assert metadata["source"]["stage"] == stage
         assert hashes[metadata["source"]["path"]] == metadata["source"]["sha256"]
+
+
+def test_studio_publication_preserves_source_and_screenshot_hashes() -> None:
+    docs = Path(__file__).parents[1] / "docs"
+    folder = docs / "images/studio"
+    published = json.loads((folder / "provenance.json").read_bytes())
+    physical = json.loads((docs / "evidence/opentitan-aes/physical.json").read_bytes())
+    stage_hashes = {
+        key: value
+        for attempt in json.loads((docs / "evidence/gcd-walkthrough/receipt.json").read_bytes())[
+            "attempts"
+        ]
+        for key, value in attempt["artifacts"].items()
+    }
+    for record in published["images"].values():
+        assert sha256(folder / record["filename"]) == record["image_sha256"]
+        for stage in record["stages"].values():
+            expected = physical["artifact_sha256"] if record["design"] == "aes" else stage_hashes
+            assert stage["source"]["sha256"] == expected[stage["source"]["path"]]

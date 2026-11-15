@@ -40,7 +40,7 @@ Use the RTL workflow to check an explicitly declared source set and testbench. U
 | IO pad-ring placement | Experimental | Real Sky130 IO abstracts placed with ICeWall |
 | Full-chip connectivity and signoff | Blocked | Qualified pad geometry, electrical views and chip-level evidence are required |
 | Reporting and AI assistance | Implemented | Deterministic reports, comparisons, verified PNGs and optional bounded model interpretation |
-| Interactive physical explorer and execution console | Planned | Stage geometry, object inspection and runtime events are tracked in Patch 09D |
+| Studio 2.0 | Implemented | [Physical checkpoints, timing paths, verification and execution](docs/PHYSICAL_WORKSPACE.md) verified on recorded GCD and AES evidence |
 
 [Measured verification](docs/VERIFICATION_EVALUATION.md) · [IO evaluation](docs/IO_PAD_RING_EVALUATION.md) · [Roadmap](docs/ROADMAP.md)
 

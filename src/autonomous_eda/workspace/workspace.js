@@ -6,7 +6,8 @@ const labels = {floorplan:"Floorplan", place:"Placement", cts:"CTS", grt:"Global
 const palette = ["#5ecbdb", "#aa86f2", "#f6ad68", "#73d79e", "#e47fad", "#6699f2", "#c0c768"];
 const stageLabel = id => labels[id] || id;
 const state = {bundle:null, stages:new Map(), primary:null, other:null, selection:null,
-    shown:new Set(), hiddenLayers:new Set(), center:[0,0], zoom:1, loading:0, console:false};
+    shown:new Set(), hiddenLayers:new Set(), center:[0,0], zoom:1, loading:0, console:false,
+    measuring:false, ruler:[], timingIndex:0};
 const views = [$("layout"), $("comparison")];
 const kinds = {cells:"Placed cells", pins:"I/O pins", pads:"Pad-ring cells", guides:"Route guides",
     congestion:"GCell usage / capacity", wires:"Routed wire shapes", polygons:"GDS geometry",
@@ -62,11 +63,11 @@ function index(g) {
 
 async function geometry(id) {
     if (!id) return null;
-    if (!state.stages.has(id)) {
-        const g = index(await json(stagePath(id, "geometry")));
-        state.stages.set(id, g);
-    }
-    return state.stages.get(id);
+    const g = state.stages.get(id) || index(await json(stagePath(id, "geometry")));
+    state.stages.delete(id);
+    state.stages.set(id,g);
+    while (state.stages.size > 3) state.stages.delete(state.stages.keys().next().value);
+    return g;
 }
 function fit() {
     const frames = [state.primary, state.other].filter(Boolean).map(g => g.bounds.map(n => n / g.dbu));
@@ -90,7 +91,6 @@ function view(canvas, g) {
         canvas.width = w; canvas.height = h;
     }
     const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#0a121e"; ctx.fillRect(0,0,w,h);
     const bases = [state.primary, state.other].filter(Boolean).map(item => {
         const b = item.bounds;
         return Math.max(b[2]-b[0], b[3]-b[1]) / item.dbu;
@@ -104,11 +104,16 @@ function view(canvas, g) {
 
 function draw(canvas, g) {
     if (!g || !canvas.clientWidth) return;
-    const {ctx, pixel, ratio} = view(canvas, g);
+    const {ctx, pixel, world, ratio} = view(canvas, g);
+    ctx.fillStyle = "#0a121e";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    const [left,top] = world(0,0);
+    const [right,bottom] = world(canvas.clientWidth,canvas.clientHeight);
     const color = layer => palette[g.layers.indexOf(layer) % palette.length] || "#63b9ce";
     const shown = kind => state.shown.has(kind);
     const layerOn = layer => !state.hiddenLayers.has(layer);
     const box = (bounds, fill, outline) => {
+        if (bounds[0]>right || bounds[2]<left || bounds[1]>top || bounds[3]<bottom) return;
         const [x,y] = pixel([bounds[0], bounds[3]]), [xx,yy] = pixel([bounds[2],bounds[1]]);
         if (fill) { ctx.fillStyle = fill; ctx.fillRect(x,y,xx-x,yy-y); }
         if (outline) { ctx.strokeStyle = outline; ctx.strokeRect(x,y,xx-x,yy-y); }
@@ -186,10 +191,10 @@ function draw(canvas, g) {
             }
         }
     }
-    if (shown("timing") && g.timing.length) {
-        const path = g.timing.find(p => p.check === "setup") || g.timing[0];
+    const timingPath = g.timing[state.timingIndex];
+    if (g === state.primary && shown("timing") && timingPath) {
         let prev = null;
-        for (const a of path.anchors) {
+        for (const a of timingPath.anchors) {
             if (prev && a.point) line(prev,a.point,"#ffad68");
             if (a.point) point(a.point,"#ffad68",3);
             prev = a.point;
@@ -203,11 +208,19 @@ function draw(canvas, g) {
     if (selected?.kind === "pin" && g.pinMap.has(selected.name)) {
         box(boxOf(g.pinMap.get(selected.name)), "#ffcf7f88","#ffcf7f");
     }
+    const ruler = state.ruler.map(p => p.map(coordinate => coordinate*g.dbu));
+    if (ruler.length === 2) line(ruler[0],ruler[1],"#f9d388");
+    for (const p of ruler) point(p,"#f9d388",3);
 }
 
+let frameRequest = null;
 function drawAll() {
-    draw(views[0],state.primary);
-    draw(views[1],state.other);
+    if (frameRequest !== null) return;
+    frameRequest = requestAnimationFrame(() => {
+        frameRequest = null;
+        draw(views[0],state.primary);
+        draw(views[1],state.other);
+    });
 }
 const resize = new ResizeObserver(drawAll);
 for (const [i, canvas] of views.entries()) {
@@ -249,6 +262,17 @@ for (const [i, canvas] of views.entries()) {
         if (drag && !drag.moved) {
             const g = model(), rect = canvas.getBoundingClientRect();
             const p = view(canvas,g).world(e.clientX-rect.left,e.clientY-rect.top);
+            if (state.measuring) {
+                if (state.ruler.length === 2) state.ruler = [];
+                state.ruler.push(p.map(coordinate => coordinate/g.dbu));
+                if (state.ruler.length === 2) {
+                    const [a,b] = state.ruler;
+                    status(Math.hypot(a[0]-b[0],a[1]-b[1]).toFixed(3)+" µm");
+                } else status("Select the end point");
+                drawAll();
+                drag = null;
+                return;
+            }
             const pin = g.pins.find(item => !state.hiddenLayers.has(item[2]) && inside(p,boxOf(item)));
             const wire = g.wires.find(item => !state.hiddenLayers.has(item[1]) && inside(p,boxOf(item)));
             const cell = g.cells.find(item => inside(p,boxOf(item)));
@@ -348,12 +372,39 @@ function evidence() {
     if (state.shown.has("clock") && g.clock.length) {
         rows.push(element("p",g.clock.length+" clock nets. Lines join placed driver and sink pins."));
     }
-    if (state.shown.has("timing") && g.timing.length) {
-        const t = g.timing.find(p => p.check === "setup") || g.timing[0];
-        rows.push(element("p",t.check+" "+t.slack_ns+" ns · report lines "+t.lines.join("–")),
-            element("code",t.report),element("p","Timing lines join matched report pins."));
-    }
     $("evidence").replaceChildren(...rows);
+}
+
+function timingDetails() {
+    const g = state.primary;
+    const path = g.timing[state.timingIndex];
+    const mapped = path?.anchors.filter(anchor => anchor.point) || [];
+    $("fit-path").disabled = mapped.length < 2;
+    const entries = [];
+    if (path) {
+        if (path.startpoint) entries.push(element("p",path.startpoint+" → "+path.endpoint));
+        if (path.group) entries.push(element("p","Path group "+path.group));
+        if (path.launch_clock) entries.push(element("p",path.launch_clock+" → "+path.capture_clock));
+        if (path.arrival_ns != null && path.required_ns != null) {
+            entries.push(element("p","Arrival "+path.arrival_ns+" ns · required "+path.required_ns+" ns"));
+        }
+        entries.push(element("p",mapped.length < 2 ? "Matching geometry is unavailable." :
+            mapped.length+" matched report pins"),element("code",path.report+" · lines "+path.lines.join("–")));
+    } else entries.push(element("p","No verified timing paths for this stage."));
+    $("timing-info").replaceChildren(...entries);
+}
+
+function timingOptions() {
+    const paths = state.primary.timing;
+    state.timingIndex = Math.max(0, paths.findIndex(path => path.check === "setup"));
+    $("timing-path").replaceChildren(...paths.map((path,index) => {
+        const option = element("option",path.check+" · "+path.slack_ns+" ns · "+path.lines[0]);
+        option.value = index;
+        option.selected = index === state.timingIndex;
+        return option;
+    }));
+    $("timing-path").disabled = !paths.length;
+    timingDetails();
 }
 
 async function switchStage(id, comparison=$("compare").value) {
@@ -363,6 +414,7 @@ async function switchStage(id, comparison=$("compare").value) {
         const [g,other] = await Promise.all([geometry(id),geometry(comparison)]);
         if (seq !== state.loading) return;
         state.primary = g; state.other = other; state.stage = id; state.selection = null;
+        state.ruler = [];
         state.shown = new Set(["cells","pins","pads","polygons"]);
         state.hiddenLayers.clear();
         $("stage-label").textContent = stageLabel(id)+" · "+g.top;
@@ -370,13 +422,40 @@ async function switchStage(id, comparison=$("compare").value) {
         $("compare-panel").hidden = !other;
         for (const b of $("timeline").children) b.setAttribute("aria-pressed",String(b.dataset.id===id));
         $("selection").replaceChildren(); $("matches").replaceChildren(); $("find").value="";
-        controls(); evidence(); fit(); status("");
+        controls(); timingOptions(); evidence(); fit(); status("");
     } catch (error) { if (seq === state.loading) status(error.message); }
 }
 $("fit").onclick = fit;
 $("plus").onclick = () => { state.zoom = Math.min(150,state.zoom*1.25); drawAll(); };
 $("minus").onclick = () => { state.zoom = Math.max(.2,state.zoom/1.25); drawAll(); };
 $("compare").onchange = () => switchStage(state.stage);
+$("timing-path").onchange = () => {
+    state.timingIndex = Number($("timing-path").value);
+    state.shown.add("timing");
+    controls();
+    timingDetails();
+    drawAll();
+};
+$("fit-path").onclick = () => {
+    const g = state.primary;
+    const pins = g.timing[state.timingIndex]?.anchors.filter(anchor => anchor.point) || [];
+    if (pins.length < 2) return;
+    const axes = [0,1].map(index => pins.map(pin => pin.point[index]/g.dbu));
+    const spans = axes.map(axis => Math.max(...axis)-Math.min(...axis));
+    const b = g.bounds.map(n => n/g.dbu);
+    state.zoom = Math.min(150, .85 * Math.max(b[2]-b[0],b[3]-b[1]) / Math.max(...spans,.1));
+    state.center = axes.map(axis => (Math.min(...axis)+Math.max(...axis))/2);
+    state.shown.add("timing");
+    controls();
+    drawAll();
+};
+$("ruler").onclick = () => {
+    state.measuring = !state.measuring;
+    state.ruler = [];
+    $("ruler").setAttribute("aria-pressed",String(state.measuring));
+    status(state.measuring ? "Select the start point" : "");
+    drawAll();
+};
 
 function download(blob, name) {
     const href = URL.createObjectURL(blob);
@@ -451,12 +530,22 @@ function events(target, rows) {
 let attempts = "";
 let agentEvents = "";
 let liveEvents = "";
+let timelineEvents = "";
 let polling = false;
 async function refresh() {
     if (polling || !state.console) return;
     polling = true;
     try {
         const data = await json("/api/status");
+        const timelineKey = JSON.stringify(data.timeline);
+        if (timelineKey !== timelineEvents) {
+            timelineEvents = timelineKey;
+            const rows = data.timeline.map(event => {
+                const timestamp = event.timestamp ? new Date(event.timestamp).toLocaleString() : "Time unavailable";
+                return element("p",timestamp+" · "+event.source+" · "+event.message,event.severity);
+            });
+            $("execution-stream").replaceChildren(...(rows.length ? rows : [element("p","No recorded events")]));
+        }
         const liveKey = JSON.stringify(data.events);
         if (liveKey !== liveEvents) {
             liveEvents = liveKey;
@@ -479,6 +568,12 @@ async function refresh() {
             node.append(element("summary","#"+item.id+" · "+item.stage+" · "+item.state+
                 (item.runtime_seconds == null ? "" : " · "+item.runtime_seconds.toFixed(2)+" s")));
             if (item.exit_code != null) node.append(element("p","Exit code "+item.exit_code));
+            if (item.detail) node.append(element("p",item.detail));
+            if (item.command) {
+                const command = element("details");
+                command.append(element("summary","Recorded command"),element("pre",item.command));
+                node.append(command);
+            }
             const refs = element("pre",Object.entries(item.artifacts).map(([p,h]) => h+"  "+p).join("\n"));
             if (refs.textContent) node.append(element("p","Recorded evidence"),refs);
             node.addEventListener("toggle",async () => {
@@ -503,13 +598,56 @@ async function refresh() {
     finally { polling = false; }
 }
 let discovered = false;
-function tab(consoleOn) {
-    state.console = consoleOn;
-    $("explore").hidden = consoleOn; $("console").hidden = !consoleOn;
-    $("explore-tab").setAttribute("aria-pressed",String(!consoleOn));
-    $("console-tab").setAttribute("aria-pressed",String(consoleOn));
-    $("title").textContent = consoleOn ? "Agentic Execution Console" : "Physical Design Explorer";
-    if (!consoleOn) { drawAll(); return; }
+async function refreshVerification() {
+    const content = $("verification-content");
+    content.textContent = "Reading recorded gates…";
+    try {
+        const report = await json("/api/verification");
+        if (!report) { content.textContent = "No controller run is selected."; return; }
+        const table = element("table");
+        const headers = element("tr");
+        for (const label of ["Gate", "Status", "Evidence"]) {
+            const cell = element("th",label);
+            cell.scope = "col";
+            headers.append(cell);
+        }
+        table.createTHead().append(headers);
+        const body = table.createTBody();
+        for (const [name,gate] of Object.entries(report.gates)) {
+            const row = body.insertRow();
+            row.append(element("td",name.replaceAll("_"," ")));
+            row.append(element("td",gate.status,"gate "+gate.status.toLowerCase()));
+            const evidence = element("td");
+            evidence.append(element("div",gate.diagnostic));
+            if (gate.evidence_references.length) {
+                const refs = element("details",null,"references");
+                refs.append(element("summary",gate.evidence_references.length+" evidence references"));
+                for (const path of gate.evidence_references) refs.append(element("code",path));
+                evidence.append(refs);
+            }
+            row.append(evidence);
+        }
+        const acceptance = report.verdicts.full_acceptance.replaceAll("_"," ");
+        const summary = element("p","Acceptance: "+acceptance,
+            "gate "+report.verdicts.full_acceptance.toLowerCase());
+        content.replaceChildren(summary);
+        if (report.note) content.append(element("p",report.note));
+        content.append(table);
+        if (report.decision_sha256) content.append(element("code",report.decision_sha256));
+    } catch (error) { content.textContent = error.message; }
+}
+
+function tab(viewName) {
+    state.console = viewName === "console";
+    const tabs = {explore:"Physical layout", verification:"Verification", console:"Execution console"};
+    for (const name of Object.keys(tabs)) $(name).hidden = viewName !== name;
+    $("explore-tab").setAttribute("aria-pressed",String(viewName === "explore"));
+    $("verify-tab").setAttribute("aria-pressed",String(viewName === "verification"));
+    $("console-tab").setAttribute("aria-pressed",String(state.console));
+    $("title").textContent = tabs[viewName];
+    status("");
+    if (viewName === "explore") { drawAll(); return; }
+    if (viewName === "verification") { refreshVerification(); return; }
     if (!discovered) {
         discovered = true;
         $("context").replaceChildren(element("p","Reading workspace sources…","waiting"));
@@ -518,8 +656,10 @@ function tab(consoleOn) {
     }
     refresh();
 }
-$("explore-tab").onclick = () => tab(false);
-$("console-tab").onclick = () => tab(true);
+$("explore-tab").onclick = () => tab("explore");
+$("verify-tab").onclick = () => tab("verification");
+$("console-tab").onclick = () => tab("console");
+$("refresh-verification").onclick = refreshVerification;
 setInterval(refresh,2000);
 
 (async () => {

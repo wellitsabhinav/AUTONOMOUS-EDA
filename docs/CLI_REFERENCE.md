@@ -13,7 +13,7 @@ Run `autonomous-eda COMMAND --help` for current arguments and defaults. The same
 | `report` | Read run evidence or evaluate an acceptance profile | [Verification and acceptance](VERIFICATION_AND_ACCEPTANCE.md) |
 | `verify` | Run platform decks or evaluate a named verification profile | [Verification and acceptance](VERIFICATION_AND_ACCEPTANCE.md) |
 | `experiments` | List, import or compare run evidence | [Evidence contract](EVIDENCE_CONTRACT.md) |
-| `artifacts` | Render images and stage bundles, open the local workspace, or classify tool logs | [Physical workspace](PHYSICAL_WORKSPACE.md) · [Gallery](EXAMPLE_GALLERY.md#regenerate) |
+| `artifacts` | Render images and stage bundles, open Studio, or classify tool logs | [Studio 2.0](PHYSICAL_WORKSPACE.md) · [Gallery](EXAMPLE_GALLERY.md#regenerate) |
 | `diagnose` | Read deterministic timing analysis with report citations | [Timing diagnosis](TIMING_DIAGNOSIS.md) |
 | `io` | Plan, approve, execute and inspect ICeWall placement | [IO pad-ring placement](IO_PAD_RING.md) |
 | `optimize` | Plan and run approved bounded optimization campaigns | [Optimization](OPTIMIZATION.md) |

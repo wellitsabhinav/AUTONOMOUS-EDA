@@ -8,6 +8,7 @@ from .manifest import sha256
 KEY = ("sky130hd", "opentitan_aes")
 RTL_REVISION = "b2d662157db2802bde0e40dfc96fd0316042d116"
 RTL_DIGEST = "f2adfd17f78bbdbe0ecad10a61e08d8a574aa706feb0a2c7b818775fd5f944a8"
+INPUTS = ("aes-input/aes.v", "aes-input/block.sdc", "aes-input/config.mk")
 CONFIG = """export DESIGN_NAME = aes
 export DESIGN_NICKNAME = opentitan_aes
 export PLATFORM = sky130hd
@@ -44,9 +45,8 @@ def stage_bundle(source: Path, root: Path) -> None:
 
 def check_bundle(root: Path) -> None:
     folder = root / "aes-input"
-    names = ("aes.v", "block.sdc", "config.mk")
-    for name in names:
-        path = folder / name
+    for name in INPUTS:
+        path = root / name
         if not path.resolve().is_relative_to(root.resolve()) or not path.is_file():
             raise ValueError(f"AES staged input missing or outside run directory: {name}")
     check_translated_rtl(folder / "aes.v")

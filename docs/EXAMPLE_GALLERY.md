@@ -36,6 +36,8 @@ OpenROAD rendered the verified placement checkpoint for the pinned masked AES co
 
 ## Timing and physical checks
 
+[Studio 2.0 screenshots](PHYSICAL_WORKSPACE.md) show the GCD checkpoint comparison, matched timing pins, independent acceptance gates and retained execution records.
+
 <img src="images/examples/gcd/timing_setup_summary.png" alt="Final GCD setup slack and corresponding OpenSTA path" width="600">
 
 *GCD setup. The aggregate slack preserves report precision. The path table uses rounded values.* [Independent DRC and LVS outcomes](images/examples/gcd/verification_summary.png) · [GCD provenance](images/examples/gcd/provenance.json)

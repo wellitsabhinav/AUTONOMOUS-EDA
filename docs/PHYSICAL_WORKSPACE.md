@@ -1,6 +1,10 @@
-# Physical workspace
+# AUTONOMOUS-EDA Studio 2.0
 
-Patch 09D exports retained checkpoints and opens them in a local browser with stage comparison, layout inspection and a live readout of recorded execution. Rendering uses the pinned ORFS image on Linux or WSL2. Once a bundle exists, the viewer runs with base Python on Windows or Linux. Follow the [GCD walkthrough](tutorials/GCD_WALKTHROUGH.md) for environment setup and run commands.
+Studio 2.0 opens retained physical checkpoints in a local browser with stage comparison, object inspection, timing paths, verification and a readout of recorded execution. Rendering uses the pinned ORFS image on Linux or WSL2. Once a bundle exists, the viewer runs with base Python on Windows or Linux. Follow the [GCD walkthrough](tutorials/GCD_WALKTHROUGH.md) for environment setup and run commands.
+
+![Studio compares GCD placement with its CTS checkpoint](images/studio/gcd-comparison.png)
+
+[Workspace overview](images/studio/gcd-placement.png) · [Cell inspection](images/studio/gcd-inspection.png) · [Timing pins](images/studio/gcd-timing.png) · [Verification](images/studio/gcd-verification.png) · [Execution](images/studio/gcd-execution.png) · [AES placement](images/studio/aes-placement.png) · [AES routing failure](images/studio/aes-diagnostic.png) · [Screenshot provenance](images/studio/provenance.json)
 
 ## Export and open GCD
 
@@ -22,6 +26,10 @@ Each PNG carries JSON in the PNG text field **autonomous-eda.provenance**, inclu
 The viewer starts at placement. Use the stage timeline to select CTS, then turn on **Clock pin topology**. Clock lines join the sole recorded driver to placed sink pins. Highlighted clock buffer and inverter masters also connect to a recorded CLOCK net. Choose **Global route** in **Compare** to inspect both stages with a shared viewport. Select a cell, port or routed shape, or search its name. **Checkpoint PNG** exports the exact renderer output. **Export view** exports the current primary canvas with the viewport and display settings embedded in its provenance.
 
 The **Route guides** display shows guide rectangles. **GCell usage / capacity** shows retained routing grid measurements. **Routed wire shapes** shows layer-resolved signal wire rectangles, with vias and special wires outside this vector overlay. The OpenROAD PNG and final GDS provide additional physical geometry. The timing overlay joins matched pin locations in a verified stage OpenSTA report and breaks at unresolved anchors. It uses the printed path slack. The GCD final setup metric remains −1.20488 ns.
+
+In **Timing paths**, select a reported setup or hold path, read its endpoint, clock, slack and source details, and choose **Zoom to pins** when at least two pins match. Older bundles show the timing fields they recorded. Use **Measure** to place two points and read their separation in micrometres. Overlay, layer and inspector sections can collapse separately.
+
+**Verification** displays the physical profile's independently recorded checks and their evidence references. Until an acceptance profile has run, it shows **NOT CHECKED** and the available controller gates. The browser keeps at most three stage models in its cache and the local server caps each canvas asset at 64 MiB. The checkpoint PNG remains the native raster evidence where the geometry preview reaches its limit.
 
 ## Additional inputs
 
@@ -50,6 +58,8 @@ autonomous-eda artifacts workspace experiments/icewall-snapshots
 
 The console checks the selected Git checkout, detects host tools on PATH, reads renderer versions from the bundle and rehashes indexed assets. It polls the selected controller database and AI journal every two seconds while visible. Controller rows report recorded state, runtime, exit code and artifact references. Expand an attempt for its retained log and classified messages. Supervisor activity comes from the journal’s transitions and active leases. A recorded running attempt is labeled accordingly. The console observes existing CLI execution.
 
+**Recorded events** exposes the latest 100 versioned controller attempts and supervisor transitions with recorded time, source, severity and stage. Controller events carry the run and attempt IDs. Supervisor transitions carry their workflow identity. Expand an attempt to see its redacted command and bounded native log.
+
 ## Diagnose the retained OpenROAD failure
 
 The [original Tcl probe](evidence/physical-snapshots/teardown-probe.tcl) loaded the floorplan checkpoint, then tried to destroy and recreate the chip and block before loading placement. The [original log](evidence/physical-snapshots/openroad-teardown.log) stops with **Signal 11 received** after the floorplan inventory. The local workaround starts one process and one temporary work directory per stage. An unsuccessful process retains its log. A crash regression verifies that any PNG produced by that process is excluded and subsequent checkpoints can still publish.
@@ -76,3 +86,14 @@ Run **b162fa09cf9442dda08b0b31cb58c728** rendered seven checkpoints at 1,000 px 
 | --- | --- | --- |
 | ![GCD floorplan](images/gcd-stage-snapshots/floorplan.png) | ![GCD placement](images/gcd-stage-snapshots/place.png) | ![GCD CTS](images/gcd-stage-snapshots/cts.png) |
 | [Global route](images/gcd-stage-snapshots/grt.png) | [Detailed route](images/gcd-stage-snapshots/route.png) | [Final OpenDB](images/gcd-stage-snapshots/finish.png) · [Final GDS](images/gcd-stage-snapshots/gds.png) |
+
+## Browser validation
+
+Headless Edge 157 on a Ryzen 7 7735HS loaded the 502-cell GCD placement in 381 ms and switched to its final OpenDB in 75 ms, measured from navigation or click to the reported stage label. The 51.7 MB AES placement geometry loaded in 1.74 s and switched to the 52.2 MB CTS geometry in 1.27 s. Sampled live page JS heap after comparison was 16.9 MB for GCD and 221.6 MB for AES. These are single local measurements. Both sessions exercised stage switching, comparison, measurement, verification and recorded execution. The GCD session also verified a selected object, anchored timing pins and the embedded provenance of the canvas PNG. [Browser receipts and screenshot hashes](images/studio/provenance.json)
+
+To replay the checks, start the workspace at its printed loopback URL. Start a dedicated headless Chromium or Edge session with `--remote-debugging-port=9227` and a fresh `--user-data-dir`, then run the [browser smoke test](../tests/studio_browser.mjs) with Node.js 24.
+
+~~~sh
+node tests/studio_browser.mjs http://127.0.0.1:8765/ experiments/studio-browser-smoke
+node tests/studio_browser.mjs http://127.0.0.1:8765/ experiments/studio-browser-aes aes
+~~~

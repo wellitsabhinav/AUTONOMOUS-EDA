@@ -156,17 +156,25 @@ def timing_paths(root: Path, source: Source, geometry: dict[str, Any]) -> list[d
             for row in path.launch
             if row.kind == "pin"
         ]
-        if sum(anchor["point"] is not None for anchor in anchors) >= 2:
-            paths.append(
-                {
-                    "check": path.check_type,
-                    "slack_ns": path.slack.ns,
-                    "report": name,
-                    "sha256": digest,
-                    "lines": [path.line_start, path.line_end],
-                    "anchors": anchors,
-                }
-            )
+        matched = sum(anchor["point"] is not None for anchor in anchors)
+        paths.append(
+            {
+                "check": path.check_type,
+                "group": path.group,
+                "startpoint": path.startpoint.name if path.startpoint else None,
+                "endpoint": path.endpoint.name if path.endpoint else None,
+                "launch_clock": path.startpoint.clock if path.startpoint else None,
+                "capture_clock": path.endpoint.clock if path.endpoint else None,
+                "arrival_ns": path.arrival.ns if path.arrival else None,
+                "required_ns": path.required.ns if path.required else None,
+                "slack_ns": path.slack.ns,
+                "report": name,
+                "sha256": digest,
+                "lines": [path.line_start, path.line_end],
+                "mapped_pins": matched,
+                "anchors": anchors if matched >= 2 else [],
+            }
+        )
     return paths
 
 

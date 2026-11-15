@@ -11,6 +11,7 @@ import subprocess
 import time
 from collections.abc import Iterable, Sequence
 from contextlib import closing
+from datetime import UTC, datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from importlib.resources import files
 from pathlib import Path
@@ -19,10 +20,12 @@ from urllib.parse import parse_qs, urlsplit
 
 from .ai.journal import APPLICATION_ID, JOURNAL_VERSION
 from .doctor import environment_secrets, redact_diagnostics
+from .evidence import get_experiment
 from .experiment import db_version
 from .log_diagnostics import bounded_log, classify
 from .manifest import sha256
 from .stage_snapshots import local_input
+from .verification.report import LATEST, report_run
 
 ASSETS = {
     "/": ("workspace.html", "text/html"),
@@ -72,7 +75,10 @@ class Workspace:
         if record["status"] != "rendered":
             raise ValueError("Stage evidence is unavailable")
         path = local_input(self.bundle, record[kind])
-        data = path.read_bytes()
+        with path.open("rb") as stream:
+            data = stream.read(64 * 1024**2 + 1)
+        if len(data) > 64 * 1024**2:
+            raise ValueError("Stage asset exceeds the Studio's 64 MiB display limit")
         if hashlib.sha256(data).hexdigest() != record[kind + "_sha256"]:
             raise ValueError("Stage asset hash changed")
         return data
@@ -145,7 +151,8 @@ class Workspace:
         if self.run is None:
             return []
         with closing(database(local_input(self.run, "run.sqlite3"))) as db:
-            db_version(db)
+            if db_version(db) == 2:
+                self.check_run(db.execute("SELECT run_id FROM run").fetchone()[0])
             rows = db.execute("SELECT * FROM attempts ORDER BY id DESC LIMIT 250").fetchall()
         result = []
         for row in reversed(rows):
@@ -161,8 +168,15 @@ class Workspace:
                     "runtime_seconds",
                     "exit_code",
                     "log",
+                    "detail",
                 )
             }
+            command = item.get("command")
+            fields["command"] = (
+                redact_diagnostics(command, self.secrets)[:16384] if command else None
+            )
+            if fields["detail"]:
+                fields["detail"] = redact_diagnostics(fields["detail"], self.secrets)
             fields["artifacts"] = json.loads(item["artifacts"] or "{}")
             result.append(fields)
         return result
@@ -213,6 +227,7 @@ class Workspace:
         live = any(item["current_state"] in active_states and item["leased"] for item in agents)
         running = any(item["state"] == "running" for item in attempts)
         return {
+            "schema_version": 1,
             "events": [
                 {
                     "kind": "execution",
@@ -233,7 +248,84 @@ class Workspace:
             ],
             "attempts": attempts,
             "agents": agents,
+            "timeline": self.timeline(attempts, agents),
         }
+
+    def timeline(
+        self, attempts: list[dict[str, Any]], agents: list[dict[str, Any]]
+    ) -> list[dict[str, Any]]:
+        run_id = self.manifest["run_id"]
+        events = [
+            {
+                "event_id": f"controller:{run_id}:{item['id']}:{item['state']}",
+                "timestamp": item["ended_at"] or item["started_at"],
+                "run_id": run_id,
+                "attempt_id": item["id"],
+                "source": "controller",
+                "category": "stage_attempt",
+                "severity": "error" if item["state"] == "failed" else "info",
+                "message": f"{item['stage']} {item['state']}",
+                "evidence_references": list(item["artifacts"]),
+                "stage": item["stage"],
+            }
+            for item in attempts
+        ]
+        events.extend(
+            {
+                "event_id": f"supervisor:{item['workflow']}:{item['id']}",
+                "timestamp": datetime.fromtimestamp(item["at"], UTC).isoformat(),
+                "run_id": None,
+                "attempt_id": None,
+                "source": "supervisor",
+                "category": "workflow_transition",
+                "severity": "info",
+                "message": item["state"],
+                "evidence_references": [],
+                "stage": None,
+            }
+            for item in agents
+        )
+        return sorted(events, key=lambda event: event["timestamp"] or "", reverse=True)[:100]
+
+    def verification(self) -> dict[str, Any] | None:
+        if self.run is None:
+            return None
+        if not (self.run / LATEST).is_file():
+            run = get_experiment(self.run)
+            self.check_run(run["run_id"])
+            return {
+                "run_id": run["run_id"],
+                "decision_sha256": None,
+                "verdicts": {"full_acceptance": "NOT_CHECKED"},
+                "note": "No physical profile has been evaluated for this run.",
+                "gates": {
+                    key: {
+                        "status": gate["state"],
+                        "diagnostic": "Controller evidence",
+                        "evidence_references": gate["artifacts"],
+                    }
+                    for key, gate in run["verification_gates"].items()
+                },
+            }
+        matrix = report_run(self.run, "physical")
+        self.check_run(matrix["run_id"])
+        return {
+            "run_id": matrix["run_id"],
+            "decision_sha256": matrix["decision_sha256"],
+            "verdicts": matrix["verdicts"],
+            "gates": {
+                key: {
+                    "status": gate["status"],
+                    "diagnostic": redact_diagnostics(gate["diagnostic"], self.secrets),
+                    "evidence_references": gate["evidence_references"],
+                }
+                for key, gate in matrix["gates"].items()
+            },
+        }
+
+    def check_run(self, run_id: str) -> None:
+        if run_id != self.manifest["run_id"]:
+            raise ValueError("The selected verification run does not match the layout bundle")
 
 
 def serve(
@@ -280,6 +372,8 @@ def serve(
                 self.send_json(workspace.discovery())
             elif url.path == "/api/status":
                 self.send_json(workspace.status())
+            elif url.path == "/api/verification":
+                self.send_json(workspace.verification())
             elif url.path == "/api/log":
                 self.send_json(workspace.attempt_log(int(parse_qs(url.query)["attempt"][0])))
             elif url.path.startswith("/api/stage/"):
