@@ -1,0 +1,80 @@
+{
+  "attempt_id": "aeda-0f7d00ccf2174c86ac53a9f15d2996e1",
+  "cgroup_sample_line_sha256": "3d52090cb2975d242dce9d579cda1ec4e5e720351a51a40747186444aea060d6",
+  "route_log_first_10_lines_sha256": "541586426b61f1c4ee1b303800714eef780830e27997a4cc2e70c6b6694b669b",
+  "run_id": "eb2896531cd2412d9611ee79d80f6ceb",
+  "sample": {
+    "container_id": "d234b64aa1a6f3a8ba2dd3b8bd4df5f94cf3fbde72774ddd54be28805eff9845",
+    "elapsed_seconds": 171.479450832,
+    "measurements": {
+      "cpu_throttle_events": {
+        "source": "linux cgroup v2",
+        "value": 262
+      },
+      "cpu_throttled_usec": {
+        "source": "linux cgroup v2",
+        "value": 875106
+      },
+      "cpu_usage_usec": {
+        "source": "linux cgroup v2",
+        "value": 332101908
+      },
+      "disk_capacity_bytes": {
+        "source": "statvfs experiment filesystem",
+        "value": 362531516416
+      },
+      "disk_free_bytes": {
+        "source": "statvfs experiment filesystem",
+        "value": 175005057024
+      },
+      "experiment_bytes": {
+        "source": "bounded experiment tree stat",
+        "value": 787668982
+      },
+      "host_available_memory_bytes": {
+        "source": "/proc/meminfo",
+        "value": 2967552000
+      },
+      "log_bytes": {
+        "source": "stat attempt log",
+        "value": 4711
+      },
+      "memory_current_bytes": {
+        "source": "linux cgroup v2",
+        "value": 716759040
+      },
+      "memory_kernel_peak_bytes": {
+        "source": "linux cgroup v2",
+        "value": 740425728
+      },
+      "oom_events": {
+        "source": "linux cgroup v2",
+        "value": 0
+      },
+      "oom_kills": {
+        "source": "linux cgroup v2",
+        "value": 0
+      },
+      "process_limit_events": {
+        "source": "linux cgroup v2",
+        "value": 0
+      },
+      "process_rss_sum_bytes": {
+        "source": "cgroup.procs and /proc/PID/status VmRSS",
+        "value": 618143744
+      },
+      "swap_current_bytes": {
+        "source": "linux cgroup v2",
+        "value": 0
+      },
+      "temporary_bytes": {
+        "source": "bounded container /tmp tree stat",
+        "value": 0
+      }
+    },
+    "observed_at": "2026-11-15T14:52:00.362284+00:00",
+    "schema_version": 1
+  },
+  "schema_version": 1,
+  "source_plan_sha256": "7e62cb717a595fd87ae22eed211be8af263b4d788deb94ca61f1eee0508649de"
+}

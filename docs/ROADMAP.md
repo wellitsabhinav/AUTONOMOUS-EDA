@@ -22,3 +22,5 @@ Use one reviewable PR from validated `main` at a time. Each milestone issue reco
 | [10D Studio 2.0](PHYSICAL_WORKSPACE.md) | Inspect genuine GCD and AES checkpoints in a responsive browser workspace, with timing paths, verification, execution events and traceable PNG exports. | 10B, 09D |
 | [10E Integration and evidence](MILESTONE_10_EVALUATION.md) | Verify a digest-bound native renderer correction, budgeted dispatch and the measured readiness and physical receipts. | 10A–10D |
 | [11 Telemetry and benchmark reporting #12](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/12) | Reproduce evidence-backed reports and expose structured run telemetry. | 03, 10 |
+| [11A Resource telemetry](RESOURCE_TELEMETRY.md) | Measure native stage resource peaks and preserve Docker disposition and recovery evidence. | 10E |
+| [11B Resource planning and AES retry](MILESTONE_11_EVALUATION.md#11b-aes-resource-preflight-and-native-launch) | Recheck pinned checkpoints, evaluate finite budgets, and retain the measured route attempt. | 11A |

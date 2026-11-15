@@ -62,3 +62,25 @@ additional swap per disposable container. Tests exercise a bounded 96 MiB alloca
 an explicit exit 137, a stage timeout and SIGTERM/SIGKILL controller interruption.
 The [milestone evaluation](MILESTONE_11_EVALUATION.md) records the measured host and
 physical outcomes.
+
+## Plan a bounded retry
+
+`resources plan` verifies staged run inputs and the upstream checkpoint chain, then
+reports available host RAM and CPU, filesystem headroom, the retained experiment size
+and the target stage's recorded resource observations. A configurable margin reserves
+headroom for the host and above measured stage use. The verdict is one of `READY`,
+`RESOURCE_CONSTRAINED`, `INSUFFICIENT_RESOURCES` or `UNKNOWN`.
+
+An incomplete route provides a runtime lower bound. A successful global route provides
+no measured detailed-route memory requirement. A completion-size storage estimate is
+also unavailable when the target stage never finished. The planner checks whether the
+copy and margin fit the supplied retained artifact cap and whether the destination
+filesystem can cover that cap.
+
+`resources retry` requires an explicit execution policy. The `evidence-required` policy
+permits a `READY` plan. The `bounded-trial` policy additionally permits a constrained
+plan with finite limits and a verified elapsed observation. The retry rechecks live
+limits, requires a new directory, copies the verified checkpoint history and assigns
+a new run ID. The copied upstream stages must pass their hash checks on dispatch.
+The inherited manifest and container limits remain pinned. The stage timeout override
+and experiment-wide guard are recorded in `resource-plan.json`.

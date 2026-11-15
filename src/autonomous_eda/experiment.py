@@ -181,6 +181,8 @@ def continue_run(
     guard: DispatchGuard | None = None,
     max_processes: int | None = None,
     max_retries: int | None = None,
+    stage_timeouts: dict[str, int] | None = None,
+    must_reuse: frozenset[str] = frozenset(),
 ) -> bool:
     root = root.resolve()
     if not (root / "run.sqlite3").is_file():
@@ -207,6 +209,8 @@ def continue_run(
             guard=guard,
             max_processes=max_processes,
             max_retries=max_retries,
+            stage_timeouts=stage_timeouts,
+            must_reuse=must_reuse,
         )
 
 
@@ -232,6 +236,8 @@ def run_stages(
     guard: DispatchGuard | None = None,
     max_processes: int | None = None,
     max_retries: int | None = None,
+    stage_timeouts: dict[str, int] | None = None,
+    must_reuse: frozenset[str] = frozenset(),
 ) -> bool:
     version = db_version(db)
     run_id = db.execute("SELECT run_id FROM run").fetchone()[0] if version == 2 else None
@@ -278,6 +284,8 @@ def run_stages(
             except (OSError, ValueError):
                 # A lost or modified checkpoint invalidates dependent stages.
                 pass
+        if stage.name in must_reuse:
+            raise ValueError(f"required checkpoint could not be reused: {stage.name}")
         attempts = db.execute(
             "SELECT COUNT(*) FROM attempts WHERE stage=?", (stage.name,)
         ).fetchone()[0]
@@ -328,6 +336,11 @@ def run_stages(
         start = time.monotonic()
         logs = [log, attempt / "gds-validation.log"] if len(commands) == 2 else [log]
         try:
+            timeout = integer(
+                (stage_timeouts or {}).get(stage.name, manifest.stage_timeout_seconds),
+                "stage timeout seconds",
+                86400,
+            )
             resources = ResourceContext(
                 root,
                 stage.name,
@@ -342,7 +355,7 @@ def run_stages(
             )
             code, elapsed = execute(
                 commands[0],
-                manifest.stage_timeout_seconds,
+                timeout,
                 log,
                 name,
                 guard=guard,
@@ -364,7 +377,7 @@ def run_stages(
             if len(commands) == 2:
                 code, duration = execute(
                     commands[1],
-                    manifest.stage_timeout_seconds,
+                    timeout,
                     logs[1],
                     name,
                     guard=guard,

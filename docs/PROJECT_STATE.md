@@ -1,5 +1,9 @@
 # Project state
 
+- Milestone 11B verified the seeded AES inputs and pinned global-route checkpoints
+  before dispatching a constrained retry in an isolated experiment. The retry retained
+  the original 8.5 ns, two CPUs and 3,000 MiB. [Resource plan and launch](MILESTONE_11_EVALUATION.md#11b-aes-resource-preflight-and-native-launch)
+
 - Milestone 11A validated the `c19929b` baseline and instrumented pinned Docker dispatch.
   A native GCD run completed all seven stages with cgroup v2 high-water observations.
   Disposable native probes confirmed OOM, controller timeout, explicit exit 137, and

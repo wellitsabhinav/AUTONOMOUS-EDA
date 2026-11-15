@@ -95,7 +95,7 @@ wsl -d AutonomousEDA -- docker info
 cd /mnt/f/AgenticAI
 export PYTHONPATH=src
 python -m autonomous_eda report experiments/m10-aes-physical-01
-python -m autonomous_eda verify experiments/m10-aes-physical-01 --profile physical
+python -m autonomous_eda report experiments/m10-aes-physical-01 --profile physical
 ```
 
 The [AES walkthrough](tutorials/OPENTITAN_AES.md) reproduces the pinned source staging and
@@ -142,4 +142,50 @@ python -m autonomous_eda run configs/gcd-sky130hd.toml experiments/gcd-telemetry
   --memory-mib 1600 --wall-clock-seconds 400 --max-retries 0
 python -m autonomous_eda verify experiments/gcd-telemetry --profile physical --coverage --decks
 AEDA_NATIVE_RESOURCE_TEST=1 python -m pytest -q tests/test_resource_telemetry.py
+```
+
+PR #34 merged at `6917fa04b765140e0df5f94a497bb0c8e77f993a` after all four head
+checks passed. All four checks also passed on the resulting main commit.
+[PR #34](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/34) ·
+[Head CI](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43725553395) ·
+[Main CI](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43725916523)
+
+## 11B AES resource preflight and native launch
+
+The selected seeded source export matched all 233 input hashes and retained the 226
+ordered RTL sources. One separately retained export differed in one generated
+`prim_pkg.sv` file. The pinned OpenROAD build independently reopened the committed
+checkpoint identity as top `aes` with 82,362 instances and 63,884 nets. The launch log
+shows detailed route consuming the retained `5_1_grt.odb` and `5_1_grt.sdc`.
+
+The live preflight reported `RESOURCE_CONSTRAINED`. It observed 3,511,676,928 B of
+available WSL RAM and 175,793,393,664 B of free space. It retained the 3,000 MiB memory
+cap, zero additional swap, and two CPUs. The 8% planning margin reserved
+251,658,240 B of RAM beyond the container limit at dispatch. The original 787,555,309 B
+experiment and margin fit the explicit 2 GiB retained artifact cap.
+[Captured preflight and checkpoint chain](evidence/resource-telemetry/aes-preflight.json)
+
+The first pilot spent 900.839 s and ended in iteration zero. Its last recorded 30%
+progress row followed 430 s of router optimization. A linear projection would place
+that first iteration at about 1,433 s. The progress percentage is coarse, and later
+iterations can vary. The bounded trial selected 2,700 s to cover that exploratory
+first-iteration estimate and leave time for further iterations. The 3,700 s
+invocation cap also allows finish and GDS reopening if detailed route completes.
+The measured evidence does not yet establish a feasible completion budget.
+
+The isolated replay created run `eb2896531cd2412d9611ee79d80f6ceb` and dispatched
+route as a new attempt. The pinned clock, RTL, core configuration and tool image all
+match the original. At 171.479 s of sampling, the cgroup peak counter reached
+740,425,728 B and had recorded zero OOM kills. This intermediate observation
+covers dispatch and early routing activity. The terminal route and downstream
+acceptance are pending. [Launch sample and source hashes](evidence/resource-telemetry/aes-launch.json)
+
+```bash
+export PYTHONPATH=src
+python -m autonomous_eda resources plan experiments/m10-aes-physical-01 \
+  --stage route --stage-seconds 2700 --wall-seconds 3700 --artifact-mib 2048 \
+  --margin 0.08 --policy bounded-trial
+python -m autonomous_eda resources retry experiments/m10-aes-physical-01 \
+  experiments/m11b-aes-route-reproduction --stage route --stage-seconds 2700 \
+  --wall-seconds 3700 --artifact-mib 2048 --margin 0.08 --policy bounded-trial
 ```

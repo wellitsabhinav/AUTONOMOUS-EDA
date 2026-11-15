@@ -11,6 +11,7 @@ Run `autonomous-eda COMMAND --help` for current arguments and defaults. The same
 | `plan` | Print an ORFS stage plan without invoking synthesis | [GCD walkthrough](tutorials/GCD_WALKTHROUGH.md#plan-the-implementation) |
 | `run` | Start a new implementation in a fresh experiment directory | [GCD walkthrough](tutorials/GCD_WALKTHROUGH.md#run-and-resume) |
 | `resume` | Continue from verified checkpoints or resume a native verification run | [Evidence contract](EVIDENCE_CONTRACT.md) |
+| `resources` | Plan an evidence-qualified ORFS budget or start an isolated routing retry | [Resource telemetry and retries](RESOURCE_TELEMETRY.md#plan-a-bounded-retry) |
 | `report` | Read run evidence or evaluate an acceptance profile | [Verification and acceptance](VERIFICATION_AND_ACCEPTANCE.md) |
 | `verify` | Run platform decks or evaluate a named verification profile | [Verification and acceptance](VERIFICATION_AND_ACCEPTANCE.md) |
 | `experiments` | List, import or compare run evidence | [Evidence contract](EVIDENCE_CONTRACT.md) |
