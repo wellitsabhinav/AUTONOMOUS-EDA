@@ -26,3 +26,4 @@ Use one reviewable PR from validated `main` at a time. Each milestone issue reco
 | [11B Resource planning and AES retry](MILESTONE_11_EVALUATION.md#11b-aes-resource-preflight-and-native-launch) | Recheck pinned checkpoints, evaluate finite budgets, and retain the measured route attempt. | 11A |
 | [11C Core qualification](OPENTITAN_READINESS.md#independent-core-qualification) | Evaluate implementation, extraction, physical acceptance and design qualification independently. | 11B |
 | [11D Structured reporting and benchmarks](BENCHMARK_REPORTING.md) | Publish bounded read queries, controlled-comparison eligibility, retained candidates and reproducible evidence exports. | 11C |
+| [11E Studio and integration](MILESTONE_11_EVALUATION.md#11e-terminal-aes-result-and-integrated-evidence) | Verify the evidence-backed resource workspace and publish terminal AES disposition with reproducible figures. | 11D |

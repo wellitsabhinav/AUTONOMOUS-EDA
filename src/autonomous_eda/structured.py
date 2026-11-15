@@ -42,6 +42,7 @@ METRICS = {
     "cpu_throttle_events": "count",
     "oom_events": "count",
     "oom_kills": "count",
+    "memory_limit_events": "count",
     "process_limit_events": "count",
     "experiment_bytes": "B",
     "temporary_bytes": "B",
@@ -195,15 +196,25 @@ def describe_invocation(
             native_exit_code=integer_or_unknown(native.get("exit_code")),
             docker_oom_killed=docker_oom if type(docker_oom) is bool else None,
             termination_signal=integer_or_unknown(record.get("termination_signal")),
+            stage_timeout_seconds=integer_or_unknown(record.get("stage_timeout_seconds")),
             timeout=timed_out if type(timed_out) is bool else None,
             retry_count=integer_or_unknown(record.get("retry_count")),
             reused_checkpoints=[
                 stage for stage in STAGES if isinstance(reused, list) and stage in reused
             ],
         )
+        event = native.get("oom_event")
+        if isinstance(event, dict) and event.get("source") == "docker events":
+            info["docker_oom_event"] = {
+                "source": "docker events",
+                "time_ns": integer_or_unknown(event.get("time_ns")),
+                "observed_at": recorded_time(event.get("observed_at")),
+            }
     if sample_limit and (expected := artifacts.get(journal) or status == "PROVISIONAL"):
         sample_path = root / journal
-        bound = read_bound(root, journal, str(expected), 16 * 2**20)
+        bound = (
+            read_bound(root, journal, expected, 16 * 2**20) if isinstance(expected, str) else None
+        )
         if status == "PROVISIONAL" or bound is not None:
             try:
                 if sample_path.resolve().is_relative_to(root):

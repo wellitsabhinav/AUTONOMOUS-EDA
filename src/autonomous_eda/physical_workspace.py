@@ -332,6 +332,48 @@ class Workspace:
             },
         }
 
+    def resources(self) -> dict[str, Any] | None:
+        if self.run is None:
+            return None
+        from .structured import input_approval, resource_page
+
+        page = resource_page(self.run, limit=20, sample_limit=120, live=True)
+        if page["run_id"] is None:
+            return None
+        self.check_run(page["run_id"])
+        page["pipeline"] = resource_pipeline(page["attempts"])
+        page["readiness_level"] = (
+            2
+            if any(
+                item["stage"] == "synth" and item["state"] == "passed" for item in page["attempts"]
+            )
+            else None
+        )
+        execution = input_approval(self.run)
+        page["route_budget_seconds"] = (
+            execution[0]["budget"]["stage_seconds"] if execution else None
+        )
+        return page
+
+    def resource_qualification(self) -> dict[str, Any] | None:
+        if self.run is None:
+            return None
+        from .qualification import qualify
+
+        result = qualify(self.run)
+        self.check_run(result["run_id"])
+        return {
+            name: result[name]
+            for name in (
+                "run_id",
+                "readiness_level",
+                "implementation_status",
+                "physical_acceptance_status",
+                "design_qualification_status",
+                "verification_gates",
+            )
+        }
+
     def check_run(self, run_id: str) -> None:
         if run_id != self.manifest["run_id"]:
             raise ValueError("The selected verification run does not match the layout bundle")
@@ -358,6 +400,27 @@ class Workspace:
             "action": plan["action"]["kind"],
             **result,
         }
+
+
+def resource_pipeline(attempts: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    stages = ("synth", "floorplan", "place", "cts", "grt", "route", "finish")
+    latest: dict[str, str] = {}
+    for item in attempts:
+        latest.setdefault(item["stage"], item["state"])
+    rows = []
+    waiting_for = None
+    for stage in stages:
+        state = latest.get(stage, "blocked" if waiting_for else "pending")
+        rows.append(
+            {
+                "stage": stage,
+                "state": state,
+                "reason": f"Waiting for {waiting_for}" if state == "blocked" else None,
+            }
+        )
+        if state != "passed" and waiting_for is None:
+            waiting_for = stage
+    return rows
 
 
 def serve(
@@ -411,6 +474,10 @@ def serve(
                 self.send_json(workspace.status())
             elif url.path == "/api/verification":
                 self.send_json(workspace.verification())
+            elif url.path == "/api/resources":
+                self.send_json(workspace.resources())
+            elif url.path == "/api/resource-qualification":
+                self.send_json(workspace.resource_qualification())
             elif url.path == "/api/correction":
                 self.send_json(workspace.correction_state())
             elif url.path == "/api/log":

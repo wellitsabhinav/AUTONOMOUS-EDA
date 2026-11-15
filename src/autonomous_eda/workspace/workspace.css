@@ -76,6 +76,20 @@ thead { background: #182431; }
 .gate.failed { color: #f8a5a5; }
 .gate.blocked { color: var(--amber); }
 .gate.unknown, .gate.not_applicable { color: var(--dim); }
+.resource-table { overflow-x: auto; }
+#resources-stages { min-width: 36rem; table-layout: auto; }
+#resources-stages th { width: auto; }
+#resources-stages tbody th { font-weight: 500; }
+#resource-gates, #resource-sample-note, #resources-status { color: var(--dim); }
+.resource-facts { display: grid; grid-template-columns: repeat(2,max-content minmax(0,1fr)); gap: .25rem 1rem; }
+.resource-facts dt { color: var(--dim); }
+.resource-facts dd { margin: 0; font-family: "IBM Plex Mono", Consolas, monospace; }
+#resource-plot { height: auto; max-width: 900px; cursor: default; touch-action: auto; }
+@media (max-width: 610px) {
+    .topbar nav { flex-wrap: wrap; }
+    #resource-attempt { max-width: 100%; }
+    .resource-facts { grid-template-columns: max-content minmax(0,1fr); }
+}
 @media (max-width: 900px) { .workbench { grid-template-columns: 134px minmax(0, 1fr); } .inspector { grid-column: span 2; border-left: 0; border-top: 1px solid var(--line); max-height: none; } }
 @media (max-width: 610px) { main, .topbar { padding: .75rem; } .topbar { flex-wrap: wrap; } .local { display: none; } .workbench, .console-grid { display: block; } .sidebar { border-right: 0; border-bottom: 1px solid var(--line); } #display, .layers { display: flex; gap: .35rem; flex-wrap: wrap; } .canvases { display: block; } .card + .card { margin-top: .8rem; } }
 @media (max-width: 610px) { th:first-child { width: 28%; } th:nth-child(2) { width: 23%; } }

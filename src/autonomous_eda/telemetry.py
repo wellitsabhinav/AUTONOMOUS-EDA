@@ -12,7 +12,7 @@ import subprocess
 import threading
 import time
 from dataclasses import asdict, dataclass
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -86,6 +86,51 @@ def docker_inspect(docker: str, name: str) -> dict[str, Any]:
     except (OSError, ValueError, subprocess.TimeoutExpired):
         pass
     return {}
+
+
+def docker_oom_event(docker: str, native: dict[str, Any]) -> dict[str, Any] | None:
+    container = native.get("id")
+    started = native.get("started_at")
+    if (
+        not isinstance(container, str)
+        or not re.fullmatch(r"[a-f0-9]{64}", container)
+        or not isinstance(started, str)
+        or started.startswith("0001-01-01")
+    ):
+        return None
+    # A workload can exit as the daemon processes its cgroup OOM notification.
+    end = (datetime.now(UTC) + timedelta(milliseconds=350)).isoformat()
+    try:
+        result = subprocess.run(
+            [
+                docker,
+                "events",
+                "--since",
+                started,
+                "--until",
+                end,
+                "--filter",
+                "type=container",
+                "--filter",
+                f"container={container}",
+                "--filter",
+                "event=oom",
+                "--format",
+                "{{.TimeNano}}",
+            ],
+            capture_output=True,
+            text=True,
+            timeout=2,
+            check=False,
+        )
+        times = [
+            int(line) for line in result.stdout.splitlines() if re.fullmatch(r"[0-9]{15,20}", line)
+        ]
+        if result.returncode == 0 and times:
+            return {"source": "docker events", "time_ns": max(times), "observed_at": timestamp()}
+    except (OSError, subprocess.TimeoutExpired):
+        pass
+    return None
 
 
 def bounded_tree_bytes(root: Path, stop: threading.Event) -> int | None:
@@ -271,7 +316,11 @@ def classify(
     termination_signal: int | None = None,
     interrupted: bool = False,
 ) -> str:
-    if native.get("oom_killed") is True or peaks.get("oom_kills", {}).get("value", 0) > 0:
+    if (
+        native.get("oom_killed") is True
+        or native.get("oom_event") is not None
+        or peaks.get("oom_kills", {}).get("value", 0) > 0
+    ):
         return "CONFIRMED_OOM"
     if timed_out:
         return "WALL_TIMEOUT"

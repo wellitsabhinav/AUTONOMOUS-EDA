@@ -2,7 +2,8 @@ import {createHash} from "node:crypto";
 import {writeFile, mkdir, readFile} from "node:fs/promises";
 import {resolve} from "node:path";
 
-const pages = await fetch("http://127.0.0.1:9227/json/list").then(response => response.json());
+const port = process.env.AEDA_CDP_PORT || "9227";
+const pages = await fetch("http://127.0.0.1:"+port+"/json/list").then(response => response.json());
 const page = pages.find(item => item.type === "page");
 const ws = new WebSocket(page.webSocketDebuggerUrl);
 const pending = new Map();
@@ -54,6 +55,69 @@ await cdp("Page.enable");
 await cdp("Emulation.setDeviceMetricsOverride",{width:1440,height:900,deviceScaleFactor:1,mobile:false});
 const start = performance.now();
 await cdp("Page.navigate",{url:process.argv[2] || "http://127.0.0.1:8765/"});
+if (process.argv[4] === "resources") {
+    await wait('typeof tab === "function" && document.querySelector("#resources-tab")');
+    const tabStart = performance.now();
+    await cdp("Page.bringToFront");
+    await evaluate('document.querySelector("#resources-tab").focus()');
+    await cdp("Input.dispatchKeyEvent",{type:"keyDown",key:"Enter",code:"Enter",text:"\r",windowsVirtualKeyCode:13});
+    await cdp("Input.dispatchKeyEvent",{type:"keyUp",key:"Enter",code:"Enter",windowsVirtualKeyCode:13});
+    try {
+        await wait('document.querySelector("#resources-stages tr[data-stage=route]")');
+    } catch (error) {
+        const current = await evaluate(
+            '({tab:document.querySelector("#resources-tab").getAttribute("aria-pressed"),'
+            +'note:document.querySelector("#resources-status").textContent})'
+        );
+        throw new Error(error.message+" "+JSON.stringify({current,faults}));
+    }
+    const renderMs = performance.now()-tabStart;
+    const expected = process.argv[5];
+    const routeState = await evaluate('document.querySelector("#resources-stages tr[data-stage=route]").dataset.state');
+    if (expected && routeState !== expected) throw new Error("Expected route "+expected+", saw "+routeState);
+    if (routeState === "failed") {
+        await wait('document.querySelector("#resources-stages tr[data-stage=finish]").dataset.state==="blocked"');
+    }
+    const sources = await cdp("Runtime.evaluate",{
+        expression:'fetch("/api/resources").then(r=>r.text())',awaitPromise:true,returnByValue:true
+    });
+    const source = sources.result.value;
+    const data = JSON.parse(source);
+    await writeFile(output+"/resource-api.json",source);
+    await wait('document.querySelector("#resource-qualification").textContent.length > 0');
+    let qualification = null;
+    if (routeState !== "running") {
+        await wait('document.querySelector("#resource-qualification").textContent.includes("Physical acceptance")');
+        const loaded = await cdp("Runtime.evaluate",{
+            expression:'fetch("/api/resource-qualification").then(r=>r.text())',
+            awaitPromise:true,returnByValue:true
+        });
+        qualification = loaded.result.value;
+        await writeFile(output+"/resource-qualification-api.json",qualification);
+    }
+    await cdp("Emulation.setDeviceMetricsOverride",{width:1440,height:1050,deviceScaleFactor:1,mobile:false});
+    await screenshot("resources");
+    await cdp("Emulation.setDeviceMetricsOverride",{width:390,height:844,deviceScaleFactor:1,mobile:true});
+    const viewportWidth = await evaluate("document.documentElement.clientWidth");
+    const scrollWidth = await evaluate("document.documentElement.scrollWidth");
+    if (scrollWidth > viewportWidth + 1) throw new Error("Resources view overflows the mobile page");
+    await screenshot("resources-mobile");
+    if (faults.length) throw new Error(faults.join("\n"));
+    const hash = value => createHash("sha256").update(value).digest("hex");
+    const receipt = {
+        run_id:data.run_id, routeState, renderMs, viewportWidth, scrollWidth,
+        source_sha256:hash(source), source_bytes:Buffer.byteLength(source),
+        qualification_source_sha256:qualification === null ? null : hash(qualification),
+        image_sha256:hash(await readFile(output+"/resources.png")),
+        mobile_sha256:hash(await readFile(output+"/resources-mobile.png")),
+        browser:await cdp("Browser.getVersion"), generated_at:new Date().toISOString(),
+        generation_command:process.argv.slice(1),
+    };
+    await writeFile(output+"/resource-browser-check.json",JSON.stringify(receipt,null,2)+"\n");
+    console.log(receipt);
+    ws.close();
+    process.exit(0);
+}
 await wait('document.querySelector("#stage-label")?.textContent.startsWith("Placement")');
 const initialMs = performance.now()-start;
 await screenshot("placement");

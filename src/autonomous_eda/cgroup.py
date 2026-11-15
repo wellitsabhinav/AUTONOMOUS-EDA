@@ -6,7 +6,7 @@ import re
 from pathlib import Path
 
 COUNTERS_V2 = {
-    "memory.events": {"oom": "oom_events", "oom_kill": "oom_kills"},
+    "memory.events": {"oom": "oom_events", "oom_kill": "oom_kills", "max": "memory_limit_events"},
     "cpu.stat": {
         "usage_usec": "cpu_usage_usec",
         "nr_throttled": "cpu_throttle_events",
