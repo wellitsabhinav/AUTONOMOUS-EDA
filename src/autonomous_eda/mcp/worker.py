@@ -19,7 +19,7 @@ from .api import (
     View,
 )
 from .snapshot import Snapshot, Source, load_evidence
-from .tools import TOOLS, bounded, failure, project
+from .tools import MAX_RESULT_BYTES, TOOLS, bounded, failure, project
 
 
 class Request(Model):
@@ -45,7 +45,14 @@ def read(request: Request, target: Path) -> Model:
             target, limit=min(args.limit, 8), offset=args.offset, prepare=snapshot.copy
         )
         snapshot.verify_source()
-        return ResourceHistory(**page)
+        history = ResourceHistory(**page)
+        while (
+            len(history.attempts) > 1
+            and len(history.model_dump_json().encode("utf-8")) > MAX_RESULT_BYTES
+        ):
+            history.attempts.pop()
+            history.next_offset = args.offset + len(history.attempts)
+        return history
     evidence = load_evidence(source, target)
     if request.tool == "get_acceptance_summary":
         from ..verification.policy import Policy

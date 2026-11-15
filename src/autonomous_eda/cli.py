@@ -92,6 +92,9 @@ def build_parser() -> argparse.ArgumentParser:
         resource.add_argument("--stage-seconds", required=True, type=int)
         resource.add_argument("--wall-seconds", required=True, type=int)
         resource.add_argument("--artifact-mib", required=True, type=int)
+        resource.add_argument(
+            "--memory-mib", type=int, help="explicit container cap for the isolated retry"
+        )
         resource.add_argument("--margin", default=0.1, type=float)
         resource.add_argument(
             "--policy", choices=POLICIES, default="evidence-required", required=action == "retry"
@@ -284,6 +287,7 @@ def controller_main(args: argparse.Namespace) -> int:
             "stage_seconds": args.stage_seconds,
             "wall_seconds": args.wall_seconds,
             "artifact_mib": args.artifact_mib,
+            "memory_mib": args.memory_mib,
             "margin": args.margin,
             "policy": args.policy,
         }

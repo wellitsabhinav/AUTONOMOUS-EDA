@@ -117,6 +117,8 @@ The panel shows elapsed time, the observed cgroup peak, the CPU and memory
 allocations, budget usage, exit classification, and checkpoint recovery.
 Cyan plots sampled memory use. Amber plots the kernel high-water counter.
 Live samples are provisional until the terminal receipt is hash-bound.
+Select an independent DRC, LVS or OpenSTA attempt to inspect its own CPU and memory
+allocation. The verification view reports the corresponding gate outcomes.
 
 The panel uses a bounded metadata request and at most 120 samples per attempt.
 Earlier records without resource telemetry show unknown values. Failed routing

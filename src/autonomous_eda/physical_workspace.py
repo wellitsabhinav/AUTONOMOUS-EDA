@@ -349,7 +349,7 @@ class Workspace:
             )
             else None
         )
-        execution = input_approval(self.run)
+        execution = input_approval(self.run, page["run_id"])
         page["route_budget_seconds"] = (
             execution[0]["budget"]["stage_seconds"] if execution else None
         )

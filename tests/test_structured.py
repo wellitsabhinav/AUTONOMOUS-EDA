@@ -82,3 +82,61 @@ def test_router_progress_keeps_interim_scope() -> None:
         "interim_violations": 87,
         "line": 2,
     }
+
+
+def test_recovered_resource_receipt_is_exposed(structured_run: tuple[Path, Path]) -> None:
+    root, log = structured_run
+    recovery = log.with_suffix(".resources-recovery.json")
+    receipt_path(log).rename(recovery)
+    with closing(sqlite3.connect(root / "run.sqlite3")) as db, db:
+        db.execute(
+            "UPDATE attempts SET state='interrupted', artifacts=?",
+            (json.dumps({recovery.relative_to(root).as_posix(): sha256(recovery)}),),
+        )
+    primary = resource_page(root)["attempts"][0]["dispatches"]["primary"]
+    assert primary["status"] == "VERIFIED"
+    assert primary["receipt_kind"] == "recovery"
+    assert primary["measurements"]["memory_kernel_peak_bytes"]["value"] == 1234
+
+
+def test_verification_dispatch_requires_run_layout_and_receipt(
+    structured_run: tuple[Path, Path],
+) -> None:
+    root, log = structured_run
+    gds = "1" * 64
+    with closing(sqlite3.connect(root / "run.sqlite3")) as db, db:
+        run_id = db.execute("SELECT run_id FROM run").fetchone()[0]
+        db.execute(
+            "INSERT INTO attempts(stage,state,log,artifacts) VALUES ('finish','passed',?,?)",
+            ("attempts/finish.log", json.dumps({"results/sky130hd/gcd/base/6_final.gds": gds})),
+        )
+    receipt = receipt_path(log.with_name("drc.log"))
+    receipt.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "attempt_id": log.parent.name,
+                "stage": "drc",
+                "run_id": run_id,
+                "classification": "COMPLETED",
+                "elapsed_seconds": 5,
+                "native_state": {"memory_bytes": 512 * 2**20},
+            }
+        )
+    )
+    index = {
+        "attempt": log.parent.name,
+        "gds_sha256": gds,
+        "exit_code": 0,
+        "artifacts": {receipt.relative_to(root).as_posix(): sha256(receipt)},
+    }
+    path = root / "verification-drc.json"
+    path.write_text(json.dumps(index))
+    (result,) = resource_page(root)["verification_attempts"]
+    assert result["stage"] == "drc"
+    assert result["dispatches"]["primary"]["configured_memory_bytes"] == 512 * 2**20
+    path.write_text(json.dumps({**index, "gds_sha256": "2" * 64}))
+    assert resource_page(root)["verification_attempts"] == []
+    path.write_text(json.dumps(index))
+    receipt.write_text("tampered")
+    assert resource_page(root)["verification_attempts"] == []

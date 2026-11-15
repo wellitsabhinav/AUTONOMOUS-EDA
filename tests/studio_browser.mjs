@@ -83,6 +83,17 @@ if (process.argv[4] === "resources") {
     });
     const source = sources.result.value;
     const data = JSON.parse(source);
+    if (process.env.AEDA_STUDIO_EXPECT_VERIFICATION === "1") {
+        const checks = new Set(data.verification_attempts.map(item=>item.stage));
+        for (const check of ["drc","lvs","timing_coverage"]) {
+            if (!checks.has(check)) throw new Error("Missing recorded verification dispatch "+check);
+            await wait('document.querySelector("#resources-stages tr[data-stage='+check+']")');
+        }
+        const coverage = data.verification_attempts.find(item=>item.stage==="timing_coverage");
+        await evaluate('document.querySelector("#resource-attempt").value='+JSON.stringify(coverage.id)
+            +'; document.querySelector("#resource-attempt").dispatchEvent(new Event("change"))');
+        await wait('document.querySelector("#resource-facts").textContent.includes("1,200 MiB")');
+    }
     await writeFile(output+"/resource-api.json",source);
     await wait('document.querySelector("#resource-qualification").textContent.length > 0');
     let qualification = null;
