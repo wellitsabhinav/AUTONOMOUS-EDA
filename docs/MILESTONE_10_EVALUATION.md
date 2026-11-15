@@ -1,6 +1,6 @@
 # Milestone 10 engineering evaluation
 
-The audit began on `5ca213d`, whose three Python CI jobs failed after the ICeWall merge. [PR #28](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/28) restored the displaced documentation checks. Milestone 10A began at the repaired, green baseline `e2c4155`. The source, physical and Studio changes landed in [PR #29](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/29), [PR #30](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/30) and [PR #31](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/31). The [tracking issue](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/11) remains open.
+The audit began on `5ca213d`, whose three Python CI jobs failed after the ICeWall merge. [PR #28](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/28) restored the displaced documentation checks. Milestone 10A began at the repaired, green baseline `e2c4155`. The source, physical, Studio and readiness changes landed in [PR #29](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/29), [PR #30](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/30), [PR #31](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/31) and [PR #32](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/32). The [tracking issue](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/11) remains open.
 
 ## Ingestion and architecture
 
@@ -27,7 +27,7 @@ OpenTitan AES at `b2d662157db2802bde0e40dfc96fd0316042d116` exercised real packa
 
 The [AES physical receipt](evidence/opentitan-aes/physical.json) includes per-stage wall time, available native process RSS, checkpoint hashes, the failed routing log receipt and the independent gate matrix. The last detailed-routing progress row reported 15,973 interim violations. The stage left no final detailed-router or deck result. The [GCD recovery receipt](evidence/gcd-recovery/recovery.json) records 147.999 s of successful stage time, the two reused upstream attempts and the retained SIGTERM attempt.
 
-The resource guard stopped native GCD synthesis after a five-second invocation budget and retained its log. Budget controls now include per-run CPU, Docker RAM and stage duration plus optional invocation wall-time and sampled artifact bytes. Confirmed OOM detection, retry limits, process-count limits and retention policies remain partial or pending.
+The resource guard stopped native GCD synthesis under a five-second invocation budget and retained its log. The real process limit test passed Docker a 64-task limit. Resuming with zero retries reused the record and refused a second synthesis dispatch. Budget controls include per-run CPU, Docker RAM and stage duration plus optional invocation wall-time, sampled artifact bytes, process counts and retries. Confirmed OOM detection, multi-run scheduling and configurable retention remain pending. [Resource-limit and replay receipt](evidence/integration/verified-correction.json)
 
 ## Readiness and Studio
 
@@ -38,13 +38,13 @@ The resource guard stopped native GCD synthesis after a five-second invocation b
 | Memory | Yosys, OpenROAD and KLayout independently read the DFFRAM logical interface, LEF and GDS. Liberty qualification remains blocked. |
 | ICeWall | Existing pad placement and routed-signal evidence remain available. Chip power connectivity failed and full-chip signoff is blocked. |
 | Studio 2.0 | Browser verified GCD and AES checkpoints, stage comparison, selected timing pins and instances, measurements, acceptance and execution events. |
-| Agentic diagnosis | Retained OpenROAD crash classified with exact log evidence. Fixtures reject incorrect approval digests and verify the approval-record path. Full automated execution and verification of approved proposals remain pending. |
+| Agentic diagnosis | A retained OpenROAD crash produced a digest-bound renderer proposal. The integration test rejected one plan without dispatch and verified a separately approved OpenROAD rerender. Other corrections retain their manual review workflow. |
 
 [OpenTitan and macro evidence](OPENTITAN_READINESS.md) · [ICeWall results](IO_CHIP_EVALUATION.md) · [Studio screenshots and measured browser checks](PHYSICAL_WORKSPACE.md) · [Studio screenshot provenance](images/studio/provenance.json)
 
 ## Verification and remaining work
 
-The merged changes passed the hosted Python and documentation checks for the [baseline repair](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43672719591), [10A](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43674228746), [10B](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43676460685) and [Studio](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43677781152). Fixtures exercise path handling, evidence corruption, snapshot isolation and proposal digests. The OpenTitan source resolution, Yosys elaboration and mapping, physical stages, real interruption, macro reads, image exports and browser sessions used native tools and recorded inputs.
+The merged changes passed the hosted Python and documentation checks for the [baseline repair](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43672719591), [10A](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43674228746), [10B](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43676460685), [Studio](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43677781152) and [10C](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43678926214). Fixtures exercise path handling, evidence corruption, snapshot isolation and proposal digests. The OpenTitan source resolution, Yosys elaboration and mapping, physical stages, real interruption, macro reads, image exports and browser sessions used native tools and recorded inputs.
 
 The native Linux `rtl-formal` fixture passed Yosys elaboration and SAT equivalence plus Icarus functional regression. The installed Windows Icarus frontend could not launch its helpers from a path containing spaces. The pinned OpenTitan masked cipher-core testbench passed encrypt/decrypt round trips in 3,297 native Verilator cycles. [Native RTL regression receipt](evidence/earlgrey/rtl-regression.json) · [Cipher-core verification receipt](evidence/earlgrey/aes-cipher-core-dv.json)
 

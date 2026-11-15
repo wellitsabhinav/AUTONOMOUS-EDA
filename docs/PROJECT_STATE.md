@@ -1,5 +1,7 @@
 # Project state
 
+- The integration test rejected one digest-bound renderer plan before dispatch and completed an approved replay on the recorded GCD floorplan. Studio displayed the saved lifecycle through verification. A five-second GCD attempt recorded a Docker process limit of 64, and zero retries prevented a second dispatch. [Recorded integration evidence](evidence/integration/verified-correction.json)
+
 - The pinned Earl Grey ASIC target reached source discovery with 706 native entries and 43 TopGen instance boundaries. The native DFFRAM probe matched the 80 logical signal bits, both supplies and the LEF/GDS extent. Missing Liberty blocks macro timing qualification. [Readiness guide](OPENTITAN_READINESS.md) · [Milestone evaluation](MILESTONE_10_EVALUATION.md)
 
 - Studio 2.0 promotes the stage export and read-only explorer from Patch 09D. The browser validation loaded real GCD and AES OpenDB checkpoints, compared stages, inspected timing evidence, measured distances, exported a provenance-tagged Canvas PNG and displayed independent acceptance gates. [Workspace guide and measured checks](PHYSICAL_WORKSPACE.md)

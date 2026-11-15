@@ -43,6 +43,7 @@ def configure(parser: argparse.ArgumentParser) -> None:
     workspace.add_argument("--repository", type=Path, default=Path("."))
     workspace.add_argument("--run", type=Path, help="controller run to monitor")
     workspace.add_argument("--journal", type=Path, help="AI supervisor journal to monitor")
+    workspace.add_argument("--correction", type=Path, help="read-only corrective-action receipts")
     workspace.add_argument("--port", type=int, default=8765)
     diagnostics = actions.add_parser("triage", help="classify and cite local EDA log messages")
     diagnostics.add_argument("directory", type=Path)
@@ -56,14 +57,48 @@ def configure(parser: argparse.ArgumentParser) -> None:
     approval = actions.add_parser("triage-approve", help="approve a digest-bound correction plan")
     approval.add_argument("bundle", type=Path)
     approval.add_argument("--digest", required=True)
+    correction = actions.add_parser("correction", help="review and replay a fixed renderer action")
+    choices = correction.add_subparsers(dest="correction_action", required=True)
+    plan = choices.add_parser("plan")
+    for arg in ("diagnosis", "log_root", "run", "review", "output"):
+        plan.add_argument(arg, type=Path)
+    plan.add_argument("--stage", required=True)
+    plan.add_argument("--width", type=int, default=1000)
+    review = choices.add_parser("review")
+    review.add_argument("directory", type=Path)
+    review.add_argument("--digest", required=True)
+    review.add_argument("--decision", choices=("approve", "reject"), required=True)
+    execute = choices.add_parser("execute")
+    execute.add_argument("directory", type=Path)
+    execute.add_argument("--digest", required=True)
 
 
 def main(args: argparse.Namespace) -> int:
     if args.action == "workspace":
         if not 0 <= args.port <= 65535:
             raise ValueError("Port must be between 0 and 65535")
-        serve(args.bundle, args.repository, args.run, args.journal, args.port)
+        serve(args.bundle, args.repository, args.run, args.journal, args.port, args.correction)
         return 0
+    if args.action == "correction":
+        from .correction_replay import execute_plan, plan, review_plan
+
+        if args.correction_action == "plan":
+            result = plan(
+                args.diagnosis,
+                args.log_root,
+                args.run,
+                args.review,
+                args.output,
+                args.stage,
+                args.width,
+            )
+        elif args.correction_action == "review":
+            decisions = {"approve": "APPROVED", "reject": "REJECTED"}
+            result = review_plan(args.directory, args.digest, decision=decisions[args.decision])
+        else:
+            result = execute_plan(args.directory, args.digest)
+        print(json.dumps(result, indent=2, allow_nan=False))
+        return int(args.correction_action == "execute" and result["state"] != "VERIFIED")
     if args.action == "triage":
         result = classify(args.directory.resolve(strict=True), args.log, tool=args.tool)
         add_proposals(result)

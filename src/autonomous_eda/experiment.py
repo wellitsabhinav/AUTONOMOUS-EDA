@@ -173,7 +173,13 @@ def check_inputs(root: Path, db: sqlite3.Connection, manifest: ORFSManifest) -> 
     return integer(limit, "memory_mib", 1048576)
 
 
-def continue_run(root: Path, *, guard: DispatchGuard | None = None) -> bool:
+def continue_run(
+    root: Path,
+    *,
+    guard: DispatchGuard | None = None,
+    max_processes: int | None = None,
+    max_retries: int | None = None,
+) -> bool:
     root = root.resolve()
     if not (root / "run.sqlite3").is_file():
         raise ValueError(f"experiment database missing in {root}")
@@ -190,7 +196,16 @@ def continue_run(root: Path, *, guard: DispatchGuard | None = None) -> bool:
             raise ValueError("configured memory exceeds the visible host limit")
         docker = preflight()
         cleanup_verification(root, docker)
-        return run_stages(root, db, manifest, docker, memory_mib, guard=guard)
+        return run_stages(
+            root,
+            db,
+            manifest,
+            docker,
+            memory_mib,
+            guard=guard,
+            max_processes=max_processes,
+            max_retries=max_retries,
+        )
 
 
 def cleanup_verification(root: Path, docker: str) -> None:
@@ -210,6 +225,8 @@ def run_stages(
     memory_mib: int,
     *,
     guard: DispatchGuard | None = None,
+    max_processes: int | None = None,
+    max_retries: int | None = None,
 ) -> bool:
     version = db_version(db)
     for (log,) in db.execute("SELECT log FROM attempts WHERE state='running'"):
@@ -240,6 +257,14 @@ def run_stages(
             except (OSError, ValueError):
                 # A lost or modified checkpoint invalidates dependent stages.
                 pass
+        if max_retries is not None:
+            attempts = db.execute(
+                "SELECT COUNT(*) FROM attempts WHERE stage=?", (stage.name,)
+            ).fetchone()[0]
+            if attempts > max_retries:
+                raise DispatchStopped(
+                    f"{stage.name} retry budget exhausted after {attempts} attempts"
+                )
         name = f"aeda-{uuid.uuid4().hex}"
         attempt = root / "attempts" / name
         attempt.mkdir(parents=True)
@@ -248,7 +273,10 @@ def run_stages(
             preserve_invalid_artifacts(root, first, attempt / "previous")
             dirty = True
         log = attempt / f"{stage.name}.log"
-        command = container_command(docker, root, name, manifest.cores, memory_mib)
+        resource_options = {"max_processes": max_processes} if max_processes is not None else {}
+        command = container_command(
+            docker, root, name, manifest.cores, memory_mib, **resource_options
+        )
         commands = [command + make_command(manifest, stage.name)]
         if stage.name == "finish":
             gds = next(item for item in stage.outputs if item.endswith(".gds"))

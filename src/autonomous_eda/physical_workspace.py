@@ -19,6 +19,7 @@ from typing import Any
 from urllib.parse import parse_qs, urlsplit
 
 from .ai.journal import APPLICATION_ID, JOURNAL_VERSION
+from .correction_replay import load_plan, record
 from .doctor import environment_secrets, redact_diagnostics
 from .evidence import get_experiment
 from .experiment import db_version
@@ -51,11 +52,19 @@ def verify_asset(bundle: Path, record: dict[str, Any], kinds: Iterable[str]) -> 
 
 
 class Workspace:
-    def __init__(self, bundle: Path, repository: Path, run: Path | None, journal: Path | None):
+    def __init__(
+        self,
+        bundle: Path,
+        repository: Path,
+        run: Path | None,
+        journal: Path | None,
+        correction: Path | None = None,
+    ):
         self.bundle = bundle.resolve(strict=True)
         self.repository = repository.resolve(strict=True)
         self.run = run.resolve(strict=True) if run else None
         self.journal = journal.resolve(strict=True) if journal else None
+        self.correction = correction.resolve(strict=True) if correction else None
         self.manifest = json.loads((self.bundle / "snapshots.json").read_bytes())
         order = self.manifest["order"]
         stages = self.manifest["stages"]
@@ -327,11 +336,39 @@ class Workspace:
         if run_id != self.manifest["run_id"]:
             raise ValueError("The selected verification run does not match the layout bundle")
 
+    def correction_state(self) -> dict[str, Any] | None:
+        if self.correction is None:
+            return None
+        root = self.correction
+        plan = record(local_input(root, "plan.json"))
+        checksum = plan["plan_sha256"]
+        plan = load_plan(root, checksum)
+        self.check_run(plan["inputs"]["checkpoint"]["run_id"])
+        result = {"state": "PROPOSED", "events": plan["events"]}
+        for name in ("decision.json", "execution.json"):
+            if (root / name).exists():
+                receipt = record(local_input(root, name))
+                if receipt["plan_sha256"] != checksum:
+                    raise ValueError("correction receipt and plan digests differ")
+                result = {"state": receipt["state"], "events": receipt["events"]}
+        return {
+            "schema_version": 1,
+            "plan_sha256": checksum,
+            "stage": plan["action"]["stage"],
+            "action": plan["action"]["kind"],
+            **result,
+        }
+
 
 def serve(
-    bundle: Path, repository: Path, run: Path | None, journal: Path | None, port: int
+    bundle: Path,
+    repository: Path,
+    run: Path | None,
+    journal: Path | None,
+    port: int,
+    correction: Path | None = None,
 ) -> None:
-    workspace = Workspace(bundle, repository, run, journal)
+    workspace = Workspace(bundle, repository, run, journal, correction)
 
     class Handler(BaseHTTPRequestHandler):
         def send(self, status: int, mime: str, content: bytes) -> None:
@@ -374,6 +411,8 @@ def serve(
                 self.send_json(workspace.status())
             elif url.path == "/api/verification":
                 self.send_json(workspace.verification())
+            elif url.path == "/api/correction":
+                self.send_json(workspace.correction_state())
             elif url.path == "/api/log":
                 self.send_json(workspace.attempt_log(int(parse_qs(url.query)["attempt"][0])))
             elif url.path.startswith("/api/stage/"):

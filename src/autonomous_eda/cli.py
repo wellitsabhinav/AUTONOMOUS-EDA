@@ -8,6 +8,7 @@ import sys
 from collections.abc import Sequence
 from dataclasses import asdict
 from pathlib import Path
+from typing import TypedDict
 
 from . import __version__
 from .ai.cli import configure as configure_ai
@@ -29,7 +30,7 @@ from .mcp.cli import configure as configure_mcp
 from .mcp.cli import main as mcp_main
 from .optimization_cli import configure as configure_optimization
 from .optimization_cli import main as optimization_main
-from .orfs import DispatchStopped, stage_plan
+from .orfs import DispatchGuard, DispatchStopped, stage_plan
 from .resource_budget import run_guard
 
 
@@ -133,6 +134,32 @@ def add_run_budget_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--max-artifact-mib", type=int, help="stop at the sampled retained size limit"
     )
+    parser.add_argument("--max-tool-processes", type=int, help="container PID limit")
+    parser.add_argument("--max-retries", type=int, help="maximum retries per implementation stage")
+
+
+class RunOptions(TypedDict):
+    guard: DispatchGuard | None
+    max_processes: int | None
+    max_retries: int | None
+
+
+def run_options(args: argparse.Namespace) -> RunOptions:
+    processes = args.max_tool_processes
+    retries = args.max_retries
+    if retries is not None and not 0 <= retries <= 100:
+        raise ValueError("max-retries must be between 0 and 100")
+    return {
+        "guard": run_guard(
+            args.directory,
+            wall_seconds=args.wall_clock_seconds,
+            artifact_mib=args.max_artifact_mib,
+        ),
+        "max_processes": (
+            integer(processes, "max-tool-processes", 65536) if processes is not None else None
+        ),
+        "max_retries": retries,
+    }
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -227,11 +254,7 @@ def controller_main(args: argparse.Namespace) -> int:
             else:
                 if not 128 <= args.memory_mib <= 1048576:
                     raise ValueError("memory-mib must be between 128 and 1048576")
-                guard = run_guard(
-                    args.directory,
-                    wall_seconds=args.wall_clock_seconds,
-                    artifact_mib=args.max_artifact_mib,
-                )
+                options = run_options(args)
                 initialize(
                     args.directory,
                     args.manifest,
@@ -239,7 +262,7 @@ def controller_main(args: argparse.Namespace) -> int:
                     args.memory_mib,
                     translated_rtl=args.translated_rtl,
                 )
-                success = continue_run(args.directory, guard=guard)
+                success = continue_run(args.directory, **options)
                 result = get_experiment(args.directory)
     else:
         from .verification.report import LATEST, native_run, report_run, verify_run
@@ -251,15 +274,6 @@ def controller_main(args: argparse.Namespace) -> int:
                 raise ValueError("--engineering is separate from acceptance profile reporting")
             print(engineering_markdown(get_experiment(args.directory)), end="")
             return 0
-        guard = (
-            run_guard(
-                args.directory,
-                wall_seconds=args.wall_clock_seconds,
-                artifact_mib=args.max_artifact_mib,
-            )
-            if args.command == "resume"
-            else None
-        )
         selected = (args.directory / LATEST).is_file()
         configured = bool(args.profile or args.markdown or selected and args.command == "report")
         if configured or args.command == "verify" and (args.coverage or args.decks):
@@ -279,7 +293,7 @@ def controller_main(args: argparse.Namespace) -> int:
                 success = matrix["verdicts"]["full_acceptance"] == "PASSED"
             else:
                 if args.command == "resume":
-                    success = continue_run(args.directory, guard=guard)
+                    success = continue_run(args.directory, **run_options(args))
                 matrix = report_run(args.directory, args.profile)
             if args.markdown:
                 print(markdown(matrix), end="")
@@ -294,7 +308,7 @@ def controller_main(args: argparse.Namespace) -> int:
                 matrix = verify_run(args.directory, matrix["profile"])
                 print(json.dumps(matrix, indent=2, allow_nan=False))
                 return 0 if matrix["verdicts"]["full_acceptance"] == "PASSED" else 1
-            success = continue_run(args.directory, guard=guard)
+            success = continue_run(args.directory, **run_options(args))
         if args.command == "verify":
             verify(args.directory)
         evidence = get_experiment(args.directory)

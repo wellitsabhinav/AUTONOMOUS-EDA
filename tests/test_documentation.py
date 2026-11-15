@@ -89,7 +89,8 @@ def test_manual_covers_public_cli_and_example_syntax() -> None:
     assert documented == set(listed[1].split(","))
 
     for name in ("README.md", "docs/tutorials/GCD_WALKTHROUGH.md", "docs/PHYSICAL_WORKSPACE.md"):
-        for line in (ROOT / name).read_text(encoding="utf-8").splitlines():
+        body = (ROOT / name).read_text(encoding="utf-8").replace("\\\n", " ")
+        for line in body.splitlines():
             if line.startswith("autonomous-eda "):
                 parser.parse_args(shlex.split(line)[1:])
 
