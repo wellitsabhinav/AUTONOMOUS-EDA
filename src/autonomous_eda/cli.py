@@ -72,6 +72,10 @@ def build_parser() -> argparse.ArgumentParser:
     partitions.add_argument("topgen_json", type=Path)
     partitions.add_argument("edam_json", type=Path)
     partitions.add_argument("--revision", required=True)
+    qualification = readiness_actions.add_parser(
+        "qualification", help="evaluate independent implementation, physical and design gates"
+    )
+    qualification.add_argument("directory", type=Path)
     resources = commands.add_parser("resources", help="plan and execute bounded checkpoint retries")
     resource_actions = resources.add_subparsers(dest="resource_action", required=True)
     for action in ("plan", "retry"):
@@ -253,10 +257,14 @@ def controller_main(args: argparse.Namespace) -> int:
             from .macro_readiness import inspect_macro
 
             result = inspect_macro(args.manifest, args.output)
-        else:
+        elif args.readiness_action == "partitions":
             from .partition_readiness import plan_partitions
 
             result = plan_partitions(args.topgen_json, args.edam_json, args.revision)
+        else:
+            from .qualification import qualify
+
+            result = qualify(args.directory)
     elif args.command == "experiments":
         if args.action == "list":
             result = list_experiments(args.directory)

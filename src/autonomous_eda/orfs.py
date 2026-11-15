@@ -12,6 +12,7 @@ import subprocess
 import sys
 import time
 from collections.abc import Callable
+from contextlib import ExitStack
 from dataclasses import dataclass
 from pathlib import Path
 from typing import BinaryIO
@@ -192,9 +193,12 @@ def execute(
     *,
     guard: DispatchGuard | None = None,
     resources: ResourceContext | None = None,
+    stderr_path: Path | None = None,
 ) -> tuple[int, float]:
     if resources is not None:
-        return execute_observed(command, timeout, log_path, container, resources, guard)
+        return execute_observed(
+            command, timeout, log_path, container, resources, guard, stderr_path
+        )
     start = time.monotonic()
     with log_path.open("wb") as log:
         log.write((json.dumps(command) + "\n").encode())
@@ -241,6 +245,7 @@ def execute_observed(
     name: str,
     context: ResourceContext,
     guard: DispatchGuard | None,
+    stderr_path: Path | None,
 ) -> tuple[int, float]:
     start, started_at = time.monotonic(), timestamp()
     docker = command[0]
@@ -251,7 +256,9 @@ def execute_observed(
     exit_code = delivered_signal = None
     timed_out = interrupted = created = False
     controller_signal = None
-    with log_path.open("wb") as log:
+    with ExitStack() as files:
+        log = files.enter_context(log_path.open("wb"))
+        stderr = files.enter_context(stderr_path.open("xb")) if stderr_path else subprocess.STDOUT
         log.write((json.dumps(create) + "\n" + json.dumps(launch) + "\n").encode())
         log.flush()
         try:
@@ -262,7 +269,7 @@ def execute_observed(
             result = subprocess.run(
                 create,
                 stdout=log,
-                stderr=subprocess.STDOUT,
+                stderr=stderr,
                 timeout=min(allowance, 15),
                 check=False,
             )
@@ -271,7 +278,7 @@ def execute_observed(
                 created = False
             if not exit_code:
                 exit_code = None
-                with subprocess.Popen(launch, stdout=log, stderr=subprocess.STDOUT) as process:
+                with subprocess.Popen(launch, stdout=log, stderr=stderr) as process:
                     observer.thread.start()
                     try:
                         while True:

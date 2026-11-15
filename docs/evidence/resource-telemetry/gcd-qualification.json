@@ -1,0 +1,367 @@
+{
+  "coverage_resources": {
+    "elapsed_seconds": 3.1556130300000405,
+    "native_state": {
+      "exit_code": 0,
+      "finished_at": "2026-11-15T15:00:46.96423183Z",
+      "id": "b11c2452edaecee6bd2a316b744ad8b861fd6f785bfea09a6a35d64c8e3b20b5",
+      "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+      "memory_bytes": 1258291200,
+      "memory_swap_bytes": 1258291200,
+      "nano_cpus": 1000000000,
+      "observed_at": "2026-11-15T15:00:47.521149+00:00",
+      "oom_killed": false,
+      "pid": 0,
+      "pids_limit": 128,
+      "source": "docker container inspect",
+      "started_at": "2026-11-15T15:00:45.215404561Z",
+      "status": "exited"
+    },
+    "observed_maxima": {
+      "cpu_throttle_events": {
+        "observed_at": "2026-11-15T15:00:45.499705+00:00",
+        "source": "linux cgroup v2",
+        "value": 0
+      },
+      "cpu_throttled_usec": {
+        "observed_at": "2026-11-15T15:00:45.499705+00:00",
+        "source": "linux cgroup v2",
+        "value": 0
+      },
+      "cpu_usage_usec": {
+        "observed_at": "2026-11-15T15:00:45.499705+00:00",
+        "source": "linux cgroup v2",
+        "value": 94827
+      },
+      "disk_capacity_bytes": {
+        "observed_at": "2026-11-15T15:00:45.499705+00:00",
+        "source": "statvfs experiment filesystem",
+        "value": 362531516416
+      },
+      "disk_free_bytes": {
+        "observed_at": "2026-11-15T15:00:45.499705+00:00",
+        "source": "statvfs experiment filesystem",
+        "value": 174873382912
+      },
+      "experiment_bytes": {
+        "observed_at": "2026-11-15T15:00:45.499705+00:00",
+        "source": "bounded experiment tree stat",
+        "value": 3795285
+      },
+      "host_available_memory_bytes": {
+        "observed_at": "2026-11-15T15:00:45.499705+00:00",
+        "source": "/proc/meminfo",
+        "value": 562503680
+      },
+      "log_bytes": {
+        "observed_at": "2026-11-15T15:00:45.499705+00:00",
+        "source": "stat attempt log",
+        "value": 778
+      },
+      "memory_current_bytes": {
+        "observed_at": "2026-11-15T15:00:45.499705+00:00",
+        "source": "linux cgroup v2",
+        "value": 7258112
+      },
+      "memory_kernel_peak_bytes": {
+        "observed_at": "2026-11-15T15:00:45.499705+00:00",
+        "source": "linux cgroup v2",
+        "value": 7524352
+      },
+      "oom_events": {
+        "observed_at": "2026-11-15T15:00:45.499705+00:00",
+        "source": "linux cgroup v2",
+        "value": 0
+      },
+      "oom_kills": {
+        "observed_at": "2026-11-15T15:00:45.499705+00:00",
+        "source": "linux cgroup v2",
+        "value": 0
+      },
+      "process_limit_events": {
+        "observed_at": "2026-11-15T15:00:45.499705+00:00",
+        "source": "linux cgroup v2",
+        "value": 0
+      },
+      "process_rss_sum_bytes": {
+        "observed_at": "2026-11-15T15:00:45.499705+00:00",
+        "source": "cgroup.procs and /proc/PID/status VmRSS",
+        "value": 16039936
+      },
+      "swap_current_bytes": {
+        "observed_at": "2026-11-15T15:00:45.499705+00:00",
+        "source": "linux cgroup v2",
+        "value": 0
+      },
+      "temporary_bytes": {
+        "observed_at": "2026-11-15T15:00:45.499705+00:00",
+        "source": "bounded container /tmp tree stat",
+        "value": 0
+      }
+    },
+    "path": "verification/attempts/d253afbd146740078773159bfc988e55/timing_coverage/coverage.stdout.resources.json",
+    "samples_retained": 1,
+    "sha256": "901927ee91c58d1860e2dc7f75e68722487d17c3b9f7682f801dc274929f8a64"
+  },
+  "qualification": {
+    "design_qualification_status": "FAILED",
+    "extracted_nets": {
+      "artifact": "logs/sky130hd/gcd/base/6_report.log",
+      "sha256": "b09e6b5bce63d53e4e47c933ab73544d35a5ff358b8474b60802d957bfcfbc2e",
+      "source": "OpenRCX RCX-0443",
+      "unit": "net",
+      "value": 482
+    },
+    "extracted_timing_status": "FAILED",
+    "extraction_status": "PASSED",
+    "final_products": {
+      "constraints": {
+        "attempt": "7",
+        "availability": "VERIFIED",
+        "location": "results/sky130hd/gcd/base/6_final.sdc",
+        "observed_at": "2026-11-15T14:30:16.051740+00:00",
+        "producer_version": null,
+        "run_id": "7f902b30b15d466eb12ffdb852c39595",
+        "sha256": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+        "size": 6137,
+        "stage": "finish",
+        "type": ".sdc"
+      },
+      "database": {
+        "attempt": "7",
+        "availability": "VERIFIED",
+        "location": "results/sky130hd/gcd/base/6_final.odb",
+        "observed_at": "2026-11-15T14:30:16.166566+00:00",
+        "producer_version": null,
+        "run_id": "7f902b30b15d466eb12ffdb852c39595",
+        "sha256": "19d15a42a312949cbfcf10fda80fd43238733fb0abecd791c7d460cf4cc1587d",
+        "size": 3460249,
+        "stage": "finish",
+        "type": ".odb"
+      },
+      "netlist": {
+        "attempt": "7",
+        "availability": "VERIFIED",
+        "location": "results/sky130hd/gcd/base/6_final.v",
+        "observed_at": "2026-11-15T14:30:16.326645+00:00",
+        "producer_version": null,
+        "run_id": "7f902b30b15d466eb12ffdb852c39595",
+        "sha256": "5fe44acee42aa0d6221f9195a1657270c9fabf2791dfba0e370da86f9a672cca",
+        "size": 44004,
+        "stage": "finish",
+        "type": ".v"
+      },
+      "parasitics": {
+        "attempt": "7",
+        "availability": "VERIFIED",
+        "location": "results/sky130hd/gcd/base/6_final.spef",
+        "observed_at": "2026-11-15T14:30:17.243592+00:00",
+        "producer_version": null,
+        "run_id": "7f902b30b15d466eb12ffdb852c39595",
+        "sha256": "5bf293e3c9a6ac3eddc748d3913df24825810ac808c7ded013540a2a5c9e6281",
+        "size": 320980,
+        "stage": "finish",
+        "type": ".spef"
+      },
+      "streamout": {
+        "attempt": "7",
+        "availability": "VERIFIED",
+        "location": "results/sky130hd/gcd/base/6_final.gds",
+        "observed_at": "2026-11-15T14:30:27.709726+00:00",
+        "producer_version": null,
+        "run_id": "7f902b30b15d466eb12ffdb852c39595",
+        "sha256": "dbfcbf21f43bac2c97beb869996bc009b78a853a13480bb0d4939e82781e2fda",
+        "size": 829132,
+        "stage": "finish",
+        "type": ".gds"
+      }
+    },
+    "implementation_status": "PASSED",
+    "measurements": {
+      "estimated_power_w": {
+        "artifact": "logs/sky130hd/gcd/base/6_report.json",
+        "corner": "tt_025C_1v80",
+        "method": "orfs-normalization-v1",
+        "name": "estimated_power_w",
+        "reference": "finish__power__total",
+        "stage": "finish",
+        "status": "MEASURED",
+        "unit": "W",
+        "value": 0.0052894
+      },
+      "hold_tns_ns": {
+        "artifact": "logs/sky130hd/gcd/base/6_report.json",
+        "corner": "tt_025C_1v80",
+        "method": "orfs-normalization-v1",
+        "name": "hold_tns_ns",
+        "reference": "finish__timing__hold__tns",
+        "stage": "finish",
+        "status": "MEASURED",
+        "unit": "ns",
+        "value": 0
+      },
+      "hold_worst_slack_ns": {
+        "artifact": "logs/sky130hd/gcd/base/6_report.json",
+        "corner": "tt_025C_1v80",
+        "method": "orfs-normalization-v1",
+        "name": "hold_worst_slack_ns",
+        "reference": "finish__timing__hold__ws",
+        "stage": "finish",
+        "status": "MEASURED",
+        "unit": "ns",
+        "value": 0.429847
+      },
+      "routed_wirelength_um": {
+        "artifact": "logs/sky130hd/gcd/base/5_2_route.json",
+        "corner": null,
+        "method": "orfs-normalization-v1",
+        "name": "routed_wirelength_um",
+        "reference": "detailedroute__route__wirelength",
+        "stage": "route",
+        "status": "MEASURED",
+        "unit": "um",
+        "value": 7425
+      },
+      "router_drc_errors": {
+        "artifact": "logs/sky130hd/gcd/base/5_2_route.json",
+        "corner": null,
+        "method": "orfs-normalization-v1",
+        "name": "router_drc_errors",
+        "reference": "detailedroute__route__drc_errors",
+        "stage": "route",
+        "status": "MEASURED",
+        "unit": "count",
+        "value": 0
+      },
+      "setup_tns_ns": {
+        "artifact": "logs/sky130hd/gcd/base/6_report.json",
+        "corner": "tt_025C_1v80",
+        "method": "orfs-normalization-v1",
+        "name": "setup_tns_ns",
+        "reference": "finish__timing__setup__tns",
+        "stage": "finish",
+        "status": "MEASURED",
+        "unit": "ns",
+        "value": -54.4492
+      },
+      "setup_worst_slack_ns": {
+        "artifact": "logs/sky130hd/gcd/base/6_report.json",
+        "corner": "tt_025C_1v80",
+        "method": "orfs-normalization-v1",
+        "name": "setup_worst_slack_ns",
+        "reference": "finish__timing__setup__ws",
+        "stage": "finish",
+        "status": "MEASURED",
+        "unit": "ns",
+        "value": -1.20488
+      },
+      "stage.finish.utilization": {
+        "artifact": "logs/sky130hd/gcd/base/6_report.json",
+        "corner": null,
+        "method": "orfs-native-stage-metrics-v1",
+        "name": "stage.finish.utilization",
+        "reference": "finish__design__instance__utilization__stdcell",
+        "stage": "finish",
+        "status": "MEASURED",
+        "unit": "ratio",
+        "value": 0.75
+      },
+      "stage.grt.hold_worst_slack": {
+        "artifact": "logs/sky130hd/gcd/base/5_1_grt.json",
+        "corner": null,
+        "method": "orfs-native-stage-metrics-v1",
+        "name": "stage.grt.hold_worst_slack",
+        "reference": "globalroute__timing__hold__ws",
+        "stage": "grt",
+        "status": "MEASURED",
+        "unit": "ns",
+        "value": 0.415138
+      },
+      "stage.grt.setup_worst_slack": {
+        "artifact": "logs/sky130hd/gcd/base/5_1_grt.json",
+        "corner": null,
+        "method": "orfs-native-stage-metrics-v1",
+        "name": "stage.grt.setup_worst_slack",
+        "reference": "globalroute__timing__setup__ws",
+        "stage": "grt",
+        "status": "MEASURED",
+        "unit": "ns",
+        "value": -1.23073
+      },
+      "standard_cell_area_um2": {
+        "artifact": "logs/sky130hd/gcd/base/6_report.json",
+        "corner": null,
+        "method": "orfs-normalization-v1",
+        "name": "standard_cell_area_um2",
+        "reference": "finish__design__instance__area__stdcell",
+        "stage": "finish",
+        "status": "MEASURED",
+        "unit": "um2",
+        "value": 4414.23
+      }
+    },
+    "physical_acceptance_status": "FAILED",
+    "qualification_sha256": "f9d0aeb3373e60601cc5704a3bcb112a04aadcd64ef1bb0d342007b79777e83e",
+    "readiness_level": 3,
+    "run_id": "7f902b30b15d466eb12ffdb852c39595",
+    "schema_version": 1,
+    "timing_context": {
+      "clock_period_ns": 1.1,
+      "clocks": {
+        "core_clock": 1.1,
+        "vclk_core_clock": 1.1
+      },
+      "corner": "tt_025C_1v80",
+      "coverage_checks": {
+        "generated_clocks": "PASSED",
+        "loops": "PASSED",
+        "multiple_clock": "PASSED",
+        "no_clock": "PASSED",
+        "no_input_delay": "PASSED",
+        "no_output_delay": "PASSED",
+        "unconstrained_endpoints": "PASSED"
+      },
+      "expected_clocks": [
+        "core_clock",
+        "vclk_core_clock"
+      ],
+      "missing_clocks": [],
+      "observed_clocks": [
+        "core_clock",
+        "vclk_core_clock"
+      ],
+      "sdc_sha256": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+      "synthesis_sdc_sha256": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+      "unaccounted_clocks": [],
+      "unsupported_sdc_commands": []
+    },
+    "timing_contract": {
+      "bound_rtl_revision": null,
+      "clock_ports": [],
+      "reset_ports": [],
+      "status": "UNKNOWN",
+      "unqualified": []
+    },
+    "verification_gates": {
+      "artifact_integrity": "PASSED",
+      "connectivity": "UNKNOWN",
+      "elaboration": "UNKNOWN",
+      "equivalence": "UNKNOWN",
+      "formal_properties": "UNKNOWN",
+      "functional_regression": "UNKNOWN",
+      "gds_generation": "PASSED",
+      "gds_reopen": "PASSED",
+      "hold": "PASSED",
+      "lvs": "PASSED",
+      "platform_drc": "PASSED",
+      "router": "PASSED",
+      "sequential_equivalence": "UNKNOWN",
+      "setup": "FAILED",
+      "synthesis": "PASSED",
+      "timing_coverage": "PASSED"
+    },
+    "verification_sha256": "24087c37ee6301a7d42188edcb672203b1785e0ae537132c997ceba8ef02644c"
+  },
+  "run_directory": "experiments/m11c-gcd-coverage-01",
+  "schema_version": 1
+}

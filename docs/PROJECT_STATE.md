@@ -1,5 +1,9 @@
 # Project state
 
+- Milestone 11C evaluated completed GCD as Level 3 with 482 OpenRCX-extracted nets
+  and passed independent coverage, router and deck checks. The original setup
+  violation keeps physical acceptance failed. [Independent qualification](MILESTONE_11_EVALUATION.md#11c-independent-physical-and-design-qualification)
+
 - Milestone 11B verified the seeded AES inputs and pinned global-route checkpoints
   before dispatching a constrained retry in an isolated experiment. The retry retained
   the original 8.5 ns, two CPUs and 3,000 MiB. [Resource plan and launch](MILESTONE_11_EVALUATION.md#11b-aes-resource-preflight-and-native-launch)
