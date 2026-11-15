@@ -1,5 +1,10 @@
 # Project state
 
+- The Milestone 11 AES retry reused the pinned global-route checkpoint and hit the
+  3,000 MiB cap with Docker-confirmed OOM after 2,255.853 s. AES remains Level 2.
+  Final extraction and all dependent signoff gates are blocked. Studio and the
+  benchmark retain measured resource and failure evidence. [Terminal evaluation](MILESTONE_11_EVALUATION.md#11e-terminal-aes-result-and-integrated-evidence)
+
 - Milestone 11D added versioned run and resource queries, a paged read-only MCP
   tool and deterministic benchmark exports. The four-case control reproduced
   five PNG digests. [Benchmark evidence](MILESTONE_11_EVALUATION.md#11d-structured-reporting-and-benchmark-controls)

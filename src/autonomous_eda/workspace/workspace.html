@@ -13,6 +13,7 @@
     <nav aria-label="Workspace views">
       <button id="explore-tab" aria-pressed="true">Physical</button>
       <button id="verify-tab" aria-pressed="false">Verification</button>
+      <button id="resources-tab" aria-pressed="false">Resources</button>
       <button id="console-tab" aria-pressed="false">Execution</button>
     </nav>
     <span class="local"><i></i> Local workspace</span>
@@ -43,6 +44,24 @@
       <div class="card">
         <div class="subheading"><h2>Physical acceptance</h2><button id="refresh-verification">Refresh evidence</button></div>
         <div id="verification-content" aria-live="polite"></div>
+      </div>
+    </section>
+    <section id="resources" aria-label="Resource diagnostics" hidden>
+      <div class="card">
+        <div class="subheading"><h2>Stage timeline</h2><button id="refresh-resources">Refresh evidence</button></div>
+        <p id="resources-status" role="status"></p>
+        <p id="resource-qualification"></p>
+        <p id="resource-gates"></p>
+        <div class="resource-table"><table id="resources-stages">
+          <thead><tr><th scope="col">Stage</th><th scope="col">State</th><th scope="col">Elapsed</th><th scope="col">Peak memory</th><th scope="col">Disposition</th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </div>
+      <div class="card history">
+        <label for="resource-attempt">Attempt</label> <select id="resource-attempt"></select>
+        <dl id="resource-facts" class="resource-facts"></dl>
+        <canvas id="resource-plot" width="900" height="196" aria-label="Cgroup memory usage and kernel high-water over time" role="img" hidden></canvas>
+        <p id="resource-sample-note"></p>
       </div>
     </section>
     <section id="console" aria-label="Agentic Execution Console" hidden>

@@ -16,7 +16,7 @@ container resource use.
 | CPU, RAM, swap and process allocation | Controller policy and Docker HostConfig. CPU allocation is in cores, Docker NanoCPUs in billionths of a core, RAM and swap in bytes and limits in processes. Docker MemorySwap includes RAM. |
 | Memory use and highest observed kernel high-water counter | Linux cgroup v2 `memory.current` and `memory.peak`, or corresponding v1 memory controller files, in bytes |
 | CPU time and throttling | Linux cgroup CPU counters, normalized to microseconds and event counts |
-| OOM and process-limit evidence | Fresh per-invocation cgroup counters and Docker `State.OOMKilled`, with timestamps |
+| OOM and process-limit evidence | Fresh per-invocation cgroup counters, Docker `State.OOMKilled`, and bounded Docker OOM event lookup on ambiguous failed exits |
 | Sampled process RSS | Sum of readable process `VmRSS` values in bytes. Shared pages can appear in multiple processes. |
 | Host available memory | Linux `/proc/meminfo` `MemAvailable`, converted to bytes |
 | Experiment, temporary, and retained log usage | Bounded directory scan and file sizes in bytes, with filesystem capacity and free bytes from statvfs |

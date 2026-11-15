@@ -110,6 +110,23 @@ Headless Edge 157 on a Ryzen 7 7735HS loaded the 502-cell GCD placement in 381 m
 
 To replay the checks, start the workspace at its printed loopback URL. Start a dedicated headless Chromium or Edge session with `--remote-debugging-port=9227` and a fresh `--user-data-dir`, then run the [browser smoke test](../tests/studio_browser.mjs) with Node.js 24.
 
+## Resource diagnostics
+
+Open **Resources** to inspect the stage timeline and choose a retained attempt.
+The panel shows elapsed time, the observed cgroup peak, the CPU and memory
+allocations, budget usage, exit classification, and checkpoint recovery.
+Cyan plots sampled memory use. Amber plots the kernel high-water counter.
+Live samples are provisional until the terminal receipt is hash-bound.
+
+The panel uses a bounded metadata request and at most 120 samples per attempt.
+Earlier records without resource telemetry show unknown values. Failed routing
+leaves finish and downstream checks blocked. The final verification and layout
+views remain available when the corresponding evidence exists.
+
+```bash
+node tests/studio_browser.mjs http://127.0.0.1:8765/ experiments/studio-resources resources failed
+```
+
 ~~~sh
 node tests/studio_browser.mjs http://127.0.0.1:8765/ experiments/studio-browser-smoke
 node tests/studio_browser.mjs http://127.0.0.1:8765/ experiments/studio-browser-aes aes

@@ -25,6 +25,7 @@ from .telemetry import (
     ResourceContext,
     classify,
     docker_inspect,
+    docker_oom_event,
     owned_attempt,
     read_samples,
     receipt_path,
@@ -319,6 +320,10 @@ def execute_observed(
                     native = docker_inspect(docker, name) or native
                 if native.get("status") in {"exited", "dead"} and not timed_out:
                     exit_code = native["exit_code"]
+                    if exit_code and native.get("oom_killed") is False:
+                        event = docker_oom_event(docker, native)
+                        if event is not None:
+                            native["oom_event"] = event
                 if exit_code is not None and exit_code < 0:
                     delivered_signal = -exit_code
                 observer.stop.set()

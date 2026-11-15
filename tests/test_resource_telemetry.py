@@ -65,6 +65,9 @@ def test_cgroup_accounting(tmp_path: Path) -> None:
 
 def test_exit_classification_does_not_infer_oom_from_exit_code() -> None:
     assert classify(137, {"oom_killed": True}, {}) == "CONFIRMED_OOM"
+    assert classify(9, {"oom_killed": False, "oom_event": {"source": "docker events"}}, {}) == (
+        "CONFIRMED_OOM"
+    )
     assert classify(137, {}, {"oom_kills": {"value": 1}}) == "CONFIRMED_OOM"
     assert classify(137, {}, {}) == "RESOURCE_OBSERVATION_UNAVAILABLE"
     assert classify(137, {"oom_killed": False}, {"oom_kills": {"value": 0}}) == "UNKNOWN_FAILURE"

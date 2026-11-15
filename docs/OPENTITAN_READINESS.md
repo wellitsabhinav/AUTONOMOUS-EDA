@@ -6,7 +6,7 @@ The native FuseSoC synthesis setup for `chip_earlgrey_asic` completed at `b2d662
 
 | Partition or dependency | Available evidence | Blocker and next qualification |
 | --- | --- | --- |
-| AES | Default source configuration elaborated and mapped. Pilot completed global route. | Detailed route exceeded the stage budget. Qualify block interface timing and rerun under a measured routing resource plan. |
+| AES | Default source configuration elaborated and mapped. Verified global route was reused in a bounded retry. | Detailed route hit the 3,000 MiB cap with confirmed OOM. Final gates, interface timing, DV and equivalence remain open. |
 | SRAM controllers, ROM, flash and OTP | Native module boundaries, clock/reset connections and memory settings | Bind qualified logical, Liberty, LEF, GDS and power views to each exact configuration. Generic models support source discovery. Substitution would change electrical and timing evidence. |
 | Clock and reset managers | TopGen source and reset maps, including main, AON, divided IO and USB paths | Trace generated clocks, reset-domain behavior and timing constraints through the selected partitions. |
 | Analog sensor top and pads | Native interface and clock/reset inventory | Require technology-qualified analog, IO, power and extraction views before top-level timing, electrical checks and signoff. |

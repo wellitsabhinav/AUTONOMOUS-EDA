@@ -637,17 +637,165 @@ async function refreshVerification() {
     } catch (error) { content.textContent = error.message; }
 }
 
+let resourcePage = null;
+let resourceRefreshing = false;
+let resourceActive = false;
+const resourceTitles = {...labels, synth:"Synthesis", finish:"Finish",
+    timing_coverage:"Timing coverage", drc:"Platform DRC", lvs:"LVS"};
+const formatResource = (value, unit, divisor=1) => value == null ? "Unknown"
+    : (value/divisor).toLocaleString(undefined,{maximumFractionDigits:2})+" "+unit;
+
+function resourceGraph(attempt) {
+    const canvas = $("resource-plot");
+    const series = attempt?.dispatches.primary.samples || [];
+    const usable = series.filter(point => Number.isFinite(point.memory_current_bytes));
+    canvas.hidden = !usable.length;
+    $("resource-sample-note").textContent = usable.length
+        ? usable.length+" plotted cgroup samples · "+attempt.dispatches.primary.status.toLowerCase()
+          +" · Cyan: memory use · Amber: high-water"
+        : "Container memory samples are unavailable for this attempt.";
+    if (!usable.length) return;
+    const ctx = canvas.getContext("2d");
+    const {width,height} = canvas;
+    const bottom = height-32, left = 72, right = width-24, top = 20;
+    const duration = Math.max(1, usable.at(-1).elapsed_seconds);
+    const limit = resourcePage.memory_limit_bytes;
+    const max = Math.max(limit || 0, ...usable.map(point => point.memory_kernel_peak_bytes || 0));
+    ctx.clearRect(0,0,width,height);
+    ctx.font = "14px system-ui";
+    ctx.textBaseline = "middle";
+    for (let tick=0; tick<=4; tick++) {
+        const y = bottom-tick*(bottom-top)/4;
+        ctx.strokeStyle = "#344659";
+        ctx.beginPath(); ctx.moveTo(left,y); ctx.lineTo(right,y); ctx.stroke();
+        ctx.fillStyle="#c7d3e0";
+        ctx.fillText(Math.round(max*tick/4/1048576).toString(),8,y);
+    }
+    ctx.fillText("MiB",8,8);
+    for (let tick=0; tick<=4; tick++) {
+        const x = left+tick*(right-left)/4;
+        ctx.fillText(Math.round(duration*tick/4)+" s",Math.min(x-8,right-32),bottom+16);
+    }
+    for (const [key,color] of [["memory_current_bytes","#59cddb"],["memory_kernel_peak_bytes","#efbd77"]]) {
+        ctx.beginPath();
+        ctx.strokeStyle=color; ctx.lineWidth=2;
+        let first = true;
+        for (const point of usable) {
+            if (!Number.isFinite(point[key])) continue;
+            const x = left+point.elapsed_seconds/duration*(right-left);
+            const y = bottom-point[key]/Math.max(max,1)*(bottom-top);
+            if (first) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+            first = false;
+        }
+        ctx.stroke();
+    }
+}
+
+function selectResource() {
+    const attempt = resourcePage?.attempts.find(item => String(item.id) === $("resource-attempt").value);
+    resourceGraph(attempt);
+    const record = attempt?.dispatches.primary;
+    const facts = $("resource-facts");
+    facts.replaceChildren();
+    if (!record) return;
+    const values = record.measurements;
+    const bytes = values.memory_kernel_peak_bytes?.value;
+    const limit = resourcePage.memory_limit_bytes;
+    const used = bytes != null && limit ? (100*bytes/limit).toFixed(1)+"%" : "Unknown";
+    const last = record.samples?.at(-1)?.elapsed_seconds;
+    const duration = attempt.duration_seconds ?? last;
+    const budget = record.stage_timeout_seconds ??
+        (attempt.stage==="route" && record.status==="PROVISIONAL" ? resourcePage.route_budget_seconds : null);
+    const timeUsed = duration != null && budget ? (100*duration/budget).toFixed(1)+"%" : "Unknown";
+    for (const [label,value] of [
+        ["Peak memory",formatResource(bytes,"MiB",1048576)],["Memory budget used",used],
+        ["Container cap",formatResource(limit,"MiB",1048576)],
+        ["CPU time",formatResource(values.cpu_usage_usec?.value,"s",1000000)],
+        ["CPU allocation",formatResource(resourcePage.allocated_cpus,"cores")],
+        ["Elapsed",formatResource(duration,"s")],["Wall budget",formatResource(budget,"s")],
+        ["Wall budget used",timeUsed],
+        ["Termination",record.classification ?? attempt.state],
+        ["Native exit",record.native_exit_code ?? attempt.exit_code ?? "Unknown"],
+        ["Sampled OOM kills",values.oom_kills?.value ?? "Unknown"],
+        ["Docker OOM flag",record.docker_oom_killed == null ? "Unknown"
+            : String(record.docker_oom_killed)],
+        ["Retry count",record.retry_count ?? "Unknown"],
+        ["Reused checkpoints",record.reused_checkpoints?.map(stage=>resourceTitles[stage] || stage).join(", ") || "Unknown"],
+    ]) facts.append(element("dt",label),element("dd",String(value)));
+}
+
+async function refreshResources() {
+    if (resourceRefreshing) return;
+    resourceRefreshing = true;
+    const note = $("resources-status");
+    try {
+        const page = await json("/api/resources");
+        if (!page) { note.textContent = "No controller run is selected."; return; }
+        resourcePage = page;
+        const body = $("resources-stages").tBodies[0];
+        body.replaceChildren();
+        for (const stage of page.pipeline) {
+            const record = page.attempts.find(item=>item.stage===stage.stage);
+            const primary = record?.dispatches.primary;
+            const row = body.insertRow();
+            row.dataset.stage = stage.stage;
+            row.dataset.state = stage.state;
+            const label = element("th",resourceTitles[stage.stage] || stage.stage);
+            label.scope = "row";
+            row.append(label, element("td",stage.state,"gate "+stage.state),
+                element("td",formatResource(record?.duration_seconds,"s")),
+                element("td",formatResource(primary?.measurements.memory_kernel_peak_bytes?.value,"MiB",1048576)),
+                element("td",primary?.classification || stage.reason || ""));
+        }
+        const select = $("resource-attempt");
+        const preferred = select.value || String(page.attempts.find(item=>item.stage==="route")?.id || "");
+        select.replaceChildren(...page.attempts.map(item=>{
+            const label = (resourceTitles[item.stage] || item.stage)+" · Attempt "+item.id+" · "+item.state;
+            const option = element("option",label);
+            option.value = item.id;
+            return option;
+        }));
+        if ([...select.options].some(option=>option.value===preferred)) select.value=preferred;
+        const active = page.attempts.some(row=>row.state==="running");
+        note.textContent = active ? "Live observations are provisional." : "Retained attempt evidence";
+        selectResource();
+        const qualification = $("resource-qualification");
+        $("resource-gates").textContent = page.pipeline.find(item=>item.stage==="finish")?.state==="blocked"
+            ? "Final extraction, STA, DRC, LVS and GDS reopening are blocked." : "";
+        qualification.textContent = page.readiness_level == null
+            ? "Readiness unknown" : "Readiness Level "+page.readiness_level;
+        if (!active) {
+            json("/api/resource-qualification").then(result=>{
+                if (!result || resourcePage?.run_id!==result.run_id) return;
+                qualification.textContent = "Readiness Level "+(result.readiness_level ?? "unknown")
+                    +" · Implementation "+result.implementation_status
+                    +" · Physical acceptance "+result.physical_acceptance_status
+                    +" · Design qualification "+result.design_qualification_status;
+                const gates = result.verification_gates;
+                $("resource-gates").textContent = "Setup "+gates.setup
+                    +" · Hold "+gates.hold+" · Coverage "+gates.timing_coverage
+                    +" · Router "+gates.router+" · Platform DRC "+gates.platform_drc
+                    +" · LVS "+gates.lvs+" · GDS reopening "+gates.gds_reopen;
+            }).catch(()=>{});
+        }
+    } catch (error) { note.textContent = error.message; }
+    finally { resourceRefreshing = false; }
+}
+
 function tab(viewName) {
     state.console = viewName === "console";
-    const tabs = {explore:"Physical layout", verification:"Verification", console:"Execution console"};
+    resourceActive = viewName === "resources";
+    const tabs = {explore:"Physical layout", verification:"Verification", resources:"Resource diagnostics", console:"Execution console"};
     for (const name of Object.keys(tabs)) $(name).hidden = viewName !== name;
     $("explore-tab").setAttribute("aria-pressed",String(viewName === "explore"));
     $("verify-tab").setAttribute("aria-pressed",String(viewName === "verification"));
     $("console-tab").setAttribute("aria-pressed",String(state.console));
+    $("resources-tab").setAttribute("aria-pressed",String(resourceActive));
     $("title").textContent = tabs[viewName];
     status("");
     if (viewName === "explore") { drawAll(); return; }
     if (viewName === "verification") { refreshVerification(); return; }
+    if (resourceActive) { refreshResources(); return; }
     if (!discovered) {
         discovered = true;
         $("context").replaceChildren(element("p","Reading workspace sources…","waiting"));
@@ -659,6 +807,12 @@ function tab(viewName) {
 $("explore-tab").onclick = () => tab("explore");
 $("verify-tab").onclick = () => tab("verification");
 $("console-tab").onclick = () => tab("console");
+$("resources-tab").onclick = () => tab("resources");
+$("refresh-resources").onclick = refreshResources;
+$("resource-attempt").onchange = selectResource;
+setInterval(()=>{
+    if (resourceActive && resourcePage?.attempts.some(item=>item.state==="running")) refreshResources();
+},5000);
 $("refresh-verification").onclick = refreshVerification;
 $("correction-review").addEventListener("toggle", async () => {
     if (!$("correction-review").open) return;

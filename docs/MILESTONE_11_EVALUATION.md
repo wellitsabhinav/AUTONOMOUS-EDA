@@ -238,3 +238,112 @@ The retained optimization campaign contained four completed candidates. Their se
 failures left both feasible frontiers empty. The exporter reproduced all five
 control PNG hashes after fixing stage-row order. [Control reproducibility receipt](evidence/resource-telemetry/benchmark-control.json) ·
 [Benchmark commands and data contract](BENCHMARK_REPORTING.md)
+
+PR #37 merged at `4fadb8685cc89cadc632b9a4b1e85b5f92159b63` with four green
+head checks and four green main checks. [PR #37](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/37) ·
+[Head CI](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43729232240) ·
+[Main CI](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43729600960)
+
+## 11E Terminal AES result and integrated evidence
+
+| Measurement or gate | AES retry result |
+| --- | --- |
+| RTL, platform and clock | Pinned OpenTitan AES on Sky130HD, 8.5 ns |
+| Run and attempt | `eb2896531cd2412d9611ee79d80f6ceb`, detailed-route attempt 7 |
+| Reused stages | Synthesis, floorplan, placement, CTS and global route |
+| Elapsed and allocated wall time | 2,255.853 s elapsed, 2,700 s stage limit |
+| CPU time and allocation | 4,205.021 s sampled cgroup CPU time, two allocated cores |
+| Cgroup peak and cap | 3,145,728,000 B, equal to the 3,000 MiB cap, zero additional swap |
+| Retained telemetry | 986 samples at a nominal two-second interval |
+| Detailed-router output | Iteration 0 reached 50% with 15,973 interim violations |
+| Exit and cleanup | `CONFIRMED_OOM`, Docker exit 2, successful cleanup |
+| Last verified checkpoint | `5_1_grt.odb` and `5_1_grt.sdc`, hashes match the original |
+| Final database, netlist, SDC, SPEF and GDS | Absent |
+| Extracted setup, hold and coverage | Blocked |
+| Router and platform DRC, LVS, independent GDS reopening | Blocked |
+| Implementation / physical acceptance / design qualification | Failed / blocked / blocked |
+| AES readiness | Level 2 |
+
+Docker recorded `State.OOMKilled=true` before cleanup. The last sampled cgroup OOM-kill
+counter was zero and the controller deadline had not expired. A separate live sample
+recorded 2,299,369 `memory.events max` events while the process was near its cap.
+The route log ends with Make errors after the final progress row with no completed
+detailed-route checkpoint. A repeat preflight using the now-observed peak returns
+`INSUFFICIENT_RESOURCES` at the same cap and 8% margin. This establishes the limit
+encountered by the attempt. Completion requirements on a larger host remain unknown.
+[Terminal receipt and gate matrix](evidence/resource-telemetry/aes-terminal.json) ·
+[Measured postflight](evidence/resource-telemetry/aes-postflight.json)
+
+The baseline's +0.0053717 ns setup and +0.344325 ns hold slack are global-route
+estimates. The retry preserves those checkpoints and provides no extracted timing or
+final design-rule result. All 29 original physical receipt hashes were rechecked after
+the retry. Full peripheral DV, translated-RTL equivalence and the qualified AES
+interface timing contract remain independent blockers.
+
+### Benchmark and Studio
+
+| Case | Verified attempt seconds | Implementation | Physical acceptance |
+| --- | ---: | --- | --- |
+| GCD retained baseline | 145.208 | Passed | Failed setup |
+| GCD interrupted and resumed | 147.999 | Passed | Failed setup |
+| AES 10B | 2,338.478 | Failed detailed route | Blocked |
+| AES 11B history | 4,594.331 | Failed detailed route | Blocked |
+
+The AES 11B history total includes inherited stages and the prior timeout. Its new
+dispatch lasted 2,255.853 s. GCD implements a smaller design at its own 1.1 ns clock
+and provides completed-deck controls. The comparison is descriptive. Both optimization
+frontiers remain empty after evaluating the four rejected candidates.
+[JSON](evidence/milestone-11-benchmark/report.json) ·
+[Markdown](evidence/milestone-11-benchmark/report.md) ·
+[Run CSV](evidence/milestone-11-benchmark/runs.csv) ·
+[Stage CSV](evidence/milestone-11-benchmark/stages.csv)
+
+The five benchmark PNGs rebuilt to identical content digests.
+[Route CPU timeline](evidence/milestone-11-benchmark/visualizations/routing_resource_timeline.png) ·
+[Memory and high-water](evidence/milestone-11-benchmark/visualizations/routing_memory.png) ·
+[Stage duration](evidence/milestone-11-benchmark/visualizations/stage_duration_comparison.png) ·
+[Verification and acceptance](evidence/milestone-11-benchmark/visualizations/verification_acceptance.png) ·
+[Benchmark comparison](evidence/milestone-11-benchmark/visualizations/benchmark_comparison.png) ·
+[Figure provenance](evidence/milestone-11-benchmark/visualizations/visualization_manifest.json)
+
+Headless Edge 157 loaded the AES resource stage table 176.9 ms after keyboard
+activation and received a 27,626-byte metadata response. The 390 px mobile viewport
+had a 390 px document width. On the retained GCD control the browser measured 198.9 ms
+for initial placement and 76.5 ms for the final-OpenDB stage switch. The GCD browser
+exercise also checked stage comparison, pin timing, object inspection, PNG export and
+execution history. [AES desktop screenshot](images/milestone-11/resources.png) ·
+[AES mobile screenshot](images/milestone-11/resources-mobile.png) ·
+[Browser receipt](images/milestone-11/resource-browser-check.json)
+
+### Acceptance matrix
+
+| Area | Status | Evidence |
+| --- | --- | --- |
+| Telemetry | PASS | Native cgroup v2 peak and Docker OOM evidence, bounded timeout and interruption recovery probes |
+| Resource planning | PASS | Verified finite retry and measured postflight rejection under the same cap |
+| AES implementation | FAIL | Detailed-route OOM; valid upstream checkpoints retained |
+| AES finish and signoff | BLOCKED | Final extraction, STA, DRC, LVS and GDS reopening were not run |
+| AES design qualification | BLOCKED | Readiness Level 2, with interface timing, DV and equivalence still required |
+| Reporting | PASS | Versioned queries, digest-checked exports, rejected candidates and reproducible PNGs |
+| Local integration | PASS | Lint, formatting, mypy, focused tests and genuine browser sessions |
+
+### Reproduce terminal reads
+
+```bash
+export PYTHONPATH=src
+python -m autonomous_eda resources history experiments/m11b-aes-route-01 --samples 120
+python -m autonomous_eda readiness qualification experiments/m11b-aes-route-01
+python -m autonomous_eda artifacts snapshots experiments/m11b-aes-route-01 \
+  experiments/m11e-aes-studio-reproduction --run-id eb2896531cd2412d9611ee79d80f6ceb \
+  --top aes --width 860 --checkpoint place results/sky130hd/opentitan_aes/base/3_place.odb
+python -m autonomous_eda artifacts workspace experiments/m11e-aes-studio-reproduction \
+  --run experiments/m11b-aes-route-01
+```
+
+For the next physical milestone, qualify an environment with measured memory headroom
+above the observed cap, then run the same verified checkpoint under a new finite
+budget. Carry a completed route through independent finish and physical checks. Close
+the AES interface timing, peripheral DV and equivalence prerequisites separately.
+The [OpenTitan prerequisites](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/11)
+and [ICeWall chip-level work](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/24)
+remain independently tracked.
