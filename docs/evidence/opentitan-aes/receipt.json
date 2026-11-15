@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "design": "opentitan-aes",
+  "revision": "b2d662157db2802bde0e40dfc96fd0316042d116",
+  "readiness_level": 1,
+  "manifest_sha256": "5bbe2656335b12ffc74aa6e15b17eb401e717cf002d685d4991ed853b1cf69db",
+  "published_sha256": {
+    "design.toml": "f5f7bfbf2c180abbadd442524d7eb941509005b0936475dd8c3f31062c39a227",
+    "resolved.json": "acdbf45488cc71751c23bcaae016b133bcbc0080f6d3785523c711b14fd9283a",
+    "inspect.json": "e81837fbc65eba1775958837963946e7f972dac719eb38428603d05cb4dab41d"
+  },
+  "source_resolution": {
+    "tool": "FuseSoC 0.5.dev0 (lowRISC ot-0.5.dev0) and Edalize 0.4.0",
+    "argv": [
+      "fusesoc",
+      "--cores-root=.",
+      "run",
+      "--target=syn",
+      "--tool=icarus",
+      "--setup",
+      "--build-root=<fresh-root>",
+      "lowrisc:ip:aes"
+    ],
+    "environment": {
+      "PYTHONHASHSEED": "0",
+      "python": "3.12.3"
+    },
+    "generator": "lowrisc:prim:primgen:0.1",
+    "generator_and_metadata_inputs": {
+      "hw/ip/aes/aes.core": "e101ab818b090302dd538eb0ec957ee17bc13807ee6dad5819a5af69145f92f4",
+      "hw/ip/aes/data/aes.hjson": "d61e76284cc352de922d27a46d0916f36e00a5c05d381b3b2b0d741c88926b93",
+      "hw/ip/prim/primgen.core": "217403644b2977145ab69cd777552a7befa24adef0aa9380b961bc4d7fea4a7d",
+      "hw/ip/prim/prim_pkg.core": "29eed9fd452a2784a5ec44da9eb3b838a880cd202a35180804e64413d260175c",
+      "hw/ip/prim/util/primgen.py": "dbb660eb301a9291c6c27aa15ec25c62afd18a5801b8dc90a1dddba2e7eae445",
+      "hw/top_earlgrey/data/top_earlgrey.hjson": "0c43c9de69f870daec1fc42ad7f2c8ac9e37d32781bf523be60ca67270ded691"
+    },
+    "independent_build_receipts_sha256": [
+      "acdbf45488cc71751c23bcaae016b133bcbc0080f6d3785523c711b14fd9283a",
+      "acdbf45488cc71751c23bcaae016b133bcbc0080f6d3785523c711b14fd9283a"
+    ],
+    "ordered_sources": 226,
+    "inputs": 233,
+    "generated_sources": 11,
+    "dependency_nodes": 95,
+    "unseeded_mismatch": "prim_pkg.sv implementation enum order",
+    "generated_block_rtl": {
+      "src/lowrisc_ip_aes_1.0/rtl/aes_reg_pkg.sv": "b2b4d16a7c9189d8b4d738650695a2b9784205f688ac5126f1f286cb63ef9816",
+      "src/lowrisc_ip_aes_1.0/rtl/aes_reg_top.sv": "46cd38a742ef0f8f83b86ce6f4ccace79531801b37b98282f478fbc2e9425bc1"
+    },
+    "setup_runs": [
+      {
+        "local_report": "aes-setup-06.log",
+        "report_sha256": "ef59b3139202aca871106a00f2b17440ca29bc4d63cebe7dd5352269807c79af",
+        "wall_clock": "0:04.31",
+        "peak_rss_kib": 42448
+      },
+      {
+        "local_report": "aes-setup-07.log",
+        "report_sha256": "0f24130861528b8f755a9f1e3fac1e9ccf265878b0868e727e847a6808886382",
+        "wall_clock": "0:04.56",
+        "peak_rss_kib": 42572
+      }
+    ]
+  },
+  "elaboration": {
+    "local_report": "aes-seeded-inspect.time",
+    "report_sha256": "030acc205470018f2c7f8919d86d6591373091cf9935ee46ddabe7ed41a3bf81",
+    "wall_clock": "0:38.33",
+    "peak_rss_kib": 484400
+  },
+  "generic_synthesis": {
+    "local_report": "aes-seeded-synth.time",
+    "report_sha256": "2bdc461d4b530fc63ae9913e505313b8af1f211e74cab018de59a31a22dbce49",
+    "wall_clock": "0:40.18",
+    "peak_rss_kib": 196732,
+    "log_sha256": "b64cdc40fb8461c6fb11999a56fde2d14192e2995daff1fa063a153512ce3fd0",
+    "netlist_sha256": "e2915093fbfd8ff93a9f7ae0440df891f8457a6456f7b2ff7b49d4ad66491912",
+    "generic_cell_count": 56622,
+    "generic_flip_flops": 6016,
+    "generic_cell_types": {
+      "$_ANDNOT_": 1010,
+      "$_AND_": 10137,
+      "$_DFFE_PN0P_": 5330,
+      "$_DFFE_PN1P_": 32,
+      "$_DFF_PN0_": 487,
+      "$_DFF_PN1_": 167,
+      "$_MUX_": 3504,
+      "$_NAND_": 16410,
+      "$_NOR_": 767,
+      "$_NOT_": 467,
+      "$_ORNOT_": 921,
+      "$_OR_": 1530,
+      "$_XNOR_": 9603,
+      "$_XOR_": 6257
+    },
+    "technology_mapped": false
+  },
+  "execution_limits": {
+    "container_cpus": 2,
+    "container_memory_mib": 3072,
+    "host": "WSL2 Ubuntu 24.04 on AMD Ryzen 7 7735HS, 4 visible CPUs, 3.8 GiB usable RAM",
+    "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987"
+  }
+}

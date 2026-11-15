@@ -1,0 +1,1404 @@
+{
+  "schema_version": 1,
+  "run_id": "ec21b03b7f674b69a39586d8088da79b",
+  "design": "gcd",
+  "platform": "sky130hd",
+  "clock_period_ns": 1.1,
+  "run_input_sha256": "b60fa8922f2bf45707880207e456962369d781f8d653ba39013fff961025acd2",
+  "stage_runtime_seconds": 147.99906117300003,
+  "attempts": [
+    {
+      "id": 1,
+      "stage": "synth",
+      "state": "passed",
+      "runtime_seconds": 11.95707649800002,
+      "detail": null,
+      "artifacts": {
+        "results/sky130hd/gcd/base/1_synth.odb": "9c1a97e023970950802af5d024cadb2a1541f34953b9753083f5c29e1659f09f",
+        "results/sky130hd/gcd/base/1_synth.sdc": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+        "attempts/aeda-8da8a750212d4425b4668f259573a13d/synth.log": "4b53d32262a9a8dfcadcc15628a2cf67f7967a972e72902148735ffd7bb2fa7d",
+        "logs/sky130hd/gcd/base/1_2_yosys.log": "1dc545371bf2cf9d6d9b8def8d4d62cca188d2574d5882eb924f7337c3dcc09c",
+        "logs/sky130hd/gcd/base/1_synth.json": "897e5bb3a4be24c642115b3dbdff1fee4f44dfb29954473157f4738ffe5e726e"
+      },
+      "log": "attempts/aeda-8da8a750212d4425b4668f259573a13d/synth.log",
+      "started_at": "2026-11-15T03:44:59.760018+00:00",
+      "ended_at": "2026-11-15T03:45:11.910831+00:00",
+      "exit_code": 0
+    },
+    {
+      "id": 2,
+      "stage": "floorplan",
+      "state": "passed",
+      "runtime_seconds": 11.354724042000015,
+      "detail": null,
+      "artifacts": {
+        "results/sky130hd/gcd/base/2_floorplan.odb": "f9a70a830094e143bfe694328ad360fb60a4a534461d1a658cef141d2e04a561",
+        "results/sky130hd/gcd/base/2_floorplan.sdc": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+        "attempts/aeda-368708d113124f3c9f85cec0e6e7426e/floorplan.log": "a578e7080a1c89c38888cf96536d9bd57ca541cc50c71aab4c0c104924092139",
+        "logs/sky130hd/gcd/base/2_1_floorplan.json": "6898bb7236bb0786463416480e41a59b9459aef8f79dd61f10f04628d852f7ec",
+        "reports/sky130hd/gcd/base/2_floorplan_final.rpt": "cd85e940e2e88ecc5ee936e0e732dda7a69daf1b228f5d63da0aef2c17c94950"
+      },
+      "log": "attempts/aeda-368708d113124f3c9f85cec0e6e7426e/floorplan.log",
+      "started_at": "2026-11-15T03:45:11.972155+00:00",
+      "ended_at": "2026-11-15T03:45:23.537911+00:00",
+      "exit_code": 0
+    },
+    {
+      "id": 3,
+      "stage": "place",
+      "state": "interrupted",
+      "runtime_seconds": 0.0,
+      "detail": "Stage execution interrupted",
+      "artifacts": {
+        "attempts/aeda-eeb7603ad6194a49ba0360b419702df6/place.log": "857518e9d9eb27acbe716ea42c37993a20a32c3af5103e2ae6d82e178b701436"
+      },
+      "log": "attempts/aeda-eeb7603ad6194a49ba0360b419702df6/place.log",
+      "started_at": "2026-11-15T03:45:23.605585+00:00",
+      "ended_at": "2026-11-15T03:45:24.614277+00:00",
+      "exit_code": null
+    },
+    {
+      "id": 4,
+      "stage": "place",
+      "state": "passed",
+      "runtime_seconds": 19.550045732,
+      "detail": null,
+      "artifacts": {
+        "results/sky130hd/gcd/base/3_place.odb": "e42c29405d7cfb4dd95183812e477455c797cc028936f8127253b3f05a3b3c1f",
+        "results/sky130hd/gcd/base/3_place.sdc": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+        "attempts/aeda-ee945472103449b7b6ad18db7b2fe8a3/place.log": "329bfbd2e61466129ab3003e49ac9d72217c23676ee42019eec372476fe81ba3",
+        "logs/sky130hd/gcd/base/3_5_place_dp.json": "9bbe4c06b23e0a381e90c8e29baf846854f6397bd0c380c3ac1d976e383a196c",
+        "reports/sky130hd/gcd/base/3_detailed_place.rpt": "e57fc2756ff221708646963afd569b5f532ea23a2d8f645466145213e9bfe38c"
+      },
+      "log": "attempts/aeda-ee945472103449b7b6ad18db7b2fe8a3/place.log",
+      "started_at": "2026-11-15T03:45:28.984362+00:00",
+      "ended_at": "2026-11-15T03:45:48.736581+00:00",
+      "exit_code": 0
+    },
+    {
+      "id": 5,
+      "stage": "cts",
+      "state": "passed",
+      "runtime_seconds": 14.420905510000011,
+      "detail": null,
+      "artifacts": {
+        "results/sky130hd/gcd/base/4_cts.odb": "9f050de335fd7c3be91036244af2af7930b5ded907210705a15ffde36e663d40",
+        "results/sky130hd/gcd/base/4_cts.sdc": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+        "attempts/aeda-2eb9b6e2826b4847902805ec518ec020/cts.log": "9e9ceb6c7e4c936cf74978381e583c54b81eb65fd230428bce115bf37b86c291",
+        "logs/sky130hd/gcd/base/4_1_cts.json": "ea23324deabdd094cd830ba6055a36fb3a9e7aaba94d34f832fe2b8cd2017904",
+        "reports/sky130hd/gcd/base/4_cts_final.rpt": "a9169ed801c33c865fa8416b4fb38c2fc0a1b915e73a2d7962a453c0cec645a6"
+      },
+      "log": "attempts/aeda-2eb9b6e2826b4847902805ec518ec020/cts.log",
+      "started_at": "2026-11-15T03:45:48.800601+00:00",
+      "ended_at": "2026-11-15T03:46:03.433430+00:00",
+      "exit_code": 0
+    },
+    {
+      "id": 6,
+      "stage": "grt",
+      "state": "passed",
+      "runtime_seconds": 22.64960488899999,
+      "detail": null,
+      "artifacts": {
+        "results/sky130hd/gcd/base/5_1_grt.odb": "932d792b26f00a9405b663f938a2db883a5769595f47ab2de3b7c80f628d4b30",
+        "results/sky130hd/gcd/base/5_1_grt.sdc": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+        "attempts/aeda-56623e97a1f44597adcf69b2c46555d9/grt.log": "9e5a996c027ab5ab85330bed29dbc8fbf83b598f8af2167bef6ad6afe4b070c3",
+        "logs/sky130hd/gcd/base/5_1_grt.json": "0422ea7c7e0cdd83a26d16531fb88ae3f9d699f235016b55bd7c648b528bbc89",
+        "reports/sky130hd/gcd/base/5_global_route.rpt": "6f4ef35c5e06df282e0e03f3b599c8e26e6bc21be4e3b1063466dd7f3dcf97a2"
+      },
+      "log": "attempts/aeda-56623e97a1f44597adcf69b2c46555d9/grt.log",
+      "started_at": "2026-11-15T03:46:03.502424+00:00",
+      "ended_at": "2026-11-15T03:46:26.334056+00:00",
+      "exit_code": 0
+    },
+    {
+      "id": 7,
+      "stage": "route",
+      "state": "passed",
+      "runtime_seconds": 44.344313020000016,
+      "detail": null,
+      "artifacts": {
+        "results/sky130hd/gcd/base/5_route.odb": "26d74dfd9c4f78df59d3545be101771a660c3f4a8e5bacefa1a8509b6ebf5818",
+        "results/sky130hd/gcd/base/5_route.sdc": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+        "logs/sky130hd/gcd/base/5_1_grt.log": "a5f0cac796ebef9fc3f381e416e1f2874f777eaeeb7404bc23fdb039276e7ea0",
+        "logs/sky130hd/gcd/base/5_2_route.json": "107801e836eb1ad52d10d695a02b3695c34b0fc34d90d7c5287bb95a8c8b119b",
+        "attempts/aeda-6b8d674a09fc4c0791b80b21be4adc8f/route.log": "e20229bab99117f0b0590410cba50e58069a87797ebb259e2823cb5a064998e2"
+      },
+      "log": "attempts/aeda-6b8d674a09fc4c0791b80b21be4adc8f/route.log",
+      "started_at": "2026-11-15T03:46:26.393758+00:00",
+      "ended_at": "2026-11-15T03:47:10.944095+00:00",
+      "exit_code": 0
+    },
+    {
+      "id": 8,
+      "stage": "finish",
+      "state": "passed",
+      "runtime_seconds": 23.722391481999978,
+      "detail": null,
+      "artifacts": {
+        "results/sky130hd/gcd/base/6_final.gds": "f89c7abf56af111dbec09a24d66ca1332f2da3b26c13ab25161ffd13fad27e41",
+        "results/sky130hd/gcd/base/6_final.odb": "19d15a42a312949cbfcf10fda80fd43238733fb0abecd791c7d460cf4cc1587d",
+        "results/sky130hd/gcd/base/6_final.v": "5fe44acee42aa0d6221f9195a1657270c9fabf2791dfba0e370da86f9a672cca",
+        "results/sky130hd/gcd/base/6_final.sdc": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+        "results/sky130hd/gcd/base/6_final.spef": "e77ed2c922874daff664f095ed225bc57310e94d4a61a64892014530af86323f",
+        "logs/sky130hd/gcd/base/6_report.json": "c0735a7028ab2b0ff27b0f6a22122c0f12b78fbcb5ece00ed4f499dc11a83c3c",
+        "logs/sky130hd/gcd/base/6_report.log": "471466ef3d0c621be7488c63b8c9cdc2473b1038279a3a1e419ec190e902f379",
+        "attempts/aeda-f2ee093647ec42c2825dec3f2a631989/finish.log": "b3533ba77e17c99e1869b150c976d1554ae48c1cb8367bcb42e0aa4620a317bf",
+        "attempts/aeda-f2ee093647ec42c2825dec3f2a631989/gds-validation.log": "da1167aa7b23d8892da29c016412dd8ef0bfd5de186a6e9a2d2d651294876c7d",
+        "reports/sky130hd/gcd/base/6_finish.rpt": "2d5632d0df4a388002b93a986f0f9a1841f3371d59428a49216e7b72c57d8fdd"
+      },
+      "log": "attempts/aeda-f2ee093647ec42c2825dec3f2a631989/finish.log",
+      "started_at": "2026-11-15T03:47:11.004033+00:00",
+      "ended_at": "2026-11-15T03:47:35.098983+00:00",
+      "exit_code": 0
+    }
+  ],
+  "reused_attempts": [
+    1,
+    2
+  ],
+  "cancelled_attempt": 3,
+  "termination": {
+    "signal": "SIGTERM",
+    "exit_code": 130
+  },
+  "verification": {
+    "schema_version": 1,
+    "run_id": "ec21b03b7f674b69a39586d8088da79b",
+    "design": "gcd",
+    "profile": "physical",
+    "profile_sha256": "d40de931645abaa7db909e948b0fa0922b16f9e45a54aa8f58d58dd5e17d39c1",
+    "attempt": "c52a4b0a7eee4c5082e33b3772225e46",
+    "toolchain": {
+      "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+      "orfs_revision": "23341145f0fc92a522de26d5244a4a0013818f97",
+      "library": "sky130_fd_sc_hd__tt_025C_1v80.lib",
+      "yosys": "0.68+post",
+      "openroad": "unknown"
+    },
+    "timing_context": {
+      "corner": "tt_025C_1v80",
+      "clock_period_ns": 1.1,
+      "sdc_sha256": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+      "synthesis_sdc_sha256": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+      "clocks": {
+        "core_clock": 1.1,
+        "vclk_core_clock": 1.1
+      },
+      "unsupported_sdc_commands": [],
+      "coverage_checks": {
+        "no_clock": "UNKNOWN",
+        "multiple_clock": "UNKNOWN",
+        "unconstrained_endpoints": "UNKNOWN",
+        "no_input_delay": "UNKNOWN",
+        "no_output_delay": "UNKNOWN",
+        "generated_clocks": "UNKNOWN",
+        "loops": "UNKNOWN"
+      },
+      "expected_clocks": [
+        "core_clock",
+        "vclk_core_clock"
+      ],
+      "missing_clocks": [],
+      "unaccounted_clocks": []
+    },
+    "run_inputs": {
+      "rtl_identity": "2596ddacc3fe4f3759b9b30b0ab2834c3c816cc0857d3dc1293ee992253df808",
+      "manifest": {
+        "top": "gcd",
+        "design": "gcd",
+        "platform": "sky130hd",
+        "config": "designs/sky130hd/gcd/config.mk",
+        "revision": "23341145f0fc92a522de26d5244a4a0013818f97",
+        "clock_period_ns": 1.1,
+        "cores": 2,
+        "stage_timeout_seconds": 900,
+        "backend": "orfs",
+        "core_utilization": null
+      },
+      "configuration_sha256": "b60fa8922f2bf45707880207e456962369d781f8d653ba39013fff961025acd2"
+    },
+    "verdicts": {
+      "implementation_completion": "PASSED",
+      "verification": "FAILED",
+      "physical_feasibility": "FAILED",
+      "optimization_objectives": "NOT_APPLICABLE",
+      "full_acceptance": "FAILED"
+    },
+    "gates": {
+      "elaboration": {
+        "gate": "elaboration",
+        "applicable": true,
+        "applicability": "Gate applies to this evidence scope",
+        "requirement": "optional",
+        "status": "UNKNOWN",
+        "diagnostic": "No recorded check for this gate",
+        "run_id": "ec21b03b7f674b69a39586d8088da79b",
+        "attempt": null,
+        "tool": null,
+        "tool_version": null,
+        "execution": [],
+        "inputs": {},
+        "outputs": {},
+        "evidence_references": [],
+        "recorded_at": null
+      },
+      "functional_regression": {
+        "gate": "functional_regression",
+        "applicable": true,
+        "applicability": "Gate applies to this evidence scope",
+        "requirement": "optional",
+        "status": "UNKNOWN",
+        "diagnostic": "No recorded check for this gate",
+        "run_id": "ec21b03b7f674b69a39586d8088da79b",
+        "attempt": null,
+        "tool": null,
+        "tool_version": null,
+        "execution": [],
+        "inputs": {},
+        "outputs": {},
+        "evidence_references": [],
+        "recorded_at": null
+      },
+      "equivalence": {
+        "gate": "equivalence",
+        "applicable": true,
+        "applicability": "Gate applies to this evidence scope",
+        "requirement": "optional",
+        "status": "UNKNOWN",
+        "diagnostic": "No recorded check for this gate",
+        "run_id": "ec21b03b7f674b69a39586d8088da79b",
+        "attempt": null,
+        "tool": null,
+        "tool_version": null,
+        "execution": [],
+        "inputs": {},
+        "outputs": {},
+        "evidence_references": [],
+        "recorded_at": null
+      },
+      "synthesis": {
+        "gate": "synthesis",
+        "applicable": true,
+        "applicability": "Gate applies to this evidence scope",
+        "requirement": "required",
+        "status": "PASSED",
+        "diagnostic": "Verified schema 1 tool evidence passed",
+        "run_id": "ec21b03b7f674b69a39586d8088da79b",
+        "attempt": 1,
+        "tool": "yosys",
+        "tool_version": "0.68+post",
+        "execution": [
+          {
+            "command": [
+              [
+                "/usr/bin/docker",
+                "run",
+                "--rm",
+                "--pull=never",
+                "--network=none",
+                "--name",
+                "aeda-8da8a750212d4425b4668f259573a13d",
+                "--cpus",
+                "2",
+                "--memory",
+                "2750m",
+                "--memory-swap",
+                "2750m",
+                "--user",
+                "0:0",
+                "--env",
+                "HOME=/tmp",
+                "--mount",
+                "type=bind,source=/mnt/f/AgenticAI/experiments/m10-gcd-recovery,target=/work",
+                "--workdir",
+                "/OpenROAD-flow-scripts/flow",
+                "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+                "make",
+                "DESIGN_CONFIG=./designs/sky130hd/gcd/config.mk",
+                "WORK_HOME=/work",
+                "NUM_CORES=2",
+                "synth"
+              ]
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-15T03:44:59.760018+00:00",
+            "runtime_seconds": 11.95707649800002
+          }
+        ],
+        "inputs": {},
+        "outputs": {
+          "results/sky130hd/gcd/base/1_synth.odb": "9c1a97e023970950802af5d024cadb2a1541f34953b9753083f5c29e1659f09f",
+          "results/sky130hd/gcd/base/1_synth.sdc": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+          "attempts/aeda-8da8a750212d4425b4668f259573a13d/synth.log": "4b53d32262a9a8dfcadcc15628a2cf67f7967a972e72902148735ffd7bb2fa7d",
+          "logs/sky130hd/gcd/base/1_2_yosys.log": "1dc545371bf2cf9d6d9b8def8d4d62cca188d2574d5882eb924f7337c3dcc09c",
+          "logs/sky130hd/gcd/base/1_synth.json": "897e5bb3a4be24c642115b3dbdff1fee4f44dfb29954473157f4738ffe5e726e"
+        },
+        "evidence_references": [
+          "results/sky130hd/gcd/base/1_synth.odb",
+          "results/sky130hd/gcd/base/1_synth.sdc",
+          "attempts/aeda-8da8a750212d4425b4668f259573a13d/synth.log",
+          "logs/sky130hd/gcd/base/1_2_yosys.log",
+          "logs/sky130hd/gcd/base/1_synth.json"
+        ],
+        "recorded_at": null
+      },
+      "setup": {
+        "gate": "setup",
+        "applicable": true,
+        "applicability": "Gate applies to this evidence scope",
+        "requirement": "required",
+        "status": "FAILED",
+        "diagnostic": "Final setup violation, worst slack -1.20488 ns",
+        "run_id": "ec21b03b7f674b69a39586d8088da79b",
+        "attempt": 8,
+        "tool": "openroad",
+        "tool_version": "unknown",
+        "execution": [
+          {
+            "command": [
+              [
+                "/usr/bin/docker",
+                "run",
+                "--rm",
+                "--pull=never",
+                "--network=none",
+                "--name",
+                "aeda-f2ee093647ec42c2825dec3f2a631989",
+                "--cpus",
+                "2",
+                "--memory",
+                "2750m",
+                "--memory-swap",
+                "2750m",
+                "--user",
+                "0:0",
+                "--env",
+                "HOME=/tmp",
+                "--mount",
+                "type=bind,source=/mnt/f/AgenticAI/experiments/m10-gcd-recovery,target=/work",
+                "--workdir",
+                "/OpenROAD-flow-scripts/flow",
+                "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+                "make",
+                "DESIGN_CONFIG=./designs/sky130hd/gcd/config.mk",
+                "WORK_HOME=/work",
+                "NUM_CORES=2",
+                "finish"
+              ],
+              [
+                "/usr/bin/docker",
+                "run",
+                "--rm",
+                "--pull=never",
+                "--network=none",
+                "--name",
+                "aeda-f2ee093647ec42c2825dec3f2a631989",
+                "--cpus",
+                "2",
+                "--memory",
+                "2750m",
+                "--memory-swap",
+                "2750m",
+                "--user",
+                "0:0",
+                "--env",
+                "HOME=/tmp",
+                "--mount",
+                "type=bind,source=/mnt/f/AgenticAI/experiments/m10-gcd-recovery,target=/work",
+                "--workdir",
+                "/OpenROAD-flow-scripts/flow",
+                "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+                "klayout",
+                "-b",
+                "-r",
+                "/work/validate_gds.rb",
+                "-rd",
+                "gds=/work/results/sky130hd/gcd/base/6_final.gds",
+                "-rd",
+                "top=gcd"
+              ]
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-15T03:47:11.004033+00:00",
+            "runtime_seconds": 23.722391481999978
+          }
+        ],
+        "inputs": {
+          "results/sky130hd/gcd/base/1_synth.sdc": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+          "results/sky130hd/gcd/base/6_final.sdc": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb"
+        },
+        "outputs": {
+          "logs/sky130hd/gcd/base/6_report.json": "c0735a7028ab2b0ff27b0f6a22122c0f12b78fbcb5ece00ed4f499dc11a83c3c"
+        },
+        "evidence_references": [
+          "logs/sky130hd/gcd/base/6_report.json"
+        ],
+        "recorded_at": null,
+        "context": {
+          "corner": "tt_025C_1v80",
+          "clock_period_ns": 1.1,
+          "sdc_sha256": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+          "synthesis_sdc_sha256": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+          "clocks": {
+            "core_clock": 1.1,
+            "vclk_core_clock": 1.1
+          },
+          "unsupported_sdc_commands": [],
+          "coverage_checks": {
+            "no_clock": "UNKNOWN",
+            "multiple_clock": "UNKNOWN",
+            "unconstrained_endpoints": "UNKNOWN",
+            "no_input_delay": "UNKNOWN",
+            "no_output_delay": "UNKNOWN",
+            "generated_clocks": "UNKNOWN",
+            "loops": "UNKNOWN"
+          },
+          "expected_clocks": [
+            "core_clock",
+            "vclk_core_clock"
+          ],
+          "missing_clocks": [],
+          "unaccounted_clocks": []
+        },
+        "measurement": {
+          "name": "setup_worst_slack_ns",
+          "value": -1.20488,
+          "unit": "ns",
+          "stage": "finish",
+          "corner": "tt_025C_1v80",
+          "artifact": "logs/sky130hd/gcd/base/6_report.json",
+          "reference": "finish__timing__setup__ws",
+          "method": "orfs-normalization-v1",
+          "status": "MEASURED"
+        }
+      },
+      "hold": {
+        "gate": "hold",
+        "applicable": true,
+        "applicability": "Gate applies to this evidence scope",
+        "requirement": "required",
+        "status": "PASSED",
+        "diagnostic": "Verified schema 1 tool evidence passed",
+        "run_id": "ec21b03b7f674b69a39586d8088da79b",
+        "attempt": 8,
+        "tool": "openroad",
+        "tool_version": "unknown",
+        "execution": [
+          {
+            "command": [
+              [
+                "/usr/bin/docker",
+                "run",
+                "--rm",
+                "--pull=never",
+                "--network=none",
+                "--name",
+                "aeda-f2ee093647ec42c2825dec3f2a631989",
+                "--cpus",
+                "2",
+                "--memory",
+                "2750m",
+                "--memory-swap",
+                "2750m",
+                "--user",
+                "0:0",
+                "--env",
+                "HOME=/tmp",
+                "--mount",
+                "type=bind,source=/mnt/f/AgenticAI/experiments/m10-gcd-recovery,target=/work",
+                "--workdir",
+                "/OpenROAD-flow-scripts/flow",
+                "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+                "make",
+                "DESIGN_CONFIG=./designs/sky130hd/gcd/config.mk",
+                "WORK_HOME=/work",
+                "NUM_CORES=2",
+                "finish"
+              ],
+              [
+                "/usr/bin/docker",
+                "run",
+                "--rm",
+                "--pull=never",
+                "--network=none",
+                "--name",
+                "aeda-f2ee093647ec42c2825dec3f2a631989",
+                "--cpus",
+                "2",
+                "--memory",
+                "2750m",
+                "--memory-swap",
+                "2750m",
+                "--user",
+                "0:0",
+                "--env",
+                "HOME=/tmp",
+                "--mount",
+                "type=bind,source=/mnt/f/AgenticAI/experiments/m10-gcd-recovery,target=/work",
+                "--workdir",
+                "/OpenROAD-flow-scripts/flow",
+                "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+                "klayout",
+                "-b",
+                "-r",
+                "/work/validate_gds.rb",
+                "-rd",
+                "gds=/work/results/sky130hd/gcd/base/6_final.gds",
+                "-rd",
+                "top=gcd"
+              ]
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-15T03:47:11.004033+00:00",
+            "runtime_seconds": 23.722391481999978
+          }
+        ],
+        "inputs": {
+          "results/sky130hd/gcd/base/1_synth.sdc": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+          "results/sky130hd/gcd/base/6_final.sdc": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb"
+        },
+        "outputs": {
+          "logs/sky130hd/gcd/base/6_report.json": "c0735a7028ab2b0ff27b0f6a22122c0f12b78fbcb5ece00ed4f499dc11a83c3c"
+        },
+        "evidence_references": [
+          "logs/sky130hd/gcd/base/6_report.json"
+        ],
+        "recorded_at": null,
+        "context": {
+          "corner": "tt_025C_1v80",
+          "clock_period_ns": 1.1,
+          "sdc_sha256": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+          "synthesis_sdc_sha256": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+          "clocks": {
+            "core_clock": 1.1,
+            "vclk_core_clock": 1.1
+          },
+          "unsupported_sdc_commands": [],
+          "coverage_checks": {
+            "no_clock": "UNKNOWN",
+            "multiple_clock": "UNKNOWN",
+            "unconstrained_endpoints": "UNKNOWN",
+            "no_input_delay": "UNKNOWN",
+            "no_output_delay": "UNKNOWN",
+            "generated_clocks": "UNKNOWN",
+            "loops": "UNKNOWN"
+          },
+          "expected_clocks": [
+            "core_clock",
+            "vclk_core_clock"
+          ],
+          "missing_clocks": [],
+          "unaccounted_clocks": []
+        },
+        "measurement": {
+          "name": "hold_worst_slack_ns",
+          "value": 0.429847,
+          "unit": "ns",
+          "stage": "finish",
+          "corner": "tt_025C_1v80",
+          "artifact": "logs/sky130hd/gcd/base/6_report.json",
+          "reference": "finish__timing__hold__ws",
+          "method": "orfs-normalization-v1",
+          "status": "MEASURED"
+        }
+      },
+      "timing_coverage": {
+        "gate": "timing_coverage",
+        "applicable": true,
+        "applicability": "Gate applies to this evidence scope",
+        "requirement": "required",
+        "status": "PASSED",
+        "diagnostic": "OpenSTA completed all configured final coverage checks",
+        "run_id": "ec21b03b7f674b69a39586d8088da79b",
+        "attempt": "c52a4b0a7eee4c5082e33b3772225e46",
+        "tool": null,
+        "tool_version": null,
+        "execution": [
+          {
+            "command": [
+              "/usr/bin/docker",
+              "run",
+              "--rm",
+              "--pull",
+              "never",
+              "--network",
+              "none",
+              "--name",
+              "aeda-coverage-0e844a75195c4b77a0d19342848218e9",
+              "--cpus",
+              "1",
+              "--memory",
+              "1200m",
+              "--pids-limit",
+              "128",
+              "-v",
+              "/mnt/f/AgenticAI/experiments/m10-gcd-recovery/verification/attempts/c52a4b0a7eee4c5082e33b3772225e46/timing_coverage:/work:ro",
+              "--entrypoint",
+              "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad",
+              "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+              "-no_init",
+              "-threads",
+              "1",
+              "-exit",
+              "/work/coverage.tcl"
+            ],
+            "return_code": 0,
+            "runtime_seconds": 1.7404984300000024,
+            "started_at": "2026-11-15T03:48:14.794180+00:00",
+            "stderr": "coverage.stderr.log",
+            "stdout": "coverage.stdout.log",
+            "stop": null
+          }
+        ],
+        "inputs": {
+          "results/sky130hd/gcd/base/1_synth.sdc": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+          "results/sky130hd/gcd/base/6_final.odb": "19d15a42a312949cbfcf10fda80fd43238733fb0abecd791c7d460cf4cc1587d",
+          "results/sky130hd/gcd/base/6_final.sdc": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+          "results/sky130hd/gcd/base/6_final.spef": "e77ed2c922874daff664f095ed225bc57310e94d4a61a64892014530af86323f"
+        },
+        "outputs": {
+          "verification/attempts/c52a4b0a7eee4c5082e33b3772225e46/timing_coverage/receipt.json": "b8ecac27246676f945a305552a7f4abb960818e125360882b6b9783602957cb8",
+          "verification/attempts/c52a4b0a7eee4c5082e33b3772225e46/timing_coverage/coverage.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "verification/attempts/c52a4b0a7eee4c5082e33b3772225e46/timing_coverage/coverage.stdout.log": "7f72b4719d681bb53292612c6c59f282de7a44108124915ac405a993078f22b5",
+          "verification/attempts/c52a4b0a7eee4c5082e33b3772225e46/timing_coverage/coverage.tcl": "657f2238d45e8c22bea5235c26766f2a5f4608391df5f623edb54015337ad56d"
+        },
+        "evidence_references": [
+          "verification/attempts/c52a4b0a7eee4c5082e33b3772225e46/timing_coverage/receipt.json",
+          "verification/attempts/c52a4b0a7eee4c5082e33b3772225e46/timing_coverage/coverage.stderr.log",
+          "verification/attempts/c52a4b0a7eee4c5082e33b3772225e46/timing_coverage/coverage.stdout.log",
+          "verification/attempts/c52a4b0a7eee4c5082e33b3772225e46/timing_coverage/coverage.tcl"
+        ],
+        "recorded_at": "2026-11-15T03:48:16.616378+00:00",
+        "context": {
+          "corner": "tt_025C_1v80",
+          "clock_period_ns": 1.1,
+          "sdc_sha256": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+          "synthesis_sdc_sha256": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+          "clocks": {
+            "core_clock": 1.1,
+            "vclk_core_clock": 1.1
+          },
+          "unsupported_sdc_commands": [],
+          "coverage_checks": {
+            "no_clock": "PASSED",
+            "multiple_clock": "PASSED",
+            "unconstrained_endpoints": "PASSED",
+            "no_input_delay": "PASSED",
+            "no_output_delay": "PASSED",
+            "generated_clocks": "PASSED",
+            "loops": "PASSED"
+          },
+          "expected_clocks": [
+            "core_clock",
+            "vclk_core_clock"
+          ],
+          "missing_clocks": [],
+          "unaccounted_clocks": [],
+          "observed_clocks": [
+            "core_clock",
+            "vclk_core_clock"
+          ]
+        },
+        "tools": {
+          "OpenSTA": {
+            "path": "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad",
+            "version": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987"
+          },
+          "docker": {
+            "path": "/usr/bin/docker",
+            "sha256": "7ed12b00293d64742419a6601ae97960a367a0ce97c88b06e3278cc0a409557b"
+          }
+        }
+      },
+      "gds_generation": {
+        "gate": "gds_generation",
+        "applicable": true,
+        "applicability": "Gate applies to this evidence scope",
+        "requirement": "required",
+        "status": "PASSED",
+        "diagnostic": "Verified schema 1 tool evidence passed",
+        "run_id": "ec21b03b7f674b69a39586d8088da79b",
+        "attempt": 8,
+        "tool": "klayout",
+        "tool_version": null,
+        "execution": [
+          {
+            "command": [
+              [
+                "/usr/bin/docker",
+                "run",
+                "--rm",
+                "--pull=never",
+                "--network=none",
+                "--name",
+                "aeda-f2ee093647ec42c2825dec3f2a631989",
+                "--cpus",
+                "2",
+                "--memory",
+                "2750m",
+                "--memory-swap",
+                "2750m",
+                "--user",
+                "0:0",
+                "--env",
+                "HOME=/tmp",
+                "--mount",
+                "type=bind,source=/mnt/f/AgenticAI/experiments/m10-gcd-recovery,target=/work",
+                "--workdir",
+                "/OpenROAD-flow-scripts/flow",
+                "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+                "make",
+                "DESIGN_CONFIG=./designs/sky130hd/gcd/config.mk",
+                "WORK_HOME=/work",
+                "NUM_CORES=2",
+                "finish"
+              ],
+              [
+                "/usr/bin/docker",
+                "run",
+                "--rm",
+                "--pull=never",
+                "--network=none",
+                "--name",
+                "aeda-f2ee093647ec42c2825dec3f2a631989",
+                "--cpus",
+                "2",
+                "--memory",
+                "2750m",
+                "--memory-swap",
+                "2750m",
+                "--user",
+                "0:0",
+                "--env",
+                "HOME=/tmp",
+                "--mount",
+                "type=bind,source=/mnt/f/AgenticAI/experiments/m10-gcd-recovery,target=/work",
+                "--workdir",
+                "/OpenROAD-flow-scripts/flow",
+                "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+                "klayout",
+                "-b",
+                "-r",
+                "/work/validate_gds.rb",
+                "-rd",
+                "gds=/work/results/sky130hd/gcd/base/6_final.gds",
+                "-rd",
+                "top=gcd"
+              ]
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-15T03:47:11.004033+00:00",
+            "runtime_seconds": 23.722391481999978
+          }
+        ],
+        "inputs": {},
+        "outputs": {
+          "results/sky130hd/gcd/base/6_final.gds": "f89c7abf56af111dbec09a24d66ca1332f2da3b26c13ab25161ffd13fad27e41"
+        },
+        "evidence_references": [
+          "results/sky130hd/gcd/base/6_final.gds"
+        ],
+        "recorded_at": null
+      },
+      "gds_reopen": {
+        "gate": "gds_reopen",
+        "applicable": true,
+        "applicability": "Gate applies to this evidence scope",
+        "requirement": "required",
+        "status": "PASSED",
+        "diagnostic": "Verified schema 1 tool evidence passed",
+        "run_id": "ec21b03b7f674b69a39586d8088da79b",
+        "attempt": 8,
+        "tool": "klayout",
+        "tool_version": null,
+        "execution": [
+          {
+            "command": [
+              [
+                "/usr/bin/docker",
+                "run",
+                "--rm",
+                "--pull=never",
+                "--network=none",
+                "--name",
+                "aeda-f2ee093647ec42c2825dec3f2a631989",
+                "--cpus",
+                "2",
+                "--memory",
+                "2750m",
+                "--memory-swap",
+                "2750m",
+                "--user",
+                "0:0",
+                "--env",
+                "HOME=/tmp",
+                "--mount",
+                "type=bind,source=/mnt/f/AgenticAI/experiments/m10-gcd-recovery,target=/work",
+                "--workdir",
+                "/OpenROAD-flow-scripts/flow",
+                "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+                "make",
+                "DESIGN_CONFIG=./designs/sky130hd/gcd/config.mk",
+                "WORK_HOME=/work",
+                "NUM_CORES=2",
+                "finish"
+              ],
+              [
+                "/usr/bin/docker",
+                "run",
+                "--rm",
+                "--pull=never",
+                "--network=none",
+                "--name",
+                "aeda-f2ee093647ec42c2825dec3f2a631989",
+                "--cpus",
+                "2",
+                "--memory",
+                "2750m",
+                "--memory-swap",
+                "2750m",
+                "--user",
+                "0:0",
+                "--env",
+                "HOME=/tmp",
+                "--mount",
+                "type=bind,source=/mnt/f/AgenticAI/experiments/m10-gcd-recovery,target=/work",
+                "--workdir",
+                "/OpenROAD-flow-scripts/flow",
+                "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+                "klayout",
+                "-b",
+                "-r",
+                "/work/validate_gds.rb",
+                "-rd",
+                "gds=/work/results/sky130hd/gcd/base/6_final.gds",
+                "-rd",
+                "top=gcd"
+              ]
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-15T03:47:11.004033+00:00",
+            "runtime_seconds": 23.722391481999978
+          }
+        ],
+        "inputs": {},
+        "outputs": {
+          "results/sky130hd/gcd/base/6_final.gds": "f89c7abf56af111dbec09a24d66ca1332f2da3b26c13ab25161ffd13fad27e41",
+          "attempts/aeda-f2ee093647ec42c2825dec3f2a631989/gds-validation.log": "da1167aa7b23d8892da29c016412dd8ef0bfd5de186a6e9a2d2d651294876c7d"
+        },
+        "evidence_references": [
+          "results/sky130hd/gcd/base/6_final.gds",
+          "attempts/aeda-f2ee093647ec42c2825dec3f2a631989/gds-validation.log"
+        ],
+        "recorded_at": null
+      },
+      "router": {
+        "gate": "router",
+        "applicable": true,
+        "applicability": "Gate applies to this evidence scope",
+        "requirement": "required",
+        "status": "PASSED",
+        "diagnostic": "Verified schema 1 tool evidence passed",
+        "run_id": "ec21b03b7f674b69a39586d8088da79b",
+        "attempt": 7,
+        "tool": "openroad",
+        "tool_version": "unknown",
+        "execution": [
+          {
+            "command": [
+              [
+                "/usr/bin/docker",
+                "run",
+                "--rm",
+                "--pull=never",
+                "--network=none",
+                "--name",
+                "aeda-6b8d674a09fc4c0791b80b21be4adc8f",
+                "--cpus",
+                "2",
+                "--memory",
+                "2750m",
+                "--memory-swap",
+                "2750m",
+                "--user",
+                "0:0",
+                "--env",
+                "HOME=/tmp",
+                "--mount",
+                "type=bind,source=/mnt/f/AgenticAI/experiments/m10-gcd-recovery,target=/work",
+                "--workdir",
+                "/OpenROAD-flow-scripts/flow",
+                "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+                "make",
+                "DESIGN_CONFIG=./designs/sky130hd/gcd/config.mk",
+                "WORK_HOME=/work",
+                "NUM_CORES=2",
+                "route"
+              ]
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-15T03:46:26.393758+00:00",
+            "runtime_seconds": 44.344313020000016
+          }
+        ],
+        "inputs": {},
+        "outputs": {
+          "logs/sky130hd/gcd/base/5_2_route.json": "107801e836eb1ad52d10d695a02b3695c34b0fc34d90d7c5287bb95a8c8b119b"
+        },
+        "evidence_references": [
+          "logs/sky130hd/gcd/base/5_2_route.json"
+        ],
+        "recorded_at": null
+      },
+      "platform_drc": {
+        "gate": "platform_drc",
+        "applicable": true,
+        "applicability": "Gate applies to this evidence scope",
+        "requirement": "required",
+        "status": "PASSED",
+        "diagnostic": "Verified schema 1 tool evidence passed",
+        "run_id": "ec21b03b7f674b69a39586d8088da79b",
+        "attempt": "aeda-130bf31307e94ab3b853ab4c0fcd2e3a",
+        "tool": "klayout",
+        "tool_version": null,
+        "execution": [
+          {
+            "command": [
+              "/usr/bin/docker",
+              "run",
+              "--rm",
+              "--pull=never",
+              "--network=none",
+              "--name",
+              "aeda-130bf31307e94ab3b853ab4c0fcd2e3a",
+              "--cpus",
+              "2",
+              "--memory",
+              "2750m",
+              "--memory-swap",
+              "2750m",
+              "--user",
+              "0:0",
+              "--env",
+              "HOME=/tmp",
+              "--mount",
+              "type=bind,source=/mnt/f/AgenticAI/experiments/m10-gcd-recovery,target=/work",
+              "--workdir",
+              "/OpenROAD-flow-scripts/flow",
+              "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+              "make",
+              "DESIGN_CONFIG=./designs/sky130hd/gcd/config.mk",
+              "WORK_HOME=/work",
+              "NUM_CORES=2",
+              "drc"
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-15T03:47:41.890612+00:00",
+            "runtime_seconds": 13.993152863000034
+          }
+        ],
+        "inputs": {},
+        "outputs": {
+          "results/sky130hd/gcd/base/6_final.gds": "f89c7abf56af111dbec09a24d66ca1332f2da3b26c13ab25161ffd13fad27e41",
+          "reports/sky130hd/gcd/base/6_drc_count.rpt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "reports/sky130hd/gcd/base/6_drc.lyrdb": "0b1f5f9ea92c90dbadd8b7e8c49e597b9b1d1148b37db26adba44f8c842fcdbf"
+        },
+        "evidence_references": [
+          "results/sky130hd/gcd/base/6_final.gds",
+          "reports/sky130hd/gcd/base/6_drc_count.rpt",
+          "reports/sky130hd/gcd/base/6_drc.lyrdb"
+        ],
+        "recorded_at": null
+      },
+      "lvs": {
+        "gate": "lvs",
+        "applicable": true,
+        "applicability": "Gate applies to this evidence scope",
+        "requirement": "required",
+        "status": "PASSED",
+        "diagnostic": "Verified schema 1 tool evidence passed",
+        "run_id": "ec21b03b7f674b69a39586d8088da79b",
+        "attempt": "aeda-80fe1da56a06486d96e68b1a741c724f",
+        "tool": "klayout",
+        "tool_version": null,
+        "execution": [
+          {
+            "command": [
+              "/usr/bin/docker",
+              "run",
+              "--rm",
+              "--pull=never",
+              "--network=none",
+              "--name",
+              "aeda-80fe1da56a06486d96e68b1a741c724f",
+              "--cpus",
+              "2",
+              "--memory",
+              "2750m",
+              "--memory-swap",
+              "2750m",
+              "--user",
+              "0:0",
+              "--env",
+              "HOME=/tmp",
+              "--mount",
+              "type=bind,source=/mnt/f/AgenticAI/experiments/m10-gcd-recovery,target=/work",
+              "--workdir",
+              "/OpenROAD-flow-scripts/flow",
+              "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+              "make",
+              "DESIGN_CONFIG=./designs/sky130hd/gcd/config.mk",
+              "WORK_HOME=/work",
+              "NUM_CORES=2",
+              "lvs"
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-15T03:47:55.950122+00:00",
+            "runtime_seconds": 8.804738223000015
+          }
+        ],
+        "inputs": {},
+        "outputs": {
+          "results/sky130hd/gcd/base/6_final.gds": "f89c7abf56af111dbec09a24d66ca1332f2da3b26c13ab25161ffd13fad27e41",
+          "logs/sky130hd/gcd/base/6_lvs.log": "10c7576905cc2a5f0fb408787d72ae85699f7e34c151a2674580c2a22551c1d0",
+          "results/sky130hd/gcd/base/6_lvs.lvsdb": "de588d48abc5191914e2847e799f40b891a8a80c4019c45dd2109424623b4367"
+        },
+        "evidence_references": [
+          "results/sky130hd/gcd/base/6_final.gds",
+          "logs/sky130hd/gcd/base/6_lvs.log",
+          "results/sky130hd/gcd/base/6_lvs.lvsdb"
+        ],
+        "recorded_at": null
+      },
+      "connectivity": {
+        "gate": "connectivity",
+        "applicable": true,
+        "applicability": "Gate applies to this evidence scope",
+        "requirement": "optional",
+        "status": "UNKNOWN",
+        "diagnostic": "No recorded check for this gate",
+        "run_id": "ec21b03b7f674b69a39586d8088da79b",
+        "attempt": null,
+        "tool": null,
+        "tool_version": null,
+        "execution": [],
+        "inputs": {},
+        "outputs": {},
+        "evidence_references": [],
+        "recorded_at": null
+      },
+      "artifact_integrity": {
+        "gate": "artifact_integrity",
+        "applicable": true,
+        "applicability": "Gate applies to this evidence scope",
+        "requirement": "required",
+        "status": "PASSED",
+        "diagnostic": "Recorded artifact hashes match",
+        "run_id": "ec21b03b7f674b69a39586d8088da79b",
+        "attempt": null,
+        "tool": null,
+        "tool_version": null,
+        "execution": [],
+        "inputs": {
+          "results/sky130hd/gcd/base/1_synth.odb": "9c1a97e023970950802af5d024cadb2a1541f34953b9753083f5c29e1659f09f",
+          "results/sky130hd/gcd/base/1_synth.sdc": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+          "attempts/aeda-8da8a750212d4425b4668f259573a13d/synth.log": "4b53d32262a9a8dfcadcc15628a2cf67f7967a972e72902148735ffd7bb2fa7d",
+          "logs/sky130hd/gcd/base/1_2_yosys.log": "1dc545371bf2cf9d6d9b8def8d4d62cca188d2574d5882eb924f7337c3dcc09c",
+          "logs/sky130hd/gcd/base/1_synth.json": "897e5bb3a4be24c642115b3dbdff1fee4f44dfb29954473157f4738ffe5e726e",
+          "results/sky130hd/gcd/base/2_floorplan.odb": "f9a70a830094e143bfe694328ad360fb60a4a534461d1a658cef141d2e04a561",
+          "results/sky130hd/gcd/base/2_floorplan.sdc": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+          "attempts/aeda-368708d113124f3c9f85cec0e6e7426e/floorplan.log": "a578e7080a1c89c38888cf96536d9bd57ca541cc50c71aab4c0c104924092139",
+          "logs/sky130hd/gcd/base/2_1_floorplan.json": "6898bb7236bb0786463416480e41a59b9459aef8f79dd61f10f04628d852f7ec",
+          "reports/sky130hd/gcd/base/2_floorplan_final.rpt": "cd85e940e2e88ecc5ee936e0e732dda7a69daf1b228f5d63da0aef2c17c94950",
+          "attempts/aeda-eeb7603ad6194a49ba0360b419702df6/place.log": "857518e9d9eb27acbe716ea42c37993a20a32c3af5103e2ae6d82e178b701436",
+          "results/sky130hd/gcd/base/3_place.odb": "e42c29405d7cfb4dd95183812e477455c797cc028936f8127253b3f05a3b3c1f",
+          "results/sky130hd/gcd/base/3_place.sdc": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+          "attempts/aeda-ee945472103449b7b6ad18db7b2fe8a3/place.log": "329bfbd2e61466129ab3003e49ac9d72217c23676ee42019eec372476fe81ba3",
+          "logs/sky130hd/gcd/base/3_5_place_dp.json": "9bbe4c06b23e0a381e90c8e29baf846854f6397bd0c380c3ac1d976e383a196c",
+          "reports/sky130hd/gcd/base/3_detailed_place.rpt": "e57fc2756ff221708646963afd569b5f532ea23a2d8f645466145213e9bfe38c",
+          "results/sky130hd/gcd/base/4_cts.odb": "9f050de335fd7c3be91036244af2af7930b5ded907210705a15ffde36e663d40",
+          "results/sky130hd/gcd/base/4_cts.sdc": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+          "attempts/aeda-2eb9b6e2826b4847902805ec518ec020/cts.log": "9e9ceb6c7e4c936cf74978381e583c54b81eb65fd230428bce115bf37b86c291",
+          "logs/sky130hd/gcd/base/4_1_cts.json": "ea23324deabdd094cd830ba6055a36fb3a9e7aaba94d34f832fe2b8cd2017904",
+          "reports/sky130hd/gcd/base/4_cts_final.rpt": "a9169ed801c33c865fa8416b4fb38c2fc0a1b915e73a2d7962a453c0cec645a6",
+          "results/sky130hd/gcd/base/5_1_grt.odb": "932d792b26f00a9405b663f938a2db883a5769595f47ab2de3b7c80f628d4b30",
+          "results/sky130hd/gcd/base/5_1_grt.sdc": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+          "attempts/aeda-56623e97a1f44597adcf69b2c46555d9/grt.log": "9e5a996c027ab5ab85330bed29dbc8fbf83b598f8af2167bef6ad6afe4b070c3",
+          "logs/sky130hd/gcd/base/5_1_grt.json": "0422ea7c7e0cdd83a26d16531fb88ae3f9d699f235016b55bd7c648b528bbc89",
+          "reports/sky130hd/gcd/base/5_global_route.rpt": "6f4ef35c5e06df282e0e03f3b599c8e26e6bc21be4e3b1063466dd7f3dcf97a2",
+          "results/sky130hd/gcd/base/5_route.odb": "26d74dfd9c4f78df59d3545be101771a660c3f4a8e5bacefa1a8509b6ebf5818",
+          "results/sky130hd/gcd/base/5_route.sdc": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+          "logs/sky130hd/gcd/base/5_1_grt.log": "a5f0cac796ebef9fc3f381e416e1f2874f777eaeeb7404bc23fdb039276e7ea0",
+          "logs/sky130hd/gcd/base/5_2_route.json": "107801e836eb1ad52d10d695a02b3695c34b0fc34d90d7c5287bb95a8c8b119b",
+          "attempts/aeda-6b8d674a09fc4c0791b80b21be4adc8f/route.log": "e20229bab99117f0b0590410cba50e58069a87797ebb259e2823cb5a064998e2",
+          "results/sky130hd/gcd/base/6_final.gds": "f89c7abf56af111dbec09a24d66ca1332f2da3b26c13ab25161ffd13fad27e41",
+          "results/sky130hd/gcd/base/6_final.odb": "19d15a42a312949cbfcf10fda80fd43238733fb0abecd791c7d460cf4cc1587d",
+          "results/sky130hd/gcd/base/6_final.v": "5fe44acee42aa0d6221f9195a1657270c9fabf2791dfba0e370da86f9a672cca",
+          "results/sky130hd/gcd/base/6_final.sdc": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+          "results/sky130hd/gcd/base/6_final.spef": "e77ed2c922874daff664f095ed225bc57310e94d4a61a64892014530af86323f",
+          "logs/sky130hd/gcd/base/6_report.json": "c0735a7028ab2b0ff27b0f6a22122c0f12b78fbcb5ece00ed4f499dc11a83c3c",
+          "logs/sky130hd/gcd/base/6_report.log": "471466ef3d0c621be7488c63b8c9cdc2473b1038279a3a1e419ec190e902f379",
+          "attempts/aeda-f2ee093647ec42c2825dec3f2a631989/finish.log": "b3533ba77e17c99e1869b150c976d1554ae48c1cb8367bcb42e0aa4620a317bf",
+          "attempts/aeda-f2ee093647ec42c2825dec3f2a631989/gds-validation.log": "da1167aa7b23d8892da29c016412dd8ef0bfd5de186a6e9a2d2d651294876c7d",
+          "reports/sky130hd/gcd/base/6_finish.rpt": "2d5632d0df4a388002b93a986f0f9a1841f3371d59428a49216e7b72c57d8fdd",
+          "reports/sky130hd/gcd/base/6_drc_count.rpt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "reports/sky130hd/gcd/base/6_drc.lyrdb": "0b1f5f9ea92c90dbadd8b7e8c49e597b9b1d1148b37db26adba44f8c842fcdbf",
+          "attempts/aeda-130bf31307e94ab3b853ab4c0fcd2e3a/drc.log": "11967b7fe49b9ef3ab1cf3109ec7dfe17e4c52678bc7f56b284201a91f932be5",
+          "logs/sky130hd/gcd/base/6_lvs.log": "10c7576905cc2a5f0fb408787d72ae85699f7e34c151a2674580c2a22551c1d0",
+          "results/sky130hd/gcd/base/6_lvs.lvsdb": "de588d48abc5191914e2847e799f40b891a8a80c4019c45dd2109424623b4367",
+          "attempts/aeda-80fe1da56a06486d96e68b1a741c724f/lvs.log": "976299d445deb45caec683554805a7f53292cc80f5e5f4698f080fa2f3a49aba"
+        },
+        "outputs": {},
+        "evidence_references": [],
+        "recorded_at": null
+      },
+      "sequential_equivalence": {
+        "gate": "sequential_equivalence",
+        "applicable": true,
+        "applicability": "Gate applies to this evidence scope",
+        "requirement": "optional",
+        "status": "UNKNOWN",
+        "diagnostic": "No supported verification evidence",
+        "run_id": "ec21b03b7f674b69a39586d8088da79b",
+        "attempt": null,
+        "tool": null,
+        "tool_version": null,
+        "execution": [],
+        "inputs": {},
+        "outputs": {},
+        "evidence_references": [],
+        "recorded_at": null
+      },
+      "formal_properties": {
+        "gate": "formal_properties",
+        "applicable": true,
+        "applicability": "Gate applies to this evidence scope",
+        "requirement": "optional",
+        "status": "UNKNOWN",
+        "diagnostic": "No supported verification evidence",
+        "run_id": "ec21b03b7f674b69a39586d8088da79b",
+        "attempt": null,
+        "tool": null,
+        "tool_version": null,
+        "execution": [],
+        "inputs": {},
+        "outputs": {},
+        "evidence_references": [],
+        "recorded_at": null
+      }
+    },
+    "decision_sha256": "5c483dc9bbbf565d677154956ceb5709bb163db5ce11df9e199f7cf606be3fc2"
+  },
+  "measurements": {
+    "setup_wns_ns": {
+      "name": "setup_wns_ns",
+      "value": -1.20488,
+      "unit": "ns",
+      "stage": "finish",
+      "corner": "tt_025C_1v80",
+      "artifact": "logs/sky130hd/gcd/base/6_report.json",
+      "reference": "min(finish__timing__setup__ws,0)",
+      "method": "orfs-normalization-v1",
+      "status": "MEASURED"
+    },
+    "setup_tns_ns": {
+      "name": "setup_tns_ns",
+      "value": -54.4492,
+      "unit": "ns",
+      "stage": "finish",
+      "corner": "tt_025C_1v80",
+      "artifact": "logs/sky130hd/gcd/base/6_report.json",
+      "reference": "finish__timing__setup__tns",
+      "method": "orfs-normalization-v1",
+      "status": "MEASURED"
+    },
+    "hold_wns_ns": {
+      "name": "hold_wns_ns",
+      "value": 0,
+      "unit": "ns",
+      "stage": "finish",
+      "corner": "tt_025C_1v80",
+      "artifact": "logs/sky130hd/gcd/base/6_report.json",
+      "reference": "min(finish__timing__hold__ws,0)",
+      "method": "orfs-normalization-v1",
+      "status": "MEASURED"
+    },
+    "hold_tns_ns": {
+      "name": "hold_tns_ns",
+      "value": 0,
+      "unit": "ns",
+      "stage": "finish",
+      "corner": "tt_025C_1v80",
+      "artifact": "logs/sky130hd/gcd/base/6_report.json",
+      "reference": "finish__timing__hold__tns",
+      "method": "orfs-normalization-v1",
+      "status": "MEASURED"
+    }
+  },
+  "reports_sha256": {
+    "before-resume": "0db24f9c8a648334409c0049c10512c13e1dea2ec3fdb2f7e24376e189f2b78e",
+    "resumed": "2236944bec7b9dcc0024e76d9700a23f594da31e8fa5c6530d848f12bb0fbf70",
+    "acceptance": "20a1e3341d1814c17e33c4d8503471b535d4eb8fe6b32bf5192a4e2f719c782c",
+    "gallery": "14beea1f188c2788262f31fdb11d72b8bdddf73c7b08dbf131d854754ae98b9b"
+  },
+  "gds_size_bytes": 829132,
+  "images": {
+    "layout_overview": {
+      "schema_version": 1,
+      "visualization_type": "layout_overview",
+      "run_id": "ec21b03b7f674b69a39586d8088da79b",
+      "filename": "layout_overview.png",
+      "source_artifacts": [
+        "results/sky130hd/gcd/base/6_final.gds"
+      ],
+      "source_sha256": [
+        "f89c7abf56af111dbec09a24d66ca1332f2da3b26c13ab25161ffd13fad27e41"
+      ],
+      "image_sha256": "14a43db6e2c77c0f9aa242be6cd13163d01b0ecd9bb79e6a08e7250bd3049e50",
+      "renderer": "klayout",
+      "renderer_version": "0.30.12",
+      "render_configuration": {
+        "container": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "layer_mapping": "/OpenROAD-flow-scripts/flow/platforms/sky130hd/sky130hd.lyp",
+        "routing_layer_numbers": [
+          67,
+          68,
+          69,
+          70,
+          71,
+          72
+        ],
+        "placement_layer": "GDS instance bounding boxes, excluding fill, decap and tap cells",
+        "top": "gcd",
+        "bbox_um": [
+          80.02499999999998,
+          80.02499999999998
+        ],
+        "detail": "central quarter by width and height",
+        "script": "\"\\ninclude RBA\\nv = LayoutView.new\\nv.set_config(\\\"background-color\\\", \\\"#0b1220\\\")\\nv.set_config(\\\"grid-visible\\\", \\\"false\\\")\\nv.load_layout(\\\"/work/source.gds\\\", 0)\\nv.load_layer_props($layer_map)\\ncv = v.active_cellview\\nraise \\\"Unexpected layout top\\\" unless cv.cell.name == $top\\nv.max_hier\\nbbox = cv.cell.bbox.to_dtype(cv.layout.dbu)\\nraise \\\"Empty layout\\\" if bbox.empty?\\ndef visibility(v, layers, boundary)\\n  it = v.begin_layers\\n  until it.at_end?\\n    node = it.current\\n    node.visible = layers.include?(node.source_layer) ||\\n      (boundary && node.source_layer == 235 && node.source_datatype == 4)\\n    v.set_layer_properties(it, node)\\n    it.next\\n  end\\nend\\nv.zoom_fit\\nv.save_image(\\\"/work/layout_overview.png\\\", 1600, 1400)\\nvisibility(v, [67,68,69,70,71,72], true)\\nv.save_image(\\\"/work/layout_routing.png\\\", 1600, 1400)\\nv.zoom_box(DBox.new(bbox.center.x - bbox.width / 8, bbox.center.y - bbox.height / 8,\\n  bbox.center.x + bbox.width / 8, bbox.center.y + bbox.height / 8))\\nv.save_image(\\\"/work/layout_detail.png\\\", 1600, 1400)\\nboxes = Layout.new\\nboxes.dbu = cv.layout.dbu\\noutline = boxes.create_cell(\\\"PLACEMENT\\\")\\ncells = boxes.layer(236, 0)\\ncount = 0\\ndef placed(cell, transform, output, depth)\\n  raise \\\"Layout hierarchy is too deep\\\" if depth > 16\\n  count = 0\\n  cell.each_inst do |inst|\\n    child = inst.cell\\n    next if child.name =~ /__(fill|decap|tapvpwr)/\\n    inst.cell_inst.each_cplx_trans do |position|\\n      absolute = transform * position\\n      if child.name.start_with?(\\\"sky130_fd_sc_hd__\\\")\\n        output.insert(absolute * child.bbox)\\n        count += 1\\n      else\\n        count += placed(child, absolute, output, depth + 1)\\n      end\\n    end\\n  end\\n  count\\nend\\ncount = placed(cv.cell, ICplxTrans.new, outline.shapes(cells), 0)\\nraise \\\"No standard-cell placements\\\" if count == 0\\nboxes.write(\\\"/work/placement-preview.gds\\\")\\nplacement = LayoutView.new\\nplacement.set_config(\\\"background-color\\\", \\\"#0b1220\\\")\\nplacement.set_config(\\\"grid-visible\\\", \\\"false\\\")\\nplacement.load_layout(\\\"/work/placement-preview.gds\\\", 0)\\nplacement.max_hier\\nit = placement.begin_layers\\nuntil it.at_end?\\n  node = it.current\\n  node.visible = true\\n  node.frame_color = 0x8de1e6\\n  node.fill_color = 0x245a77\\n  node.dither_pattern = 0\\n  placement.set_layer_properties(it, node)\\n  it.next\\nend\\nplacement.zoom_box(bbox)\\nplacement.save_image(\\\"/work/layout_placement.png\\\", 1600, 1400)\\nputs \\\"AEDA_LAYOUT #{Application.instance.version} #{bbox.width} #{bbox.height}\\\"\\n\""
+      },
+      "image_width": 1600,
+      "image_height": 1400,
+      "generated_at": "2026-11-15T03:48:15.349745+00:00",
+      "evidence_status": "VERIFIED"
+    },
+    "layout_placement": {
+      "schema_version": 1,
+      "visualization_type": "layout_placement",
+      "run_id": "ec21b03b7f674b69a39586d8088da79b",
+      "filename": "layout_placement.png",
+      "source_artifacts": [
+        "results/sky130hd/gcd/base/6_final.gds"
+      ],
+      "source_sha256": [
+        "f89c7abf56af111dbec09a24d66ca1332f2da3b26c13ab25161ffd13fad27e41"
+      ],
+      "image_sha256": "f93d68ca5d756023e799feb6d1f1c6102ad27ef7b477c5f3505f77adbc7ccbb0",
+      "renderer": "klayout",
+      "renderer_version": "0.30.12",
+      "render_configuration": {
+        "container": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "layer_mapping": "/OpenROAD-flow-scripts/flow/platforms/sky130hd/sky130hd.lyp",
+        "routing_layer_numbers": [
+          67,
+          68,
+          69,
+          70,
+          71,
+          72
+        ],
+        "placement_layer": "GDS instance bounding boxes, excluding fill, decap and tap cells",
+        "top": "gcd",
+        "bbox_um": [
+          80.02499999999998,
+          80.02499999999998
+        ],
+        "detail": "central quarter by width and height",
+        "script": "\"\\ninclude RBA\\nv = LayoutView.new\\nv.set_config(\\\"background-color\\\", \\\"#0b1220\\\")\\nv.set_config(\\\"grid-visible\\\", \\\"false\\\")\\nv.load_layout(\\\"/work/source.gds\\\", 0)\\nv.load_layer_props($layer_map)\\ncv = v.active_cellview\\nraise \\\"Unexpected layout top\\\" unless cv.cell.name == $top\\nv.max_hier\\nbbox = cv.cell.bbox.to_dtype(cv.layout.dbu)\\nraise \\\"Empty layout\\\" if bbox.empty?\\ndef visibility(v, layers, boundary)\\n  it = v.begin_layers\\n  until it.at_end?\\n    node = it.current\\n    node.visible = layers.include?(node.source_layer) ||\\n      (boundary && node.source_layer == 235 && node.source_datatype == 4)\\n    v.set_layer_properties(it, node)\\n    it.next\\n  end\\nend\\nv.zoom_fit\\nv.save_image(\\\"/work/layout_overview.png\\\", 1600, 1400)\\nvisibility(v, [67,68,69,70,71,72], true)\\nv.save_image(\\\"/work/layout_routing.png\\\", 1600, 1400)\\nv.zoom_box(DBox.new(bbox.center.x - bbox.width / 8, bbox.center.y - bbox.height / 8,\\n  bbox.center.x + bbox.width / 8, bbox.center.y + bbox.height / 8))\\nv.save_image(\\\"/work/layout_detail.png\\\", 1600, 1400)\\nboxes = Layout.new\\nboxes.dbu = cv.layout.dbu\\noutline = boxes.create_cell(\\\"PLACEMENT\\\")\\ncells = boxes.layer(236, 0)\\ncount = 0\\ndef placed(cell, transform, output, depth)\\n  raise \\\"Layout hierarchy is too deep\\\" if depth > 16\\n  count = 0\\n  cell.each_inst do |inst|\\n    child = inst.cell\\n    next if child.name =~ /__(fill|decap|tapvpwr)/\\n    inst.cell_inst.each_cplx_trans do |position|\\n      absolute = transform * position\\n      if child.name.start_with?(\\\"sky130_fd_sc_hd__\\\")\\n        output.insert(absolute * child.bbox)\\n        count += 1\\n      else\\n        count += placed(child, absolute, output, depth + 1)\\n      end\\n    end\\n  end\\n  count\\nend\\ncount = placed(cv.cell, ICplxTrans.new, outline.shapes(cells), 0)\\nraise \\\"No standard-cell placements\\\" if count == 0\\nboxes.write(\\\"/work/placement-preview.gds\\\")\\nplacement = LayoutView.new\\nplacement.set_config(\\\"background-color\\\", \\\"#0b1220\\\")\\nplacement.set_config(\\\"grid-visible\\\", \\\"false\\\")\\nplacement.load_layout(\\\"/work/placement-preview.gds\\\", 0)\\nplacement.max_hier\\nit = placement.begin_layers\\nuntil it.at_end?\\n  node = it.current\\n  node.visible = true\\n  node.frame_color = 0x8de1e6\\n  node.fill_color = 0x245a77\\n  node.dither_pattern = 0\\n  placement.set_layer_properties(it, node)\\n  it.next\\nend\\nplacement.zoom_box(bbox)\\nplacement.save_image(\\\"/work/layout_placement.png\\\", 1600, 1400)\\nputs \\\"AEDA_LAYOUT #{Application.instance.version} #{bbox.width} #{bbox.height}\\\"\\n\""
+      },
+      "image_width": 1600,
+      "image_height": 1400,
+      "generated_at": "2026-11-15T03:48:15.412050+00:00",
+      "evidence_status": "VERIFIED"
+    },
+    "layout_routing": {
+      "schema_version": 1,
+      "visualization_type": "layout_routing",
+      "run_id": "ec21b03b7f674b69a39586d8088da79b",
+      "filename": "layout_routing.png",
+      "source_artifacts": [
+        "results/sky130hd/gcd/base/6_final.gds"
+      ],
+      "source_sha256": [
+        "f89c7abf56af111dbec09a24d66ca1332f2da3b26c13ab25161ffd13fad27e41"
+      ],
+      "image_sha256": "44348f57f0a76413ef52fdcf17a51db2b551275eeb5fb1016d845f0af2f398f6",
+      "renderer": "klayout",
+      "renderer_version": "0.30.12",
+      "render_configuration": {
+        "container": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "layer_mapping": "/OpenROAD-flow-scripts/flow/platforms/sky130hd/sky130hd.lyp",
+        "routing_layer_numbers": [
+          67,
+          68,
+          69,
+          70,
+          71,
+          72
+        ],
+        "placement_layer": "GDS instance bounding boxes, excluding fill, decap and tap cells",
+        "top": "gcd",
+        "bbox_um": [
+          80.02499999999998,
+          80.02499999999998
+        ],
+        "detail": "central quarter by width and height",
+        "script": "\"\\ninclude RBA\\nv = LayoutView.new\\nv.set_config(\\\"background-color\\\", \\\"#0b1220\\\")\\nv.set_config(\\\"grid-visible\\\", \\\"false\\\")\\nv.load_layout(\\\"/work/source.gds\\\", 0)\\nv.load_layer_props($layer_map)\\ncv = v.active_cellview\\nraise \\\"Unexpected layout top\\\" unless cv.cell.name == $top\\nv.max_hier\\nbbox = cv.cell.bbox.to_dtype(cv.layout.dbu)\\nraise \\\"Empty layout\\\" if bbox.empty?\\ndef visibility(v, layers, boundary)\\n  it = v.begin_layers\\n  until it.at_end?\\n    node = it.current\\n    node.visible = layers.include?(node.source_layer) ||\\n      (boundary && node.source_layer == 235 && node.source_datatype == 4)\\n    v.set_layer_properties(it, node)\\n    it.next\\n  end\\nend\\nv.zoom_fit\\nv.save_image(\\\"/work/layout_overview.png\\\", 1600, 1400)\\nvisibility(v, [67,68,69,70,71,72], true)\\nv.save_image(\\\"/work/layout_routing.png\\\", 1600, 1400)\\nv.zoom_box(DBox.new(bbox.center.x - bbox.width / 8, bbox.center.y - bbox.height / 8,\\n  bbox.center.x + bbox.width / 8, bbox.center.y + bbox.height / 8))\\nv.save_image(\\\"/work/layout_detail.png\\\", 1600, 1400)\\nboxes = Layout.new\\nboxes.dbu = cv.layout.dbu\\noutline = boxes.create_cell(\\\"PLACEMENT\\\")\\ncells = boxes.layer(236, 0)\\ncount = 0\\ndef placed(cell, transform, output, depth)\\n  raise \\\"Layout hierarchy is too deep\\\" if depth > 16\\n  count = 0\\n  cell.each_inst do |inst|\\n    child = inst.cell\\n    next if child.name =~ /__(fill|decap|tapvpwr)/\\n    inst.cell_inst.each_cplx_trans do |position|\\n      absolute = transform * position\\n      if child.name.start_with?(\\\"sky130_fd_sc_hd__\\\")\\n        output.insert(absolute * child.bbox)\\n        count += 1\\n      else\\n        count += placed(child, absolute, output, depth + 1)\\n      end\\n    end\\n  end\\n  count\\nend\\ncount = placed(cv.cell, ICplxTrans.new, outline.shapes(cells), 0)\\nraise \\\"No standard-cell placements\\\" if count == 0\\nboxes.write(\\\"/work/placement-preview.gds\\\")\\nplacement = LayoutView.new\\nplacement.set_config(\\\"background-color\\\", \\\"#0b1220\\\")\\nplacement.set_config(\\\"grid-visible\\\", \\\"false\\\")\\nplacement.load_layout(\\\"/work/placement-preview.gds\\\", 0)\\nplacement.max_hier\\nit = placement.begin_layers\\nuntil it.at_end?\\n  node = it.current\\n  node.visible = true\\n  node.frame_color = 0x8de1e6\\n  node.fill_color = 0x245a77\\n  node.dither_pattern = 0\\n  placement.set_layer_properties(it, node)\\n  it.next\\nend\\nplacement.zoom_box(bbox)\\nplacement.save_image(\\\"/work/layout_placement.png\\\", 1600, 1400)\\nputs \\\"AEDA_LAYOUT #{Application.instance.version} #{bbox.width} #{bbox.height}\\\"\\n\""
+      },
+      "image_width": 1600,
+      "image_height": 1400,
+      "generated_at": "2026-11-15T03:48:15.477159+00:00",
+      "evidence_status": "VERIFIED"
+    },
+    "layout_detail": {
+      "schema_version": 1,
+      "visualization_type": "layout_detail",
+      "run_id": "ec21b03b7f674b69a39586d8088da79b",
+      "filename": "layout_detail.png",
+      "source_artifacts": [
+        "results/sky130hd/gcd/base/6_final.gds"
+      ],
+      "source_sha256": [
+        "f89c7abf56af111dbec09a24d66ca1332f2da3b26c13ab25161ffd13fad27e41"
+      ],
+      "image_sha256": "648f35d2cdb3e6376d23d02bde9ab324d0b0d00c9e8c26a279f5ad7f31b3682e",
+      "renderer": "klayout",
+      "renderer_version": "0.30.12",
+      "render_configuration": {
+        "container": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "layer_mapping": "/OpenROAD-flow-scripts/flow/platforms/sky130hd/sky130hd.lyp",
+        "routing_layer_numbers": [
+          67,
+          68,
+          69,
+          70,
+          71,
+          72
+        ],
+        "placement_layer": "GDS instance bounding boxes, excluding fill, decap and tap cells",
+        "top": "gcd",
+        "bbox_um": [
+          80.02499999999998,
+          80.02499999999998
+        ],
+        "detail": "central quarter by width and height",
+        "script": "\"\\ninclude RBA\\nv = LayoutView.new\\nv.set_config(\\\"background-color\\\", \\\"#0b1220\\\")\\nv.set_config(\\\"grid-visible\\\", \\\"false\\\")\\nv.load_layout(\\\"/work/source.gds\\\", 0)\\nv.load_layer_props($layer_map)\\ncv = v.active_cellview\\nraise \\\"Unexpected layout top\\\" unless cv.cell.name == $top\\nv.max_hier\\nbbox = cv.cell.bbox.to_dtype(cv.layout.dbu)\\nraise \\\"Empty layout\\\" if bbox.empty?\\ndef visibility(v, layers, boundary)\\n  it = v.begin_layers\\n  until it.at_end?\\n    node = it.current\\n    node.visible = layers.include?(node.source_layer) ||\\n      (boundary && node.source_layer == 235 && node.source_datatype == 4)\\n    v.set_layer_properties(it, node)\\n    it.next\\n  end\\nend\\nv.zoom_fit\\nv.save_image(\\\"/work/layout_overview.png\\\", 1600, 1400)\\nvisibility(v, [67,68,69,70,71,72], true)\\nv.save_image(\\\"/work/layout_routing.png\\\", 1600, 1400)\\nv.zoom_box(DBox.new(bbox.center.x - bbox.width / 8, bbox.center.y - bbox.height / 8,\\n  bbox.center.x + bbox.width / 8, bbox.center.y + bbox.height / 8))\\nv.save_image(\\\"/work/layout_detail.png\\\", 1600, 1400)\\nboxes = Layout.new\\nboxes.dbu = cv.layout.dbu\\noutline = boxes.create_cell(\\\"PLACEMENT\\\")\\ncells = boxes.layer(236, 0)\\ncount = 0\\ndef placed(cell, transform, output, depth)\\n  raise \\\"Layout hierarchy is too deep\\\" if depth > 16\\n  count = 0\\n  cell.each_inst do |inst|\\n    child = inst.cell\\n    next if child.name =~ /__(fill|decap|tapvpwr)/\\n    inst.cell_inst.each_cplx_trans do |position|\\n      absolute = transform * position\\n      if child.name.start_with?(\\\"sky130_fd_sc_hd__\\\")\\n        output.insert(absolute * child.bbox)\\n        count += 1\\n      else\\n        count += placed(child, absolute, output, depth + 1)\\n      end\\n    end\\n  end\\n  count\\nend\\ncount = placed(cv.cell, ICplxTrans.new, outline.shapes(cells), 0)\\nraise \\\"No standard-cell placements\\\" if count == 0\\nboxes.write(\\\"/work/placement-preview.gds\\\")\\nplacement = LayoutView.new\\nplacement.set_config(\\\"background-color\\\", \\\"#0b1220\\\")\\nplacement.set_config(\\\"grid-visible\\\", \\\"false\\\")\\nplacement.load_layout(\\\"/work/placement-preview.gds\\\", 0)\\nplacement.max_hier\\nit = placement.begin_layers\\nuntil it.at_end?\\n  node = it.current\\n  node.visible = true\\n  node.frame_color = 0x8de1e6\\n  node.fill_color = 0x245a77\\n  node.dither_pattern = 0\\n  placement.set_layer_properties(it, node)\\n  it.next\\nend\\nplacement.zoom_box(bbox)\\nplacement.save_image(\\\"/work/layout_placement.png\\\", 1600, 1400)\\nputs \\\"AEDA_LAYOUT #{Application.instance.version} #{bbox.width} #{bbox.height}\\\"\\n\""
+      },
+      "image_width": 1600,
+      "image_height": 1400,
+      "generated_at": "2026-11-15T03:48:15.519051+00:00",
+      "evidence_status": "VERIFIED"
+    }
+  }
+}
