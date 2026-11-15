@@ -78,6 +78,11 @@ def build_parser() -> argparse.ArgumentParser:
     qualification.add_argument("directory", type=Path)
     resources = commands.add_parser("resources", help="plan and execute bounded checkpoint retries")
     resource_actions = resources.add_subparsers(dest="resource_action", required=True)
+    history = resource_actions.add_parser("history", help="read verified attempt resource history")
+    history.add_argument("directory", type=Path)
+    history.add_argument("--limit", type=int, default=16)
+    history.add_argument("--offset", type=int, default=0)
+    history.add_argument("--samples", type=int, default=0)
     for action in ("plan", "retry"):
         resource = resource_actions.add_parser(action)
         resource.add_argument("directory", type=Path)
@@ -91,6 +96,14 @@ def build_parser() -> argparse.ArgumentParser:
         resource.add_argument(
             "--policy", choices=POLICIES, default="evidence-required", required=action == "retry"
         )
+    benchmarks = commands.add_parser("benchmark", help="export reproducible benchmark evidence")
+    benchmark_actions = benchmarks.add_subparsers(dest="benchmark_action", required=True)
+    build = benchmark_actions.add_parser("build", help="compare retained experiments")
+    build.add_argument("directory", type=Path)
+    build.add_argument("--case", metavar="LABEL=RUN", action="append", required=True)
+    build.add_argument("--campaign", type=Path)
+    figures = benchmark_actions.add_parser("figures", help="rebuild figures from a bound report")
+    figures.add_argument("directory", type=Path)
     for name in ("inspect", "plan", "run"):
         item = commands.add_parser(
             name,
@@ -128,6 +141,12 @@ def build_parser() -> argparse.ArgumentParser:
             command.add_argument(
                 "--engineering", action="store_true", help="print a run engineering report"
             )
+            command.add_argument(
+                "--structured", action="store_true", help="read a versioned summary"
+            )
+            command.add_argument("--artifact", help="inspect a recorded artifact path")
+            command.add_argument("--limit", type=int, default=16)
+            command.add_argument("--offset", type=int, default=0)
         if name == "resume":
             add_run_budget_args(command)
         if name == "verify":
@@ -233,6 +252,33 @@ def controller_main(args: argparse.Namespace) -> int:
         result = import_edam(
             args.edam, args.manifest, args.revision, tuple(args.generated_core_prefix)
         )
+    elif args.command == "benchmark":
+        from .benchmark import make_report, rebuild, write_report
+
+        if args.benchmark_action == "figures":
+            result = rebuild(
+                args.directory, ["autonomous-eda", "benchmark", "figures", str(args.directory)]
+            )
+        else:
+            cases = []
+            command = ["autonomous-eda", "benchmark", "build", str(args.directory)]
+            for specification in args.case:
+                label, separator, path = specification.partition("=")
+                if not separator or not label or not path or len(label) > 64:
+                    raise ValueError("use --case LABEL=RUN with a label of up to 64 characters")
+                cases.append((label, Path(path)))
+                command.extend(("--case", specification))
+            if args.campaign is not None:
+                command.extend(("--campaign", str(args.campaign)))
+            benchmark = make_report(cases, args.campaign)
+            write_report(args.directory, benchmark, command)
+            result = {"report_sha256": benchmark["report_sha256"], "directory": str(args.directory)}
+    elif args.command == "resources" and args.resource_action == "history":
+        from .structured import resource_page
+
+        result = resource_page(
+            args.directory, limit=args.limit, offset=args.offset, sample_limit=args.samples
+        )
     elif args.command == "resources":
         budgets = {
             "stage_seconds": args.stage_seconds,
@@ -312,6 +358,16 @@ def controller_main(args: argparse.Namespace) -> int:
     else:
         from .verification.report import LATEST, native_run, report_run, verify_run
 
+        if args.command == "report" and (args.structured or args.artifact is not None):
+            from .structured import summary
+
+            if args.engineering or args.markdown or args.profile:
+                raise ValueError("structured reports use their own evidence query")
+            value = summary(
+                args.directory, limit=args.limit, offset=args.offset, artifact=args.artifact
+            )
+            print(json.dumps(value, indent=2, allow_nan=False))
+            return 0
         if args.command == "report" and args.engineering:
             from .engineering_report import engineering_markdown
 

@@ -63,6 +63,11 @@ TOOLS = {
     "get_stage_status": ToolSpec(
         "Page through recorded stage attempts.", api.ExperimentPageArgs, api.StageStatus
     ),
+    "get_stage_resources": ToolSpec(
+        "Page through verified controller attempt resource summaries.",
+        api.ExperimentPageArgs,
+        api.ResourceHistory,
+    ),
     "get_timing_summary": ToolSpec(
         "Inspect final timing, its corner, and retained evidence.",
         api.TimingArgs,

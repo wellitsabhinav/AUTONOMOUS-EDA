@@ -219,3 +219,22 @@ PYTHONPATH=src python -m autonomous_eda verify experiments/m11c-gcd-coverage-01 
   --profile physical --coverage
 PYTHONPATH=src python -m autonomous_eda readiness qualification experiments/m11c-gcd-coverage-01
 ```
+
+PR #36 merged at `f0d959f782daaa1ca36eec36ededae62aae964b7`. Its four head and main
+checks passed. [PR #36](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/36) ·
+[Head CI](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43727753472) ·
+[Main CI](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43728191884)
+
+## 11D Structured reporting and benchmark controls
+
+The versioned reporting commands and read-only MCP resource tool preserve independent
+attempt outcomes and artifact integrity. The Linux control report used retained
+GCD baseline, GCD recovery, AES 10B and the instrumented GCD run. The GCD baseline
+reported 145.208 s of stage time. The resumed run reported 147.999 s of verified
+stage time and retained the interrupted attempt. AES 10B accumulated 2,338.478 s
+through the incomplete route. These workloads exercise different clocks and scopes.
+
+The retained optimization campaign contained four completed candidates. Their setup
+failures left both feasible frontiers empty. The exporter reproduced all five
+control PNG hashes after fixing stage-row order. [Control reproducibility receipt](evidence/resource-telemetry/benchmark-control.json) ·
+[Benchmark commands and data contract](BENCHMARK_REPORTING.md)

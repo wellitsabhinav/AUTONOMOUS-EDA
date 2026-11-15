@@ -4,7 +4,7 @@ import hashlib
 import math
 import re
 from collections.abc import Sequence
-from typing import Annotated, Literal, TypeVar
+from typing import Annotated, Any, Literal, TypeVar
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -103,6 +103,16 @@ class StageStatus(Model):
     stages: dict[str, str]
     attempts: list[Attempt]
     next_offset: int | None
+
+
+class ResourceHistory(Model):
+    schema_version: Literal[1]
+    run_id: str | None
+    memory_limit_bytes: int | None
+    allocated_cpus: int | None
+    allocation_source: Literal["controller run configuration"]
+    next_offset: int | None
+    attempts: list[dict[str, Any]]
 
 
 class EvidenceRef(Model):
