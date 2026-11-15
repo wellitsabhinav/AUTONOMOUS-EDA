@@ -5,11 +5,48 @@ from pathlib import Path
 
 import pytest
 
-from autonomous_eda.experiment import check_inputs, initialize, report, run_stages
-from autonomous_eda.manifest import ORFSManifest, load_manifest
-from autonomous_eda.orfs import artifact_hashes, stage_plan
+from autonomous_eda.experiment import (
+    check_inputs,
+    initialize,
+    report,
+    restore_archived_global_route_report,
+    run_stages,
+)
+from autonomous_eda.manifest import ORFSManifest, load_manifest, sha256
+from autonomous_eda.orfs import artifact_hashes, preserve_invalid_artifacts, stage_plan
 
 REFERENCE = Path("configs/gcd-sky130hd.toml")
+
+
+def test_route_retry_preserves_and_restores_its_upstream_timing_report(tmp_path: Path) -> None:
+    manifest = load_manifest(REFERENCE)
+    assert isinstance(manifest, ORFSManifest)
+    root = (tmp_path / "run").resolve()
+    initialize(root, REFERENCE, manifest, 1024)
+    name = "reports/sky130hd/gcd/base/5_global_route.rpt"
+    report_path = root / name
+    report_path.parent.mkdir(parents=True)
+    report_path.write_bytes(b"verified global route report")
+    log = f"attempts/aeda-{'0' * 32}/route.log"
+    history = (root / log).parent / "previous"
+    stale = report_path.with_name("5_route_drc.rpt")
+    stale.write_bytes(b"interim route diagnostics")
+    preserve_invalid_artifacts(root, "route", history)
+    assert report_path.is_file() and (history / stale.relative_to(root)).is_file()
+    digest = sha256(report_path)
+    archived = history / name
+    report_path.rename(archived)
+    with closing(sqlite3.connect(root / "run.sqlite3")) as db, db:
+        db.execute(
+            "INSERT INTO attempts(stage,state,artifacts,log) VALUES ('grt','passed',?,'grt.log')",
+            (json.dumps({name: digest}),),
+        )
+        db.execute("INSERT INTO attempts(stage,state,log) VALUES ('route','failed',?)", (log,))
+        restore_archived_global_route_report(root, db, manifest)
+        assert sha256(report_path) == sha256(archived) == digest
+        report_path.write_bytes(b"changed output")
+        restore_archived_global_route_report(root, db, manifest)
+        assert report_path.read_bytes() == b"changed output"
 
 
 def test_stage_plan_and_validation(tmp_path: Path) -> None:

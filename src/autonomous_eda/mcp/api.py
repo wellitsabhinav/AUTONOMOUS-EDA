@@ -113,6 +113,7 @@ class ResourceHistory(Model):
     allocation_source: Literal["controller run configuration"]
     next_offset: int | None
     attempts: list[dict[str, Any]]
+    verification_attempts: list[dict[str, Any]] = Field(default_factory=list)
 
 
 class EvidenceRef(Model):

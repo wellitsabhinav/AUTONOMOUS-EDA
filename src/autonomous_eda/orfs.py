@@ -413,7 +413,9 @@ def preserve_invalid_artifacts(root: Path, first: str, history: Path) -> None:
     for kind in ("results", "logs", "reports", "objects"):
         for path in (root / kind).glob("*/*/base/*"):
             match = re.match(r"([1-6])_", path.name)
-            if first == "route" and path.name.startswith("5_1_"):
+            if first == "route" and (
+                path.name.startswith("5_1_") or path.name == "5_global_route.rpt"
+            ):
                 continue
             if match is not None and int(match[1]) >= prefix:
                 destination = history / path.relative_to(root)

@@ -83,5 +83,25 @@ permits a `READY` plan. The `bounded-trial` policy additionally permits a constr
 plan with finite limits and a verified elapsed observation. The retry rechecks live
 limits, requires a new directory, copies the verified checkpoint history and assigns
 a new run ID. The copied upstream stages must pass their hash checks on dispatch.
-The inherited manifest and container limits remain pinned. The stage timeout override
-and experiment-wide guard are recorded in `resource-plan.json`.
+The manifest and tool image provide the design identity. Use `--memory-mib` to
+propose a different container limit for the isolated copy. The plan records both
+allocations and the new execution configuration digest. A confirmed OOM rules out
+its recorded cap and smaller caps, including when the requested margin is zero.
+
+The planner emits a minimum exploratory cap from the stage observations and a
+maximum cap from the host RAM and selected reserve. An empty overlap blocks dispatch.
+A cap derived from an incomplete run is a lower bound for exploration.
+The saved `resource-plan.json` binds the retry authorization to the destination
+database. Resume reapplies the trial deadline, artifact cap, checkpoint requirements
+and attempt limits. The deadline starts when the isolated run is prepared. A further
+dispatch beyond the trial limits requires a fresh `resources retry` preflight.
+
+```bash
+autonomous-eda resources plan experiments/m11b-aes-route-01 \
+  --memory-mib 3240 --stage-seconds 2700 --wall-seconds 3700 \
+  --artifact-mib 2048 --margin 0.08 --policy bounded-trial
+```
+
+This command checks the lower edge measured for the AES trial. See the
+[follow-up evaluation](MILESTONE_11_EVALUATION.md#follow-up-retry-limits-and-verification-resource-evidence)
+for the observed host limit and restored GCD control.

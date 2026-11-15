@@ -10,8 +10,12 @@ import sqlite3
 import subprocess
 import sys
 import uuid
+from collections.abc import Callable
 from contextlib import closing
+from dataclasses import asdict, dataclass
+from datetime import UTC, datetime
 from pathlib import Path
+from tempfile import TemporaryDirectory
 from typing import Any
 
 from .doctor import available_cpus, memory_bytes
@@ -24,17 +28,46 @@ from .experiment import (
     now,
 )
 from .manifest import ORFSManifest, fingerprint, integer, load_manifest, sha256
-from .orfs import preflight, stage_plan
+from .orfs import DispatchGuard, DispatchStopped, preflight, stage_plan
 from .resource_budget import MIB, run_guard, tree_bytes
 from .telemetry import encode, receipt_path
 
 POLICIES = ("evidence-required", "bounded-trial")
+PLAN_FILE = "resource-plan.json"
+
+
+@dataclass(frozen=True)
+class RetryBudget:
+    guard: DispatchGuard
+    stage_seconds: int
+    checkpoint_stages: frozenset[str]
+    attempt_limits: dict[str, int]
+
+
+def memory_bound(records: list[dict[str, Any]]) -> tuple[int | None, int | None]:
+    peaks = [row["memory_peak"]["value"] for row in records if row["memory_peak"]]
+    oom_caps = [
+        row["memory_limit"]["value"]
+        for row in records
+        if row.get("classification") == "CONFIRMED_OOM" and row.get("memory_limit")
+    ]
+    return max(peaks, default=None), max(oom_caps, default=None)
 
 
 def checked_resource_receipt(
-    root: Path, log: str, recorded_hashes: dict[str, str]
+    root: Path,
+    log: str,
+    recorded_hashes: dict[str, str],
+    *,
+    recovered: bool = False,
+    attempt: str | None = None,
+    run_stage: tuple[str, str] | None = None,
 ) -> dict[str, Any] | None:
-    path = receipt_path(root / log)
+    path = (
+        (root / log).with_suffix(".resources-recovery.json")
+        if recovered
+        else receipt_path(root / log)
+    )
     if not path.resolve().is_relative_to(root):
         return None
     relative = path.relative_to(root).as_posix()
@@ -50,7 +83,8 @@ def checked_resource_receipt(
         if (
             not isinstance(value, dict)
             or value.get("schema_version") != 1
-            or value.get("attempt_id") != path.parent.name
+            or value.get("attempt_id") != (attempt or path.parent.name)
+            or (run_stage is not None and (value.get("run_id"), value.get("stage")) != run_stage)
         ):
             return None
         return value
@@ -76,6 +110,11 @@ def observations(root: Path, db: sqlite3.Connection, stage: str) -> list[dict[st
             continue
         receipt = checked_resource_receipt(root, relative, artifacts)
         peak = (receipt or {}).get("observed_maxima", {}).get("memory_kernel_peak_bytes")
+        native = (receipt or {}).get("native_state") or {}
+        if not isinstance(native, dict):
+            native = {}
+        limit = native.get("memory_bytes")
+        resource_sha = artifacts.get(receipt_path(log).relative_to(root).as_posix())
         runtime_observation = None
         if type(runtime) in (int, float) and math.isfinite(runtime) and runtime > 0:
             runtime_observation = {
@@ -100,13 +139,21 @@ def observations(root: Path, db: sqlite3.Connection, stage: str) -> list[dict[st
                     {
                         **peak,
                         "unit": "B",
-                        "artifact_sha256": artifacts[
-                            receipt_path(log).relative_to(root).as_posix()
-                        ],
+                        "artifact_sha256": resource_sha,
                     }
                     if isinstance(peak, dict)
                     and type(peak.get("value")) is int
                     and peak["value"] > 0
+                    else None
+                ),
+                "memory_limit": (
+                    {
+                        "value": limit,
+                        "unit": "B",
+                        "source": "Docker HostConfig.Memory",
+                        "artifact_sha256": resource_sha,
+                    }
+                    if type(limit) is int and limit > 0
                     else None
                 ),
             }
@@ -127,9 +174,7 @@ def disposition(
     margin: float,
 ) -> tuple[str, list[str], int | None, float | None]:
     risks = []
-    observed_peak = max(
-        (row["memory_peak"]["value"] for row in records if row["memory_peak"]), default=None
-    )
+    observed_peak, oom_cap = memory_bound(records)
     longest = max((row["runtime"]["value"] for row in records if row["runtime"]), default=None)
     if host_available is not None and memory_limit * (1 + margin) > host_available:
         risks.append("The configured container limit plus host reserve exceeds available RAM")
@@ -139,6 +184,8 @@ def disposition(
         risks.append("The destination cannot accommodate the bounded retained storage budget")
     if observed_peak is not None and observed_peak * (1 + margin) > memory_limit:
         risks.append("The observed stage memory peak plus margin exceeds the container cap")
+    if oom_cap is not None and memory_limit <= oom_cap:
+        risks.append("The proposed cap does not exceed one that already produced a confirmed OOM")
     if longest is not None and longest * (1 + margin) >= stage_seconds:
         risks.append("The retained elapsed time plus margin reaches the proposed stage limit")
     if risks:
@@ -172,6 +219,7 @@ def plan(
     margin: float,
     policy: str,
     destination_parent: Path | None = None,
+    memory_mib: int | None = None,
 ) -> dict[str, Any]:
     root = root.resolve()
     stage_seconds = integer(stage_seconds, "stage seconds", 86400)
@@ -191,7 +239,13 @@ def plan(
     with closing(sqlite3.connect(f"{database.as_uri()}?mode=ro", uri=True)) as db:
         if db_version(db) != 2:
             raise ValueError("resource planning requires a controller schema 2 run")
-        memory_limit = check_inputs(root, db, manifest) * MIB
+        source_memory_mib = check_inputs(root, db, manifest)
+        memory_mib = (
+            source_memory_mib if memory_mib is None else integer(memory_mib, "memory MiB", 1048576)
+        )
+        if memory_mib < 128:
+            raise ValueError("memory MiB must be at least 128")
+        memory_limit = memory_mib * MIB
         run_id, image, configuration = db.execute(
             "SELECT run_id, image, configuration_sha256 FROM run"
         ).fetchone()
@@ -213,6 +267,9 @@ def plan(
                 "artifacts": {relative: hashes[relative] for relative in item.outputs},
             }
         records = observations(root, db, stage)
+        dispatch_stages = [item.name for item in stages if item.name not in checkpoints]
+        counts = dict(db.execute("SELECT stage, count(*) FROM attempts GROUP BY stage"))
+        stage_attempt_counts = {name: counts.get(name, 0) for name in dispatch_stages}
     total: int | None
     available: int | None
     try:
@@ -240,11 +297,18 @@ def plan(
     can_dispatch = verdict == "READY" or (
         verdict == "RESOURCE_CONSTRAINED" and policy == "bounded-trial"
     )
+    _, oom_cap = memory_bound(records)
+    minimum_mib = max(
+        math.ceil((peak or 0) * (1 + margin) / MIB),
+        (oom_cap // MIB + 1) if oom_cap is not None else 0,
+    )
     result = {
         "schema_version": 1,
         "observed_at": now(),
         "source_run_id": run_id,
         "configuration_sha256": configuration,
+        "execution_configuration_sha256": fingerprint([asdict(manifest), image, memory_mib]),
+        "source_memory_mib": source_memory_mib,
         "manifest_sha256": sha256(root / "manifest.toml"),
         "image": image,
         "stage": stage,
@@ -271,16 +335,103 @@ def plan(
         },
         "retained_source_bytes": {"value": cloned_bytes, "source": "retained experiment tree stat"},
         "observed_peak_bytes": peak,
+        "confirmed_oom_limit_bytes": oom_cap,
+        "minimum_trial_memory_mib": minimum_mib or None,
+        "maximum_trial_memory_mib_on_host": (
+            math.floor(available / (1 + margin) / MIB) if available is not None else None
+        ),
         "observed_elapsed_seconds": duration,
         "observed_elapsed_headroom_seconds": stage_seconds - duration if duration else None,
         "attempts": records,
         "checkpoints": checkpoints,
+        "stage_attempt_counts": stage_attempt_counts,
         "uncertainty": (
             "Observed maxima and elapsed times from incomplete runs are lower bounds. "
-            "A sampled kernel peak covers execution through its sample time."
+            "A sampled kernel peak covers execution through its sample time. "
+            "The minimum trial cap includes the observed margin and does not establish "
+            "a completion requirement."
         ),
     }
     return {**result, "plan_sha256": fingerprint(result)}
+
+
+def restore_budget(
+    root: Path, db: sqlite3.Connection, available: Callable[[], int]
+) -> RetryBudget | None:
+    """Apply the saved authorization on initial dispatch and every later resume."""
+    path = root / PLAN_FILE
+    managed = db.execute(
+        "SELECT 1 FROM sqlite_schema WHERE type='table' AND name='retry_policy'"
+    ).fetchone()
+    if not managed and not path.exists() and not path.is_symlink():
+        return None
+    if not path.resolve().is_relative_to(root) or path.is_symlink():
+        raise ValueError("unsafe saved retry plan")
+    with path.open("rb") as stream:
+        raw = stream.read(65537)
+    if len(raw) > 65536:
+        raise ValueError("saved retry plan exceeds the size limit")
+    try:
+        receipt = json.loads(raw)
+        saved = dict(receipt["plan"])
+        digest = saved.pop("plan_sha256")
+        run_id, created_at, config, memory_mib = db.execute(
+            "SELECT run_id, created_at, configuration_sha256, memory_mib FROM run"
+        ).fetchone()
+        if (
+            digest != fingerprint(saved)
+            or receipt["run_id"] != run_id
+            or saved.get("execution_configuration_sha256", saved["configuration_sha256"]) != config
+            or saved["execution_allowed"] is not True
+            or saved["policy"] not in POLICIES
+            or saved["stage"] != "route"
+        ):
+            raise ValueError("saved retry identity or authorization changed")
+        if managed and db.execute("SELECT plan_sha256 FROM retry_policy").fetchall() != [(digest,)]:
+            raise ValueError("saved retry plan fails its database digest check")
+        budget = saved["budget"]
+        stage_seconds = integer(budget["stage_seconds"], "stage seconds", 86400)
+        wall_seconds = integer(budget["wall_seconds"], "wall seconds", 7 * 86400)
+        if budget["memory_bytes"] != memory_mib * MIB or budget["artifact_bytes"] % MIB:
+            raise ValueError("saved retry limits differ from the controller configuration")
+        artifact_mib = integer(budget["artifact_bytes"] // MIB, "artifact MiB", 1048576)
+        counts = saved.get("stage_attempt_counts")
+        if counts is None:
+            counts = {"route": len(saved["attempts"]), "finish": 0}
+        if set(counts) != {"route", "finish"} or any(
+            type(count) is not int or count < 0 for count in counts.values()
+        ):
+            raise ValueError("invalid saved attempt limits")
+        checkpoints = frozenset(saved["checkpoints"])
+        if checkpoints != {"synth", "floorplan", "place", "cts", "grt"}:
+            raise ValueError("saved retry is missing required checkpoints")
+        remaining = math.floor(
+            wall_seconds - (datetime.now(UTC) - datetime.fromisoformat(created_at)).total_seconds()
+        )
+        reserve = budget["memory_bytes"] * (1 + float(saved["margin_fraction"]))
+    except (KeyError, TypeError, AttributeError, OverflowError) as error:
+        raise ValueError("invalid saved retry plan") from error
+    # Run startup recovery even when a deadline or a changed host makes dispatch impossible.
+    current_guard = run_guard(
+        root, wall_seconds=max(1, min(wall_seconds, remaining)), artifact_mib=artifact_mib
+    )
+    assert current_guard is not None
+
+    checked_host = False
+
+    def guard() -> float:
+        nonlocal checked_host
+        if remaining <= 0:
+            raise DispatchStopped("saved retry wall-clock budget expired")
+        if not checked_host:
+            if available() < reserve:
+                raise DispatchStopped("available host RAM no longer fits the saved retry")
+            checked_host = True
+        return current_guard()
+
+    return RetryBudget(
+        guard, stage_seconds, checkpoints, {stage: count + 1 for stage, count in counts.items()}
+    )
 
 
 def copy_regular(source: str, destination: str) -> str:
@@ -300,6 +451,7 @@ def retry(
     artifact_mib: int,
     margin: float,
     policy: str,
+    memory_mib: int | None = None,
 ) -> tuple[dict[str, Any], bool]:
     source, destination = source.resolve(), destination.resolve()
     if stage != "route":
@@ -328,6 +480,7 @@ def retry(
             margin=margin,
             policy=policy,
             destination_parent=destination.parent,
+            memory_mib=memory_mib,
         )
         if not prepared["execution_allowed"]:
             return prepared, False
@@ -341,24 +494,30 @@ def retry(
             ).fetchone()
             if last is None or last[0] not in {"failed", "interrupted"}:
                 raise ValueError("retry source must end in a failed or interrupted target stage")
-            attempts = db.execute(
-                "SELECT COUNT(*) FROM attempts WHERE stage=?", (stage,)
-            ).fetchone()[0]
         for path in source.rglob("*"):
             if path.is_symlink():
                 raise ValueError("checkpoint replica contains a symbolic link")
-        shutil.copytree(source, destination, symlinks=True, copy_function=copy_regular)
-    run_id = uuid.uuid4().hex
-    with closing(sqlite3.connect(destination / "run.sqlite3")) as db, db:
-        db.execute("UPDATE run SET run_id=?, created_at=?", (run_id, now()))
-    (destination / "resource-plan.json").write_text(
-        encode({"run_id": run_id, "plan": prepared}), encoding="utf-8"
-    )
-    guard = run_guard(destination, wall_seconds=wall_seconds, artifact_mib=artifact_mib)
-    return prepared, continue_run(
-        destination,
-        guard=guard,
-        max_retries=attempts,
-        stage_timeouts={stage: stage_seconds},
-        must_reuse=frozenset(prepared["checkpoints"]),
-    )
+        with TemporaryDirectory(dir=destination.parent, prefix=".prepare-retry-") as pending:
+            replica = Path(pending) / "run"
+            shutil.copytree(source, replica, symlinks=True, copy_function=copy_regular)
+            run_id = uuid.uuid4().hex
+            with closing(sqlite3.connect(replica / "run.sqlite3")) as db, db:
+                db.execute(
+                    "UPDATE run SET run_id=?, created_at=?, memory_mib=?, configuration_sha256=?",
+                    (
+                        run_id,
+                        now(),
+                        prepared["budget"]["memory_bytes"] // MIB,
+                        prepared["execution_configuration_sha256"],
+                    ),
+                )
+                db.execute("CREATE TABLE IF NOT EXISTS retry_policy (plan_sha256 TEXT NOT NULL)")
+                db.execute("DELETE FROM retry_policy")
+                db.execute("INSERT INTO retry_policy VALUES (?)", (prepared["plan_sha256"],))
+            (replica / PLAN_FILE).write_text(
+                encode({"run_id": run_id, "plan": prepared}), encoding="utf-8"
+            )
+            if destination.exists():
+                raise ValueError("retry destination appeared during preparation")
+            replica.rename(destination)
+    return prepared, continue_run(destination)

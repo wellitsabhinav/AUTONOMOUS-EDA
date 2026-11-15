@@ -5,6 +5,9 @@ artifacts, selected measurements, the qualification matrix, resource history, re
 retry policy and a paged artifact inventory. Use `--artifact PATH` to inspect one
 inventory entry. `resources history` pages controller attempts with telemetry provenance
 and optional bounded samples. Historical missing telemetry appears as unknown.
+The resource response also exposes recorded platform DRC, LVS and OpenSTA dispatch
+receipts tied to the current layout or extracted timing inputs. Their exit dispositions
+describe the tool execution. The qualification query evaluates the physical gates.
 
 ```bash
 autonomous-eda report experiments/m11b-aes-route-01 --structured

@@ -1,5 +1,12 @@
 # Project state
 
+- The Milestone 11 follow-up added explicit memory caps for isolated retries and
+  bound resume to the saved dispatch budget. A native GCD replay recovered from a
+  five-second routing timeout at 768 MiB and completed at 1,024 MiB. The live AES
+  preflight found no feasible cap at the recorded 8% reserve. Independent verification
+  resource receipts now appear in the CLI, MCP and Studio.
+  [Follow-up evaluation](MILESTONE_11_EVALUATION.md#follow-up-retry-limits-and-verification-resource-evidence)
+
 - The Milestone 11 AES retry reused the pinned global-route checkpoint and hit the
   3,000 MiB cap with Docker-confirmed OOM after 2,255.853 s. AES remains Level 2.
   Final extraction and all dependent signoff gates are blocked. Studio and the

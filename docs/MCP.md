@@ -72,7 +72,7 @@ Every experiment tool takes `experiment_id`. Pagination takes optional `offset` 
 | --- | --- |
 | `get_server_info` | App, SDK, protocol, and evidence versions, tool capabilities, read-only status, and configured root aliases. |
 | `list_experiments` | A page of approved IDs. Retrieve individual summaries for design and platform. |
-| `get_stage_resources` | Up to eight controller attempts with digest-bound resource summaries, disposition and verified router progress. |
+| `get_stage_resources` | Bounded pages of up to eight controller attempts plus the current layout's recorded verification dispatches. |
 | `get_experiment_summary` | Recorded run and design IDs, top, platform, source revision, toolchain, stage states, acceptance, and evidence counts. |
 | `get_stage_status` | Stage states and paginated attempts with elapsed seconds, exit codes, and normalized failure categories. Reference archives without attempt records return an empty list. |
 | `get_timing_summary` | Clock target, setup and hold worst slack and TNS at `finish`, with units, corner, and evidence references. Optional `corner` accepts `tt_025C_1v80` when recorded. |

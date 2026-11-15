@@ -347,3 +347,39 @@ the AES interface timing, peripheral DV and equivalence prerequisites separately
 The [OpenTitan prerequisites](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/11)
 and [ICeWall chip-level work](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/24)
 remain independently tracked.
+
+## Follow-up retry limits and verification resource evidence
+
+The original retry command inherited the source run's RAM limit. A plain resume
+could also fall back to manifest defaults instead of the trial's original limits.
+The controller now accepts an explicit container cap for the isolated copy and
+binds its authorization to the destination database. Resume reapplies the deadline,
+artifact cap, checkpoint requirements and attempt limits. Recorded OOM caps
+remain excluded when the margin is zero.
+
+The AES postflight used the prior Docker-confirmed OOM at 3,000 MiB. With the 8%
+margin, the lower exploratory cap was **3,240 MiB**. The host supplied
+3,517,550,592 B of available memory at the quiet-host sample and could admit at
+most **3,106 MiB** under the same reserve. The plan refused dispatch. The 3,240 MiB
+figure describes the lower edge of a trial. Routing completion requirements
+remain unknown. [Live postflight and exact bounds](evidence/resource-telemetry/aes-followup-preflight.json)
+
+The native GCD control timed out at **5.767 s** with a 768 MiB cap and reused its
+verified upstream checkpoints in a new run at **1,024 MiB**. The new detailed
+route completed in **48.548 s** and finish produced the final layout. Resume
+returned the same eight attempts. Platform DRC, LVS and extracted timing
+coverage passed. Setup failed at the original 1.1 ns clock.
+
+The replay exposed an archive bug that moved the verified `5_global_route.rpt`
+out of the live artifact inventory. The new archive rule retains the upstream
+report. Resume recovered exact archived bytes in the existing GCD and AES runs
+without adding any attempts. GCD now reaches Level 3 on its repaired evidence.
+The AES implementation and signoff results remain as recorded.
+
+The CLI, MCP and Studio now expose separate resource records for the DRC, LVS
+and OpenSTA checks. The read-only MCP resource query returned all eight controller
+attempts over two bounded pages. The browser selected the actual OpenSTA dispatch
+and displayed its 1,200 MiB cap. The stage table rendered in 171.5 ms after
+keyboard activation in the measured desktop run. [Native retry and restored report hashes](evidence/resource-telemetry/gcd-changed-cap-retry.json) ·
+[Studio verification resources](images/milestone-11-followup/resources.png) ·
+[Screenshot provenance](images/milestone-11-followup/resource-browser-check.json)

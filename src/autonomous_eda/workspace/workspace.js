@@ -645,6 +645,15 @@ const resourceTitles = {...labels, synth:"Synthesis", finish:"Finish",
 const formatResource = (value, unit, divisor=1) => value == null ? "Unknown"
     : (value/divisor).toLocaleString(undefined,{maximumFractionDigits:2})+" "+unit;
 
+function resourceAttempts(page) {
+    const checks = (page.verification_attempts || []).map(item => {
+        const dispatch = item.dispatches.primary;
+        return {...item, duration_seconds:dispatch.elapsed_seconds,
+            state:dispatch.classification === "COMPLETED" ? "completed" : "stopped"};
+    });
+    return [...page.attempts,...checks];
+}
+
 function resourceGraph(attempt) {
     const canvas = $("resource-plot");
     const series = attempt?.dispatches.primary.samples || [];
@@ -659,7 +668,7 @@ function resourceGraph(attempt) {
     const {width,height} = canvas;
     const bottom = height-32, left = 72, right = width-24, top = 20;
     const duration = Math.max(1, usable.at(-1).elapsed_seconds);
-    const limit = resourcePage.memory_limit_bytes;
+    const limit = attempt.dispatches.primary.configured_memory_bytes ?? resourcePage.memory_limit_bytes;
     const max = Math.max(limit || 0, ...usable.map(point => point.memory_kernel_peak_bytes || 0));
     ctx.clearRect(0,0,width,height);
     ctx.font = "14px system-ui";
@@ -692,7 +701,9 @@ function resourceGraph(attempt) {
 }
 
 function selectResource() {
-    const attempt = resourcePage?.attempts.find(item => String(item.id) === $("resource-attempt").value);
+    const attempt = resourcePage
+        ? resourceAttempts(resourcePage).find(item => String(item.id) === $("resource-attempt").value)
+        : null;
     resourceGraph(attempt);
     const record = attempt?.dispatches.primary;
     const facts = $("resource-facts");
@@ -700,7 +711,9 @@ function selectResource() {
     if (!record) return;
     const values = record.measurements;
     const bytes = values.memory_kernel_peak_bytes?.value;
-    const limit = resourcePage.memory_limit_bytes;
+    const limit = record.configured_memory_bytes ?? resourcePage.memory_limit_bytes;
+    const cpu = record.configured_cpu_nanocores == null ? resourcePage.allocated_cpus
+        : record.configured_cpu_nanocores/1000000000;
     const used = bytes != null && limit ? (100*bytes/limit).toFixed(1)+"%" : "Unknown";
     const last = record.samples?.at(-1)?.elapsed_seconds;
     const duration = attempt.duration_seconds ?? last;
@@ -711,7 +724,7 @@ function selectResource() {
         ["Peak memory",formatResource(bytes,"MiB",1048576)],["Memory budget used",used],
         ["Container cap",formatResource(limit,"MiB",1048576)],
         ["CPU time",formatResource(values.cpu_usage_usec?.value,"s",1000000)],
-        ["CPU allocation",formatResource(resourcePage.allocated_cpus,"cores")],
+        ["CPU allocation",formatResource(cpu,"cores")],
         ["Elapsed",formatResource(duration,"s")],["Wall budget",formatResource(budget,"s")],
         ["Wall budget used",timeUsed],
         ["Termination",record.classification ?? attempt.state],
@@ -732,10 +745,12 @@ async function refreshResources() {
         const page = await json("/api/resources");
         if (!page) { note.textContent = "No controller run is selected."; return; }
         resourcePage = page;
+        const attempts = resourceAttempts(page);
         const body = $("resources-stages").tBodies[0];
         body.replaceChildren();
-        for (const stage of page.pipeline) {
-            const record = page.attempts.find(item=>item.stage===stage.stage);
+        const checkRows = attempts.filter(item=>typeof item.id === "string");
+        for (const stage of [...page.pipeline,...checkRows]) {
+            const record = attempts.find(item=>item.stage===stage.stage);
             const primary = record?.dispatches.primary;
             const row = body.insertRow();
             row.dataset.stage = stage.stage;
@@ -749,7 +764,7 @@ async function refreshResources() {
         }
         const select = $("resource-attempt");
         const preferred = select.value || String(page.attempts.find(item=>item.stage==="route")?.id || "");
-        select.replaceChildren(...page.attempts.map(item=>{
+        select.replaceChildren(...attempts.map(item=>{
             const label = (resourceTitles[item.stage] || item.stage)+" · Attempt "+item.id+" · "+item.state;
             const option = element("option",label);
             option.value = item.id;

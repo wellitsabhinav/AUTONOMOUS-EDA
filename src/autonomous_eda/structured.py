@@ -116,6 +116,12 @@ def recorded_time(value: object) -> str | None:
     return None
 
 
+def duration_or_unknown(value: object) -> float | int | None:
+    if type(value) in (int, float) and isinstance(value, (int, float)) and 0 <= value <= 8 * 86400:
+        return value
+    return None
+
+
 def route_progress(log: bytes) -> dict[str, Any]:
     iteration = None
     last = None
@@ -163,15 +169,25 @@ def describe_invocation(
     *,
     live: bool = False,
     prepare: Callable[[str], object] | None = None,
+    attempt: str | None = None,
+    run_stage: tuple[str, str] | None = None,
 ) -> dict[str, Any]:
     path = Path(log)
     receipt_file = telemetry.receipt_path(path).as_posix()
+    recovery_file = path.with_suffix(".resources-recovery.json").as_posix()
     journal = telemetry.samples_path(path).as_posix()
     if prepare is not None:
-        for relative in (log, receipt_file, journal):
+        for relative in (log, receipt_file, recovery_file, journal):
             if relative in artifacts and (relative != journal or sample_limit):
                 prepare(relative)
-    record = checked_resource_receipt(root, log, artifacts)
+    record = checked_resource_receipt(root, log, artifacts, attempt=attempt, run_stage=run_stage)
+    recovered = False
+    if record is None:
+        record = checked_resource_receipt(
+            root, log, artifacts, recovered=True, attempt=attempt, run_stage=run_stage
+        )
+        if record is not None:
+            recovered, receipt_file = True, recovery_file
     status = "VERIFIED" if record is not None else "UNKNOWN"
     if status == "UNKNOWN" and live and state == "running":
         status = "PROVISIONAL"
@@ -199,10 +215,13 @@ def describe_invocation(
             stage_timeout_seconds=integer_or_unknown(record.get("stage_timeout_seconds")),
             timeout=timed_out if type(timed_out) is bool else None,
             retry_count=integer_or_unknown(record.get("retry_count")),
+            elapsed_seconds=duration_or_unknown(record.get("elapsed_seconds")),
             reused_checkpoints=[
                 stage for stage in STAGES if isinstance(reused, list) and stage in reused
             ],
         )
+        if recovered:
+            info["receipt_kind"] = "recovery"
         event = native.get("oom_event")
         if isinstance(event, dict) and event.get("source") == "docker events":
             info["docker_oom_event"] = {
@@ -219,7 +238,9 @@ def describe_invocation(
             try:
                 if sample_path.resolve().is_relative_to(root):
                     rows = telemetry.read_samples(
-                        sample_path, allow_partial=status == "PROVISIONAL", verified_bytes=bound
+                        sample_path,
+                        allow_partial=status == "PROVISIONAL" or recovered,
+                        verified_bytes=bound,
                     )
                     info.update(samples=retain_samples(rows, sample_limit))
                     if status == "PROVISIONAL":
@@ -236,6 +257,122 @@ def describe_invocation(
         if raw is not None:
             info["router"] = {**route_progress(raw), "log_sha256": artifacts[log]}
     return info
+
+
+def small_json(
+    root: Path, name: str, prepare: Callable[[str], object] | None, sha: str | None = None
+) -> dict[str, Any]:
+    if prepare is not None:
+        prepare(name)
+    path = root / name
+    if not path.resolve().is_relative_to(root) or path.is_symlink():
+        return {}
+    try:
+        with path.open("rb") as stream:
+            raw = stream.read(65537)
+        if len(raw) > 65536 or (sha and hashlib.sha256(raw).hexdigest() != sha):
+            return {}
+        value = json.loads(raw)
+        return value if isinstance(value, dict) else {}
+    except (OSError, ValueError):
+        return {}
+
+
+def verification_resources(
+    root: Path,
+    run_id: str | None,
+    gds_sha: str | None,
+    finish_artifacts: dict[str, str],
+    sample_limit: int,
+    prepare: Callable[[str], object] | None,
+) -> list[dict[str, Any]]:
+    """Read independent check dispatch receipts. Gate acceptance is evaluated separately."""
+    checks: list[dict[str, Any]] = []
+    if run_id is None or gds_sha is None:
+        return checks
+    for stage in ("drc", "lvs"):
+        index = small_json(root, f"verification-{stage}.json", prepare)
+        attempt = index.get("attempt")
+        artifacts = index.get("artifacts")
+        if (
+            not isinstance(attempt, str)
+            or not telemetry.owned_attempt(attempt)
+            or not isinstance(artifacts, dict)
+            or index.get("gds_sha256") != gds_sha
+        ):
+            continue
+        log = f"attempts/{attempt}/{stage}.log"
+        description = describe_invocation(
+            root,
+            log,
+            artifacts,
+            "unknown",
+            sample_limit,
+            prepare=prepare,
+            run_stage=(run_id, stage),
+        )
+        if description["status"] == "VERIFIED":
+            checks.append(
+                {
+                    "id": attempt,
+                    "stage": stage,
+                    "layout_sha256": gds_sha,
+                    "exit_code": integer_or_unknown(index.get("exit_code")),
+                    "dispatches": {"primary": description},
+                }
+            )
+    latest = small_json(root, "verification/latest.json", prepare)
+    run = latest.get("attempt")
+    index_receipts = latest.get("receipts")
+    if not isinstance(run, str) or not re.fullmatch(r"[a-f0-9]{32}", run):
+        return checks
+    digest = index_receipts.get("timing_coverage") if isinstance(index_receipts, dict) else None
+    if not isinstance(digest, str) or not re.fullmatch(r"[a-f0-9]{64}", digest):
+        return checks
+    folder = f"verification/attempts/{run}/timing_coverage"
+    receipt = small_json(root, f"{folder}/receipt.json", prepare, digest)
+    outputs = receipt.get("outputs")
+    inputs = receipt.get("inputs")
+    if (
+        receipt.get("gate") != "timing_coverage"
+        or receipt.get("run_id") != run_id
+        or not isinstance(outputs, dict)
+        or not isinstance(inputs, dict)
+    ):
+        return checks
+    for suffix in ("/6_final.odb", "/6_final.sdc", "/6_final.spef"):
+        expected = [(path, sha) for path, sha in finish_artifacts.items() if path.endswith(suffix)]
+        if len(expected) != 1 or inputs.get(expected[0][0]) != expected[0][1]:
+            return checks
+    hashes = {f"{folder}/{name}": sha for name, sha in outputs.items()}
+    marker = f"{folder}/dispatch.txt"
+    if prepare is not None and marker in hashes:
+        prepare(marker)
+    raw = read_bound(root, marker, hashes.get(marker), 40)
+    if raw is not None:
+        attempt = raw.decode("ascii", errors="replace")
+        if telemetry.owned_attempt(attempt):
+            description = describe_invocation(
+                root,
+                f"{folder}/coverage.stdout.log",
+                hashes,
+                "unknown",
+                sample_limit,
+                prepare=prepare,
+                attempt=attempt,
+                run_stage=(run_id, "timing_coverage"),
+            )
+            if description["status"] == "VERIFIED":
+                checks.append(
+                    {
+                        "id": attempt,
+                        "stage": "timing_coverage",
+                        "verification_sha256": digest,
+                        "exit_code": description["native_exit_code"],
+                        "dispatches": {"primary": description},
+                    }
+                )
+    return checks
 
 
 def resource_page(
@@ -265,6 +402,9 @@ def resource_page(
         rows = db.execute(
             "SELECT * FROM attempts ORDER BY id DESC LIMIT ? OFFSET ?", (limit + 1, offset)
         ).fetchall()
+        finish = db.execute(
+            "SELECT artifacts FROM attempts WHERE stage='finish' ORDER BY id DESC LIMIT 1"
+        ).fetchone()
     identity = dict(run[0])
     run_id = identity.get("run_id") if version == 2 else None
     if run_id is not None and (
@@ -317,6 +457,14 @@ def resource_page(
                 "dispatches": dispatches,
             }
         )
+    finished = (json.loads(finish[0] or "{}") or {}) if finish else {}
+    gds = [
+        sha
+        for path, sha in finished.items()
+        if path.endswith("/6_final.gds")
+        and isinstance(sha, str)
+        and re.fullmatch(r"[a-f0-9]{64}", sha)
+    ]
     return {
         "schema_version": 1,
         "run_id": run_id,
@@ -325,10 +473,13 @@ def resource_page(
         "allocation_source": "controller run configuration",
         "next_offset": offset + limit if len(rows) > limit else None,
         "attempts": result,
+        "verification_attempts": verification_resources(
+            root, run_id, gds[0] if len(gds) == 1 else None, finished, sample_limit, prepare
+        ),
     }
 
 
-def input_approval(root: Path) -> list[dict[str, Any]]:
+def input_approval(root: Path, run_id: str) -> list[dict[str, Any]]:
     path = root / "resource-plan.json"
     if not path.is_file() or not path.resolve().is_relative_to(root):
         return []
@@ -337,8 +488,19 @@ def input_approval(root: Path) -> list[dict[str, Any]]:
             value = json.loads(stream.read(64 * 1024))
         plan = dict(value["plan"])
         digest = plan.pop("plan_sha256")
-        if digest != fingerprint(plan):
+        if digest != fingerprint(plan) or value["run_id"] != run_id:
             return []
+        database = (root / "run.sqlite3").resolve()
+        if not database.is_relative_to(root):
+            return []
+        with closing(sqlite3.connect(f"{database.as_uri()}?mode=ro", uri=True)) as db:
+            db.execute("PRAGMA trusted_schema=OFF")
+            if db.execute(
+                "SELECT 1 FROM sqlite_schema WHERE type='table' AND name='retry_policy'"
+            ).fetchone() and db.execute("SELECT plan_sha256 FROM retry_policy").fetchall() != [
+                (digest,)
+            ]:
+                return []
         return [
             {
                 "type": "explicit_retry_policy",
@@ -348,7 +510,7 @@ def input_approval(root: Path) -> list[dict[str, Any]]:
                 "budget": plan["budget"],
             }
         ]
-    except (OSError, ValueError, KeyError, TypeError):
+    except (OSError, ValueError, KeyError, TypeError, sqlite3.Error):
         return []
 
 
@@ -380,7 +542,7 @@ def summary(
         "constraint_evidence": [inventory.get(path) for path in evidence["constraints"]],
         "metrics": dict(sorted(evidence["metrics"].items())[:256]),
         "qualification": qualification,
-        "approval_events": input_approval(root),
+        "approval_events": input_approval(root, evidence["run_id"]),
         "resources": resource,
         "artifacts": {path: inventory[path] for path in selected},
         "next_artifact_offset": offset + limit if offset + limit < len(inventory) else None,

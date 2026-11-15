@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import errno
+import hashlib
 import json
 import shutil
 import signal
@@ -198,6 +199,23 @@ def continue_run(
         total, _available = memory_bytes()
         if memory_mib * 2**20 > total:
             raise ValueError("configured memory exceeds the visible host limit")
+        from .resource_plan import restore_budget
+
+        policy = restore_budget(root, db, lambda: memory_bytes()[1])
+        limits = None
+        if policy is not None:
+            original_guard = guard
+            guard = (
+                policy.guard
+                if original_guard is None
+                else lambda: min(policy.guard(), original_guard())
+            )
+            stage_timeouts = dict(stage_timeouts or {})
+            stage_timeouts["route"] = min(
+                stage_timeouts.get("route", policy.stage_seconds), policy.stage_seconds
+            )
+            must_reuse |= policy.checkpoint_stages
+            limits = policy.attempt_limits
         docker = preflight()
         cleanup_verification(root, docker)
         return run_stages(
@@ -211,6 +229,7 @@ def continue_run(
             max_retries=max_retries,
             stage_timeouts=stage_timeouts,
             must_reuse=must_reuse,
+            attempt_limits=limits,
         )
 
 
@@ -226,6 +245,33 @@ def cleanup_verification(root: Path, docker: str) -> None:
                 remove_interrupted_container(docker, existing["attempt"])
 
 
+def restore_archived_global_route_report(
+    root: Path, db: sqlite3.Connection, manifest: ORFSManifest
+) -> None:
+    """Recover the report moved by the older detailed-route archive rule."""
+    name = f"reports/{manifest.platform}/{manifest.design}/base/5_global_route.rpt"
+    target = root / name
+    if target.exists() or target.is_symlink() or not target.resolve().is_relative_to(root):
+        return
+    row = db.execute(
+        "SELECT state, artifacts FROM attempts WHERE stage='grt' ORDER BY id DESC LIMIT 1"
+    ).fetchone()
+    digest = (json.loads(row[1] or "{}") or {}).get(name) if row and row[0] == "passed" else None
+    if not digest:
+        return
+    for (relative,) in db.execute("SELECT log FROM attempts WHERE stage='route' ORDER BY id DESC"):
+        archived = (root / relative).parent / "previous" / name
+        if archived.resolve().is_relative_to(root) and archived.is_file():
+            with archived.open("rb") as stream:
+                content = stream.read(4 * 2**20 + 1)
+            # Restore only the ledger's exact bytes. Exclusive create protects any later output.
+            if len(content) <= 4 * 2**20 and hashlib.sha256(content).hexdigest() == digest:
+                target.parent.mkdir(parents=True, exist_ok=True)
+                with target.open("xb") as stream:
+                    stream.write(content)
+                return
+
+
 def run_stages(
     root: Path,
     db: sqlite3.Connection,
@@ -238,15 +284,33 @@ def run_stages(
     max_retries: int | None = None,
     stage_timeouts: dict[str, int] | None = None,
     must_reuse: frozenset[str] = frozenset(),
+    attempt_limits: dict[str, int] | None = None,
 ) -> bool:
     version = db_version(db)
+    restore_archived_global_route_report(root, db, manifest)
     run_id = db.execute("SELECT run_id FROM run").fetchone()[0] if version == 2 else None
-    for attempt_id, relative in db.execute("SELECT id, log FROM attempts WHERE state='running'"):
+    from .resource_plan import checked_resource_receipt
+
+    recoverable = db.execute(
+        "SELECT id, log, state, artifacts FROM attempts "
+        "WHERE state IN ('running', 'failed', 'interrupted')"
+    ).fetchall()
+    for attempt_id, relative, state, raw_hashes in recoverable:
         log = root / relative
         name = Path(relative).parent.name
-        recovered: dict[str, str] = {}
+        recovered: dict[str, str] = json.loads(raw_hashes or "null") or {}
+        recovery_logs = (log, log.with_name("gds-validation.log"))
+        if state != "running" and not any(
+            (
+                checked_resource_receipt(root, item.relative_to(root).as_posix(), recovered) or {}
+            ).get("cleanup_succeeded")
+            is False
+            for item in recovery_logs
+            if item.resolve().is_relative_to(root)
+        ):
+            continue
         if log.resolve().is_relative_to(root):
-            for dispatched_log in (log, log.with_name("gds-validation.log")):
+            for dispatched_log in recovery_logs:
                 record_interrupted_dispatch(docker, name, dispatched_log)
                 record_dispatch_artifacts(root, recovered, dispatched_log)
         remove_interrupted_container(docker, name)
@@ -267,8 +331,6 @@ def run_stages(
     passed: set[str] = set()
     reused: list[str] = []
     for stage in stage_plan(manifest, legacy=version == 0):
-        if guard is not None:
-            guard()
         if not set(stage.after).issubset(passed):
             raise ValueError(f"unmet dependency for {stage.name}")
         previous = db.execute(
@@ -291,6 +353,10 @@ def run_stages(
         ).fetchone()[0]
         if max_retries is not None and attempts > max_retries:
             raise DispatchStopped(f"{stage.name} retry budget exhausted after {attempts} attempts")
+        if attempt_limits is not None and attempts >= attempt_limits.get(stage.name, 0):
+            raise DispatchStopped(f"{stage.name} exhausted the saved trial attempt budget")
+        if guard is not None:
+            guard()
         name = f"aeda-{uuid.uuid4().hex}"
         attempt = root / "attempts" / name
         attempt.mkdir(parents=True)

@@ -1,0 +1,832 @@
+{
+  "browser": {
+    "browser": {
+      "jsVersion": "15.7.11.7",
+      "product": "Edg/157.0.4341.60",
+      "protocolVersion": "1.3",
+      "revision": "@fbcb2989a6c61b72a4919fe1028e58e70131cd46",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0"
+    },
+    "generated_at": "2026-11-15T16:41:24.069Z",
+    "generation_command": [
+      "F:\\AgenticAI\\tests\\studio_browser.mjs",
+      "http://127.0.0.1:8781/",
+      "experiments/m11-followup-gcd-browser-02",
+      "resources",
+      "passed"
+    ],
+    "image_sha256": "d2b01f87437727f5ffefeb0068eafeeea4a2bace697140efd3f57b1f84c80754",
+    "mobile_sha256": "241c72e92fbce16de6bcc1db39b771ad2aaff422e5dde85e891175a6275c0e96",
+    "qualification_source_sha256": "a5d5a4a69b1b75e37abb6589bf30b7bf087f33848ca4e3de9a6d03abbaf82806",
+    "renderMs": 171.47760000000002,
+    "routeState": "passed",
+    "run_id": "c4510c321f314524a056848e72ee6412",
+    "scrollWidth": 390,
+    "source_bytes": 42546,
+    "source_sha256": "bc9892eae0a491ad4a9577e087b91dcbb1ab862c5d3e6a298c9029ac4d2acb3e",
+    "viewportWidth": 390
+  },
+  "destination_route": {
+    "dispatches": {
+      "primary": {
+        "classification": "COMPLETED",
+        "configured_cpu_nanocores": 2000000000,
+        "configured_memory_bytes": 1073741824,
+        "docker_oom_killed": false,
+        "elapsed_seconds": 48.54780425499999,
+        "measurements": {
+          "cpu_throttle_events": {
+            "source": "linux cgroup v2",
+            "unit": "count",
+            "value": 3
+          },
+          "cpu_throttled_usec": {
+            "source": "linux cgroup v2",
+            "unit": "us",
+            "value": 4611
+          },
+          "cpu_usage_usec": {
+            "source": "linux cgroup v2",
+            "unit": "us",
+            "value": 51816476
+          },
+          "disk_capacity_bytes": {
+            "source": "statvfs experiment filesystem",
+            "unit": "B",
+            "value": 362531516416
+          },
+          "disk_free_bytes": {
+            "source": "statvfs experiment filesystem",
+            "unit": "B",
+            "value": 174239567872
+          },
+          "experiment_bytes": {
+            "source": "bounded experiment tree stat",
+            "unit": "B",
+            "value": 56167270
+          },
+          "host_available_memory_bytes": {
+            "source": "/proc/meminfo",
+            "unit": "B",
+            "value": 3526643712
+          },
+          "log_bytes": {
+            "source": "stat attempt log",
+            "unit": "B",
+            "value": 16138
+          },
+          "memory_current_bytes": {
+            "source": "linux cgroup v2",
+            "unit": "B",
+            "value": 252903424
+          },
+          "memory_kernel_peak_bytes": {
+            "source": "linux cgroup v2",
+            "unit": "B",
+            "value": 437080064
+          },
+          "memory_limit_events": {
+            "source": "linux cgroup v2",
+            "unit": "count",
+            "value": 0
+          },
+          "oom_events": {
+            "source": "linux cgroup v2",
+            "unit": "count",
+            "value": 0
+          },
+          "oom_kills": {
+            "source": "linux cgroup v2",
+            "unit": "count",
+            "value": 0
+          },
+          "process_limit_events": {
+            "source": "linux cgroup v2",
+            "unit": "count",
+            "value": 0
+          },
+          "process_rss_sum_bytes": {
+            "source": "cgroup.procs and /proc/PID/status VmRSS",
+            "unit": "B",
+            "value": 357355520
+          },
+          "swap_current_bytes": {
+            "source": "linux cgroup v2",
+            "unit": "B",
+            "value": 0
+          },
+          "temporary_bytes": {
+            "source": "bounded container /tmp tree stat",
+            "unit": "B",
+            "value": 0
+          }
+        },
+        "native_exit_code": 0,
+        "receipt_sha256": "806f766df0ae83295c21dc4c1be818b28442a4e1e8fc9b0833a4bf4bce92e7cb",
+        "retry_count": 1,
+        "reused_checkpoints": [
+          "synth",
+          "floorplan",
+          "place",
+          "cts",
+          "grt"
+        ],
+        "router": {
+          "last_progress": {
+            "interim_violations": 0,
+            "iteration": 2,
+            "line": 281,
+            "percent": 100
+          },
+          "last_reported_iteration": 2,
+          "log_sha256": "961308b4f163e285b842103b65b867e1b5043edcedf14538f172c23f0cb4f22a",
+          "progress_rows": 22
+        },
+        "sample_interval_seconds": 2,
+        "stage_timeout_seconds": 100,
+        "status": "VERIFIED",
+        "termination_signal": null,
+        "timeout": false
+      }
+    },
+    "duration_seconds": 48.54780425499999,
+    "duration_source": "controller monotonic runtime and recorded log",
+    "ended_at": "2026-11-15T16:31:33.089680+00:00",
+    "exit_code": 0,
+    "id": 7,
+    "log_sha256": "961308b4f163e285b842103b65b867e1b5043edcedf14538f172c23f0cb4f22a",
+    "stage": "route",
+    "started_at": "2026-11-15T16:30:43.599436+00:00",
+    "state": "passed"
+  },
+  "destination_run": "c4510c321f314524a056848e72ee6412",
+  "manifest_sha256": "3a96094aaff12af22446dfc1dfdaeed8b03ed7c8f3b134b233213e64f815cd42",
+  "qualification": {
+    "design_qualification_status": "FAILED",
+    "extracted_nets": {
+      "artifact": "logs/sky130hd/gcd/base/6_report.log",
+      "sha256": "0dc0c7399d5587a37982e83535467ff01226d92f817e12edb843bf3c7a90cda5",
+      "source": "OpenRCX RCX-0443",
+      "unit": "net",
+      "value": 482
+    },
+    "extracted_timing_status": "FAILED",
+    "extraction_status": "PASSED",
+    "final_products": {
+      "constraints": {
+        "attempt": "8",
+        "availability": "VERIFIED",
+        "location": "results/sky130hd/gcd/base/6_final.sdc",
+        "observed_at": "2026-11-15T16:31:39.921835+00:00",
+        "producer_version": null,
+        "run_id": "c4510c321f314524a056848e72ee6412",
+        "sha256": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+        "size": 6137,
+        "stage": "finish",
+        "type": ".sdc"
+      },
+      "database": {
+        "attempt": "8",
+        "availability": "VERIFIED",
+        "location": "results/sky130hd/gcd/base/6_final.odb",
+        "observed_at": "2026-11-15T16:31:40.027920+00:00",
+        "producer_version": null,
+        "run_id": "c4510c321f314524a056848e72ee6412",
+        "sha256": "19d15a42a312949cbfcf10fda80fd43238733fb0abecd791c7d460cf4cc1587d",
+        "size": 3460249,
+        "stage": "finish",
+        "type": ".odb"
+      },
+      "netlist": {
+        "attempt": "8",
+        "availability": "VERIFIED",
+        "location": "results/sky130hd/gcd/base/6_final.v",
+        "observed_at": "2026-11-15T16:31:40.183705+00:00",
+        "producer_version": null,
+        "run_id": "c4510c321f314524a056848e72ee6412",
+        "sha256": "5fe44acee42aa0d6221f9195a1657270c9fabf2791dfba0e370da86f9a672cca",
+        "size": 44004,
+        "stage": "finish",
+        "type": ".v"
+      },
+      "parasitics": {
+        "attempt": "8",
+        "availability": "VERIFIED",
+        "location": "results/sky130hd/gcd/base/6_final.spef",
+        "observed_at": "2026-11-15T16:31:41.134655+00:00",
+        "producer_version": null,
+        "run_id": "c4510c321f314524a056848e72ee6412",
+        "sha256": "593f99d9af211dcde75b51eaf05959a117652910224badbbfebb4b4151df975f",
+        "size": 320980,
+        "stage": "finish",
+        "type": ".spef"
+      },
+      "streamout": {
+        "attempt": "8",
+        "availability": "VERIFIED",
+        "location": "results/sky130hd/gcd/base/6_final.gds",
+        "observed_at": "2026-11-15T16:31:52.444692+00:00",
+        "producer_version": null,
+        "run_id": "c4510c321f314524a056848e72ee6412",
+        "sha256": "c07bbe85d70197a76235b5d6306016187493ec7d026be33b0b3acfa5e2485194",
+        "size": 829132,
+        "stage": "finish",
+        "type": ".gds"
+      }
+    },
+    "implementation_status": "PASSED",
+    "measurements": {
+      "estimated_power_w": {
+        "artifact": "logs/sky130hd/gcd/base/6_report.json",
+        "corner": "tt_025C_1v80",
+        "method": "orfs-normalization-v1",
+        "name": "estimated_power_w",
+        "reference": "finish__power__total",
+        "stage": "finish",
+        "status": "MEASURED",
+        "unit": "W",
+        "value": 0.0052894
+      },
+      "hold_tns_ns": {
+        "artifact": "logs/sky130hd/gcd/base/6_report.json",
+        "corner": "tt_025C_1v80",
+        "method": "orfs-normalization-v1",
+        "name": "hold_tns_ns",
+        "reference": "finish__timing__hold__tns",
+        "stage": "finish",
+        "status": "MEASURED",
+        "unit": "ns",
+        "value": 0
+      },
+      "hold_worst_slack_ns": {
+        "artifact": "logs/sky130hd/gcd/base/6_report.json",
+        "corner": "tt_025C_1v80",
+        "method": "orfs-normalization-v1",
+        "name": "hold_worst_slack_ns",
+        "reference": "finish__timing__hold__ws",
+        "stage": "finish",
+        "status": "MEASURED",
+        "unit": "ns",
+        "value": 0.429847
+      },
+      "routed_wirelength_um": {
+        "artifact": "logs/sky130hd/gcd/base/5_2_route.json",
+        "corner": null,
+        "method": "orfs-normalization-v1",
+        "name": "routed_wirelength_um",
+        "reference": "detailedroute__route__wirelength",
+        "stage": "route",
+        "status": "MEASURED",
+        "unit": "um",
+        "value": 7425
+      },
+      "router_drc_errors": {
+        "artifact": "logs/sky130hd/gcd/base/5_2_route.json",
+        "corner": null,
+        "method": "orfs-normalization-v1",
+        "name": "router_drc_errors",
+        "reference": "detailedroute__route__drc_errors",
+        "stage": "route",
+        "status": "MEASURED",
+        "unit": "count",
+        "value": 0
+      },
+      "setup_tns_ns": {
+        "artifact": "logs/sky130hd/gcd/base/6_report.json",
+        "corner": "tt_025C_1v80",
+        "method": "orfs-normalization-v1",
+        "name": "setup_tns_ns",
+        "reference": "finish__timing__setup__tns",
+        "stage": "finish",
+        "status": "MEASURED",
+        "unit": "ns",
+        "value": -54.4492
+      },
+      "setup_worst_slack_ns": {
+        "artifact": "logs/sky130hd/gcd/base/6_report.json",
+        "corner": "tt_025C_1v80",
+        "method": "orfs-normalization-v1",
+        "name": "setup_worst_slack_ns",
+        "reference": "finish__timing__setup__ws",
+        "stage": "finish",
+        "status": "MEASURED",
+        "unit": "ns",
+        "value": -1.20488
+      },
+      "stage.finish.utilization": {
+        "artifact": "logs/sky130hd/gcd/base/6_report.json",
+        "corner": null,
+        "method": "orfs-native-stage-metrics-v1",
+        "name": "stage.finish.utilization",
+        "reference": "finish__design__instance__utilization__stdcell",
+        "stage": "finish",
+        "status": "MEASURED",
+        "unit": "ratio",
+        "value": 0.75
+      },
+      "stage.grt.hold_worst_slack": {
+        "artifact": "logs/sky130hd/gcd/base/5_1_grt.json",
+        "corner": null,
+        "method": "orfs-native-stage-metrics-v1",
+        "name": "stage.grt.hold_worst_slack",
+        "reference": "globalroute__timing__hold__ws",
+        "stage": "grt",
+        "status": "MEASURED",
+        "unit": "ns",
+        "value": 0.415138
+      },
+      "stage.grt.setup_worst_slack": {
+        "artifact": "logs/sky130hd/gcd/base/5_1_grt.json",
+        "corner": null,
+        "method": "orfs-native-stage-metrics-v1",
+        "name": "stage.grt.setup_worst_slack",
+        "reference": "globalroute__timing__setup__ws",
+        "stage": "grt",
+        "status": "MEASURED",
+        "unit": "ns",
+        "value": -1.23073
+      },
+      "standard_cell_area_um2": {
+        "artifact": "logs/sky130hd/gcd/base/6_report.json",
+        "corner": null,
+        "method": "orfs-normalization-v1",
+        "name": "standard_cell_area_um2",
+        "reference": "finish__design__instance__area__stdcell",
+        "stage": "finish",
+        "status": "MEASURED",
+        "unit": "um2",
+        "value": 4414.23
+      }
+    },
+    "physical_acceptance_status": "FAILED",
+    "qualification_sha256": "4279aa5e441c32378a43de1fd3ba87a56ca8f912a816673dd222e30c509cbe69",
+    "readiness_level": 3,
+    "run_id": "c4510c321f314524a056848e72ee6412",
+    "schema_version": 1,
+    "timing_context": {
+      "clock_period_ns": 1.1,
+      "clocks": {
+        "core_clock": 1.1,
+        "vclk_core_clock": 1.1
+      },
+      "corner": "tt_025C_1v80",
+      "coverage_checks": {
+        "generated_clocks": "PASSED",
+        "loops": "PASSED",
+        "multiple_clock": "PASSED",
+        "no_clock": "PASSED",
+        "no_input_delay": "PASSED",
+        "no_output_delay": "PASSED",
+        "unconstrained_endpoints": "PASSED"
+      },
+      "expected_clocks": [
+        "core_clock",
+        "vclk_core_clock"
+      ],
+      "missing_clocks": [],
+      "observed_clocks": [
+        "core_clock",
+        "vclk_core_clock"
+      ],
+      "sdc_sha256": "0c7f9b72610bf1fa58369ff99708816e337b98dfc7f8c44f4007ecd0126e2cbb",
+      "synthesis_sdc_sha256": "1da6837b5ccc68d322143f103895c0b77ca89fd3f6f74c13e5c97c3b0dafbf16",
+      "unaccounted_clocks": [],
+      "unsupported_sdc_commands": []
+    },
+    "timing_contract": {
+      "bound_rtl_revision": null,
+      "clock_ports": [],
+      "reset_ports": [],
+      "status": "UNKNOWN",
+      "unqualified": []
+    },
+    "verification_gates": {
+      "artifact_integrity": "PASSED",
+      "connectivity": "UNKNOWN",
+      "elaboration": "UNKNOWN",
+      "equivalence": "UNKNOWN",
+      "formal_properties": "UNKNOWN",
+      "functional_regression": "UNKNOWN",
+      "gds_generation": "PASSED",
+      "gds_reopen": "PASSED",
+      "hold": "PASSED",
+      "lvs": "PASSED",
+      "platform_drc": "PASSED",
+      "router": "PASSED",
+      "sequential_equivalence": "UNKNOWN",
+      "setup": "FAILED",
+      "synthesis": "PASSED",
+      "timing_coverage": "PASSED"
+    },
+    "verification_sha256": "cf69d2d5a8b995c811dfe97f9e74097dddf72d00255ef11d2a0383aa98c0edf9"
+  },
+  "restored_global_route_report_sha256": {
+    "c4510c321f314524a056848e72ee6412": "6f4ef35c5e06df282e0e03f3b599c8e26e6bc21be4e3b1063466dd7f3dcf97a2",
+    "eb2896531cd2412d9611ee79d80f6ceb": "36b34600f47f6e0ffb43ba9ae130e215f95e69c663417dcb1ec8bb88af41493d"
+  },
+  "resume_record_sha256": "e4ffad6c713837ed837c9dcc1529aa606a9376bf46353c09caea4118caf51ded",
+  "saved_policy_sha256": "4fc6aeaf242e7fc5f1163c67e8ee0b94658d278a86a4c96c8b7ccb388fa9c0b4",
+  "schema_version": 1,
+  "source_route": {
+    "dispatches": {
+      "primary": {
+        "classification": "WALL_TIMEOUT",
+        "configured_cpu_nanocores": 2000000000,
+        "configured_memory_bytes": 805306368,
+        "docker_oom_killed": false,
+        "elapsed_seconds": 5.766821914000005,
+        "measurements": {
+          "cpu_throttle_events": {
+            "source": "linux cgroup v2",
+            "unit": "count",
+            "value": 4
+          },
+          "cpu_throttled_usec": {
+            "source": "linux cgroup v2",
+            "unit": "us",
+            "value": 2839
+          },
+          "cpu_usage_usec": {
+            "source": "linux cgroup v2",
+            "unit": "us",
+            "value": 7022492
+          },
+          "disk_capacity_bytes": {
+            "source": "statvfs experiment filesystem",
+            "unit": "B",
+            "value": 362531516416
+          },
+          "disk_free_bytes": {
+            "source": "statvfs experiment filesystem",
+            "unit": "B",
+            "value": 174289014784
+          },
+          "experiment_bytes": {
+            "source": "bounded experiment tree stat",
+            "unit": "B",
+            "value": 49190580
+          },
+          "host_available_memory_bytes": {
+            "source": "/proc/meminfo",
+            "unit": "B",
+            "value": 3517333504
+          },
+          "log_bytes": {
+            "source": "stat attempt log",
+            "unit": "B",
+            "value": 4498
+          },
+          "memory_current_bytes": {
+            "source": "linux cgroup v2",
+            "unit": "B",
+            "value": 89858048
+          },
+          "memory_kernel_peak_bytes": {
+            "source": "linux cgroup v2",
+            "unit": "B",
+            "value": 89858048
+          },
+          "memory_limit_events": {
+            "source": "linux cgroup v2",
+            "unit": "count",
+            "value": 0
+          },
+          "oom_events": {
+            "source": "linux cgroup v2",
+            "unit": "count",
+            "value": 0
+          },
+          "oom_kills": {
+            "source": "linux cgroup v2",
+            "unit": "count",
+            "value": 0
+          },
+          "process_limit_events": {
+            "source": "linux cgroup v2",
+            "unit": "count",
+            "value": 0
+          },
+          "process_rss_sum_bytes": {
+            "source": "cgroup.procs and /proc/PID/status VmRSS",
+            "unit": "B",
+            "value": 159744000
+          },
+          "swap_current_bytes": {
+            "source": "linux cgroup v2",
+            "unit": "B",
+            "value": 0
+          },
+          "temporary_bytes": {
+            "source": "bounded container /tmp tree stat",
+            "unit": "B",
+            "value": 0
+          }
+        },
+        "native_exit_code": 137,
+        "receipt_sha256": "109c32c6050d16a1f45918d904f7452f73024df5573c8f744749ed8790dd4cd0",
+        "retry_count": 0,
+        "reused_checkpoints": [],
+        "router": {
+          "last_progress": null,
+          "last_reported_iteration": null,
+          "log_sha256": "af3df35b9f83c0b4307460fba6c9d3be9be47a1154de9091d4b2b21d0cb2f085",
+          "progress_rows": 0
+        },
+        "sample_interval_seconds": 2,
+        "stage_timeout_seconds": 5,
+        "status": "VERIFIED",
+        "termination_signal": 9,
+        "timeout": true
+      }
+    },
+    "duration_seconds": 5.766821914000005,
+    "duration_source": "controller monotonic runtime and recorded log",
+    "ended_at": "2026-11-15T16:30:30.522052+00:00",
+    "exit_code": 124,
+    "id": 6,
+    "log_sha256": "af3df35b9f83c0b4307460fba6c9d3be9be47a1154de9091d4b2b21d0cb2f085",
+    "stage": "route",
+    "started_at": "2026-11-15T16:30:23.124367+00:00",
+    "state": "failed"
+  },
+  "source_run": "afe0768313c3490db19989fe12e2ba6c",
+  "verification_dispatches": [
+    {
+      "dispatches": {
+        "primary": {
+          "classification": "COMPLETED",
+          "configured_cpu_nanocores": 2000000000,
+          "configured_memory_bytes": 1073741824,
+          "docker_oom_killed": false,
+          "elapsed_seconds": 14.004259839,
+          "measurements": {
+            "cpu_throttle_events": {
+              "source": "linux cgroup v2",
+              "unit": "count",
+              "value": 23
+            },
+            "cpu_throttled_usec": {
+              "source": "linux cgroup v2",
+              "unit": "us",
+              "value": 2521200
+            },
+            "cpu_usage_usec": {
+              "source": "linux cgroup v2",
+              "unit": "us",
+              "value": 14831148
+            },
+            "disk_capacity_bytes": {
+              "source": "statvfs experiment filesystem",
+              "unit": "B",
+              "value": 362531516416
+            },
+            "disk_free_bytes": {
+              "source": "statvfs experiment filesystem",
+              "unit": "B",
+              "value": 174217134080
+            },
+            "experiment_bytes": {
+              "source": "bounded experiment tree stat",
+              "unit": "B",
+              "value": 69910589
+            },
+            "host_available_memory_bytes": {
+              "source": "/proc/meminfo",
+              "unit": "B",
+              "value": 3465486336
+            },
+            "log_bytes": {
+              "source": "stat attempt log",
+              "unit": "B",
+              "value": 51676
+            },
+            "memory_current_bytes": {
+              "source": "linux cgroup v2",
+              "unit": "B",
+              "value": 672989184
+            },
+            "memory_kernel_peak_bytes": {
+              "source": "linux cgroup v2",
+              "unit": "B",
+              "value": 673808384
+            },
+            "memory_limit_events": {
+              "source": "linux cgroup v2",
+              "unit": "count",
+              "value": 0
+            },
+            "oom_events": {
+              "source": "linux cgroup v2",
+              "unit": "count",
+              "value": 0
+            },
+            "oom_kills": {
+              "source": "linux cgroup v2",
+              "unit": "count",
+              "value": 0
+            },
+            "process_limit_events": {
+              "source": "linux cgroup v2",
+              "unit": "count",
+              "value": 0
+            },
+            "process_rss_sum_bytes": {
+              "source": "cgroup.procs and /proc/PID/status VmRSS",
+              "unit": "B",
+              "value": 523083776
+            },
+            "swap_current_bytes": {
+              "source": "linux cgroup v2",
+              "unit": "B",
+              "value": 0
+            },
+            "temporary_bytes": {
+              "source": "bounded container /tmp tree stat",
+              "unit": "B",
+              "value": 0
+            }
+          },
+          "native_exit_code": 0,
+          "receipt_sha256": "5906365b193ac5ce3b21c07534f46c896d32e261ce80df03ccdc830b33791eac",
+          "retry_count": 0,
+          "reused_checkpoints": [
+            "finish"
+          ],
+          "sample_interval_seconds": 2,
+          "stage_timeout_seconds": 900,
+          "status": "VERIFIED",
+          "termination_signal": null,
+          "timeout": false
+        }
+      },
+      "exit_code": 0,
+      "id": "aeda-3cc00962af914387bcc118645dc65dd9",
+      "layout_sha256": "c07bbe85d70197a76235b5d6306016187493ec7d026be33b0b3acfa5e2485194",
+      "stage": "drc"
+    },
+    {
+      "dispatches": {
+        "primary": {
+          "classification": "COMPLETED",
+          "configured_cpu_nanocores": 2000000000,
+          "configured_memory_bytes": 1073741824,
+          "docker_oom_killed": false,
+          "elapsed_seconds": 8.64271918,
+          "measurements": {
+            "cpu_throttle_events": {
+              "source": "linux cgroup v2",
+              "unit": "count",
+              "value": 0
+            },
+            "cpu_throttled_usec": {
+              "source": "linux cgroup v2",
+              "unit": "us",
+              "value": 0
+            },
+            "cpu_usage_usec": {
+              "source": "linux cgroup v2",
+              "unit": "us",
+              "value": 6735096
+            },
+            "disk_capacity_bytes": {
+              "source": "statvfs experiment filesystem",
+              "unit": "B",
+              "value": 362531516416
+            },
+            "disk_free_bytes": {
+              "source": "statvfs experiment filesystem",
+              "unit": "B",
+              "value": 174216945664
+            },
+            "experiment_bytes": {
+              "source": "bounded experiment tree stat",
+              "unit": "B",
+              "value": 72647234
+            },
+            "host_available_memory_bytes": {
+              "source": "/proc/meminfo",
+              "unit": "B",
+              "value": 3510534144
+            },
+            "log_bytes": {
+              "source": "stat attempt log",
+              "unit": "B",
+              "value": 41087
+            },
+            "memory_current_bytes": {
+              "source": "linux cgroup v2",
+              "unit": "B",
+              "value": 294649856
+            },
+            "memory_kernel_peak_bytes": {
+              "source": "linux cgroup v2",
+              "unit": "B",
+              "value": 298549248
+            },
+            "memory_limit_events": {
+              "source": "linux cgroup v2",
+              "unit": "count",
+              "value": 0
+            },
+            "oom_events": {
+              "source": "linux cgroup v2",
+              "unit": "count",
+              "value": 0
+            },
+            "oom_kills": {
+              "source": "linux cgroup v2",
+              "unit": "count",
+              "value": 0
+            },
+            "process_limit_events": {
+              "source": "linux cgroup v2",
+              "unit": "count",
+              "value": 0
+            },
+            "process_rss_sum_bytes": {
+              "source": "cgroup.procs and /proc/PID/status VmRSS",
+              "unit": "B",
+              "value": 490921984
+            },
+            "swap_current_bytes": {
+              "source": "linux cgroup v2",
+              "unit": "B",
+              "value": 0
+            },
+            "temporary_bytes": {
+              "source": "bounded container /tmp tree stat",
+              "unit": "B",
+              "value": 0
+            }
+          },
+          "native_exit_code": 0,
+          "receipt_sha256": "14ec9f48dd7fa984c6a16e9a88750207f474b4680940151f617233a876e7ee72",
+          "retry_count": 0,
+          "reused_checkpoints": [
+            "finish"
+          ],
+          "sample_interval_seconds": 2,
+          "stage_timeout_seconds": 900,
+          "status": "VERIFIED",
+          "termination_signal": null,
+          "timeout": false
+        }
+      },
+      "exit_code": 0,
+      "id": "aeda-661f7bc432414438aba14429c8faa388",
+      "layout_sha256": "c07bbe85d70197a76235b5d6306016187493ec7d026be33b0b3acfa5e2485194",
+      "stage": "lvs"
+    },
+    {
+      "dispatches": {
+        "primary": {
+          "classification": "COMPLETED",
+          "configured_cpu_nanocores": 1000000000,
+          "configured_memory_bytes": 1258291200,
+          "docker_oom_killed": false,
+          "elapsed_seconds": 1.8436835700000032,
+          "measurements": {
+            "disk_capacity_bytes": {
+              "source": "statvfs experiment filesystem",
+              "unit": "B",
+              "value": 362531516416
+            },
+            "disk_free_bytes": {
+              "source": "statvfs experiment filesystem",
+              "unit": "B",
+              "value": 174185259008
+            },
+            "experiment_bytes": {
+              "source": "bounded experiment tree stat",
+              "unit": "B",
+              "value": 3795288
+            },
+            "host_available_memory_bytes": {
+              "source": "/proc/meminfo",
+              "unit": "B",
+              "value": 3506749440
+            },
+            "log_bytes": {
+              "source": "stat attempt log",
+              "unit": "B",
+              "value": 781
+            }
+          },
+          "native_exit_code": 0,
+          "receipt_sha256": "07fb563d35d75184ae5296ebdb1d41bbc9721f194eb0e69b1b0e3828443fba41",
+          "retry_count": 0,
+          "reused_checkpoints": [],
+          "sample_interval_seconds": 2,
+          "stage_timeout_seconds": 60,
+          "status": "VERIFIED",
+          "termination_signal": null,
+          "timeout": false
+        }
+      },
+      "exit_code": 0,
+      "id": "aeda-7ae705b01b0b41dc82cad41061341da1",
+      "stage": "timing_coverage",
+      "verification_sha256": "d52f43bf4e5e8d34bc4e85fd82eb47005397b87fb500ec02db4620b82811ac3b"
+    }
+  ]
+}
