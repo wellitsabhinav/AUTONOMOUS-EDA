@@ -105,6 +105,12 @@ await invoke("#console-tab");
 await wait('document.querySelector("#live-status").textContent.includes("idle")');
 await wait('document.querySelector("#context .event")');
 await screenshot("execution");
+if (process.argv.includes("correction")) {
+    await invoke("#correction-review > summary");
+    await wait('document.querySelector("#correction-state").textContent.includes("VERIFIED")');
+    await evaluate('document.querySelector("#correction-review").scrollIntoView({block:"center"})');
+    await screenshot("correction");
+}
 if (large) {
     const failing = await evaluate(
         '[...document.querySelectorAll("#attempts > details")].find(row => row.textContent.includes(" · failed"))?.dataset.id'

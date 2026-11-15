@@ -108,7 +108,15 @@ def preflight() -> str:
     return docker
 
 
-def container_command(docker: str, root: Path, name: str, cores: int, memory_mib: int) -> list[str]:
+def container_command(
+    docker: str,
+    root: Path,
+    name: str,
+    cores: int,
+    memory_mib: int,
+    *,
+    max_processes: int | None = None,
+) -> list[str]:
     if sys.platform != "linux":
         raise ValueError("the ORFS adapter requires Linux")
     if any(char in str(root) for char in ',"\r\n'):
@@ -127,6 +135,7 @@ def container_command(docker: str, root: Path, name: str, cores: int, memory_mib
         f"{memory_mib}m",
         "--memory-swap",
         f"{memory_mib}m",
+        *(["--pids-limit", str(max_processes)] if max_processes is not None else []),
         "--user",
         f"{os.getuid()}:{os.getgid()}",
         "--env",

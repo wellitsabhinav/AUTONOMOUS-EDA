@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "approval_scope": "automated integration test operator decision",
+  "source": {
+    "attempt": "2",
+    "path": "results/sky130hd/gcd/base/2_floorplan.odb",
+    "run_id": "b162fa09cf9442dda08b0b31cb58c728",
+    "sha256": "f9a70a830094e143bfe694328ad360fb60a4a534461d1a658cef141d2e04a561",
+    "top": "gcd"
+  },
+  "diagnosis_sha256": "87b541ff382ab42a7f319b7cc55bde2436d2f6c8d2265f38f300ba5229573972",
+  "retained_fault_log_sha256": "24f7761d28cb972175eb007ddb636e7b4bcd3045274b6367c64d1dfd77662562",
+  "approved": {
+    "plan_sha256": "db55d1e48b3e0549fd3c32f2807008cb4202ff88db2c4aa1b819897efba39e70",
+    "events": [
+      {
+        "state": "OBSERVED",
+        "timestamp": "2026-11-15T05:04:27.915414+00:00"
+      },
+      {
+        "state": "DIAGNOSED",
+        "timestamp": "2026-11-15T05:04:27.915431+00:00"
+      },
+      {
+        "state": "PROPOSED",
+        "timestamp": "2026-11-15T05:04:27.915434+00:00"
+      },
+      {
+        "state": "REVIEWED",
+        "timestamp": "2026-11-15T05:04:29.380022+00:00"
+      },
+      {
+        "state": "APPROVED",
+        "timestamp": "2026-11-15T05:04:29.380045+00:00"
+      },
+      {
+        "state": "EXECUTED",
+        "timestamp": "2026-11-15T05:04:34.414618+00:00"
+      },
+      {
+        "state": "VERIFIED",
+        "timestamp": "2026-11-15T05:04:36.940035+00:00"
+      }
+    ],
+    "snapshot_manifest_sha256": "329db593054087f85dfce00466477543ba9e1c8cc628ecb8ef4968fc87a95d76",
+    "png_sha256": "1ecbf187379b3f10a111e629f3cbdf6d649aa8b8aa3bb620b34426b5a3f26b04",
+    "geometry_sha256": "b476dc0be1d45363c457ff12147dc745ae32002592657983569294402ebb804c",
+    "execution_receipt_sha256": "cf3b2b8112251fd85bbf433219df80913bd62a5f5bb9f06b916bb121bc0a2dd1"
+  },
+  "rejected": {
+    "plan_sha256": "780b486d72e7c272f83923fe8feee0fc38a6e3303b89a6634887dd8097e5740c",
+    "events": [
+      {
+        "state": "OBSERVED",
+        "timestamp": "2026-11-15T05:04:19.684409+00:00"
+      },
+      {
+        "state": "DIAGNOSED",
+        "timestamp": "2026-11-15T05:04:19.684427+00:00"
+      },
+      {
+        "state": "PROPOSED",
+        "timestamp": "2026-11-15T05:04:19.684431+00:00"
+      },
+      {
+        "state": "REVIEWED",
+        "timestamp": "2026-11-15T05:04:21.337961+00:00"
+      },
+      {
+        "state": "REJECTED",
+        "timestamp": "2026-11-15T05:04:21.337990+00:00"
+      }
+    ],
+    "tool_dispatched": false
+  },
+  "process_and_retry": {
+    "run_id": "fba5f614ae014edda651fa78637a5c96",
+    "container_pids_limit": 64,
+    "native_attempt_count": 1,
+    "attempt_seconds": 4.961530731999996,
+    "attempt_log_sha256": "cdc1db94bfcbbd722f9e2574ea29a6d7916ec362a955f2d86a7ee13310d84deb",
+    "attempt_detail": "wall-clock budget exceeded",
+    "resumed_max_retries": 0,
+    "resume_stderr": "synth retry budget exhausted after 1 attempts"
+  },
+  "browser_review": {
+    "file": "gcd-correction.png",
+    "image_sha256": "894e97ddef48ec25ee74314f29e17ef2ad2e862ceccf3948ed573ae0267628b3",
+    "size_pixels": [
+      1440,
+      900
+    ],
+    "browser": "Edg/157.0.4341.60"
+  }
+}

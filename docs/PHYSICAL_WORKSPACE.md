@@ -78,6 +78,23 @@ autonomous-eda artifacts triage-approve experiments/teardown-diagnostic --digest
 
 Optional **--local-model** and **--local-endpoint** use a configured loopback Chat Completions model. The model can prioritize existing findings by ID. The classifier rejects unsupported IDs and retains the deterministic findings. See [model gateway](MODEL_GATEWAY.md) for local runtime setup.
 
+### Review and replay an isolated renderer action
+
+Prepare an exact plan for one recorded OpenDB checkpoint. The plan binds the diagnostic receipt, full crash-log hash, run, stage, attempt, checkpoint hash, PNG width and fresh output directory. Review the plan before entering its digest. Use `--decision reject` to retain a rejection. A changed input invalidates the approval. Verification rechecks the exact checkpoint and both rendered output hashes.
+
+~~~sh
+autonomous-eda artifacts correction plan experiments/teardown-diagnostic \
+  docs/evidence/physical-snapshots experiments/gcd-walkthrough \
+  experiments/teardown-review experiments/gcd-corrected-floorplan --stage floorplan --width 750
+autonomous-eda artifacts correction review experiments/teardown-review \
+  --digest PLAN_SHA256 --decision approve
+autonomous-eda artifacts correction execute experiments/teardown-review --digest PLAN_SHA256
+autonomous-eda artifacts workspace experiments/gcd-snapshots --run experiments/gcd-walkthrough \
+  --correction experiments/teardown-review
+~~~
+
+The controlled integration run rejected one plan before dispatch and verified a separately approved floorplan render with pinned OpenROAD. Studio displayed the observed, diagnosed, proposed, reviewed, approved, executed and verified states from the saved receipts. [Correction receipt](evidence/integration/verified-correction.json) · [Studio correction screen](images/studio/gcd-correction.png)
+
 ## Measured GCD export
 
 Run **b162fa09cf9442dda08b0b31cb58c728** rendered seven checkpoints at 1,000 px wide. Placement contains 502 placed cells. CTS contains 521 placed cells and six clock nets. The global-route checkpoint exposes 2,867 guide rectangles and 500 GCell records. The final GDS provides 56,243 polygons. The published PNGs and their [provenance](images/gcd-stage-snapshots/provenance.json) bind to the original [run receipt](evidence/gcd-walkthrough/receipt.json).

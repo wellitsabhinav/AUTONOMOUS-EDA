@@ -20,4 +20,5 @@ Use one reviewable PR from validated `main` at a time. Each milestone issue reco
 | [10B Intermediate physical pilot](tutorials/OPENTITAN_AES.md#attempt-the-sky130hd-core-flow) | Bind translated AES into the deterministic Sky130HD controller, preserve attempts and publish available physical checkpoints and gates. | 10A |
 | [10C Macro and partition readiness](OPENTITAN_READINESS.md) | Verify the available native DFFRAM views and inventory the pinned Earl Grey source and TopGen boundaries. | 10A, 10B |
 | [10D Studio 2.0](PHYSICAL_WORKSPACE.md) | Inspect genuine GCD and AES checkpoints in a responsive browser workspace, with timing paths, verification, execution events and traceable PNG exports. | 10B, 09D |
+| [10E Integration and evidence](MILESTONE_10_EVALUATION.md) | Verify a digest-bound native renderer correction, budgeted dispatch and the measured readiness and physical receipts. | 10A–10D |
 | [11 Telemetry and benchmark reporting #12](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/12) | Reproduce evidence-backed reports and expose structured run telemetry. | 03, 10 |

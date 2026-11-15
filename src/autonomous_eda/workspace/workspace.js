@@ -660,6 +660,24 @@ $("explore-tab").onclick = () => tab("explore");
 $("verify-tab").onclick = () => tab("verification");
 $("console-tab").onclick = () => tab("console");
 $("refresh-verification").onclick = refreshVerification;
+$("correction-review").addEventListener("toggle", async () => {
+    if (!$("correction-review").open) return;
+    const output = $("correction-state");
+    output.textContent = "Reading correction receipts…";
+    try {
+        const review = await json("/api/correction");
+        if (!review) {
+            output.textContent = "No corrective-action review is selected.";
+            return;
+        }
+        output.replaceChildren(
+            element("p",review.state+" · "+stageLabel(review.stage)+" · "+review.action),
+            element("code",review.plan_sha256),
+            ...review.events.map(event =>
+                element("p",new Date(event.timestamp).toLocaleString()+" · "+event.state))
+        );
+    } catch (error) { output.textContent = error.message; }
+});
 setInterval(refresh,2000);
 
 (async () => {
