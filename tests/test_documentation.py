@@ -190,3 +190,20 @@ def test_opentitan_publication_matches_the_resolved_source_receipts() -> None:
     assert receipt["source_resolution"]["generated_sources"] == len(
         source["generated_sources_sha256"]
     )
+
+
+def test_opentitan_placement_figure_is_bound_to_a_physical_checkpoint() -> None:
+    root = ROOT / "docs/evidence/opentitan-aes"
+    physical = json.loads((root / "physical.json").read_bytes())
+    inspection = json.loads((root / "inspect.json").read_bytes())
+    figure = physical["placement_figure"]
+    checkpoint = figure["provenance"]["source"]
+    assert figure["provenance"]["run_id"] == physical["run_id"]
+    assert checkpoint["stage"] == "place"
+    assert checkpoint["sha256"] == physical["artifact_sha256"][checkpoint["path"]]
+    assert (
+        inspection["conversion"]["output_sha256"] == physical["artifact_sha256"]["aes-input/aes.v"]
+    )
+    assert figure["sha256"] == sha256(
+        ROOT / "docs/images/examples/opentitan-aes" / figure["filename"]
+    )

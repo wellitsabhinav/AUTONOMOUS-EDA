@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import sqlite3
@@ -13,7 +14,12 @@ from typing import Any, Literal, TypedDict
 from .diagnostic_artifacts import STAGE_REPORTS
 from .experiment import report
 from .manifest import fingerprint, sha256
-from .metrics import FINAL_FIELDS, ROUTE_FIELDS, Number, summarize_verified
+from .metrics import FINAL_FIELDS, ROUTE_FIELDS, Number, number, summarize_verified
+from .opentitan_physical import CONFIG as AES_CONFIG
+from .opentitan_physical import RTL_DIGEST as AES_RTL_DIGEST
+from .opentitan_physical import RTL_REVISION as AES_RTL_REVISION
+from .opentitan_physical import SDC as AES_SDC
+from .opentitan_physical import selected as opentitan_aes
 from .reference import IMAGE, REVISION
 
 VERSION = 1
@@ -34,6 +40,69 @@ GATES = (
     "connectivity",
 )
 SKY130_LIBRARY = "sky130_fd_sc_hd__tt_025C_1v80.lib"
+NATIVE_RSS = re.compile(rb"^Elapsed time: [^\r\n]+ Peak memory: ([0-9]+)KB\.$", re.M)
+STAGE_METRICS = {
+    "standard_cell_count": ("design__instance__count__stdcell", "count"),
+    "standard_cell_area": ("design__instance__area__stdcell", "um2"),
+    "die_area": ("design__die__area", "um2"),
+    "core_area": ("design__core__area", "um2"),
+    "utilization": ("design__instance__utilization__stdcell", "ratio"),
+    "setup_worst_slack": ("timing__setup__ws", "ns"),
+    "setup_tns": ("timing__setup__tns", "ns"),
+    "hold_worst_slack": ("timing__hold__ws", "ns"),
+    "hold_tns": ("timing__hold__tns", "ns"),
+    "setup_clock_skew": ("clock__skew__setup", "ns"),
+    "wirelength": ("route__wirelength", "um"),
+}
+
+
+def checked_artifact_bytes(root: Path, path: str, artifact: Artifact) -> bytes | None:
+    size = artifact["size"]
+    if size is None or size > 16 * 2**20:
+        return None
+    try:
+        with (root / path).open("rb") as stream:
+            content = stream.read(size + 1)
+    except OSError:
+        return None
+    if hashlib.sha256(content).hexdigest() != artifact["sha256"]:
+        return None
+    return content
+
+
+def add_stage_metrics(
+    root: Path, variant: str, artifacts: dict[str, Artifact], metrics: dict[str, Metric]
+) -> None:
+    for spec in STAGE_REPORTS:
+        path = f"logs/{variant}/{spec.metrics}"
+        if not verified_artifact(artifacts, path):
+            continue
+        raw = checked_artifact_bytes(root, path, artifacts[path])
+        if raw is None:
+            continue
+        try:
+            data = json.loads(raw)
+        except (ValueError, UnicodeDecodeError):
+            continue
+        if not isinstance(data, dict):
+            continue
+        for field, (reference, units) in STAGE_METRICS.items():
+            native_key = f"{spec.prefix}__{reference}"
+            value = number(data.get(native_key))
+            if value is None:
+                continue
+            name = f"stage.{spec.stage}.{field}"
+            metrics[name] = {
+                "name": name,
+                "value": value,
+                "unit": units,
+                "stage": spec.stage,
+                "corner": None,
+                "artifact": path,
+                "reference": native_key,
+                "method": "orfs-native-stage-metrics-v1",
+                "status": "MEASURED",
+            }
 
 
 class Artifact(TypedDict):
@@ -254,8 +323,21 @@ def get_experiment(root: Path, *, legacy_root: Path | None = None) -> Experiment
                 verification.get("attempt"),
             )
     if data["database_version"] == 2 and not data["input_error"]:
+        rtl_inputs = [data["image"], manifest["config"], manifest["revision"]]
+        if opentitan_aes(manifest["platform"], manifest["design"]):
+            inputs = {
+                "aes-input/aes.v": AES_RTL_DIGEST,
+                "aes-input/config.mk": hashlib.sha256(AES_CONFIG.encode()).hexdigest(),
+                "aes-input/block.sdc": hashlib.sha256(AES_SDC.encode()).hexdigest(),
+            }
+            for relative, digest in inputs.items():
+                artifacts[relative] = artifact_record(
+                    root, run_id, relative, Path(relative).suffix, "inputs", digest, None
+                )
+            data["rtl_source_revision"] = AES_RTL_REVISION
+            rtl_inputs.append(AES_RTL_DIGEST)
         data.update(
-            rtl_identity=fingerprint([data["image"], manifest["config"], manifest["revision"]]),
+            rtl_identity=fingerprint(rtl_inputs),
             library=SKY130_LIBRARY,
             corner="tt_025C_1v80",
         )
@@ -321,6 +403,8 @@ def assemble(
     values["clock_period_ns"] = float(next(iter(periods))) if len(periods) == 1 else None
     corner = data.get("corner")
     metrics = evidence_metrics(values, artifacts, variant, corner)
+    if not data.get("input_error"):
+        add_stage_metrics(root, variant, artifacts, metrics)
     count = metrics["router_drc_errors"]["value"]
     if count is not None:
         gates["router"] = evidence_gate(
@@ -349,6 +433,21 @@ def assemble(
                 "method": "monotonic-wall-v1",
                 "status": "MEASURED",
             }
+            raw = checked_artifact_bytes(root, path, artifacts[path])
+            rss = max((int(value) for value in NATIVE_RSS.findall(raw or b"")), default=None)
+            if rss is not None:
+                name = f"stage_peak_process_rss.{item['id']}"
+                metrics[name] = {
+                    "name": name,
+                    "value": rss,
+                    "unit": "KiB",
+                    "stage": item["stage"],
+                    "corner": None,
+                    "artifact": path,
+                    "reference": "maximum native timed subprocess RSS in the attempt log",
+                    "method": "orfs-native-time-v1",
+                    "status": "MEASURED",
+                }
     for target, verification in data.get("verification", {}).items():
         path = f"attempts/{verification.get('attempt')}/{target}.log"
         duration = verification.get("runtime_seconds")
@@ -377,8 +476,8 @@ def assemble(
         else "legacy_controller",
         "input_manifest": manifest,
         "rtl_identity": data.get("rtl_identity"),
-        "source_revision": manifest["revision"],
-        "constraints": [sdc] if sdc in artifacts else [],
+        "source_revision": data.get("rtl_source_revision", manifest["revision"]),
+        "constraints": [name for name in (sdc, "aes-input/block.sdc") if name in artifacts],
         "configuration_sha256": data.get("configuration_sha256"),
         "toolchain": {
             "image": data["image"],

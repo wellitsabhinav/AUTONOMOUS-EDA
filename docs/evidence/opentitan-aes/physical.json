@@ -1,0 +1,676 @@
+{
+  "schema_version": 1,
+  "run_id": "0271212dcd2043cbbef05cc59e4dc55e",
+  "readiness_level": 2,
+  "toolchain": {
+    "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+    "orfs_revision": "23341145f0fc92a522de26d5244a4a0013818f97",
+    "library": "sky130_fd_sc_hd__tt_025C_1v80.lib",
+    "yosys": "0.68+post"
+  },
+  "rtl_revision": "b2d662157db2802bde0e40dfc96fd0316042d116",
+  "run_inputs": {
+    "top": "aes",
+    "design": "opentitan_aes",
+    "platform": "sky130hd",
+    "config": "designs/sky130hd/opentitan_aes/config.mk",
+    "revision": "23341145f0fc92a522de26d5244a4a0013818f97",
+    "clock_period_ns": 8.5,
+    "cores": 2,
+    "stage_timeout_seconds": 900,
+    "backend": "orfs",
+    "core_utilization": null
+  },
+  "attempts": [
+    {
+      "id": 1,
+      "stage": "synth",
+      "state": "passed",
+      "runtime_seconds": 321.736753323,
+      "detail": null,
+      "log": "attempts/aeda-f66c9f6c93b24b7b8eb9f7d441d33b2b/synth.log",
+      "started_at": "2026-11-15T03:53:59.191908+00:00",
+      "ended_at": "2026-11-15T03:59:21.460409+00:00",
+      "exit_code": 0
+    },
+    {
+      "id": 2,
+      "stage": "floorplan",
+      "state": "passed",
+      "runtime_seconds": 32.38693695500001,
+      "detail": null,
+      "log": "attempts/aeda-37859a3b76844a228d5b8e9349f14c64/floorplan.log",
+      "started_at": "2026-11-15T03:59:21.570058+00:00",
+      "ended_at": "2026-11-15T03:59:54.531928+00:00",
+      "exit_code": 0
+    },
+    {
+      "id": 3,
+      "stage": "place",
+      "state": "passed",
+      "runtime_seconds": 250.76570497999995,
+      "detail": null,
+      "log": "attempts/aeda-f3d10f8f9fd5451cbffdd19f415c0a61/place.log",
+      "started_at": "2026-11-15T03:59:54.628209+00:00",
+      "ended_at": "2026-11-15T04:04:05.991943+00:00",
+      "exit_code": 0
+    },
+    {
+      "id": 4,
+      "stage": "cts",
+      "state": "passed",
+      "runtime_seconds": 253.24864114500008,
+      "detail": null,
+      "log": "attempts/aeda-cc96d54d9c5e4b1386043f5fa379d477/cts.log",
+      "started_at": "2026-11-15T04:04:06.099542+00:00",
+      "ended_at": "2026-11-15T04:08:20.000277+00:00",
+      "exit_code": 0
+    },
+    {
+      "id": 5,
+      "stage": "grt",
+      "state": "running",
+      "runtime_seconds": null,
+      "detail": null,
+      "log": "attempts/aeda-8d1cfa332dd7493d89db21ddb1335144/grt.log",
+      "started_at": "2026-11-15T04:08:20.108723+00:00",
+      "ended_at": null,
+      "exit_code": null
+    }
+  ],
+  "metrics": {
+    "clock_period_ns": {
+      "name": "clock_period_ns",
+      "value": 8.5,
+      "unit": "ns",
+      "stage": "synth",
+      "corner": null,
+      "artifact": "results/sky130hd/opentitan_aes/base/1_synth.sdc",
+      "reference": "create_clock period",
+      "method": "orfs-normalization-v1",
+      "status": "MEASURED"
+    },
+    "stage.synth.standard_cell_count": {
+      "name": "stage.synth.standard_cell_count",
+      "value": 60206,
+      "unit": "count",
+      "stage": "synth",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/1_synth.json",
+      "reference": "synth__design__instance__count__stdcell",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.synth.standard_cell_area": {
+      "name": "stage.synth.standard_cell_area",
+      "value": 487449,
+      "unit": "um2",
+      "stage": "synth",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/1_synth.json",
+      "reference": "synth__design__instance__area__stdcell",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.synth.die_area": {
+      "name": "stage.synth.die_area",
+      "value": 0,
+      "unit": "um2",
+      "stage": "synth",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/1_synth.json",
+      "reference": "synth__design__die__area",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.synth.core_area": {
+      "name": "stage.synth.core_area",
+      "value": 0,
+      "unit": "um2",
+      "stage": "synth",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/1_synth.json",
+      "reference": "synth__design__core__area",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.floorplan.standard_cell_count": {
+      "name": "stage.floorplan.standard_cell_count",
+      "value": 60213,
+      "unit": "count",
+      "stage": "floorplan",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/2_1_floorplan.json",
+      "reference": "floorplan__design__instance__count__stdcell",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.floorplan.standard_cell_area": {
+      "name": "stage.floorplan.standard_cell_area",
+      "value": 487498,
+      "unit": "um2",
+      "stage": "floorplan",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/2_1_floorplan.json",
+      "reference": "floorplan__design__instance__area__stdcell",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.floorplan.die_area": {
+      "name": "stage.floorplan.die_area",
+      "value": 1406900.0,
+      "unit": "um2",
+      "stage": "floorplan",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/2_1_floorplan.json",
+      "reference": "floorplan__design__die__area",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.floorplan.core_area": {
+      "name": "stage.floorplan.core_area",
+      "value": 1386430.0,
+      "unit": "um2",
+      "stage": "floorplan",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/2_1_floorplan.json",
+      "reference": "floorplan__design__core__area",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.floorplan.utilization": {
+      "name": "stage.floorplan.utilization",
+      "value": 0.351621,
+      "unit": "ratio",
+      "stage": "floorplan",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/2_1_floorplan.json",
+      "reference": "floorplan__design__instance__utilization__stdcell",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.floorplan.setup_worst_slack": {
+      "name": "stage.floorplan.setup_worst_slack",
+      "value": 0.00205347,
+      "unit": "ns",
+      "stage": "floorplan",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/2_1_floorplan.json",
+      "reference": "floorplan__timing__setup__ws",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.floorplan.setup_tns": {
+      "name": "stage.floorplan.setup_tns",
+      "value": 0,
+      "unit": "ns",
+      "stage": "floorplan",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/2_1_floorplan.json",
+      "reference": "floorplan__timing__setup__tns",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.floorplan.hold_worst_slack": {
+      "name": "stage.floorplan.hold_worst_slack",
+      "value": 0.33121,
+      "unit": "ns",
+      "stage": "floorplan",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/2_1_floorplan.json",
+      "reference": "floorplan__timing__hold__ws",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.floorplan.hold_tns": {
+      "name": "stage.floorplan.hold_tns",
+      "value": 0,
+      "unit": "ns",
+      "stage": "floorplan",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/2_1_floorplan.json",
+      "reference": "floorplan__timing__hold__tns",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.place.standard_cell_count": {
+      "name": "stage.place.standard_cell_count",
+      "value": 80677,
+      "unit": "count",
+      "stage": "place",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/3_5_place_dp.json",
+      "reference": "detailedplace__design__instance__count__stdcell",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.place.standard_cell_area": {
+      "name": "stage.place.standard_cell_area",
+      "value": 550759,
+      "unit": "um2",
+      "stage": "place",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/3_5_place_dp.json",
+      "reference": "detailedplace__design__instance__area__stdcell",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.place.die_area": {
+      "name": "stage.place.die_area",
+      "value": 1406900.0,
+      "unit": "um2",
+      "stage": "place",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/3_5_place_dp.json",
+      "reference": "detailedplace__design__die__area",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.place.core_area": {
+      "name": "stage.place.core_area",
+      "value": 1386430.0,
+      "unit": "um2",
+      "stage": "place",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/3_5_place_dp.json",
+      "reference": "detailedplace__design__core__area",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.place.utilization": {
+      "name": "stage.place.utilization",
+      "value": 0.39725,
+      "unit": "ratio",
+      "stage": "place",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/3_5_place_dp.json",
+      "reference": "detailedplace__design__instance__utilization__stdcell",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.place.setup_worst_slack": {
+      "name": "stage.place.setup_worst_slack",
+      "value": -1.05581,
+      "unit": "ns",
+      "stage": "place",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/3_5_place_dp.json",
+      "reference": "detailedplace__timing__setup__ws",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.place.setup_tns": {
+      "name": "stage.place.setup_tns",
+      "value": -259.003,
+      "unit": "ns",
+      "stage": "place",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/3_5_place_dp.json",
+      "reference": "detailedplace__timing__setup__tns",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.place.hold_worst_slack": {
+      "name": "stage.place.hold_worst_slack",
+      "value": 0.334725,
+      "unit": "ns",
+      "stage": "place",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/3_5_place_dp.json",
+      "reference": "detailedplace__timing__hold__ws",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.place.hold_tns": {
+      "name": "stage.place.hold_tns",
+      "value": 0,
+      "unit": "ns",
+      "stage": "place",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/3_5_place_dp.json",
+      "reference": "detailedplace__timing__hold__tns",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.cts.standard_cell_count": {
+      "name": "stage.cts.standard_cell_count",
+      "value": 82113,
+      "unit": "count",
+      "stage": "cts",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/4_1_cts.json",
+      "reference": "cts__design__instance__count__stdcell",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.cts.standard_cell_area": {
+      "name": "stage.cts.standard_cell_area",
+      "value": 578585,
+      "unit": "um2",
+      "stage": "cts",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/4_1_cts.json",
+      "reference": "cts__design__instance__area__stdcell",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.cts.die_area": {
+      "name": "stage.cts.die_area",
+      "value": 1406900.0,
+      "unit": "um2",
+      "stage": "cts",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/4_1_cts.json",
+      "reference": "cts__design__die__area",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.cts.core_area": {
+      "name": "stage.cts.core_area",
+      "value": 1386430.0,
+      "unit": "um2",
+      "stage": "cts",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/4_1_cts.json",
+      "reference": "cts__design__core__area",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.cts.utilization": {
+      "name": "stage.cts.utilization",
+      "value": 0.41732,
+      "unit": "ratio",
+      "stage": "cts",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/4_1_cts.json",
+      "reference": "cts__design__instance__utilization__stdcell",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.cts.setup_worst_slack": {
+      "name": "stage.cts.setup_worst_slack",
+      "value": -0.0109841,
+      "unit": "ns",
+      "stage": "cts",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/4_1_cts.json",
+      "reference": "cts__timing__setup__ws",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.cts.setup_tns": {
+      "name": "stage.cts.setup_tns",
+      "value": -0.0273941,
+      "unit": "ns",
+      "stage": "cts",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/4_1_cts.json",
+      "reference": "cts__timing__setup__tns",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.cts.hold_worst_slack": {
+      "name": "stage.cts.hold_worst_slack",
+      "value": 0.345366,
+      "unit": "ns",
+      "stage": "cts",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/4_1_cts.json",
+      "reference": "cts__timing__hold__ws",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.cts.hold_tns": {
+      "name": "stage.cts.hold_tns",
+      "value": 0,
+      "unit": "ns",
+      "stage": "cts",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/4_1_cts.json",
+      "reference": "cts__timing__hold__tns",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.cts.setup_clock_skew": {
+      "name": "stage.cts.setup_clock_skew",
+      "value": 1.10392,
+      "unit": "ns",
+      "stage": "cts",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/4_1_cts.json",
+      "reference": "cts__clock__skew__setup",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage_runtime.1": {
+      "name": "stage_runtime.1",
+      "value": 321.736753323,
+      "unit": "s",
+      "stage": "synth",
+      "corner": null,
+      "artifact": "attempts/aeda-f66c9f6c93b24b7b8eb9f7d441d33b2b/synth.log",
+      "reference": "attempt runtime",
+      "method": "monotonic-wall-v1",
+      "status": "MEASURED"
+    },
+    "stage_peak_process_rss.1": {
+      "name": "stage_peak_process_rss.1",
+      "value": 716712,
+      "unit": "KiB",
+      "stage": "synth",
+      "corner": null,
+      "artifact": "attempts/aeda-f66c9f6c93b24b7b8eb9f7d441d33b2b/synth.log",
+      "reference": "maximum native timed subprocess RSS in the attempt log",
+      "method": "orfs-native-time-v1",
+      "status": "MEASURED"
+    },
+    "stage_runtime.2": {
+      "name": "stage_runtime.2",
+      "value": 32.38693695500001,
+      "unit": "s",
+      "stage": "floorplan",
+      "corner": null,
+      "artifact": "attempts/aeda-37859a3b76844a228d5b8e9349f14c64/floorplan.log",
+      "reference": "attempt runtime",
+      "method": "monotonic-wall-v1",
+      "status": "MEASURED"
+    },
+    "stage_peak_process_rss.2": {
+      "name": "stage_peak_process_rss.2",
+      "value": 376368,
+      "unit": "KiB",
+      "stage": "floorplan",
+      "corner": null,
+      "artifact": "attempts/aeda-37859a3b76844a228d5b8e9349f14c64/floorplan.log",
+      "reference": "maximum native timed subprocess RSS in the attempt log",
+      "method": "orfs-native-time-v1",
+      "status": "MEASURED"
+    },
+    "stage_runtime.3": {
+      "name": "stage_runtime.3",
+      "value": 250.76570497999995,
+      "unit": "s",
+      "stage": "place",
+      "corner": null,
+      "artifact": "attempts/aeda-f3d10f8f9fd5451cbffdd19f415c0a61/place.log",
+      "reference": "attempt runtime",
+      "method": "monotonic-wall-v1",
+      "status": "MEASURED"
+    },
+    "stage_peak_process_rss.3": {
+      "name": "stage_peak_process_rss.3",
+      "value": 927764,
+      "unit": "KiB",
+      "stage": "place",
+      "corner": null,
+      "artifact": "attempts/aeda-f3d10f8f9fd5451cbffdd19f415c0a61/place.log",
+      "reference": "maximum native timed subprocess RSS in the attempt log",
+      "method": "orfs-native-time-v1",
+      "status": "MEASURED"
+    },
+    "stage_runtime.4": {
+      "name": "stage_runtime.4",
+      "value": 253.24864114500008,
+      "unit": "s",
+      "stage": "cts",
+      "corner": null,
+      "artifact": "attempts/aeda-cc96d54d9c5e4b1386043f5fa379d477/cts.log",
+      "reference": "attempt runtime",
+      "method": "monotonic-wall-v1",
+      "status": "MEASURED"
+    },
+    "stage_peak_process_rss.4": {
+      "name": "stage_peak_process_rss.4",
+      "value": 705740,
+      "unit": "KiB",
+      "stage": "cts",
+      "corner": null,
+      "artifact": "attempts/aeda-cc96d54d9c5e4b1386043f5fa379d477/cts.log",
+      "reference": "maximum native timed subprocess RSS in the attempt log",
+      "method": "orfs-native-time-v1",
+      "status": "MEASURED"
+    }
+  },
+  "artifact_sha256": {
+    "results/sky130hd/opentitan_aes/base/1_synth.odb": "18ad20ce95f6b1be9dea55e83b70fb7886958752f8d852d0b27a5b59d36c1e67",
+    "results/sky130hd/opentitan_aes/base/1_synth.sdc": "9434b9e1442eaf5fdf6fbeda35fc95cf46e43717bf6b9ba51133e390d9c5d11e",
+    "attempts/aeda-f66c9f6c93b24b7b8eb9f7d441d33b2b/synth.log": "d285f709f05af4ddc95acc5a63f58774bc9e094716f630957fd3cd41cee9a705",
+    "logs/sky130hd/opentitan_aes/base/1_2_yosys.log": "646f4765edc770d7d702b43250e2d1429a9a94ee6816a1acd5c8c7d241b244b3",
+    "logs/sky130hd/opentitan_aes/base/1_synth.json": "9d6f3744321fe6b5f417020dab2799bb3433fd6115552f678942075cb9d04361",
+    "results/sky130hd/opentitan_aes/base/2_floorplan.odb": "09174f77f467cb087f2ed4df50e60fea21b7a24fcd86ecc6cfc6df21e36e6f7a",
+    "results/sky130hd/opentitan_aes/base/2_floorplan.sdc": "9434b9e1442eaf5fdf6fbeda35fc95cf46e43717bf6b9ba51133e390d9c5d11e",
+    "attempts/aeda-37859a3b76844a228d5b8e9349f14c64/floorplan.log": "b103f9241f043d39b5588ac8a132c72a647abbc38fbba05d0e8fd581ed64aed7",
+    "logs/sky130hd/opentitan_aes/base/2_1_floorplan.json": "f18b31fe9af5949ab060bd172230fffa4a39bfa2e2ea35e5c77c3a316b17909e",
+    "reports/sky130hd/opentitan_aes/base/2_floorplan_final.rpt": "fbd3f99e47bb3a7d1d8e6cc4ac0eae13f13675fae8497062a47124cebdb53991",
+    "results/sky130hd/opentitan_aes/base/3_place.odb": "82f237ac8bf329013796707ae2a51f82fd140a66ba7bbf6fcb053c2bc9b634d9",
+    "results/sky130hd/opentitan_aes/base/3_place.sdc": "9434b9e1442eaf5fdf6fbeda35fc95cf46e43717bf6b9ba51133e390d9c5d11e",
+    "attempts/aeda-f3d10f8f9fd5451cbffdd19f415c0a61/place.log": "e6498461ca7b247c8b8b2135e3309bff45ac34d0b4b3a98f6f91212cc228e338",
+    "logs/sky130hd/opentitan_aes/base/3_5_place_dp.json": "7181a2084c7aa14a4d3187019bac2f42ffd57737eb50bea03d27f67fb730f915",
+    "reports/sky130hd/opentitan_aes/base/3_detailed_place.rpt": "d0b322fe825fe51fe8b5da0cfcc1daf549c44933c9389633dc5849cd8d51b3da",
+    "results/sky130hd/opentitan_aes/base/4_cts.odb": "dec1bf50750434f6c5e47eedacfbd57f3ee14a5b314e88693b1643ddaf785b24",
+    "results/sky130hd/opentitan_aes/base/4_cts.sdc": "437815ffc7e2b699955986cdb10e078f9ec7c7dddd0c3f255a472cf736dea242",
+    "attempts/aeda-cc96d54d9c5e4b1386043f5fa379d477/cts.log": "dcb1aad5eaba8c1671925ba192d58b169c45b072b2060da098d207bd77844f4f",
+    "logs/sky130hd/opentitan_aes/base/4_1_cts.json": "9f1bf8014e00192520f60eea81293bdbf748850e8775757541e8f458b1252572",
+    "reports/sky130hd/opentitan_aes/base/4_cts_final.rpt": "e02a630d7dbcbcbbdd3d5f1633e08ee6bf02186454d0ba3de9726e8cd36016c0",
+    "aes-input/aes.v": "f2adfd17f78bbdbe0ecad10a61e08d8a574aa706feb0a2c7b818775fd5f944a8",
+    "aes-input/config.mk": "cc39e0ef8e5595c9c836d73eee57de3bc8dabac11a86891183efe606035196e5",
+    "aes-input/block.sdc": "c9469d7e34cb05c457c8951806a15754f7c785dda43bdd6f80aa1525ddb020cc"
+  },
+  "controller_gates": {
+    "elaboration": {
+      "state": "NOT_CHECKED",
+      "artifacts": []
+    },
+    "functional_regression": {
+      "state": "NOT_CHECKED",
+      "artifacts": []
+    },
+    "equivalence": {
+      "state": "NOT_CHECKED",
+      "artifacts": []
+    },
+    "synthesis": {
+      "state": "PASSED",
+      "artifacts": [
+        "results/sky130hd/opentitan_aes/base/1_synth.odb",
+        "results/sky130hd/opentitan_aes/base/1_synth.sdc",
+        "attempts/aeda-f66c9f6c93b24b7b8eb9f7d441d33b2b/synth.log",
+        "logs/sky130hd/opentitan_aes/base/1_2_yosys.log",
+        "logs/sky130hd/opentitan_aes/base/1_synth.json"
+      ]
+    },
+    "setup": {
+      "state": "NOT_CHECKED",
+      "artifacts": [
+        "logs/sky130hd/opentitan_aes/base/6_report.json"
+      ]
+    },
+    "hold": {
+      "state": "NOT_CHECKED",
+      "artifacts": [
+        "logs/sky130hd/opentitan_aes/base/6_report.json"
+      ]
+    },
+    "timing_coverage": {
+      "state": "NOT_CHECKED",
+      "artifacts": []
+    },
+    "gds_generation": {
+      "state": "NOT_CHECKED",
+      "artifacts": [
+        "results/sky130hd/opentitan_aes/base/6_final.gds"
+      ]
+    },
+    "gds_reopen": {
+      "state": "NOT_CHECKED",
+      "artifacts": [
+        "results/sky130hd/opentitan_aes/base/6_final.gds",
+        "gds-validation.log"
+      ]
+    },
+    "router": {
+      "state": "NOT_CHECKED",
+      "artifacts": []
+    },
+    "platform_drc": {
+      "state": "NOT_CHECKED",
+      "artifacts": [
+        "results/sky130hd/opentitan_aes/base/6_final.gds",
+        "reports/sky130hd/opentitan_aes/base/6_drc_count.rpt",
+        "reports/sky130hd/opentitan_aes/base/6_drc.lyrdb"
+      ]
+    },
+    "lvs": {
+      "state": "NOT_CHECKED",
+      "artifacts": [
+        "results/sky130hd/opentitan_aes/base/6_final.gds",
+        "logs/sky130hd/opentitan_aes/base/6_lvs.log",
+        "results/sky130hd/opentitan_aes/base/6_lvs.lvsdb"
+      ]
+    },
+    "connectivity": {
+      "state": "NOT_CHECKED",
+      "artifacts": []
+    }
+  },
+  "controller_acceptance": "BLOCKED",
+  "placement_figure": {
+    "filename": "placement.png",
+    "sha256": "3f28b27d9ebb848c4865e6516b5090f833d62f3cd2e91aed81254d1eb6159237",
+    "provenance": {
+      "collateral": [],
+      "container_image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+      "environment": {
+        "AEDA_FORMAT": "odb",
+        "AEDA_WIDTH": "860",
+        "QT_QPA_PLATFORM": "offscreen"
+      },
+      "generation_command": [
+        "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad",
+        "-no_init",
+        "-threads",
+        "1",
+        "-gui",
+        "-exit",
+        "/work/render.tcl"
+      ],
+      "run_id": "0271212dcd2043cbbef05cc59e4dc55e",
+      "schema_version": 1,
+      "script_sha256": "c21f3609a9057b3d70ba93532ce6942ac4e39de5418b88764970102444f491f2",
+      "source": {
+        "attempt": "3",
+        "evidence": "recorded",
+        "path": "results/sky130hd/opentitan_aes/base/3_place.odb",
+        "sha256": "82f237ac8bf329013796707ae2a51f82fd140a66ba7bbf6fcb053c2bc9b634d9",
+        "stage": "place",
+        "timing": [
+          "reports/sky130hd/opentitan_aes/base/3_detailed_place.rpt",
+          "d0b322fe825fe51fe8b5da0cfcc1daf549c44933c9389633dc5849cd8d51b3da"
+        ]
+      },
+      "tool": "OpenROAD",
+      "tool_version": "OpenROAD unknown",
+      "top": "aes"
+    }
+  }
+}

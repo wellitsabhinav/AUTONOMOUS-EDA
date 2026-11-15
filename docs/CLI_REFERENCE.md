@@ -24,7 +24,9 @@ Run `autonomous-eda COMMAND --help` for current arguments and defaults. The same
 ## Output and exit codes
 
 - `plan`, `run`, `resume` and unprofiled `report` use JSON. The controller returns 0 for completed implementation and 1 when implementation cannot complete successfully.
+- `run` and physical `resume` accept `--wall-clock-seconds` and `--max-artifact-mib`. The controller checks total retained run-file bytes periodically, including failed attempts, and stops dispatch without erasing evidence. The limits apply to that implementation invocation.
 - `verify RUN` invokes the platform decks. Its exit code reflects their outcomes. Use `verify RUN --profile physical --coverage --decks` for the wider physical verification scope.
 - A profiled `verify` accepts `--markdown` and returns 0 for acceptance and 1 for failed or blocked acceptance. `report RUN --profile PROFILE` reads the verdict for an existing run without executing physical stages.
+- `report RUN --engineering` writes Markdown with retained attempts, runtime, verified native process RSS where available, implementation measurements and independent gate status. Unprofiled `report RUN` keeps its JSON format.
 - `diagnose RUN --json` emits structured evidence. A successful diagnosis can report a failed gate.
 - The controller uses 2 for invalid inputs and 130 for interruption. Doctor has its own [host readiness exit codes](ENVIRONMENT_DOCTOR.md).

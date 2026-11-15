@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import errno
 import json
 import shutil
 import signal
 import sqlite3
 import sys
+import time
 import uuid
 from collections.abc import Iterator
 from contextlib import closing, contextmanager
@@ -19,9 +21,11 @@ from .diagnostic_artifacts import supplemental_artifacts
 from .doctor import available_cpus, memory_bytes
 from .manifest import ORFSManifest, fingerprint, integer, load_manifest, sha256
 from .metrics import summarize
+from .opentitan_physical import check_bundle, check_translated_rtl, selected, stage_bundle
 from .orfs import (
     GDS_CHECK,
     DispatchGuard,
+    DispatchStopped,
     Stage,
     artifact_hashes,
     container_command,
@@ -53,12 +57,28 @@ def db_version(db: sqlite3.Connection) -> int:
     return version
 
 
-def initialize(root: Path, manifest_path: Path, manifest: ORFSManifest, memory_mib: int) -> None:
+def initialize(
+    root: Path,
+    manifest_path: Path,
+    manifest: ORFSManifest,
+    memory_mib: int,
+    *,
+    translated_rtl: Path | None = None,
+) -> None:
     stage_plan(manifest)
     integer(memory_mib, "memory_mib", 1048576)
     if load_manifest(manifest_path) != manifest:
         raise ValueError("manifest changed before initialization")
+    aes = selected(manifest.platform, manifest.design)
+    if aes and translated_rtl is None:
+        raise ValueError("the AES run requires --translated-rtl")
+    if translated_rtl is not None:
+        if not aes:
+            raise ValueError("--translated-rtl is supported only for the pinned OpenTitan AES")
+        check_translated_rtl(translated_rtl)
     root.mkdir(parents=True, exist_ok=False)
+    if translated_rtl is not None:
+        stage_bundle(translated_rtl, root)
     shutil.copyfile(manifest_path, root / "manifest.toml")
     if load_manifest(root / "manifest.toml") != manifest:
         raise ValueError("manifest changed during initialization")
@@ -125,6 +145,8 @@ def execution_lock(root: Path) -> Iterator[None]:
 
 
 def check_inputs(root: Path, db: sqlite3.Connection, manifest: ORFSManifest) -> int:
+    if selected(manifest.platform, manifest.design):
+        check_bundle(root)
     expected, image, limit = db.execute("SELECT manifest, image, memory_mib FROM run").fetchone()
     saved = json.loads(expected)
     saved.setdefault("core_utilization", None)
@@ -257,13 +279,19 @@ def run_stages(
                 )
         state, detail, elapsed, hashes = "failed", None, 0.0, None
         code: int | None = None
+        start = time.monotonic()
         try:
             options = {"guard": guard} if guard is not None else {}
             code, elapsed = execute(
                 commands[0], manifest.stage_timeout_seconds, log, name, **options
             )
             if code:
-                raise ValueError(f"ORFS {stage.name} exited {code}")
+                reason = {
+                    124: "stage timeout",
+                    137: "SIGKILL, possible container memory exhaustion",
+                }.get(code)
+                suffix = f" ({reason})" if reason else ""
+                raise ValueError(f"ORFS {stage.name} exited {code}{suffix}")
             hashes = artifact_hashes(root, stage)
             if version == 2 and log.is_file():
                 hashes[log.relative_to(root).as_posix()] = sha256(log)
@@ -299,10 +327,17 @@ def run_stages(
                             continue
             state = "passed"
             passed.add(stage.name)
-        except (OSError, ValueError) as error:
+        except OSError as error:
+            detail = "disk exhausted" if error.errno == errno.ENOSPC else str(error)
+        except ValueError as error:
             detail = str(error)
+        except DispatchStopped as error:
+            state, detail = "interrupted", str(error)
+            elapsed = time.monotonic() - start
+            raise
         except KeyboardInterrupt:
             state, detail = "interrupted", "Stage execution interrupted"
+            elapsed = time.monotonic() - start
             raise
         finally:
             with db:

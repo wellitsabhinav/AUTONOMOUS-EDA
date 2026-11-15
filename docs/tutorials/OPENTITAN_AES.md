@@ -77,6 +77,29 @@ The source setup took 4.31 s and 4.56 s in the independent runs. Staging, transl
 | 5 | Qualified hierarchical partitions, abstracts and interfaces |
 | 6 | Complete chip timing, physical and electrical collateral |
 
-The AES configuration reached **Level 1**. Yosys also completed generic gate synthesis. A Sky130HD block SDC would need to preserve the parent clock intent and supply interface delays for the isolated block. Earl Grey connects both AES clock inputs to the main source and applies distinct port and reset connections at integration. The upstream Nangate pre-synthesis SDC drives inputs with `BUF_X2` and does not supply a full Sky130HD interface contract. The AES DV suite, mapped synthesis and physical checks remain pending. [Pinned top configuration](https://github.com/lowRISC/opentitan/blob/b2d662157db2802bde0e40dfc96fd0316042d116/hw/top_earlgrey/data/top_earlgrey.hjson) · [Pinned chip SDC](https://github.com/lowRISC/opentitan/blob/b2d662157db2802bde0e40dfc96fd0316042d116/hw/top_earlgrey/syn/chip_earlgrey_asic.sdc)
+The 10A source receipt established **Level 1** and recorded generic gate synthesis. The 10B physical receipt records the higher observed level from Sky130HD execution. Earl Grey connects both AES clock inputs to the main source and applies distinct port and reset connections at integration. The upstream Nangate pre-synthesis SDC drives inputs with `BUF_X2`. The isolated Sky130HD flow still needs a qualified interface timing contract and the AES functional DV suite. [Pinned top configuration](https://github.com/lowRISC/opentitan/blob/b2d662157db2802bde0e40dfc96fd0316042d116/hw/top_earlgrey/data/top_earlgrey.hjson) · [Pinned chip SDC](https://github.com/lowRISC/opentitan/blob/b2d662157db2802bde0e40dfc96fd0316042d116/hw/top_earlgrey/syn/chip_earlgrey_asic.sdc)
 
 The elaborated AES netlist has no unresolved black boxes or inferred memories in the current inventory. For the full chip, SRAM, ROM, nonvolatile memory, analog support and IO still need technology-bound logical, timing, geometry and electrical views. Whole-chip generation, elaboration, signoff and partition interface qualification are outside this measurement. [Earl Grey design documentation](https://github.com/lowRISC/opentitan/tree/b2d662157db2802bde0e40dfc96fd0316042d116/hw/top_earlgrey)
+
+## Attempt the Sky130HD core flow
+
+Use the [pinned physical manifest](../../configs/opentitan-aes-sky130hd.toml). The controller accepts only the 10A translated Verilog digest and stages a fixed Make config and SDC. It verifies the three files before dispatch and on resume. Make config and SDC checks are independent of the tool stage checkpoints.
+
+The block SDC applies Earl Grey's 10 ns main target multiplied by its 0.85 overconstraint factor to both clock ports. The ports retain independent physical nets. The experiment uses the stock Sky130HD typical library, 35% starting utilization, two cores and a 3,000 MiB container memory limit. The IO delays and cross-block, reset and supply constraints remain integration inputs. [Clock target](https://github.com/lowRISC/opentitan/blob/b2d662157db2802bde0e40dfc96fd0316042d116/hw/top_earlgrey/syn/chip_earlgrey_asic.sdc) · [Clock factor](https://github.com/lowRISC/opentitan/blob/b2d662157db2802bde0e40dfc96fd0316042d116/hw/top_earlgrey/syn/ot.sdc_setup.tcl)
+
+~~~bash
+autonomous-eda run configs/opentitan-aes-sky130hd.toml experiments/aes-physical \
+  --translated-rtl "$root/aes-translated.v" --memory-mib 3000 \
+  --wall-clock-seconds 1800 --max-artifact-mib 4096
+autonomous-eda report experiments/aes-physical
+autonomous-eda report experiments/aes-physical --engineering
+autonomous-eda verify experiments/aes-physical --profile physical --coverage --decks
+~~~
+
+The example wall-clock and artifact budgets are operator limits. The controller preserves elapsed stage time, native logs and interrupted attempts, and permits resuming with a new invocation budget. The sampled artifact limit counts logical bytes in the run tree and can be exceeded between samples. Container memory is enforced by Docker. A hard kill with no direct memory evidence remains a possible memory-exhaustion event.
+
+Mapped synthesis produced 60,206 Sky130HD standard cells and 487,449 µm² of cell area. Detailed placement reported 550,759 µm² and roughly 40% utilization. CTS reported 1.10392 ns setup skew and −0.0109841 ns setup worst slack at its checkpoint. Final acceptance uses the finish and verification evidence. [Physical measurements and attempt receipts](../evidence/opentitan-aes/physical.json)
+
+![OpenTitan AES Sky130HD placement checkpoint](../images/examples/opentitan-aes/placement.png)
+
+OpenROAD rendered this placement image from the hash-verified `3_place.odb` checkpoint. The physical receipt includes the OpenDB SHA-256, renderer settings and PNG SHA-256.

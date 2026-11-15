@@ -16,12 +16,14 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from .manifest import ORFSManifest
+from .opentitan_physical import selected
 from .reference import IMAGE, ORFS_ROOT, REVISION
 
 FLOW = f"{ORFS_ROOT}/flow"
 REFERENCE_DESIGNS = {
     ("sky130hd", "gcd"): ("gcd", 1.1),
     ("sky130hd", "ibex"): ("ibex_core", 8.0),
+    ("sky130hd", "opentitan_aes"): ("aes", 8.5),
 }
 
 GDS_CHECK = """
@@ -138,9 +140,14 @@ def container_command(docker: str, root: Path, name: str, cores: int, memory_mib
 
 
 def make_command(manifest: ORFSManifest, target: str) -> list[str]:
+    config = (
+        "/work/aes-input/config.mk"
+        if selected(manifest.platform, manifest.design)
+        else f"./{manifest.config}"
+    )
     arguments = [
         "make",
-        f"DESIGN_CONFIG=./{manifest.config}",
+        f"DESIGN_CONFIG={config}",
         "WORK_HOME=/work",
         f"NUM_CORES={manifest.cores}",
     ]
