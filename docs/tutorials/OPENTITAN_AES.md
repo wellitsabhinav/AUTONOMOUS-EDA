@@ -72,8 +72,8 @@ The source setup took 4.31 s and 4.56 s in the independent runs. Staging, transl
 | 0 | Pinned source and dependency discovery |
 | 1 | Successful elaboration of the pinned configuration |
 | 2 | Technology-mapped synthesis with documented limits |
-| 3 | Core ORFS implementation with stage evidence |
-| 4 | Core timing, integrity, DRC and LVS qualification |
+| 3 | Completed core implementation, verified final products and extraction evidence, independent reopening, DRC and LVS, and evaluated extracted setup, hold and coverage |
+| 4 | Accepted core timing and physical gates, qualified interface timing, full peripheral DV and translated-RTL equivalence |
 | 5 | Qualified hierarchical partitions, abstracts and interfaces |
 | 6 | Complete chip timing, physical and electrical collateral |
 

@@ -1,7 +1,8 @@
 # ORFS resource telemetry
 
 Controller-managed ORFS stages record one resource journal per Docker invocation.
-The seven implementation stages, independent GDS reopening, and platform DRC and LVS
+The seven implementation stages, independent GDS reopening, extracted timing coverage,
+and platform DRC and LVS
 use this lifecycle. Each attempt keeps its combined native stdout and stderr log,
 `<stage>.resources.ndjson` samples, and a `<stage>.resources.json` terminal receipt.
 The controller SHA-256 hashes these files into the attempt record. Existing schema 0

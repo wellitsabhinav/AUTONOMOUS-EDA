@@ -189,3 +189,33 @@ python -m autonomous_eda resources retry experiments/m10-aes-physical-01 \
   experiments/m11b-aes-route-reproduction --stage route --stage-seconds 2700 \
   --wall-seconds 3700 --artifact-mib 2048 --margin 0.08 --policy bounded-trial
 ```
+
+PR #35 merged at `124100d60f4167c38aba229e05072ce7297d4e86` with all four head
+and main checks green. [PR #35](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/35) ·
+[Head CI](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43726745966) ·
+[Main CI](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43727111027)
+
+## 11C Independent physical and design qualification
+
+The GCD control completed route and finish. Its verified OpenRCX native log records
+482 extracted nets, and the independently instrumented OpenSTA probe loaded its
+final OpenDB, SDC and SPEF. All seven configured coverage checks passed. Docker
+recorded a 3.156 s coverage invocation with a 7,524,352 B cgroup peak at the single
+retained sample. That sample is a lower bound for the whole probe. The reports
+retain separate native stdout and stderr.
+
+GCD passed hold, router DRC, platform DRC, LVS and independent GDS reopening.
+Implementation passed and reached Level 3. Physical acceptance and design
+qualification failed because extracted setup worst slack was −1.20488 ns.
+[GCD qualification and coverage receipt](evidence/resource-telemetry/gcd-qualification.json)
+
+AES signoff waits for its route result and final products. The pinned pilot's global-route
+estimated slack cannot establish extracted timing. The block interface timing contract,
+peripheral DV and translated-RTL equivalence remain separate gates.
+[OpenTitan qualification rules](OPENTITAN_READINESS.md#independent-core-qualification)
+
+```bash
+PYTHONPATH=src python -m autonomous_eda verify experiments/m11c-gcd-coverage-01 \
+  --profile physical --coverage
+PYTHONPATH=src python -m autonomous_eda readiness qualification experiments/m11c-gcd-coverage-01
+```

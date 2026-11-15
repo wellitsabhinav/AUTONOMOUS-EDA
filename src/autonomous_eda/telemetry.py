@@ -287,14 +287,20 @@ def classify(
 def watchdog_command(command: list[str], timeout: int, image: str) -> list[str]:
     """Keep the stopped container for inspection and bound execution if the controller dies."""
     image_index = command.index(image)
+    options = [argument for argument in command[:image_index] if argument != "--rm"]
+    arguments = command[image_index + 1 :]
+    if "--entrypoint" in options:
+        entrypoint = options.index("--entrypoint")
+        arguments.insert(0, options[entrypoint + 1])
+        del options[entrypoint : entrypoint + 2]
     return [
-        *(argument for argument in command[:image_index] if argument != "--rm"),
+        *options,
         "--entrypoint",
         "/usr/bin/timeout",
         image,
         "--kill-after=5s",
         f"{timeout + 15}s",
-        *command[image_index + 1 :],
+        *arguments,
     ]
 
 

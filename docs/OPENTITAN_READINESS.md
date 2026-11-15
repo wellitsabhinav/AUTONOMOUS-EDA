@@ -14,6 +14,27 @@ The native FuseSoC synthesis setup for `chip_earlgrey_asic` completed at `b2d662
 
 The [AES walkthrough](tutorials/OPENTITAN_AES.md#readiness-and-remaining-gates) defines all seven readiness levels and records the distinct **Level 2** result for the isolated block.
 
+## Independent core qualification
+
+`autonomous-eda readiness qualification RUN` evaluates implementation, physical
+acceptance and design qualification separately. The implementation result checks
+completed route and retained final OpenDB, netlist, SDC, SPEF and GDS. Physical
+acceptance also requires extracted timing, evaluated coverage, router and platform
+DRC, LVS, GDS reopening and hash integrity. A verified route can still fail setup.
+
+The reader preserves Levels 0–2. Level 3 requires a verified core layout and final
+evaluation, including affirmative extraction evidence from the native OpenRCX log
+and SPEF. Level 4 adds the full interface timing contract, peripheral DV and
+translated-RTL equivalence. The existing Levels 5–6 describe hierarchical and full-chip
+qualification. An incomplete route blocks downstream verification.
+
+The isolated AES SDC treats `clk_i` and `clk_edn_i` as one experimental 8.5 ns
+clock. The block has `rst_ni`, `rst_shadowed_ni` and `rst_edn_ni` reset inputs.
+Its isolated constraint evidence does not qualify EDN clock relationships, reset and
+CDC assumptions, clock uncertainty or port delay constraints for TL-UL, key manager,
+alerts and EDN traffic. The independent OpenSTA coverage probe reports the checks
+it actually evaluated against the pinned final SDC and SPEF. [Milestone evaluation](MILESTONE_11_EVALUATION.md)
+
 ### Reproduce the source and partition inventory
 
 Use the native Linux checkout and FuseSoC environment from the [AES tutorial](tutorials/OPENTITAN_AES.md#reproduce-the-ordered-manifest). The ASIC synthesis setup generates EDAM metadata. Read the normalized metadata with AUTONOMOUS-EDA on Linux or Windows.

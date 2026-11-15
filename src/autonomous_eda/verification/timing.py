@@ -6,7 +6,6 @@ import re
 import shutil
 import subprocess
 import sys
-import time
 import uuid
 from collections.abc import Callable
 from dataclasses import asdict
@@ -15,10 +14,17 @@ from typing import Any
 
 from ..evidence import SKY130_LIBRARY, Experiment
 from ..manifest import identifier, sha256
+from ..orfs import (
+    DispatchStopped,
+    execute,
+    record_interrupted_dispatch,
+    remove_interrupted_container,
+)
 from ..reference import IMAGE, ORFS_ROOT, REVISION
+from ..telemetry import ResourceContext, owned_attempt, receipt_path, timestamp
 from ..timing import parse_timing_report
 from .policy import Policy, State
-from .process import Execution, execute, log_text
+from .process import Execution, log_text
 from .rtl import stage
 
 CHECKS = (
@@ -31,6 +37,7 @@ CHECKS = (
     "loops",
 )
 ENGINE = f"{ORFS_ROOT}/tools/install/OpenROAD/bin/openroad"
+DISPATCH = "dispatch.txt"
 SDC_COMMANDS = {
     "current_design",
     "create_clock",
@@ -224,7 +231,8 @@ def run_coverage(
             'puts "AEDA_COVERAGE_COMPLETE"',
         ]
         (work / "coverage.tcl").write_text("\n".join(script) + "\n", encoding="utf-8")
-        container = f"aeda-coverage-{uuid.uuid4().hex}"
+        container = f"aeda-{uuid.uuid4().hex}"
+        (work / DISPATCH).write_text(container, encoding="ascii")
         command = [
             str(binary),
             "run",
@@ -239,6 +247,8 @@ def run_coverage(
             "1",
             "--memory",
             "1200m",
+            "--memory-swap",
+            "1200m",
             "--pids-limit",
             "128",
             "-v",
@@ -252,19 +262,32 @@ def run_coverage(
             "-exit",
             "/work/coverage.tcl",
         ]
-        run = execute(
-            command, work, "coverage", time.monotonic() + policy.timeout_seconds, cancelled
+        stdout, stderr = work / "coverage.stdout.log", work / "coverage.stderr.log"
+
+        def guard() -> float:
+            if cancelled():
+                raise DispatchStopped("Verification execution cancelled")
+            if max(stdout.stat().st_size, stderr.stat().st_size) > MAX_TEXT:
+                raise DispatchStopped("Verification output limit exceeded")
+            return float("inf")
+
+        started = timestamp()
+        context = ResourceContext(
+            work, "timing_coverage", evidence["run_id"], container, IMAGE, 1, 1200 * 2**20, 128, 0
         )
-        runs.append(run)
-        if run.stop:
-            subprocess.run(
-                [str(binary), "rm", "-f", container],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-                timeout=10,
-                check=False,
-            )
+        code, elapsed = execute(
+            command,
+            policy.timeout_seconds,
+            stdout,
+            container,
+            resources=context,
+            guard=guard,
+            stderr_path=stderr,
+        )
+        runs.append(Execution(command, code, started, elapsed, None, stdout.name, stderr.name))
         state, reason = coverage_outcome(work, runs[0], evidence, root, policy)
+    except DispatchStopped as error:
+        state, reason = "BLOCKED", str(error)
     except (OSError, ValueError, subprocess.TimeoutExpired) as error:
         state, reason = "BLOCKED", str(error)
     outputs = {path.name: sha256(path) for path in sorted(work.iterdir()) if path.is_file()}
@@ -277,6 +300,21 @@ def run_coverage(
         "tools": tools,
         "execution": [asdict(item) for item in runs],
     }
+
+
+def cleanup_interrupted(work: Path) -> None:
+    marker = work / DISPATCH
+    log = work / "coverage.stdout.log"
+    if not marker.is_file() or receipt_path(log).is_file():
+        return
+    docker = shutil.which("docker") if sys.platform == "linux" else None
+    if docker is None:
+        return
+    with marker.open(encoding="ascii") as stream:
+        name = stream.read(39)
+    if owned_attempt(name):
+        record_interrupted_dispatch(docker, name, log)
+        remove_interrupted_container(docker, name)
 
 
 def coverage_outcome(

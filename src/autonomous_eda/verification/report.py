@@ -142,6 +142,9 @@ def verify_run(
     if not root.is_dir():
         raise ValueError("verification requires an existing run directory")
     with writer(root):
+        previous = selection(root)
+        if previous:
+            timing.cleanup_interrupted(root / ATTEMPTS / previous["attempt"] / "timing_coverage")
         attempt = uuid.uuid4().hex
         index: dict[str, Any] = {
             "schema_version": 1,
