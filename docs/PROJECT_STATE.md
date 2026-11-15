@@ -1,5 +1,9 @@
 # Project state
 
+- Milestone 11D added versioned run and resource queries, a paged read-only MCP
+  tool and deterministic benchmark exports. The four-case control reproduced
+  five PNG digests. [Benchmark evidence](MILESTONE_11_EVALUATION.md#11d-structured-reporting-and-benchmark-controls)
+
 - Milestone 11C evaluated completed GCD as Level 3 with 482 OpenRCX-extracted nets
   and passed independent coverage, router and deck checks. The original setup
   violation keeps physical acceptance failed. [Independent qualification](MILESTONE_11_EVALUATION.md#11c-independent-physical-and-design-qualification)

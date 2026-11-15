@@ -7,8 +7,18 @@ from pathlib import Path
 
 from pydantic import Field
 
-from .api import AcceptanceSummary, Denied, ExperimentArgs, Model, UnsupportedCorner, View
-from .snapshot import Source, load_evidence
+from ..structured import resource_page
+from .api import (
+    AcceptanceSummary,
+    Denied,
+    ExperimentArgs,
+    ExperimentPageArgs,
+    Model,
+    ResourceHistory,
+    UnsupportedCorner,
+    View,
+)
+from .snapshot import Snapshot, Source, load_evidence
 from .tools import TOOLS, bounded, failure, project
 
 
@@ -25,6 +35,17 @@ def read(request: Request, target: Path) -> Model:
     if not isinstance(args, ExperimentArgs):
         raise ValueError("Expected evidence tool")
     source = Source(Path(request.source_path), (request.source_device, request.source_inode))
+    if request.tool == "get_stage_resources":
+        assert isinstance(args, ExperimentPageArgs)
+        snapshot = Snapshot(source, target)
+        if not snapshot.copy("run.sqlite3"):
+            raise ValueError("No controller attempt database")
+        snapshot.reject_active_database()
+        page = resource_page(
+            target, limit=min(args.limit, 8), offset=args.offset, prepare=snapshot.copy
+        )
+        snapshot.verify_source()
+        return ResourceHistory(**page)
     evidence = load_evidence(source, target)
     if request.tool == "get_acceptance_summary":
         from ..verification.policy import Policy

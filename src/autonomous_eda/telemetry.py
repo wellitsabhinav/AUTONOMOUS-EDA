@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import io
 import json
 import math
 import os
@@ -196,10 +197,13 @@ def update_peaks(
     return latest
 
 
-def read_samples(path: Path, *, allow_partial: bool = False) -> list[dict[str, Any]]:
+def read_samples(
+    path: Path, *, allow_partial: bool = False, verified_bytes: bytes | None = None
+) -> list[dict[str, Any]]:
     """Validate a bounded journal. Crash recovery may ignore an unfinished final row."""
     samples: list[dict[str, Any]] = []
-    with path.open("rb") as stream:
+    stream = path.open("rb") if verified_bytes is None else io.BytesIO(verified_bytes)
+    with stream:
         while raw := stream.readline(MAX_SAMPLE_BYTES + 1):
             if len(samples) >= MAX_SAMPLES or len(raw) > MAX_SAMPLE_BYTES:
                 raise ValueError("resource journal exceeds its schema bounds")

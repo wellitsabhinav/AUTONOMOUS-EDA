@@ -1,0 +1,28 @@
+{
+  "campaign_id": "3563e8e28ec145239fc5f6f1a0ab9f69",
+  "feasible_frontiers": {
+    "full": [],
+    "physical": []
+  },
+  "files_sha256": {
+    "report.json": "853a4dee2bc17ba95aecdb421ea6ab1f14eb758dca37015d75be2ef9ee8cf5d7",
+    "report.md": "461d5a3cb4aa7815646a376a0034a374aea154a507d8c2448072eaf6e6265aae",
+    "runs.csv": "300f2a0dc660f5b61294bcc601f6c24a290c691d212b0c1f89b9fbe4ff7f31ae",
+    "stages.csv": "c9a3ce9862214973356b4c244c3854f219a9c9f7b80b0dfc5ccabe1b7faa33f4"
+  },
+  "native_case_ids": {
+    "AES 10B": "0271212dcd2043cbbef05cc59e4dc55e",
+    "GCD baseline": "b162fa09cf9442dda08b0b31cb58c728",
+    "GCD recovered": "ec21b03b7f674b69a39586d8088da79b",
+    "GCD telemetry": "7f902b30b15d466eb12ffdb852c39595"
+  },
+  "report_sha256": "0ff1353321b8885e0553024b86218ca9e6064de14b2e863cd26fed55ff0680bd",
+  "reproduced_png_sha256": {
+    "benchmark_comparison": "dc8abc5a78acc2758ed7cb5301d33cd214cbf17264352d7e0dc3f0dc6c91a7b4",
+    "routing_memory": "bc1c9779074cdaba344e47fc35d53906b8343cdb979ccbe49598a1fc4143e75d",
+    "routing_resource_timeline": "e8a93d9f0e9cbb013094591b075f9e4b1beb2cd0beffeec0fdf157d25d4107e1",
+    "stage_duration_comparison": "052005aaf549cf6ca2e5475d78040aa5a71d0324b17a97b3d8b4689b5e361f72",
+    "verification_acceptance": "839b71782fada3c82a2f2848b8a6de1969c9bff35293e9cc18f1d75126d19a3d"
+  },
+  "schema_version": 1
+}

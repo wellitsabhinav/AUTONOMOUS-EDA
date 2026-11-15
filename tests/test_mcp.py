@@ -267,6 +267,11 @@ def test_controller_status_over_stdio(tmp_path: Path) -> None:
                 result.attempts[0].exit_code == 17 and result.attempts[0].duration_seconds == 1.25
             )
             assert "private-input" not in result.model_dump_json()
+            resources = await invoke(client, "get_stage_resources", {"experiment_id": "run"})
+            assert isinstance(resources, api.ResourceHistory)
+            assert resources.schema_version == 1 and resources.allocated_cpus == 2
+            assert resources.attempts[0]["dispatches"]["primary"]["status"] == "UNKNOWN"
+            assert "private-input" not in resources.model_dump_json()
 
     asyncio.run(conversation())
     assert snapshot_files(run) == before
