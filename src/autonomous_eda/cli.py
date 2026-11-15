@@ -32,6 +32,9 @@ from .optimization_cli import configure as configure_optimization
 from .optimization_cli import main as optimization_main
 from .orfs import DispatchGuard, DispatchStopped, stage_plan
 from .resource_budget import run_guard
+from .resource_plan import POLICIES
+from .resource_plan import plan as resource_plan
+from .resource_plan import retry as resource_retry
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -69,6 +72,21 @@ def build_parser() -> argparse.ArgumentParser:
     partitions.add_argument("topgen_json", type=Path)
     partitions.add_argument("edam_json", type=Path)
     partitions.add_argument("--revision", required=True)
+    resources = commands.add_parser("resources", help="plan and execute bounded checkpoint retries")
+    resource_actions = resources.add_subparsers(dest="resource_action", required=True)
+    for action in ("plan", "retry"):
+        resource = resource_actions.add_parser(action)
+        resource.add_argument("directory", type=Path)
+        if action == "retry":
+            resource.add_argument("destination", type=Path)
+        resource.add_argument("--stage", default="route")
+        resource.add_argument("--stage-seconds", required=True, type=int)
+        resource.add_argument("--wall-seconds", required=True, type=int)
+        resource.add_argument("--artifact-mib", required=True, type=int)
+        resource.add_argument("--margin", default=0.1, type=float)
+        resource.add_argument(
+            "--policy", choices=POLICIES, default="evidence-required", required=action == "retry"
+        )
     for name in ("inspect", "plan", "run"):
         item = commands.add_parser(
             name,
@@ -211,6 +229,25 @@ def controller_main(args: argparse.Namespace) -> int:
         result = import_edam(
             args.edam, args.manifest, args.revision, tuple(args.generated_core_prefix)
         )
+    elif args.command == "resources":
+        budgets = {
+            "stage_seconds": args.stage_seconds,
+            "wall_seconds": args.wall_seconds,
+            "artifact_mib": args.artifact_mib,
+            "margin": args.margin,
+            "policy": args.policy,
+        }
+        if args.resource_action == "plan":
+            result = resource_plan(args.directory, args.stage, **budgets)
+        else:
+            planned, success = resource_retry(
+                args.directory, args.destination, args.stage, **budgets
+            )
+            result = {
+                "plan": planned,
+                "implementation_completed": success,
+                "run": get_experiment(args.destination) if args.destination.is_dir() else None,
+            }
     elif args.command == "readiness":
         if args.readiness_action == "macro":
             from .macro_readiness import inspect_macro
