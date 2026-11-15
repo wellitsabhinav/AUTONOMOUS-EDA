@@ -69,11 +69,22 @@
     {
       "id": 5,
       "stage": "grt",
-      "state": "running",
-      "runtime_seconds": null,
+      "state": "passed",
+      "runtime_seconds": 579.501240821,
       "detail": null,
       "log": "attempts/aeda-8d1cfa332dd7493d89db21ddb1335144/grt.log",
       "started_at": "2026-11-15T04:08:20.108723+00:00",
+      "ended_at": "2026-11-15T04:18:00.563294+00:00",
+      "exit_code": 0
+    },
+    {
+      "id": 6,
+      "stage": "route",
+      "state": "running",
+      "runtime_seconds": null,
+      "detail": null,
+      "log": "attempts/aeda-e7dbb5bf108e4d179026726ecfb6bb3f/route.log",
+      "started_at": "2026-11-15T04:18:00.679096+00:00",
       "ended_at": null,
       "exit_code": null
     }
@@ -442,6 +453,116 @@
       "method": "orfs-native-stage-metrics-v1",
       "status": "MEASURED"
     },
+    "stage.grt.standard_cell_count": {
+      "name": "stage.grt.standard_cell_count",
+      "value": 82362,
+      "unit": "count",
+      "stage": "grt",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/5_1_grt.json",
+      "reference": "globalroute__design__instance__count__stdcell",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.grt.standard_cell_area": {
+      "name": "stage.grt.standard_cell_area",
+      "value": 579322,
+      "unit": "um2",
+      "stage": "grt",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/5_1_grt.json",
+      "reference": "globalroute__design__instance__area__stdcell",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.grt.die_area": {
+      "name": "stage.grt.die_area",
+      "value": 1406900.0,
+      "unit": "um2",
+      "stage": "grt",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/5_1_grt.json",
+      "reference": "globalroute__design__die__area",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.grt.core_area": {
+      "name": "stage.grt.core_area",
+      "value": 1386430.0,
+      "unit": "um2",
+      "stage": "grt",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/5_1_grt.json",
+      "reference": "globalroute__design__core__area",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.grt.utilization": {
+      "name": "stage.grt.utilization",
+      "value": 0.417852,
+      "unit": "ratio",
+      "stage": "grt",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/5_1_grt.json",
+      "reference": "globalroute__design__instance__utilization__stdcell",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.grt.setup_worst_slack": {
+      "name": "stage.grt.setup_worst_slack",
+      "value": 0.0053717,
+      "unit": "ns",
+      "stage": "grt",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/5_1_grt.json",
+      "reference": "globalroute__timing__setup__ws",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.grt.setup_tns": {
+      "name": "stage.grt.setup_tns",
+      "value": 0,
+      "unit": "ns",
+      "stage": "grt",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/5_1_grt.json",
+      "reference": "globalroute__timing__setup__tns",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.grt.hold_worst_slack": {
+      "name": "stage.grt.hold_worst_slack",
+      "value": 0.344325,
+      "unit": "ns",
+      "stage": "grt",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/5_1_grt.json",
+      "reference": "globalroute__timing__hold__ws",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.grt.hold_tns": {
+      "name": "stage.grt.hold_tns",
+      "value": 0,
+      "unit": "ns",
+      "stage": "grt",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/5_1_grt.json",
+      "reference": "globalroute__timing__hold__tns",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
+    "stage.grt.setup_clock_skew": {
+      "name": "stage.grt.setup_clock_skew",
+      "value": 1.08383,
+      "unit": "ns",
+      "stage": "grt",
+      "corner": null,
+      "artifact": "logs/sky130hd/opentitan_aes/base/5_1_grt.json",
+      "reference": "globalroute__clock__skew__setup",
+      "method": "orfs-native-stage-metrics-v1",
+      "status": "MEASURED"
+    },
     "stage_runtime.1": {
       "name": "stage_runtime.1",
       "value": 321.736753323,
@@ -529,6 +650,28 @@
       "reference": "maximum native timed subprocess RSS in the attempt log",
       "method": "orfs-native-time-v1",
       "status": "MEASURED"
+    },
+    "stage_runtime.5": {
+      "name": "stage_runtime.5",
+      "value": 579.501240821,
+      "unit": "s",
+      "stage": "grt",
+      "corner": null,
+      "artifact": "attempts/aeda-8d1cfa332dd7493d89db21ddb1335144/grt.log",
+      "reference": "attempt runtime",
+      "method": "monotonic-wall-v1",
+      "status": "MEASURED"
+    },
+    "stage_peak_process_rss.5": {
+      "name": "stage_peak_process_rss.5",
+      "value": 1337960,
+      "unit": "KiB",
+      "stage": "grt",
+      "corner": null,
+      "artifact": "attempts/aeda-8d1cfa332dd7493d89db21ddb1335144/grt.log",
+      "reference": "maximum native timed subprocess RSS in the attempt log",
+      "method": "orfs-native-time-v1",
+      "status": "MEASURED"
     }
   },
   "artifact_sha256": {
@@ -552,6 +695,11 @@
     "attempts/aeda-cc96d54d9c5e4b1386043f5fa379d477/cts.log": "dcb1aad5eaba8c1671925ba192d58b169c45b072b2060da098d207bd77844f4f",
     "logs/sky130hd/opentitan_aes/base/4_1_cts.json": "9f1bf8014e00192520f60eea81293bdbf748850e8775757541e8f458b1252572",
     "reports/sky130hd/opentitan_aes/base/4_cts_final.rpt": "e02a630d7dbcbcbbdd3d5f1633e08ee6bf02186454d0ba3de9726e8cd36016c0",
+    "results/sky130hd/opentitan_aes/base/5_1_grt.odb": "72c9792677b0392a08a22a292a88b596568e151200d3e8ab80ead4517563a551",
+    "results/sky130hd/opentitan_aes/base/5_1_grt.sdc": "437815ffc7e2b699955986cdb10e078f9ec7c7dddd0c3f255a472cf736dea242",
+    "attempts/aeda-8d1cfa332dd7493d89db21ddb1335144/grt.log": "df04ee22050797b77e8598dc3051caa0c90673e22ce6c8839924e94779fab7a1",
+    "logs/sky130hd/opentitan_aes/base/5_1_grt.json": "6c3622861406c08bb586fd66b4061ba8dcd61a62d340f237acccade47df9a883",
+    "reports/sky130hd/opentitan_aes/base/5_global_route.rpt": "36b34600f47f6e0ffb43ba9ae130e215f95e69c663417dcb1ec8bb88af41493d",
     "aes-input/aes.v": "f2adfd17f78bbdbe0ecad10a61e08d8a574aa706feb0a2c7b818775fd5f944a8",
     "aes-input/config.mk": "cc39e0ef8e5595c9c836d73eee57de3bc8dabac11a86891183efe606035196e5",
     "aes-input/block.sdc": "c9469d7e34cb05c457c8951806a15754f7c785dda43bdd6f80aa1525ddb020cc"

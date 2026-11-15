@@ -28,6 +28,12 @@ Retained run `820d1810648f`. The original archive reports −0.377013 ns setup s
 
 *Ibex final GDS overview of the historical implementation.*
 
+### OpenTitan AES at 8.5 ns
+
+![OpenTitan AES Sky130HD placement](images/examples/opentitan-aes/placement.png)
+
+OpenROAD rendered the verified placement checkpoint for the pinned masked AES configuration. The observed run used 60,206 standard cells at synthesis and a 1,406,900 µm² die. [Physical receipt](evidence/opentitan-aes/physical.json) · [PNG provenance](images/examples/opentitan-aes/provenance.json) · [Reproduction](tutorials/OPENTITAN_AES.md#attempt-the-sky130hd-core-flow)
+
 ## Timing and physical checks
 
 <img src="images/examples/gcd/timing_setup_summary.png" alt="Final GCD setup slack and corresponding OpenSTA path" width="600">
