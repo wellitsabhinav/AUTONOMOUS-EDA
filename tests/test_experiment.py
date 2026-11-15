@@ -49,7 +49,7 @@ def test_checkpoint_reuse_requires_matching_hashes(
         output.parent.mkdir(parents=True, exist_ok=True)
         output.write_text("checkpoint", encoding="utf-8")
     monkeypatch.setattr("autonomous_eda.experiment.container_command", lambda *args: ["docker"])
-    monkeypatch.setattr("autonomous_eda.experiment.execute", lambda *args: (1, 0.1))
+    monkeypatch.setattr("autonomous_eda.experiment.execute", lambda *args, **kwargs: (1, 0.1))
     with closing(sqlite3.connect(root / "run.sqlite3")) as db:
         with db:
             db.execute(
@@ -80,7 +80,7 @@ def test_interrupted_dispatch_recovers_and_changed_input_disallows_resume(
 
     monkeypatch.setattr("autonomous_eda.experiment.remove_interrupted_container", remove)
     monkeypatch.setattr("autonomous_eda.experiment.container_command", lambda *args: ["docker"])
-    monkeypatch.setattr("autonomous_eda.experiment.execute", lambda *args: (1, 0.1))
+    monkeypatch.setattr("autonomous_eda.experiment.execute", lambda *args, **kwargs: (1, 0.1))
     with closing(sqlite3.connect(root / "run.sqlite3")) as db:
         with db:
             db.execute(

@@ -14,10 +14,26 @@ import time
 from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
+from typing import BinaryIO
 
 from .manifest import ORFSManifest
 from .opentitan_physical import selected
 from .reference import IMAGE, ORFS_ROOT, REVISION
+from .telemetry import (
+    Observer,
+    ResourceContext,
+    classify,
+    docker_inspect,
+    owned_attempt,
+    read_samples,
+    receipt_path,
+    samples_path,
+    terminal_receipt,
+    timestamp,
+    update_peaks,
+    watchdog_command,
+    write_receipt,
+)
 
 FLOW = f"{ORFS_ROOT}/flow"
 REFERENCE_DESIGNS = {
@@ -175,7 +191,10 @@ def execute(
     container: str,
     *,
     guard: DispatchGuard | None = None,
+    resources: ResourceContext | None = None,
 ) -> tuple[int, float]:
+    if resources is not None:
+        return execute_observed(command, timeout, log_path, container, resources, guard)
     start = time.monotonic()
     with log_path.open("wb") as log:
         log.write((json.dumps(command) + "\n").encode())
@@ -215,8 +234,144 @@ def execute(
             return 124, time.monotonic() - start
 
 
+def execute_observed(
+    command: list[str],
+    timeout: int,
+    log_path: Path,
+    name: str,
+    context: ResourceContext,
+    guard: DispatchGuard | None,
+) -> tuple[int, float]:
+    start, started_at = time.monotonic(), timestamp()
+    docker = command[0]
+    create = watchdog_command(command, timeout, context.image)
+    create[1] = "create"
+    launch = [docker, "container", "start", "--attach", name]
+    observer = Observer(docker, name, log_path, context.root)
+    exit_code = delivered_signal = None
+    timed_out = interrupted = created = False
+    controller_signal = None
+    with log_path.open("wb") as log:
+        log.write((json.dumps(create) + "\n" + json.dumps(launch) + "\n").encode())
+        log.flush()
+        try:
+            allowance = min(float(timeout), guard()) if guard is not None else float(timeout)
+            if allowance <= 0:
+                raise subprocess.TimeoutExpired(create, timeout)
+            created = True
+            result = subprocess.run(
+                create,
+                stdout=log,
+                stderr=subprocess.STDOUT,
+                timeout=min(allowance, 15),
+                check=False,
+            )
+            exit_code = result.returncode
+            if exit_code != 0:
+                created = False
+            if not exit_code:
+                exit_code = None
+                with subprocess.Popen(launch, stdout=log, stderr=subprocess.STDOUT) as process:
+                    observer.thread.start()
+                    try:
+                        while True:
+                            remaining = timeout - (time.monotonic() - start)
+                            if guard is not None:
+                                remaining = min(remaining, guard())
+                            if remaining <= 0:
+                                raise subprocess.TimeoutExpired(launch, timeout)
+                            try:
+                                exit_code = process.wait(timeout=min(remaining, 0.5))
+                                break
+                            except subprocess.TimeoutExpired:
+                                continue
+                    finally:
+                        if process.poll() is None:
+                            process.kill()
+        except subprocess.TimeoutExpired:
+            timed_out, exit_code = True, 124
+        except DispatchStopped as error:
+            interrupted = True
+            timed_out = str(error) == "wall-clock budget exceeded"
+            raise
+        except ControllerSignal as error:
+            interrupted = True
+            controller_signal = error.signum
+            raise
+        except KeyboardInterrupt:
+            interrupted = True
+            raise
+        finally:
+            elapsed = time.monotonic() - start
+            native = docker_inspect(docker, name) if created else {}
+            try:
+                if native.get("status") in {"running", "restarting", "paused"}:
+                    killed = docker_lifecycle([docker, "container", "kill", name], log)
+                    if killed:
+                        delivered_signal = 9  # Docker's default kill signal is SIGKILL.
+                    native = docker_inspect(docker, name) or native
+                if native.get("status") in {"exited", "dead"} and not timed_out:
+                    exit_code = native["exit_code"]
+                if exit_code is not None and exit_code < 0:
+                    delivered_signal = -exit_code
+                observer.stop.set()
+                if observer.thread.ident is not None:
+                    observer.thread.join(timeout=0.1)
+                receipt = terminal_receipt(
+                    log_path,
+                    context,
+                    native,
+                    observer,
+                    started_at=started_at,
+                    elapsed_seconds=elapsed,
+                    exit_code=exit_code,
+                    timed_out=timed_out,
+                    termination_signal=delivered_signal,
+                    interrupted=interrupted,
+                    cleanup_succeeded=False,
+                )
+                receipt["controller_signal"] = controller_signal
+                receipt["stage_timeout_seconds"] = timeout
+                try:
+                    write_receipt(receipt_path(log_path), receipt)
+                except OSError as error:
+                    log.write(f"Resource receipt unavailable: {error.strerror}\n".encode())
+            finally:
+                removed = not created or docker_lifecycle(
+                    [docker, "container", "rm", "-f", name], log
+                )
+            receipt["cleanup_succeeded"] = removed
+            try:
+                write_receipt(receipt_path(log_path), receipt)
+            except OSError:
+                pass
+            if observer.thread.is_alive():
+                log.write(b"Resource observer did not join before cleanup\n")
+            if not removed and native:
+                raise ValueError(f"could not remove stopped container {name}")
+    return exit_code if exit_code is not None else 125, elapsed
+
+
+def docker_lifecycle(command: list[str], log: BinaryIO) -> bool:
+    try:
+        return (
+            subprocess.run(
+                command, stdout=log, stderr=subprocess.STDOUT, timeout=5, check=False
+            ).returncode
+            == 0
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return False
+
+
 class DispatchStopped(KeyboardInterrupt):
     """An operator or campaign budget stopped a named container."""
+
+
+class ControllerSignal(KeyboardInterrupt):
+    def __init__(self, signum: int) -> None:
+        super().__init__(signum)
+        self.signum = signum
 
 
 def artifact_hashes(root: Path, stage: Stage) -> dict[str, str]:
@@ -256,11 +411,11 @@ def preserve_invalid_artifacts(root: Path, first: str, history: Path) -> None:
 
 def terminate_on_signal(signum: int, _frame: object) -> None:
     if signum == signal.SIGTERM:
-        raise KeyboardInterrupt
+        raise ControllerSignal(signum)
 
 
 def remove_interrupted_container(docker: str, name: str) -> None:
-    if not re.fullmatch(r"aeda-[0-9a-f]{32}", name):
+    if not owned_attempt(name):
         raise ValueError(f"invalid experiment container name: {name}")
     result = subprocess.run(
         [
@@ -290,3 +445,31 @@ def remove_interrupted_container(docker: str, name: str) -> None:
         )
         if cleanup.returncode:
             raise ValueError(f"cannot remove interrupted container: {cleanup.stderr.strip()}")
+
+
+def record_interrupted_dispatch(docker: str, name: str, log: Path) -> None:
+    """Record a crash-left container and its sampled counters before normal resume cleanup."""
+    if not owned_attempt(name):
+        raise ValueError(f"invalid experiment container name: {name}")
+    if log.is_file() and not log.with_suffix(".resources-recovery.json").exists():
+        native = docker_inspect(docker, name)
+        peaks: dict[str, dict[str, object]] = {}
+        diagnostic = None
+        try:
+            for row in read_samples(samples_path(log), allow_partial=True):
+                peaks = update_peaks(peaks, row)
+        except (OSError, ValueError):
+            diagnostic = "The previous dispatch has no readable resource journal"
+        code = native.get("exit_code") if native.get("status") in {"exited", "dead"} else None
+        write_receipt(
+            log.with_suffix(".resources-recovery.json"),
+            {
+                "schema_version": 1,
+                "observed_at": timestamp(),
+                "attempt_id": name,
+                "native_state": native or None,
+                "observed_maxima": peaks,
+                "classification": classify(code, native, peaks, interrupted=True),
+                "diagnostic": diagnostic,
+            },
+        )
