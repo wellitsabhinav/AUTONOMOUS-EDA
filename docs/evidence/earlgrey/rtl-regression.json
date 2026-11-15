@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "fixture": "examples/verification/manifest.toml",
+  "execution_host": "WSL2 Ubuntu 24.04",
+  "decision_sha256": "2eb6eb611a8b69379e60ecc70e1d78ba33994745cf4a219dbc144deea55f4a0a",
+  "native_report_sha256": "b0caeecb0784a41f9fad81360e9b440f220ca3fce7b3e84ea9403377bd696742",
+  "gates": {
+    "elaboration": {
+      "status": "PASSED",
+      "diagnostic": "Yosys elaboration and structural check completed",
+      "tool": null,
+      "tool_version": null,
+      "outputs": {
+        "verification/attempts/6559365fa9b84f9193843402a260c124/elaboration/receipt.json": "6693e41dd73fb19ccc935db5a01c05229f388c03df1d4dd3e0ea915284ca98d5",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/elaboration/design.json": "48aac9b31420af40802c75860170559744b2947e07ba4d77522084b090c50859",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/elaboration/elaborate.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/elaboration/elaborate.stdout.log": "985ae7fc275bcad432a9363edf7beba28eff0423ef1c9df5ee0641383b3454bc",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/elaboration/elaborate.ys": "555fdb2c2935a90d96da26a31e4da6894cb2fe49a8761b1d2ac32d4b0a5a89f6",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/elaboration/yosys-version.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/elaboration/yosys-version.stdout.log": "14022961a7564dcc908f30f8b52cc1289449e8f25a95ed5c2d2afb88c4bde4fa"
+      }
+    },
+    "functional_regression": {
+      "status": "PASSED",
+      "diagnostic": "Regression oracle emitted LOGIC_PASS",
+      "tool": null,
+      "tool_version": null,
+      "outputs": {
+        "verification/attempts/6559365fa9b84f9193843402a260c124/functional_regression/receipt.json": "fe8e80bfb81afe7f27cc867fdbc29d69e06bc7db77107ea7ca0214039340550e",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/functional_regression/compile.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/functional_regression/compile.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/functional_regression/iverilog-version.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/functional_regression/iverilog-version.stdout.log": "f9199cc8658f4afcec3edeb93f29f23bb2aebf66d3eeb217cdc728aaa692f946",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/functional_regression/simulate.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/functional_regression/simulate.stdout.log": "1601536321e8a03a308af7d1a6576cf94683df67cffff0d8873f1da84f3ad6d7",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/functional_regression/test.vvp": "ea7145bfe0ffb40ab022ada8e12ca5c692133eb11174621dae556f8c38e80433",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/functional_regression/vvp-version.stderr.log": "c9010a85df9399c2adb11b59115cdc285ea6f0a399802944367c3813c6772a42",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/functional_regression/vvp-version.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "equivalence": {
+      "status": "PASSED",
+      "diagnostic": "SAT proved all matching outputs for defined two-state inputs",
+      "tool": null,
+      "tool_version": null,
+      "outputs": {
+        "verification/attempts/6559365fa9b84f9193843402a260c124/equivalence/receipt.json": "8b65691aacfcd557a3dcc27b02850e49e1c5ef58cc1f3cdb6a1af924bfcc117d",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/equivalence/candidate.json": "48aac9b31420af40802c75860170559744b2947e07ba4d77522084b090c50859",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/equivalence/candidate.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/equivalence/candidate.stdout.log": "25b8711521d923b2f4ecacdf8865981d8d8f99667432a638bd26910c75042152",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/equivalence/candidate.ys": "18cd3bebee70ab068fe9696934904e45c31eb81e26f2eab4ff498378f9596319",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/equivalence/prove.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/equivalence/prove.stdout.log": "360dd74121d6257828eb2d78857c1437d44391f283292e8803d911be5f3749d1",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/equivalence/prove.ys": "7daee260620f9003cc32f51181bf237e685d2e3ef2fd583719961be01928fa07",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/equivalence/reference.json": "135d05a41e96c9401e7dd1e0eabf1f9604629ae15f288f890aed7705806ac392",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/equivalence/reference.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/equivalence/reference.stdout.log": "de0f98c59b32774709d7443a45c8741611c20671c97c269adfafb14961b36f20",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/equivalence/reference.ys": "ce47759dd3846c1cbff311f7130b213d28736078f42e9266a5c322085c9e09e1",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/equivalence/yosys-version.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verification/attempts/6559365fa9b84f9193843402a260c124/equivalence/yosys-version.stdout.log": "14022961a7564dcc908f30f8b52cc1289449e8f25a95ed5c2d2afb88c4bde4fa"
+      }
+    },
+    "artifact_integrity": {
+      "status": "PASSED",
+      "diagnostic": "Current RTL manifest inputs are hashable",
+      "tool": null,
+      "tool_version": null,
+      "outputs": {}
+    }
+  }
+}

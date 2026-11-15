@@ -1,0 +1,486 @@
+{
+  "checks": {
+    "clock_port": true,
+    "lef_gds_extent": true,
+    "signal_names_and_directions": true,
+    "supply_pins": true
+  },
+  "clock": "CLK",
+  "depth_words": 1024,
+  "implementation": "hard_macro",
+  "kind": "register_file",
+  "macro": "DFFRAM_4K",
+  "manifest_sha256": "36032e14784dc82784fcd5f5c7966679932c368dd7a2d9616d075ae0d6030373",
+  "orientations": [
+    "R0"
+  ],
+  "qualification": "BLOCKED",
+  "reason": "Missing tt_025C_1v80 Liberty for DFFRAM_4K",
+  "schema_version": 1,
+  "supplies": {
+    "VGND": "GROUND",
+    "VPWR": "POWER"
+  },
+  "target_corner": "tt_025C_1v80",
+  "tool_image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+  "unverified": [
+    "Liberty timing and corner",
+    "GDS pin identity",
+    "LVS",
+    "orientation legality"
+  ],
+  "views": {
+    "gds": {
+      "children": 201468,
+      "exit_code": 0,
+      "filename": "gds.gds",
+      "log": "gds.log",
+      "log_sha256": "67b3aace44f042cc8d4b4bc8ebbb91f241af1ffa0ebbd8f8407de3bbac86d597",
+      "runtime_seconds": 11.833611921000003,
+      "sha256": "cdcafe3c1b6346f77e79eb195ca2aad7acf5ad81d8a9a3950b11987c7411cd7d",
+      "size_um": [
+        1089.845,
+        1389.3600000000001
+      ],
+      "status": "VERIFIED"
+    },
+    "lef": {
+      "exit_code": 0,
+      "filename": "lef.lef",
+      "log": "lef.log",
+      "log_sha256": "fff50bba0651155110b6a1d7555443525f8c5222e39bcd29ed7befcc46b7163b",
+      "pins": {
+        "A[0]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "A[1]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "A[2]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "A[3]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "A[4]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "A[5]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "A[6]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "A[7]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "A[8]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "A[9]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "CLK": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[0]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[10]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[11]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[12]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[13]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[14]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[15]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[16]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[17]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[18]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[19]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[1]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[20]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[21]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[22]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[23]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[24]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[25]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[26]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[27]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[28]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[29]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[2]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[30]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[31]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[3]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[4]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[5]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[6]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[7]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[8]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Di[9]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "Do[0]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[10]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[11]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[12]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[13]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[14]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[15]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[16]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[17]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[18]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[19]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[1]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[20]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[21]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[22]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[23]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[24]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[25]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[26]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[27]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[28]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[29]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[2]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[30]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[31]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[3]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[4]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[5]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[6]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[7]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[8]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "Do[9]": {
+          "direction": "OUTPUT",
+          "use": "SIGNAL"
+        },
+        "EN": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "VGND": {
+          "direction": "INOUT",
+          "use": "GROUND"
+        },
+        "VPWR": {
+          "direction": "INOUT",
+          "use": "POWER"
+        },
+        "WE[0]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "WE[1]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "WE[2]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        },
+        "WE[3]": {
+          "direction": "INPUT",
+          "use": "SIGNAL"
+        }
+      },
+      "runtime_seconds": 1.3722143729999985,
+      "sha256": "691f0fcd46f5de4b4d89e172cabb6f93e020a6d51e239d31395d0fd61ff4cf5d",
+      "size_um": [
+        1089.845,
+        1389.36
+      ],
+      "status": "VERIFIED"
+    },
+    "liberty": {
+      "status": "MISSING"
+    },
+    "verilog": {
+      "exit_code": 0,
+      "filename": "verilog.v",
+      "log": "verilog.log",
+      "log_sha256": "48bfaf131843f049cc6ee318204a8c80343f5e80b104de944b4cc80053d4579f",
+      "pins": {
+        "A[0]": "INPUT",
+        "A[1]": "INPUT",
+        "A[2]": "INPUT",
+        "A[3]": "INPUT",
+        "A[4]": "INPUT",
+        "A[5]": "INPUT",
+        "A[6]": "INPUT",
+        "A[7]": "INPUT",
+        "A[8]": "INPUT",
+        "A[9]": "INPUT",
+        "CLK": "INPUT",
+        "Di[0]": "INPUT",
+        "Di[10]": "INPUT",
+        "Di[11]": "INPUT",
+        "Di[12]": "INPUT",
+        "Di[13]": "INPUT",
+        "Di[14]": "INPUT",
+        "Di[15]": "INPUT",
+        "Di[16]": "INPUT",
+        "Di[17]": "INPUT",
+        "Di[18]": "INPUT",
+        "Di[19]": "INPUT",
+        "Di[1]": "INPUT",
+        "Di[20]": "INPUT",
+        "Di[21]": "INPUT",
+        "Di[22]": "INPUT",
+        "Di[23]": "INPUT",
+        "Di[24]": "INPUT",
+        "Di[25]": "INPUT",
+        "Di[26]": "INPUT",
+        "Di[27]": "INPUT",
+        "Di[28]": "INPUT",
+        "Di[29]": "INPUT",
+        "Di[2]": "INPUT",
+        "Di[30]": "INPUT",
+        "Di[31]": "INPUT",
+        "Di[3]": "INPUT",
+        "Di[4]": "INPUT",
+        "Di[5]": "INPUT",
+        "Di[6]": "INPUT",
+        "Di[7]": "INPUT",
+        "Di[8]": "INPUT",
+        "Di[9]": "INPUT",
+        "Do[0]": "OUTPUT",
+        "Do[10]": "OUTPUT",
+        "Do[11]": "OUTPUT",
+        "Do[12]": "OUTPUT",
+        "Do[13]": "OUTPUT",
+        "Do[14]": "OUTPUT",
+        "Do[15]": "OUTPUT",
+        "Do[16]": "OUTPUT",
+        "Do[17]": "OUTPUT",
+        "Do[18]": "OUTPUT",
+        "Do[19]": "OUTPUT",
+        "Do[1]": "OUTPUT",
+        "Do[20]": "OUTPUT",
+        "Do[21]": "OUTPUT",
+        "Do[22]": "OUTPUT",
+        "Do[23]": "OUTPUT",
+        "Do[24]": "OUTPUT",
+        "Do[25]": "OUTPUT",
+        "Do[26]": "OUTPUT",
+        "Do[27]": "OUTPUT",
+        "Do[28]": "OUTPUT",
+        "Do[29]": "OUTPUT",
+        "Do[2]": "OUTPUT",
+        "Do[30]": "OUTPUT",
+        "Do[31]": "OUTPUT",
+        "Do[3]": "OUTPUT",
+        "Do[4]": "OUTPUT",
+        "Do[5]": "OUTPUT",
+        "Do[6]": "OUTPUT",
+        "Do[7]": "OUTPUT",
+        "Do[8]": "OUTPUT",
+        "Do[9]": "OUTPUT",
+        "EN": "INPUT",
+        "WE[0]": "INPUT",
+        "WE[1]": "INPUT",
+        "WE[2]": "INPUT",
+        "WE[3]": "INPUT"
+      },
+      "runtime_seconds": 1.072731804,
+      "sha256": "d3cd4b07f94b3a4d4b798ed1ea245ec6e120365cd52f6c61846679d31c760c81",
+      "status": "VERIFIED"
+    }
+  },
+  "width_bits": 32
+}

@@ -1,5 +1,7 @@
 # Project state
 
+- The pinned Earl Grey ASIC target reached source discovery with 706 native entries and 43 TopGen instance boundaries. The native DFFRAM probe matched the 80 logical signal bits, both supplies and the LEF/GDS extent. Missing Liberty blocks macro timing qualification. [Readiness guide](OPENTITAN_READINESS.md) · [Milestone evaluation](MILESTONE_10_EVALUATION.md)
+
 - Studio 2.0 promotes the stage export and read-only explorer from Patch 09D. The browser validation loaded real GCD and AES OpenDB checkpoints, compared stages, inspected timing evidence, measured distances, exported a provenance-tagged Canvas PNG and displayed independent acceptance gates. [Workspace guide and measured checks](PHYSICAL_WORKSPACE.md)
 
 - Milestone 10B started from `4fb0961` and [passing main CI](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43674490226). The pinned AES handoff produced 60,206 mapped Sky130HD cells and reached global route at 8.5 ns. Detailed route timed out after 900 seconds. The [terminal receipt](evidence/opentitan-aes/physical.json) records the stage failure, mapped Level 2 readiness and blocked final verification. A separate GCD budget test retained an interrupted synthesis attempt and its native log.

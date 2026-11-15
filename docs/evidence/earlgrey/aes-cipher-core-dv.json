@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "source_revision": "b2d662157db2802bde0e40dfc96fd0316042d116",
+  "target": "lowrisc:dv_verilator:aes_cipher_core_tb",
+  "scope": "masked DOM cipher-core RTL encrypt/decrypt round trips",
+  "verilator_version": "5.020 (Debian 5.020-1)",
+  "container_image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+  "packages_sha256": {
+    "libelf-dev_0.190-1.1ubuntu0.1_amd64.deb": "81affb95c29f7323f2ae24386aaa1f61d311578e3e27c5f78ef7b7d55cd3cf49",
+    "verilator_5.020-1_amd64.deb": "bb74ca8c32c73eb903ee91da64c8b58cfbe095c229967a95782108afb67bb3ca"
+  },
+  "commands": [
+    [
+      "fusesoc",
+      "--cores-root=.",
+      "run",
+      "--setup",
+      "--build-root=<build-root>",
+      "lowrisc:dv_verilator:aes_cipher_core_tb"
+    ],
+    [
+      "make",
+      "-j2",
+      "VERILATOR=/tools/usr/bin/verilator"
+    ],
+    [
+      "./Vaes_cipher_core_tb"
+    ]
+  ],
+  "build_wall_seconds": 79.82,
+  "build_peak_rss_kib": 490592,
+  "simulation_wall_seconds": 0.73,
+  "simulation_peak_rss_kib": 10832,
+  "simulated_cycles": 3297,
+  "success_marker": "SUCCESS: All AES ciphertexts correctly decrypted.",
+  "success_marker_observations": 2,
+  "build_exit_code": 0,
+  "simulation_exit_code": 0,
+  "native_log_sha256": "732556073142b51dc9368a68352f802bd33301e83a663bfa0474a1ee02590136",
+  "retained_attempts_sha256": {
+    "aes-cipher-core-dv.log": "51f0829e51feab91f9f093260b0864280ca5d17be591534545fec4857252d978",
+    "aes-dv-native-container.log": "179c2b9047e95e189c048911922fb9d0c1ff2dcc37ae565ccef2a1b6b5f5bcf9",
+    "aes-dv-native-container-02.log": "8f2e2194734eb9b83ad2908b703c9e68eb84b1f43b10dc6e3dadbb605d9a9255"
+  }
+}

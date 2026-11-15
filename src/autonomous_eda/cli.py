@@ -53,6 +53,21 @@ def build_parser() -> argparse.ArgumentParser:
     ingest.add_argument("manifest", type=Path, help="new TOML file under the export root")
     ingest.add_argument("--revision", required=True)
     ingest.add_argument("--generated-core-prefix", action="append", default=[])
+    readiness = commands.add_parser(
+        "readiness", help="inspect macro views and plan TopGen partition boundaries"
+    )
+    readiness_actions = readiness.add_subparsers(dest="readiness_action", required=True)
+    macro = readiness_actions.add_parser(
+        "macro", help="inspect the native views of a declared macro"
+    )
+    macro.add_argument("manifest", type=Path)
+    macro.add_argument("output", type=Path, help="new evidence directory for pinned tool readback")
+    partitions = readiness_actions.add_parser(
+        "partitions", help="inventory resolved TopGen modules"
+    )
+    partitions.add_argument("topgen_json", type=Path)
+    partitions.add_argument("edam_json", type=Path)
+    partitions.add_argument("--revision", required=True)
     for name in ("inspect", "plan", "run"):
         item = commands.add_parser(
             name,
@@ -169,6 +184,15 @@ def controller_main(args: argparse.Namespace) -> int:
         result = import_edam(
             args.edam, args.manifest, args.revision, tuple(args.generated_core_prefix)
         )
+    elif args.command == "readiness":
+        if args.readiness_action == "macro":
+            from .macro_readiness import inspect_macro
+
+            result = inspect_macro(args.manifest, args.output)
+        else:
+            from .partition_readiness import plan_partitions
+
+            result = plan_partitions(args.topgen_json, args.edam_json, args.revision)
     elif args.command == "experiments":
         if args.action == "list":
             result = list_experiments(args.directory)
