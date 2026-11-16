@@ -1,0 +1,308 @@
+{
+  "design": {
+    "clock_period_ns": 8.5,
+    "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+    "manifest": {
+      "path": "manifest.toml",
+      "sha256": "c8df5b2e7fa9fe50fb7c8497999a55a3c28a86577c574f15db9365e36522605e"
+    },
+    "orfs_revision": "23341145f0fc92a522de26d5244a4a0013818f97",
+    "platform": "sky130hd",
+    "rtl_revision": "b2d662157db2802bde0e40dfc96fd0316042d116",
+    "staged_block_sdc": {
+      "path": "aes-input/block.sdc",
+      "sha256": "c9469d7e34cb05c457c8951806a15754f7c785dda43bdd6f80aa1525ddb020cc"
+    },
+    "top": "aes",
+    "verified_upstream_checkpoints": {
+      "cts": {
+        "artifacts": {
+          "results/sky130hd/opentitan_aes/base/4_cts.odb": "dec1bf50750434f6c5e47eedacfbd57f3ee14a5b314e88693b1643ddaf785b24",
+          "results/sky130hd/opentitan_aes/base/4_cts.sdc": "437815ffc7e2b699955986cdb10e078f9ec7c7dddd0c3f255a472cf736dea242"
+        },
+        "attempt_id": 4
+      },
+      "floorplan": {
+        "artifacts": {
+          "results/sky130hd/opentitan_aes/base/2_floorplan.odb": "09174f77f467cb087f2ed4df50e60fea21b7a24fcd86ecc6cfc6df21e36e6f7a",
+          "results/sky130hd/opentitan_aes/base/2_floorplan.sdc": "9434b9e1442eaf5fdf6fbeda35fc95cf46e43717bf6b9ba51133e390d9c5d11e"
+        },
+        "attempt_id": 2
+      },
+      "grt": {
+        "artifacts": {
+          "results/sky130hd/opentitan_aes/base/5_1_grt.odb": "72c9792677b0392a08a22a292a88b596568e151200d3e8ab80ead4517563a551",
+          "results/sky130hd/opentitan_aes/base/5_1_grt.sdc": "437815ffc7e2b699955986cdb10e078f9ec7c7dddd0c3f255a472cf736dea242"
+        },
+        "attempt_id": 5
+      },
+      "place": {
+        "artifacts": {
+          "results/sky130hd/opentitan_aes/base/3_place.odb": "82f237ac8bf329013796707ae2a51f82fd140a66ba7bbf6fcb053c2bc9b634d9",
+          "results/sky130hd/opentitan_aes/base/3_place.sdc": "9434b9e1442eaf5fdf6fbeda35fc95cf46e43717bf6b9ba51133e390d9c5d11e"
+        },
+        "attempt_id": 3
+      },
+      "synth": {
+        "artifacts": {
+          "results/sky130hd/opentitan_aes/base/1_synth.odb": "18ad20ce95f6b1be9dea55e83b70fb7886958752f8d852d0b27a5b59d36c1e67",
+          "results/sky130hd/opentitan_aes/base/1_synth.sdc": "9434b9e1442eaf5fdf6fbeda35fc95cf46e43717bf6b9ba51133e390d9c5d11e"
+        },
+        "attempt_id": 1
+      }
+    }
+  },
+  "main_ci_run": 43737729825,
+  "main_commit": "f36e9d759d5c5877ceae7450205699e8b4cc7d1a",
+  "pilot_timeout": {
+    "attempt_id": 6,
+    "exit_code": 124,
+    "experiment": "experiments/m10-aes-physical-01",
+    "memory_kernel_peak_bytes": null,
+    "published_artifacts_rehashed": 29,
+    "published_evidence": {
+      "path": "docs/evidence/opentitan-aes/physical.json",
+      "sha256": "a40e144fa856270a7ee56b09ebfa2d050ec17e3d6eae11bbf63155c71c08116c"
+    },
+    "retained_log": {
+      "path": "attempts/aeda-e7dbb5bf108e4d179026726ecfb6bb3f/route.log",
+      "sha256": "7db2d84c86521bb58570d982ab325b5653ce669d4c58ca7732d3795b004e14a5"
+    },
+    "run_id": "0271212dcd2043cbbef05cc59e4dc55e",
+    "runtime_seconds": 900.8390783859998,
+    "stage_timeout_seconds": 900
+  },
+  "preflight": {
+    "higher_cap": {
+      "budget": {
+        "artifact_bytes": 2147483648,
+        "cpu_cores": 2,
+        "memory_bytes": 3397386240,
+        "source": "retained run configuration and explicit invocation limits",
+        "stage_seconds": 2700,
+        "swap_bytes": 0,
+        "wall_seconds": 3700
+      },
+      "execution_allowed": false,
+      "host": {
+        "available_memory_bytes": 3525033984,
+        "cpu_cores": 4,
+        "filesystem_free_bytes": 174087004160,
+        "source": "host memory API, CPU affinity and destination filesystem stat",
+        "total_memory_bytes": 4106866688
+      },
+      "maximum_trial_memory_mib_on_host": 3112,
+      "minimum_trial_memory_mib": 3240,
+      "observed_at": "2026-11-16T04:35:11.646474+00:00",
+      "plan_sha256": "c072c7cb32b761500d4334adcbe43d8998e85b8f86dca4511822df5893e7d680",
+      "reasons": [
+        "The configured container limit plus host reserve exceeds available RAM"
+      ],
+      "source_run_id": "eb2896531cd2412d9611ee79d80f6ceb",
+      "verdict": "INSUFFICIENT_RESOURCES"
+    },
+    "margin_fraction": 0.08,
+    "pilot_window": {
+      "budget": {
+        "artifact_bytes": 2147483648,
+        "cpu_cores": 2,
+        "memory_bytes": 3145728000,
+        "source": "retained run configuration and explicit invocation limits",
+        "stage_seconds": 900,
+        "swap_bytes": 0,
+        "wall_seconds": 1000
+      },
+      "execution_allowed": false,
+      "reasons": [
+        "The retained elapsed time plus margin reaches the proposed stage limit"
+      ]
+    },
+    "selected": {
+      "budget": {
+        "artifact_bytes": 2147483648,
+        "cpu_cores": 2,
+        "memory_bytes": 3145728000,
+        "source": "retained run configuration and explicit invocation limits",
+        "stage_seconds": 1000,
+        "swap_bytes": 0,
+        "wall_seconds": 1100
+      },
+      "execution_allowed": true,
+      "host": {
+        "available_memory_bytes": 3532562432,
+        "cpu_cores": 4,
+        "filesystem_free_bytes": 174086995968,
+        "source": "host memory API, CPU affinity and destination filesystem stat",
+        "total_memory_bytes": 4106866688
+      },
+      "observed_at": "2026-11-16T04:35:31.753511+00:00",
+      "plan_sha256": "20ce7ab4b9434d9a602036feaaa31a6ecfe0762305e06fdcbddf1352a8faf80d",
+      "source_run_id": "0271212dcd2043cbbef05cc59e4dc55e",
+      "verdict": "RESOURCE_CONSTRAINED"
+    }
+  },
+  "prior_oom": {
+    "attempt_id": 7,
+    "classification": "CONFIRMED_OOM",
+    "docker_oom_killed": true,
+    "exit_code": 2,
+    "experiment": "experiments/m11b-aes-route-01",
+    "memory_kernel_peak": {
+      "source": "linux cgroup v2",
+      "unit": "B",
+      "value": 3145728000
+    },
+    "published_evidence": {
+      "path": "docs/evidence/resource-telemetry/aes-terminal.json",
+      "sha256": "db226025071837c28d436f66d431b3144315980045911adbe727afcca2035248"
+    },
+    "rehashed_files": [
+      {
+        "path": "attempts/aeda-0f7d00ccf2174c86ac53a9f15d2996e1/route.log",
+        "sha256": "e9f056f31c80789f09d7f48cb5122e3d011b5ed5035c22934ae03c48e6f40abd"
+      },
+      {
+        "path": "attempts/aeda-0f7d00ccf2174c86ac53a9f15d2996e1/route.resources.json",
+        "sha256": "1f1f2fd4beff91a05d4022f7c45f45b280bd4e3873858564a025ee258c37d180"
+      },
+      {
+        "path": "attempts/aeda-0f7d00ccf2174c86ac53a9f15d2996e1/route.resources.ndjson",
+        "sha256": "f544974dfee9209494d9b4b83ce014b9f62e9293e11579f79a01e1313d7dfdf6"
+      }
+    ],
+    "run_id": "eb2896531cd2412d9611ee79d80f6ceb",
+    "runtime_seconds": 2255.852820007,
+    "stage_timeout_seconds": 2700
+  },
+  "qualification": {
+    "design_qualification_status": "BLOCKED",
+    "extracted_timing_status": "BLOCKED",
+    "extraction_status": "BLOCKED",
+    "final_products": {
+      "constraints": null,
+      "database": null,
+      "netlist": null,
+      "parasitics": null,
+      "streamout": null
+    },
+    "implementation_status": "FAILED",
+    "physical_acceptance_status": "BLOCKED",
+    "qualification_sha256": "d30355d11fb56666e246fc3261a5e52ced3fe71fe7ea1d51e48e4f7c4eafc9cc",
+    "readiness_level": 2,
+    "verification_gates": {
+      "artifact_integrity": "PASSED",
+      "connectivity": "UNKNOWN",
+      "elaboration": "UNKNOWN",
+      "equivalence": "UNKNOWN",
+      "formal_properties": "UNKNOWN",
+      "functional_regression": "UNKNOWN",
+      "gds_generation": "BLOCKED",
+      "gds_reopen": "BLOCKED",
+      "hold": "BLOCKED",
+      "lvs": "BLOCKED",
+      "platform_drc": "BLOCKED",
+      "router": "BLOCKED",
+      "sequential_equivalence": "UNKNOWN",
+      "setup": "BLOCKED",
+      "synthesis": "PASSED",
+      "timing_coverage": "BLOCKED"
+    }
+  },
+  "route_trial": {
+    "attempt_id": 7,
+    "experiment": "experiments/m10-aes-route-telemetry-01",
+    "log": {
+      "path": "attempts/aeda-a6e3405298dc4c0992de7ea4f88a4deb/route.log",
+      "sha256": "50c5169716a8cdc448e8973b39fc2c9cfd5994fb1ed732a9c26a0d6878200bef"
+    },
+    "resource_plan": {
+      "path": "resource-plan.json",
+      "sha256": "42b1d736b5989715bd9afa7e4381672f84aced743eb442eb3336c88ce999bffd"
+    },
+    "resource_receipt": {
+      "path": "attempts/aeda-a6e3405298dc4c0992de7ea4f88a4deb/route.resources.json",
+      "sha256": "a9e92ab232f29ea638a2fb391af8cda35993cbe8df2f70aa8ca1e2544de426c2"
+    },
+    "reused_checkpoints": [
+      "synth",
+      "floorplan",
+      "place",
+      "cts",
+      "grt"
+    ],
+    "router": {
+      "last_progress": {
+        "interim_violations": 15973,
+        "iteration": 0,
+        "line": 180,
+        "percent": 40
+      },
+      "last_reported_iteration": 0,
+      "log_sha256": "50c5169716a8cdc448e8973b39fc2c9cfd5994fb1ed732a9c26a0d6878200bef",
+      "progress_rows": 4
+    },
+    "run_id": "5fb282bdb633447485917b490c7f2920",
+    "runtime_seconds": 1001.1808446250001,
+    "samples": {
+      "path": "attempts/aeda-a6e3405298dc4c0992de7ea4f88a4deb/route.resources.ndjson",
+      "sha256": "8bba0715dad92a1f9f4254c3b35e2064eaae0866fdd50a8a6fd14e849a9bb361"
+    },
+    "sampling": {
+      "high_water": {
+        "counter": "memory.peak",
+        "observed_at": "2026-11-16T04:52:38.788215+00:00",
+        "source": "linux cgroup v2",
+        "unit": "B",
+        "value": 3091898368
+      },
+      "interval_seconds": 2,
+      "last_sample_elapsed_seconds": 1000.420364644,
+      "maximum_memory_limit_events": {
+        "observed_at": "2026-11-16T04:52:38.788215+00:00",
+        "source": "linux cgroup v2",
+        "value": 0
+      },
+      "maximum_oom_events": {
+        "observed_at": "2026-11-16T04:52:38.788215+00:00",
+        "source": "linux cgroup v2",
+        "value": 0
+      },
+      "maximum_oom_kills": {
+        "observed_at": "2026-11-16T04:52:38.788215+00:00",
+        "source": "linux cgroup v2",
+        "value": 0
+      },
+      "peak_sample_elapsed_seconds": 1000.420364644,
+      "sample_count": 441
+    },
+    "state": "failed",
+    "terminal_evidence": {
+      "classification": "WALL_TIMEOUT",
+      "cleanup_succeeded": true,
+      "diagnostic": null,
+      "ended_at": "2026-11-16T04:52:39.529914+00:00",
+      "exit_code": 124,
+      "native_state": {
+        "exit_code": 137,
+        "finished_at": "2026-11-16T04:52:39.097195018Z",
+        "id": "0ae851b336ebb8ea3da3a65fd72a03ecc72ed58624825f8630cd966bb97495ab",
+        "image_id": "sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "memory_bytes": 3145728000,
+        "memory_swap_bytes": 3145728000,
+        "nano_cpus": 2000000000,
+        "observed_at": "2026-11-16T04:52:39.526163+00:00",
+        "oom_killed": false,
+        "pid": 0,
+        "pids_limit": null,
+        "source": "docker container inspect",
+        "started_at": "2026-11-16T04:36:20.946714545Z",
+        "status": "exited"
+      },
+      "stage_timeout_seconds": 1000,
+      "started_at": "2026-11-16T04:36:18.834455+00:00",
+      "termination_signal": 9,
+      "timed_out": true
+    }
+  },
+  "schema_version": 1
+}
