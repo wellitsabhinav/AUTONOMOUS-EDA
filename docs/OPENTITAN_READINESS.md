@@ -28,6 +28,11 @@ and SPEF. Level 4 adds the full interface timing contract, peripheral DV and
 translated-RTL equivalence. The existing Levels 5–6 describe hierarchical and full-chip
 qualification. An incomplete route blocks downstream verification.
 
+The Milestone 12 AES receipt adds independent cipher-core, peripheral,
+structural and differential evidence. The blocked formal and timing obligations
+remain visible alongside the physical result in CLI, Studio, and MCP.
+[Milestone 12 evaluation](MILESTONE_12_EVALUATION.md)
+
 The isolated AES SDC treats `clk_i` and `clk_edn_i` as one experimental 8.5 ns
 clock. The block has `rst_ni`, `rst_shadowed_ni` and `rst_edn_ni` reset inputs.
 Its isolated constraint evidence does not qualify EDN clock relationships, reset and

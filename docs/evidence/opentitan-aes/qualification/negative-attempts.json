@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "retained_attempts": [
+    {
+      "experiment": "experiments/m12-aes-core-01",
+      "disposition": "INFRASTRUCTURE_ERROR",
+      "diagnostic": "FuseSoC generator could not import Mako from its Python subprocess",
+      "setup_log_sha256": "5c7b196c7973580416a21761e942794badf382718a66c63cc2db91b460ff46ae"
+    },
+    {
+      "experiment": "experiments/m12-aes-core-02",
+      "disposition": "INFRASTRUCTURE_ERROR",
+      "diagnostic": "Earlier oracle parser required one space in the cycle-count row",
+      "receipt_sha256": "5f3a0d96645eff191bd00b4d93b4e8adb0d923647c2f0b9c8b7e5944f55814f8",
+      "outputs": {
+        "Vaes_cipher_core_tb": "d517ccd09287393facd9ff5faff5ef8460902c8f957880d3b39e0ea6cd58a629",
+        "compile.stderr.log": "358d9b18ebe993b6dda0f335b405a9f62b63fe6c2f4972e789e95410d5022c72",
+        "compile.stdout.log": "16c668d743c74df91bd044f32b030c1c0f1ca8a595afaef2c02811b1df7df6fe",
+        "simulate.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulate.stdout.log": "511f8b0ea47390815e470389712cbfc39bfe9f559985652e84a48db1946dce13",
+        "version.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version.stdout.log": "26daf9ad1ba36ee1c20cab9a869d0a1fbb8117230c80c78ec2d8cf597f64c4a5"
+      }
+    },
+    {
+      "experiment": "experiments/m12-aes-peripheral-01",
+      "disposition": "INFRASTRUCTURE_ERROR",
+      "diagnostic": "Verilator 5.020 rejected the raw sv2v zero-width part select",
+      "receipt_sha256": "0e32a3a3390bb8ef49abbd4e95e472ef8585f930f8caf4153b2adca68a109443",
+      "outputs": {
+        "compile.stderr.log": "b9ffd3d59fbdbd60102224e4f594da27cf4fd5f5904ad404a81e91971eb39cb0",
+        "compile.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version.stdout.log": "26daf9ad1ba36ee1c20cab9a869d0a1fbb8117230c80c78ec2d8cf597f64c4a5"
+      }
+    }
+  ]
+}

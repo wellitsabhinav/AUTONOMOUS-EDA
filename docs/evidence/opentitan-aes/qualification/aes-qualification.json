@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "run_id": "eb2896531cd2412d9611ee79d80f6ceb",
+  "rtl_revision": "b2d662157db2802bde0e40dfc96fd0316042d116",
+  "translation_sha256": "f2adfd17f78bbdbe0ecad10a61e08d8a574aa706feb0a2c7b818775fd5f944a8",
+  "block_sdc_sha256": "c9469d7e34cb05c457c8951806a15754f7c785dda43bdd6f80aa1525ddb020cc",
+  "source_manifest_sha256": "5bbe2656335b12ffc74aa6e15b17eb401e717cf002d685d4991ed853b1cf69db",
+  "gates": {
+    "interface_timing": "BLOCKED",
+    "pre_route_sta": "PASS",
+    "cipher_core": "PASS",
+    "peripheral": "PASS",
+    "structural": "PASS",
+    "differential": "PASS",
+    "formal": "BLOCKED",
+    "resource_admission": "BLOCKED"
+  },
+  "obligations": {
+    "clock_relationship": "Qualify block clock relationships, phase/skew and generated clocks",
+    "clock_uncertainty": "Supply block setup and hold uncertainty at the selected corners",
+    "reset_cdc": "Qualify shadow reset mapping, reset release, CDC and alert synchronizers",
+    "input_delays": "Supply min/max arrivals and reference clocks for each non-clock input",
+    "output_delays": "Supply min/max required times and reference clocks for each output",
+    "electrical": "Supply input transitions or driving cells, and output loads",
+    "exceptions": "Review and substantiate asynchronous, false-path and multicycle exceptions",
+    "path_groups": "Bind endpoint groups to clock and interface obligations"
+  },
+  "evidence_references": {
+    "contract": {
+      "file": "contract.json",
+      "sha256": "76819780eef5a3d7cb77145db319a6c14c607903b4e771348588fccc7e9a8ed9"
+    },
+    "core": {
+      "file": "cipher-core.json",
+      "sha256": "5f8eb9d28e2193214b61e443c25d8ea64ad5ca9d8f9299c87bc9db1b091ec3ea"
+    },
+    "peripheral": {
+      "file": "peripheral.json",
+      "sha256": "d40222026da55731b84496dd68b49f665de399ae953dc6b6973dc50df6895118"
+    },
+    "resource": {
+      "file": "resources.json",
+      "sha256": "3548512627e0e51b39d5e0b1b6ef81f767330a9b55122f7fb3659c4ee06f8837"
+    }
+  },
+  "qualification_receipt_sha256": "e31fdb9268e36c95847df6e6672e5107ec827927cf322b1b6e012bd49ae0c6a3"
+}
