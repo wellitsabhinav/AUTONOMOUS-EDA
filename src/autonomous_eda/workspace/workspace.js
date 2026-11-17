@@ -648,7 +648,10 @@ function renderAESQualification(report) {
         interface_timing: "Interface timing", pre_route_sta: "Pre-route SDC parse",
         cipher_core: "Cipher-core regression", peripheral: "Peripheral regression",
         structural: "Structural correspondence", differential: "Differential regression",
-        formal: "Sequential equivalence", resource_admission: "Resource admission"
+        formal: "Sequential equivalence", resource_admission: "Resource admission",
+        clock_reset_structure: "Clock and reset structural review", cdc_qualification: "CDC qualification",
+        multi_clock: "Multi-clock functional verification", sideload: "Key-manager sideload",
+        alert_errors: "Alert and error verification", bounded_formal: "Bounded partition correspondence"
     };
     content.append(element("p", "RTL revision " + report.rtl_revision));
     content.append(element("p", "Source manifest " + report.source_manifest_sha256));
@@ -659,6 +662,20 @@ function renderAESQualification(report) {
         list.append(element("dd", state, "gate " + color));
     }
     content.append(list);
+    if (report.scenarios) {
+        const cases = element("details");
+        const labels = {
+            common:"Common clock", phase_offset:"Phase offset", independent:"Independent clocks",
+            sideload:"Sideload", errors:"Alerts and errors"
+        };
+        cases.append(element("summary", "Verilator scenarios"));
+        const results = element("dl");
+        for (const [name, state] of Object.entries(report.scenarios)) {
+            results.append(element("dt",labels[name]),element("dd",state));
+        }
+        cases.append(results);
+        content.append(cases);
+    }
     const obligations = element("ul");
     for (const detail of Object.values(report.obligations))
         obligations.append(element("li", detail));

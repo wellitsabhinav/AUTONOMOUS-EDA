@@ -120,6 +120,11 @@ def qualify(
         else "BLOCKED"
     )
     is_aes = evidence["input_manifest"].get("design") == "opentitan_aes"
+    aes_evidence = None
+    if is_aes:
+        from .aes_qualification import read
+
+        aes_evidence = read(root, evidence)
     interface_status = "BLOCKED" if is_aes else "UNKNOWN"
     interface = {
         "status": interface_status,
@@ -135,6 +140,9 @@ def qualify(
         if is_aes
         else [],
     }
+    if aes_evidence and "clock_reset_structure" in aes_evidence["gates"]:
+        interface["unqualified"] = list(aes_evidence["obligations"].values())
+        interface["evidence_sha256"] = aes_evidence["qualification_receipt_sha256"]
     level, implementation, physical, qualification = levels(
         states.get("synthesis") == "PASSED",
         implementation,
@@ -179,10 +187,6 @@ def qualify(
             }
         },
     }
-    if is_aes:
-        from .aes_qualification import read
-
-        aes_evidence = read(root, evidence)
-        if aes_evidence is not None:
-            report["aes_qualification"] = aes_evidence
+    if aes_evidence is not None:
+        report["aes_qualification"] = aes_evidence
     return {**report, "qualification_sha256": fingerprint(report)}
