@@ -1,0 +1,2757 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "source_manifest_sha256": "5bbe2656335b12ffc74aa6e15b17eb401e717cf002d685d4991ed853b1cf69db",
+    "translation_sha256": "f2adfd17f78bbdbe0ecad10a61e08d8a574aa706feb0a2c7b818775fd5f944a8",
+    "testbench_sha256": "2fe919d7d0d8211008020492b02179785a72cc0fb62cfa0f082fe6f9cf263750"
+  },
+  "semantic_scope": "Finite Verilator two-state simulation. CDC random delays are disabled. Common, phase-offset and independent clocks with bounded protocol scenarios. TL-UL, EDN, resets and alerts are traced on their respective clock edges. X/Z and unobserved internal state are outside scope.",
+  "functional": {
+    "original": {
+      "schema_version": 1,
+      "scope": "peripheral",
+      "status": "PASS",
+      "diagnostic": "Evaluate the individual Verilator scenario outcomes",
+      "seed": 41,
+      "timeout_seconds": 270,
+      "inputs": {
+        "source_manifest_sha256": "5bbe2656335b12ffc74aa6e15b17eb401e717cf002d685d4991ed853b1cf69db",
+        "translation_sha256": "f2adfd17f78bbdbe0ecad10a61e08d8a574aa706feb0a2c7b818775fd5f944a8",
+        "testbench_sha256": "2fe919d7d0d8211008020492b02179785a72cc0fb62cfa0f082fe6f9cf263750"
+      },
+      "tools": {
+        "verilator": {
+          "path": "/tools/usr/bin/verilator",
+          "sha256": "4c6292ab82e57b7f34ab26dbae86ba9c494bacfb088b6ff34be93c553d1301b1",
+          "version": "Verilator 5.020 2024-01-01 rev (Debian 5.020-1)"
+        },
+        "verilator_bin": {
+          "path": "/tools/usr/bin/verilator_bin",
+          "sha256": "25f33046f0055a6982c67cdc55081685a844abb50d044cfda087bd418db9be6c"
+        }
+      },
+      "observations": {
+        "common": {
+          "trace_sha256": "04c6a02b47a7fef4fc56dd30f43744453a3e0767b98a892e4a63e4b327f95a13",
+          "core_edges": 647,
+          "edn_edges": 647,
+          "first_edges_ns": {
+            "CORE": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                15
+              ]
+            ],
+            "EDN": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                15
+              ]
+            ]
+          },
+          "vectors": [
+            [
+              "software_encrypt_128",
+              "5ac5b47080b7cdd830047b6ad8e0c469",
+              "5ac5b47080b7cdd830047b6ad8e0c469"
+            ],
+            [
+              "software_decrypt_128",
+              "ffeeddccbbaa99887766554433221100",
+              "ffeeddccbbaa99887766554433221100"
+            ]
+          ],
+          "cases": [
+            "idle_reset",
+            "illegal_register"
+          ],
+          "tl_transactions": 158,
+          "edn_transfers": 32,
+          "edn_stall_edges": 0
+        },
+        "phase_offset": {
+          "trace_sha256": "5f7377cd9184ea777c478d9b3c28768df80a33bfed85688bb482e865ba0487e3",
+          "core_edges": 743,
+          "edn_edges": 742,
+          "first_edges_ns": {
+            "CORE": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                15
+              ]
+            ],
+            "EDN": [
+              [
+                0,
+                8
+              ],
+              [
+                1,
+                18
+              ]
+            ]
+          },
+          "vectors": [
+            [
+              "software_encrypt_128",
+              "5ac5b47080b7cdd830047b6ad8e0c469",
+              "5ac5b47080b7cdd830047b6ad8e0c469"
+            ],
+            [
+              "software_decrypt_128",
+              "ffeeddccbbaa99887766554433221100",
+              "ffeeddccbbaa99887766554433221100"
+            ]
+          ],
+          "cases": [
+            "idle_reset",
+            "illegal_register"
+          ],
+          "tl_transactions": 182,
+          "edn_transfers": 32,
+          "edn_stall_edges": 128
+        },
+        "independent": {
+          "trace_sha256": "5fa8e4a192b7a3bed7aaff661ce48426ccba73548b3c2944a77bbd35e6ad83a4",
+          "core_edges": 1578,
+          "edn_edges": 901,
+          "first_edges_ns": {
+            "CORE": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                13
+              ]
+            ],
+            "EDN": [
+              [
+                0,
+                9
+              ],
+              [
+                1,
+                23
+              ]
+            ]
+          },
+          "vectors": [
+            [
+              "software_encrypt_128",
+              "5ac5b47080b7cdd830047b6ad8e0c469",
+              "5ac5b47080b7cdd830047b6ad8e0c469"
+            ],
+            [
+              "software_decrypt_128",
+              "ffeeddccbbaa99887766554433221100",
+              "ffeeddccbbaa99887766554433221100"
+            ]
+          ],
+          "cases": [
+            "idle_reset",
+            "illegal_register"
+          ],
+          "tl_transactions": 215,
+          "edn_transfers": 32,
+          "edn_stall_edges": 406
+        },
+        "sideload": {
+          "trace_sha256": "a0b885f997d4d9dedf5247b9c955f49d4743f6d4ee7dd31b407193c6627a8dd6",
+          "core_edges": 2492,
+          "edn_edges": 1780,
+          "first_edges_ns": {
+            "CORE": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                15
+              ]
+            ],
+            "EDN": [
+              [
+                0,
+                9
+              ],
+              [
+                1,
+                23
+              ]
+            ]
+          },
+          "vectors": [
+            [
+              "software_encrypt_128",
+              "5ac5b47080b7cdd830047b6ad8e0c469",
+              "5ac5b47080b7cdd830047b6ad8e0c469"
+            ],
+            [
+              "software_decrypt_128",
+              "ffeeddccbbaa99887766554433221100",
+              "ffeeddccbbaa99887766554433221100"
+            ],
+            [
+              "sideload_encrypt_128",
+              "5ac5b47080b7cdd830047b6ad8e0c469",
+              "5ac5b47080b7cdd830047b6ad8e0c469"
+            ],
+            [
+              "sideload_pins_changed_old_key",
+              "5ac5b47080b7cdd830047b6ad8e0c469",
+              "5ac5b47080b7cdd830047b6ad8e0c469"
+            ],
+            [
+              "sideload_update_128",
+              "2e2b34ca59fa4c883b2c8aefd44be966",
+              "2e2b34ca59fa4c883b2c8aefd44be966"
+            ],
+            [
+              "sideload_encrypt_192",
+              "91710deca070af6ee0df4c86a47ca9dd",
+              "91710deca070af6ee0df4c86a47ca9dd"
+            ],
+            [
+              "sideload_sanitized_encrypt_256",
+              "8960494b9049fceabf456751cab7a28e",
+              "8960494b9049fceabf456751cab7a28e"
+            ],
+            [
+              "sideload_decrypt_256",
+              "ffeeddccbbaa99887766554433221100",
+              "ffeeddccbbaa99887766554433221100"
+            ],
+            [
+              "software_encrypt_128",
+              "5ac5b47080b7cdd830047b6ad8e0c469",
+              "5ac5b47080b7cdd830047b6ad8e0c469"
+            ]
+          ],
+          "cases": [
+            "idle_reset",
+            "illegal_register",
+            "sideload_invalid_key",
+            "active_reset"
+          ],
+          "tl_transactions": 408,
+          "edn_transfers": 88,
+          "edn_stall_edges": 176
+        },
+        "errors": {
+          "trace_sha256": "5a68a51f4394f0418ff091ea061abae834f306afe4e872cd76e2c02efe844331",
+          "core_edges": 1028,
+          "edn_edges": 856,
+          "first_edges_ns": {
+            "CORE": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                15
+              ]
+            ],
+            "EDN": [
+              [
+                0,
+                7
+              ],
+              [
+                1,
+                19
+              ]
+            ]
+          },
+          "vectors": [
+            [
+              "software_encrypt_128",
+              "5ac5b47080b7cdd830047b6ad8e0c469",
+              "5ac5b47080b7cdd830047b6ad8e0c469"
+            ],
+            [
+              "software_decrypt_128",
+              "ffeeddccbbaa99887766554433221100",
+              "ffeeddccbbaa99887766554433221100"
+            ],
+            [
+              "software_decrypt_128",
+              "ffeeddccbbaa99887766554433221100",
+              "ffeeddccbbaa99887766554433221100"
+            ]
+          ],
+          "cases": [
+            "idle_reset",
+            "illegal_register",
+            "shadow_update_error",
+            "fatal_alert_test_handshake",
+            "command_integrity_fault",
+            "error_reset_recovery"
+          ],
+          "tl_transactions": 244,
+          "edn_transfers": 48,
+          "edn_stall_edges": 0
+        }
+      },
+      "execution": [
+        {
+          "command": [
+            "/tools/usr/bin/verilator",
+            "--version"
+          ],
+          "return_code": 0,
+          "started_at": "2026-11-17T08:38:19.847179+00:00",
+          "runtime_seconds": 0.10141553200003273,
+          "stop": null,
+          "stdout": "version.stdout.log",
+          "stderr": "version.stderr.log"
+        },
+        {
+          "command": [
+            "/tools/usr/bin/verilator",
+            "--binary",
+            "--timing",
+            "-j",
+            "2",
+            "--top-module",
+            "peripheral_tb",
+            "--Mdir",
+            "model",
+            "-Wno-fatal",
+            "-I/inputs/src/lowrisc_dv_dv_macros_0",
+            "-I/inputs/src/lowrisc_prim_assert_0.1/rtl",
+            "-DSYNTHESIS=1",
+            "-DDISABLE_PRIM_CDC_RAND_DELAY",
+            "/inputs/src/lowrisc_constants_top_pkg_0/rtl/top_pkg.sv",
+            "/inputs/src/lowrisc_dv_pins_if_0/pins_if.sv",
+            "/inputs/src/lowrisc_ip_entropy_src_pkg_0.1/rtl/entropy_src_pkg.sv",
+            "/inputs/src/lowrisc_prim_abstract_prim_pkg_0.1/prim_pkg.sv",
+            "/inputs/src/lowrisc_prim_cipher_pkg_0.1/rtl/prim_cipher_pkg.sv",
+            "/inputs/src/lowrisc_prim_generic_and2_0/rtl/prim_generic_and2.sv",
+            "/inputs/src/lowrisc_prim_generic_buf_0/rtl/prim_generic_buf.sv",
+            "/inputs/src/lowrisc_prim_generic_flop_0/rtl/prim_generic_flop.sv",
+            "/inputs/src/lowrisc_prim_generic_xnor2_0/rtl/prim_generic_xnor2.sv",
+            "/inputs/src/lowrisc_prim_generic_xor2_0/rtl/prim_generic_xor2.sv",
+            "/inputs/src/lowrisc_prim_pad_wrapper_pkg_0/rtl/prim_pad_wrapper_pkg.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_pkg.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_22_16_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_22_16_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_28_22_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_28_22_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_39_32_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_39_32_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_64_57_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_64_57_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_72_64_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_72_64_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_hamming_22_16_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_hamming_22_16_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_hamming_39_32_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_hamming_39_32_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_hamming_72_64_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_hamming_72_64_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_hamming_76_68_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_hamming_76_68_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_22_16_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_22_16_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_28_22_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_28_22_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_39_32_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_39_32_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_64_57_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_64_57_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_72_64_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_72_64_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_hamming_22_16_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_hamming_22_16_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_hamming_39_32_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_hamming_39_32_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_hamming_72_64_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_hamming_72_64_enc.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_hamming_76_68_dec.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_hamming_76_68_enc.sv",
+            "/inputs/src/lowrisc_prim_sha2_pkg_0/rtl/prim_sha2_pkg.sv",
+            "/inputs/src/lowrisc_prim_xilinx_and2_0/rtl/prim_xilinx_and2.sv",
+            "/inputs/src/lowrisc_prim_xilinx_buf_0/rtl/prim_xilinx_buf.sv",
+            "/inputs/src/lowrisc_prim_xilinx_clock_mux2_0/rtl/prim_xilinx_clock_mux2.sv",
+            "/inputs/src/lowrisc_prim_xilinx_flop_0/rtl/prim_xilinx_flop.sv",
+            "/inputs/src/lowrisc_prim_xilinx_flop_en_0/rtl/prim_xilinx_flop_en.sv",
+            "/inputs/src/lowrisc_prim_xilinx_ultrascale_and2_0/rtl/prim_xilinx_ultrascale_and2.sv",
+            "/inputs/src/lowrisc_prim_xilinx_ultrascale_buf_0/rtl/prim_xilinx_ultrascale_buf.sv",
+            "/inputs/src/lowrisc_prim_xilinx_ultrascale_clock_inv_0/rtl/prim_xilinx_ultrascale_clock_inv.sv",
+            "/inputs/src/lowrisc_prim_xilinx_ultrascale_clock_mux2_0/rtl/prim_xilinx_ultrascale_clock_mux2.sv",
+            "/inputs/src/lowrisc_prim_xilinx_ultrascale_flop_0/rtl/prim_xilinx_ultrascale_flop.sv",
+            "/inputs/src/lowrisc_prim_xilinx_ultrascale_flop_en_0/rtl/prim_xilinx_ultrascale_flop_en.sv",
+            "/inputs/src/lowrisc_prim_xilinx_ultrascale_xor2_0/rtl/prim_xilinx_ultrascale_xor2.sv",
+            "/inputs/src/lowrisc_prim_xilinx_xor2_0/rtl/prim_xilinx_xor2.sv",
+            "/inputs/src/lowrisc_prim_arbiter_0/rtl/prim_arbiter_fixed.sv",
+            "/inputs/src/lowrisc_prim_arbiter_0/rtl/prim_arbiter_ppc.sv",
+            "/inputs/src/lowrisc_prim_arbiter_0/rtl/prim_arbiter_tree.sv",
+            "/inputs/src/lowrisc_prim_arbiter_0/rtl/prim_arbiter_tree_dup.sv",
+            "/inputs/src/lowrisc_prim_cdc_rand_delay_0/rtl/prim_cdc_rand_delay.sv",
+            "/inputs/src/lowrisc_prim_cipher_0/rtl/prim_subst_perm.sv",
+            "/inputs/src/lowrisc_prim_cipher_0/rtl/prim_present.sv",
+            "/inputs/src/lowrisc_prim_cipher_0/rtl/prim_prince.sv",
+            "/inputs/src/lowrisc_prim_count_0/rtl/prim_count_pkg.sv",
+            "/inputs/src/lowrisc_prim_count_0/rtl/prim_count.sv",
+            "/inputs/src/lowrisc_prim_generic_clock_mux2_0/rtl/prim_generic_clock_mux2.sv",
+            "/inputs/src/lowrisc_prim_generic_pad_wrapper_0/rtl/prim_generic_pad_wrapper.sv",
+            "/inputs/src/lowrisc_prim_lfsr_0.1/rtl/prim_lfsr.sv",
+            "/inputs/src/lowrisc_prim_sec_anchor_0.1/rtl/prim_sec_anchor_buf.sv",
+            "/inputs/src/lowrisc_prim_sec_anchor_0.1/rtl/prim_sec_anchor_flop.sv",
+            "/inputs/src/lowrisc_prim_sha2_0/rtl/prim_sha2_pad.sv",
+            "/inputs/src/lowrisc_prim_sha2_0/rtl/prim_sha2.sv",
+            "/inputs/src/lowrisc_prim_sha2_0/rtl/prim_sha2_32.sv",
+            "/inputs/src/lowrisc_prim_sparse_fsm_0/rtl/prim_sparse_fsm_flop.sv",
+            "/inputs/src/lowrisc_prim_util_0.1/rtl/prim_util_pkg.sv",
+            "/inputs/src/lowrisc_prim_xilinx_pad_wrapper_0/rtl/prim_xilinx_pad_wrapper.sv",
+            "/inputs/src/lowrisc_prim_xilinx_ultrascale_pad_wrapper_0/rtl/prim_xilinx_ultrascale_pad_wrapper.sv",
+            "/inputs/src/lowrisc_ip_lc_ctrl_state_pkg_0.1/rtl/lc_ctrl_state_pkg.sv",
+            "/inputs/src/lowrisc_prim_abstract_and2_0/prim_and2.sv",
+            "/inputs/src/lowrisc_prim_abstract_buf_0/prim_buf.sv",
+            "/inputs/src/lowrisc_prim_abstract_clock_mux2_0/prim_clock_mux2.sv",
+            "/inputs/src/lowrisc_prim_abstract_flop_0/prim_flop.sv",
+            "/inputs/src/lowrisc_prim_abstract_pad_wrapper_0/prim_pad_wrapper.sv",
+            "/inputs/src/lowrisc_prim_abstract_xnor2_0/prim_xnor2.sv",
+            "/inputs/src/lowrisc_prim_abstract_xor2_0/prim_xor2.sv",
+            "/inputs/src/lowrisc_prim_generic_flop_en_0/rtl/prim_generic_flop_en.sv",
+            "/inputs/src/lowrisc_prim_onehot_check_0/rtl/prim_onehot_check.sv",
+            "/inputs/src/lowrisc_prim_trivium_0.1/rtl/prim_trivium_pkg.sv",
+            "/inputs/src/lowrisc_prim_trivium_0.1/rtl/prim_trivium.sv",
+            "/inputs/src/lowrisc_prim_abstract_flop_en_0/prim_flop_en.sv",
+            "/inputs/src/lowrisc_prim_blanker_0/rtl/prim_blanker.sv",
+            "/inputs/src/lowrisc_prim_generic_clock_inv_0/rtl/prim_generic_clock_inv.sv",
+            "/inputs/src/lowrisc_prim_generic_flop_2sync_0/rtl/prim_generic_flop_2sync.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi_pkg.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi4_sender.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi4_sync.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi4_dec.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi8_sender.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi8_sync.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi8_dec.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi12_sender.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi12_sync.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi12_dec.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi16_sender.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi16_sync.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi16_dec.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi20_sender.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi20_sync.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi20_dec.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi24_sender.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi24_sync.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi24_dec.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi28_sender.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi28_sync.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi28_dec.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi32_sender.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi32_sync.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi32_dec.sv",
+            "/inputs/src/lowrisc_prim_reg_we_check_0/rtl/prim_reg_we_check.sv",
+            "/inputs/src/lowrisc_prim_abstract_clock_inv_0/prim_clock_inv.sv",
+            "/inputs/src/lowrisc_prim_abstract_flop_2sync_0/prim_flop_2sync.sv",
+            "/inputs/src/lowrisc_prim_subreg_0/rtl/prim_subreg_pkg.sv",
+            "/inputs/src/lowrisc_prim_subreg_0/rtl/prim_reg_cdc.sv",
+            "/inputs/src/lowrisc_prim_subreg_0/rtl/prim_reg_cdc_arb.sv",
+            "/inputs/src/lowrisc_prim_subreg_0/rtl/prim_subreg.sv",
+            "/inputs/src/lowrisc_prim_subreg_0/rtl/prim_subreg_arb.sv",
+            "/inputs/src/lowrisc_prim_subreg_0/rtl/prim_subreg_ext.sv",
+            "/inputs/src/lowrisc_prim_subreg_0/rtl/prim_subreg_shadow.sv",
+            "/inputs/src/lowrisc_tlul_headers_0.1/rtl/tlul_pkg.sv",
+            "/inputs/src/lowrisc_ip_lc_ctrl_pkg_0.1/rtl/lc_ctrl_reg_pkg.sv",
+            "/inputs/src/lowrisc_ip_lc_ctrl_pkg_0.1/rtl/lc_ctrl_pkg.sv",
+            "/inputs/src/lowrisc_tlul_trans_intg_0.1/rtl/tlul_data_integ_enc.sv",
+            "/inputs/src/lowrisc_tlul_trans_intg_0.1/rtl/tlul_data_integ_dec.sv",
+            "/inputs/src/lowrisc_tlul_trans_intg_0.1/rtl/tlul_cmd_intg_gen.sv",
+            "/inputs/src/lowrisc_tlul_trans_intg_0.1/rtl/tlul_cmd_intg_chk.sv",
+            "/inputs/src/lowrisc_tlul_trans_intg_0.1/rtl/tlul_rsp_intg_gen.sv",
+            "/inputs/src/lowrisc_tlul_trans_intg_0.1/rtl/tlul_rsp_intg_chk.sv",
+            "/inputs/src/lowrisc_ip_csrng_pkg_0.1/rtl/csrng_reg_pkg.sv",
+            "/inputs/src/lowrisc_ip_csrng_pkg_0.1/rtl/csrng_pkg.sv",
+            "/inputs/src/lowrisc_prim_diff_decode_0/rtl/prim_diff_decode.sv",
+            "/inputs/src/lowrisc_prim_fifo_0/rtl/prim_fifo_async_sram_adapter.sv",
+            "/inputs/src/lowrisc_prim_fifo_0/rtl/prim_fifo_async_simple.sv",
+            "/inputs/src/lowrisc_prim_fifo_0/rtl/prim_fifo_async.sv",
+            "/inputs/src/lowrisc_prim_fifo_0/rtl/prim_fifo_sync.sv",
+            "/inputs/src/lowrisc_prim_fifo_0/rtl/prim_fifo_sync_cnt.sv",
+            "/inputs/src/lowrisc_prim_lc_sync_0.1/rtl/prim_lc_sync.sv",
+            "/inputs/src/lowrisc_prim_rst_sync_0/rtl/prim_rst_sync.sv",
+            "/inputs/src/lowrisc_ip_edn_pkg_0.1/rtl/edn_reg_pkg.sv",
+            "/inputs/src/lowrisc_ip_edn_pkg_0.1/rtl/edn_pkg.sv",
+            "/inputs/src/lowrisc_prim_alert_0/rtl/prim_alert_pkg.sv",
+            "/inputs/src/lowrisc_prim_alert_0/rtl/prim_alert_receiver.sv",
+            "/inputs/src/lowrisc_prim_alert_0/rtl/prim_alert_sender.sv",
+            "/inputs/src/lowrisc_prim_esc_0/rtl/prim_esc_pkg.sv",
+            "/inputs/src/lowrisc_prim_esc_0/rtl/prim_esc_receiver.sv",
+            "/inputs/src/lowrisc_prim_esc_0/rtl/prim_esc_sender.sv",
+            "/inputs/src/lowrisc_tlul_common_0.1/rtl/tlul_fifo_sync.sv",
+            "/inputs/src/lowrisc_tlul_common_0.1/rtl/tlul_fifo_async.sv",
+            "/inputs/src/lowrisc_tlul_common_0.1/rtl/tlul_assert.sv",
+            "/inputs/src/lowrisc_tlul_common_0.1/rtl/tlul_err.sv",
+            "/inputs/src/lowrisc_tlul_common_0.1/rtl/tlul_assert_multiple.sv",
+            "/inputs/src/lowrisc_ip_keymgr_pkg_0.1/rtl/keymgr_reg_pkg.sv",
+            "/inputs/src/lowrisc_ip_keymgr_pkg_0.1/rtl/keymgr_pkg.sv",
+            "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_clock_gating_sync.sv",
+            "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_sram_arbiter.sv",
+            "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_slicer.sv",
+            "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_sync_reqack.sv",
+            "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_sync_reqack_data.sv",
+            "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_sync_slow_fast.sv",
+            "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_keccak.sv",
+            "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_packer.sv",
+            "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_packer_fifo.sv",
+            "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_gate_gen.sv",
+            "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_pulse_sync.sv",
+            "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_filter.sv",
+            "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_filter_ctr.sv",
+            "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_intr_hw.sv",
+            "/inputs/src/lowrisc_tlul_adapter_reg_0.1/rtl/tlul_adapter_reg.sv",
+            "/inputs/src/lowrisc_tlul_adapter_sram_0.1/rtl/tlul_sram_byte.sv",
+            "/inputs/src/lowrisc_tlul_adapter_sram_0.1/rtl/tlul_adapter_sram.sv",
+            "/inputs/src/lowrisc_tlul_lc_gate_0.1/rtl/tlul_lc_gate.sv",
+            "/inputs/src/lowrisc_tlul_socket_1n_0.1/rtl/tlul_err_resp.sv",
+            "/inputs/src/lowrisc_tlul_socket_1n_0.1/rtl/tlul_socket_1n.sv",
+            "/inputs/src/lowrisc_tlul_socket_m1_0.1/rtl/tlul_socket_m1.sv",
+            "/inputs/src/lowrisc_tlul_sram2tlul_0.1/rtl/sram2tlul.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_reg_pkg.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_pkg.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_reg_top.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_ctrl_reg_shadowed.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_core.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_ctr.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_ctr_fsm.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_ctr_fsm_p.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_ctr_fsm_n.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_control.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_control_fsm.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_control_fsm_p.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_control_fsm_n.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_reg_status.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sel_buf_chk.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_cipher_core.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_cipher_control.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_cipher_control_fsm.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_cipher_control_fsm_p.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_cipher_control_fsm_n.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sub_bytes.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sbox.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sbox_lut.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sbox_canright_pkg.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sbox_canright.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sbox_canright_masked_noreuse.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sbox_canright_masked.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sbox_dom.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_shift_rows.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_mix_columns.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_mix_single_column.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_key_expand.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_prng_clearing.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_prng_masking.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes.sv",
+            "/repo/examples/opentitan-aes/peripheral_tb.sv"
+          ],
+          "return_code": 0,
+          "started_at": "2026-11-17T08:38:19.949181+00:00",
+          "runtime_seconds": 129.007082759,
+          "stop": null,
+          "stdout": "compile.stdout.log",
+          "stderr": "compile.stderr.log"
+        },
+        {
+          "command": [
+            "/experiment/run/original/model/Vperipheral_tb",
+            "+verilator+seed+41",
+            "+schedule_seed=41",
+            "+extended",
+            "+clk_half=5",
+            "+clk_phase=0",
+            "+edn_half=5",
+            "+edn_phase=0",
+            "+reset_cycles=6",
+            "+edn_release_cycles=0",
+            "+shadow_release_cycles=0",
+            "+edn_delay=0",
+            "+edn_jitter=0",
+            "+tl_jitter=0"
+          ],
+          "return_code": 0,
+          "started_at": "2026-11-17T08:40:29.901802+00:00",
+          "runtime_seconds": 0.10156247400004759,
+          "stop": null,
+          "stdout": "simulate-common.stdout.log",
+          "stderr": "simulate-common.stderr.log"
+        },
+        {
+          "command": [
+            "/experiment/run/original/model/Vperipheral_tb",
+            "+verilator+seed+41",
+            "+schedule_seed=41",
+            "+extended",
+            "+clk_half=5",
+            "+clk_phase=0",
+            "+edn_half=5",
+            "+edn_phase=3",
+            "+reset_cycles=6",
+            "+edn_release_cycles=0",
+            "+shadow_release_cycles=0",
+            "+edn_delay=4",
+            "+edn_jitter=0",
+            "+tl_jitter=0"
+          ],
+          "return_code": 0,
+          "started_at": "2026-11-17T08:40:30.014944+00:00",
+          "runtime_seconds": 0.10201414899995598,
+          "stop": null,
+          "stdout": "simulate-phase_offset.stdout.log",
+          "stderr": "simulate-phase_offset.stderr.log"
+        },
+        {
+          "command": [
+            "/experiment/run/original/model/Vperipheral_tb",
+            "+verilator+seed+41",
+            "+schedule_seed=41",
+            "+extended",
+            "+clk_half=4",
+            "+clk_phase=1",
+            "+edn_half=7",
+            "+edn_phase=2",
+            "+reset_cycles=8",
+            "+edn_release_cycles=2",
+            "+shadow_release_cycles=1",
+            "+edn_delay=9",
+            "+edn_jitter=8",
+            "+tl_jitter=3"
+          ],
+          "return_code": 0,
+          "started_at": "2026-11-17T08:40:30.124032+00:00",
+          "runtime_seconds": 0.15155320899998515,
+          "stop": null,
+          "stdout": "simulate-independent.stdout.log",
+          "stderr": "simulate-independent.stderr.log"
+        },
+        {
+          "command": [
+            "/experiment/run/original/model/Vperipheral_tb",
+            "+verilator+seed+41",
+            "+schedule_seed=41",
+            "+extended",
+            "+clk_half=5",
+            "+clk_phase=0",
+            "+edn_half=7",
+            "+edn_phase=2",
+            "+reset_cycles=6",
+            "+edn_release_cycles=0",
+            "+shadow_release_cycles=0",
+            "+edn_delay=2",
+            "+edn_jitter=0",
+            "+tl_jitter=2",
+            "+exercise_sideload=1"
+          ],
+          "return_code": 0,
+          "started_at": "2026-11-17T08:40:30.288980+00:00",
+          "runtime_seconds": 0.20208713399995304,
+          "stop": null,
+          "stdout": "simulate-sideload.stdout.log",
+          "stderr": "simulate-sideload.stderr.log"
+        },
+        {
+          "command": [
+            "/experiment/run/original/model/Vperipheral_tb",
+            "+verilator+seed+41",
+            "+schedule_seed=41",
+            "+extended",
+            "+clk_half=5",
+            "+clk_phase=0",
+            "+edn_half=6",
+            "+edn_phase=1",
+            "+reset_cycles=6",
+            "+edn_release_cycles=0",
+            "+shadow_release_cycles=0",
+            "+edn_delay=0",
+            "+edn_jitter=0",
+            "+tl_jitter=0",
+            "+exercise_errors=1"
+          ],
+          "return_code": 0,
+          "started_at": "2026-11-17T08:40:30.511577+00:00",
+          "runtime_seconds": 0.10143052399996577,
+          "stop": null,
+          "stdout": "simulate-errors.stdout.log",
+          "stderr": "simulate-errors.stderr.log"
+        }
+      ],
+      "outputs": {
+        "compile.stderr.log": "3ab12afa85256623eb6207d8b4541888b9c2e3ad2ab8e8853a4c1dc8276c39af",
+        "compile.stdout.log": "442026c2701e865d63a662cfd4ba55aed893a795a3f57bcbe9ad0836dc87d8b1",
+        "model/Vperipheral_tb": "44065b9316c096ec2adfee9272a5f979d03985eafe9e1eb2fa3bc8439a8fa0a1",
+        "simulate-common.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulate-common.stdout.log": "282d8dbdf303ca0a52538413703289d943ed37fe88bfd65c996f48fb915bd38e",
+        "simulate-errors.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulate-errors.stdout.log": "8b04915984a35a9ced3a31c73ba7a2338d2bffa346a3fe3334f7b606da36c02c",
+        "simulate-independent.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulate-independent.stdout.log": "f76087654aa7dd05111969f2284e536827a6fef13b6977fc92e37e68f557f851",
+        "simulate-phase_offset.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulate-phase_offset.stdout.log": "64e031c6a933649a44c17d2adafcc9ec739fa62286b52c3905618537262228fa",
+        "simulate-sideload.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulate-sideload.stdout.log": "f99a262f18a5523b1c35460d9e14dcece976e76b30487948795c1a831e2c1425",
+        "version.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version.stdout.log": "26daf9ad1ba36ee1c20cab9a869d0a1fbb8117230c80c78ec2d8cf597f64c4a5"
+      },
+      "scenarios": {
+        "common": {
+          "status": "PASS",
+          "diagnostic": "Required protocol checks and known-answer vectors passed",
+          "config": {
+            "clk_half": 5,
+            "clk_phase": 0,
+            "edn_half": 5,
+            "edn_phase": 0,
+            "reset_cycles": 6,
+            "edn_release_cycles": 0,
+            "shadow_release_cycles": 0,
+            "edn_delay": 0,
+            "edn_jitter": 0,
+            "tl_jitter": 0
+          },
+          "observations": {
+            "trace_sha256": "04c6a02b47a7fef4fc56dd30f43744453a3e0767b98a892e4a63e4b327f95a13",
+            "core_edges": 647,
+            "edn_edges": 647,
+            "first_edges_ns": {
+              "CORE": [
+                [
+                  0,
+                  5
+                ],
+                [
+                  1,
+                  15
+                ]
+              ],
+              "EDN": [
+                [
+                  0,
+                  5
+                ],
+                [
+                  1,
+                  15
+                ]
+              ]
+            },
+            "vectors": [
+              [
+                "software_encrypt_128",
+                "5ac5b47080b7cdd830047b6ad8e0c469",
+                "5ac5b47080b7cdd830047b6ad8e0c469"
+              ],
+              [
+                "software_decrypt_128",
+                "ffeeddccbbaa99887766554433221100",
+                "ffeeddccbbaa99887766554433221100"
+              ]
+            ],
+            "cases": [
+              "idle_reset",
+              "illegal_register"
+            ],
+            "tl_transactions": 158,
+            "edn_transfers": 32,
+            "edn_stall_edges": 0
+          },
+          "execution": {
+            "command": [
+              "/experiment/run/original/model/Vperipheral_tb",
+              "+verilator+seed+41",
+              "+schedule_seed=41",
+              "+extended",
+              "+clk_half=5",
+              "+clk_phase=0",
+              "+edn_half=5",
+              "+edn_phase=0",
+              "+reset_cycles=6",
+              "+edn_release_cycles=0",
+              "+shadow_release_cycles=0",
+              "+edn_delay=0",
+              "+edn_jitter=0",
+              "+tl_jitter=0"
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-17T08:40:29.901802+00:00",
+            "runtime_seconds": 0.10156247400004759,
+            "stop": null,
+            "stdout": "simulate-common.stdout.log",
+            "stderr": "simulate-common.stderr.log"
+          }
+        },
+        "phase_offset": {
+          "status": "PASS",
+          "diagnostic": "Required protocol checks and known-answer vectors passed",
+          "config": {
+            "clk_half": 5,
+            "clk_phase": 0,
+            "edn_half": 5,
+            "edn_phase": 3,
+            "reset_cycles": 6,
+            "edn_release_cycles": 0,
+            "shadow_release_cycles": 0,
+            "edn_delay": 4,
+            "edn_jitter": 0,
+            "tl_jitter": 0
+          },
+          "observations": {
+            "trace_sha256": "5f7377cd9184ea777c478d9b3c28768df80a33bfed85688bb482e865ba0487e3",
+            "core_edges": 743,
+            "edn_edges": 742,
+            "first_edges_ns": {
+              "CORE": [
+                [
+                  0,
+                  5
+                ],
+                [
+                  1,
+                  15
+                ]
+              ],
+              "EDN": [
+                [
+                  0,
+                  8
+                ],
+                [
+                  1,
+                  18
+                ]
+              ]
+            },
+            "vectors": [
+              [
+                "software_encrypt_128",
+                "5ac5b47080b7cdd830047b6ad8e0c469",
+                "5ac5b47080b7cdd830047b6ad8e0c469"
+              ],
+              [
+                "software_decrypt_128",
+                "ffeeddccbbaa99887766554433221100",
+                "ffeeddccbbaa99887766554433221100"
+              ]
+            ],
+            "cases": [
+              "idle_reset",
+              "illegal_register"
+            ],
+            "tl_transactions": 182,
+            "edn_transfers": 32,
+            "edn_stall_edges": 128
+          },
+          "execution": {
+            "command": [
+              "/experiment/run/original/model/Vperipheral_tb",
+              "+verilator+seed+41",
+              "+schedule_seed=41",
+              "+extended",
+              "+clk_half=5",
+              "+clk_phase=0",
+              "+edn_half=5",
+              "+edn_phase=3",
+              "+reset_cycles=6",
+              "+edn_release_cycles=0",
+              "+shadow_release_cycles=0",
+              "+edn_delay=4",
+              "+edn_jitter=0",
+              "+tl_jitter=0"
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-17T08:40:30.014944+00:00",
+            "runtime_seconds": 0.10201414899995598,
+            "stop": null,
+            "stdout": "simulate-phase_offset.stdout.log",
+            "stderr": "simulate-phase_offset.stderr.log"
+          }
+        },
+        "independent": {
+          "status": "PASS",
+          "diagnostic": "Required protocol checks and known-answer vectors passed",
+          "config": {
+            "clk_half": 4,
+            "clk_phase": 1,
+            "edn_half": 7,
+            "edn_phase": 2,
+            "reset_cycles": 8,
+            "edn_release_cycles": 2,
+            "shadow_release_cycles": 1,
+            "edn_delay": 9,
+            "edn_jitter": 8,
+            "tl_jitter": 3
+          },
+          "observations": {
+            "trace_sha256": "5fa8e4a192b7a3bed7aaff661ce48426ccba73548b3c2944a77bbd35e6ad83a4",
+            "core_edges": 1578,
+            "edn_edges": 901,
+            "first_edges_ns": {
+              "CORE": [
+                [
+                  0,
+                  5
+                ],
+                [
+                  1,
+                  13
+                ]
+              ],
+              "EDN": [
+                [
+                  0,
+                  9
+                ],
+                [
+                  1,
+                  23
+                ]
+              ]
+            },
+            "vectors": [
+              [
+                "software_encrypt_128",
+                "5ac5b47080b7cdd830047b6ad8e0c469",
+                "5ac5b47080b7cdd830047b6ad8e0c469"
+              ],
+              [
+                "software_decrypt_128",
+                "ffeeddccbbaa99887766554433221100",
+                "ffeeddccbbaa99887766554433221100"
+              ]
+            ],
+            "cases": [
+              "idle_reset",
+              "illegal_register"
+            ],
+            "tl_transactions": 215,
+            "edn_transfers": 32,
+            "edn_stall_edges": 406
+          },
+          "execution": {
+            "command": [
+              "/experiment/run/original/model/Vperipheral_tb",
+              "+verilator+seed+41",
+              "+schedule_seed=41",
+              "+extended",
+              "+clk_half=4",
+              "+clk_phase=1",
+              "+edn_half=7",
+              "+edn_phase=2",
+              "+reset_cycles=8",
+              "+edn_release_cycles=2",
+              "+shadow_release_cycles=1",
+              "+edn_delay=9",
+              "+edn_jitter=8",
+              "+tl_jitter=3"
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-17T08:40:30.124032+00:00",
+            "runtime_seconds": 0.15155320899998515,
+            "stop": null,
+            "stdout": "simulate-independent.stdout.log",
+            "stderr": "simulate-independent.stderr.log"
+          }
+        },
+        "sideload": {
+          "status": "PASS",
+          "diagnostic": "Required protocol checks and known-answer vectors passed",
+          "config": {
+            "clk_half": 5,
+            "clk_phase": 0,
+            "edn_half": 7,
+            "edn_phase": 2,
+            "reset_cycles": 6,
+            "edn_release_cycles": 0,
+            "shadow_release_cycles": 0,
+            "edn_delay": 2,
+            "edn_jitter": 0,
+            "tl_jitter": 2,
+            "exercise_sideload": 1
+          },
+          "observations": {
+            "trace_sha256": "a0b885f997d4d9dedf5247b9c955f49d4743f6d4ee7dd31b407193c6627a8dd6",
+            "core_edges": 2492,
+            "edn_edges": 1780,
+            "first_edges_ns": {
+              "CORE": [
+                [
+                  0,
+                  5
+                ],
+                [
+                  1,
+                  15
+                ]
+              ],
+              "EDN": [
+                [
+                  0,
+                  9
+                ],
+                [
+                  1,
+                  23
+                ]
+              ]
+            },
+            "vectors": [
+              [
+                "software_encrypt_128",
+                "5ac5b47080b7cdd830047b6ad8e0c469",
+                "5ac5b47080b7cdd830047b6ad8e0c469"
+              ],
+              [
+                "software_decrypt_128",
+                "ffeeddccbbaa99887766554433221100",
+                "ffeeddccbbaa99887766554433221100"
+              ],
+              [
+                "sideload_encrypt_128",
+                "5ac5b47080b7cdd830047b6ad8e0c469",
+                "5ac5b47080b7cdd830047b6ad8e0c469"
+              ],
+              [
+                "sideload_pins_changed_old_key",
+                "5ac5b47080b7cdd830047b6ad8e0c469",
+                "5ac5b47080b7cdd830047b6ad8e0c469"
+              ],
+              [
+                "sideload_update_128",
+                "2e2b34ca59fa4c883b2c8aefd44be966",
+                "2e2b34ca59fa4c883b2c8aefd44be966"
+              ],
+              [
+                "sideload_encrypt_192",
+                "91710deca070af6ee0df4c86a47ca9dd",
+                "91710deca070af6ee0df4c86a47ca9dd"
+              ],
+              [
+                "sideload_sanitized_encrypt_256",
+                "8960494b9049fceabf456751cab7a28e",
+                "8960494b9049fceabf456751cab7a28e"
+              ],
+              [
+                "sideload_decrypt_256",
+                "ffeeddccbbaa99887766554433221100",
+                "ffeeddccbbaa99887766554433221100"
+              ],
+              [
+                "software_encrypt_128",
+                "5ac5b47080b7cdd830047b6ad8e0c469",
+                "5ac5b47080b7cdd830047b6ad8e0c469"
+              ]
+            ],
+            "cases": [
+              "idle_reset",
+              "illegal_register",
+              "sideload_invalid_key",
+              "active_reset"
+            ],
+            "tl_transactions": 408,
+            "edn_transfers": 88,
+            "edn_stall_edges": 176
+          },
+          "execution": {
+            "command": [
+              "/experiment/run/original/model/Vperipheral_tb",
+              "+verilator+seed+41",
+              "+schedule_seed=41",
+              "+extended",
+              "+clk_half=5",
+              "+clk_phase=0",
+              "+edn_half=7",
+              "+edn_phase=2",
+              "+reset_cycles=6",
+              "+edn_release_cycles=0",
+              "+shadow_release_cycles=0",
+              "+edn_delay=2",
+              "+edn_jitter=0",
+              "+tl_jitter=2",
+              "+exercise_sideload=1"
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-17T08:40:30.288980+00:00",
+            "runtime_seconds": 0.20208713399995304,
+            "stop": null,
+            "stdout": "simulate-sideload.stdout.log",
+            "stderr": "simulate-sideload.stderr.log"
+          }
+        },
+        "errors": {
+          "status": "PASS",
+          "diagnostic": "Required protocol checks and known-answer vectors passed",
+          "config": {
+            "clk_half": 5,
+            "clk_phase": 0,
+            "edn_half": 6,
+            "edn_phase": 1,
+            "reset_cycles": 6,
+            "edn_release_cycles": 0,
+            "shadow_release_cycles": 0,
+            "edn_delay": 0,
+            "edn_jitter": 0,
+            "tl_jitter": 0,
+            "exercise_errors": 1
+          },
+          "observations": {
+            "trace_sha256": "5a68a51f4394f0418ff091ea061abae834f306afe4e872cd76e2c02efe844331",
+            "core_edges": 1028,
+            "edn_edges": 856,
+            "first_edges_ns": {
+              "CORE": [
+                [
+                  0,
+                  5
+                ],
+                [
+                  1,
+                  15
+                ]
+              ],
+              "EDN": [
+                [
+                  0,
+                  7
+                ],
+                [
+                  1,
+                  19
+                ]
+              ]
+            },
+            "vectors": [
+              [
+                "software_encrypt_128",
+                "5ac5b47080b7cdd830047b6ad8e0c469",
+                "5ac5b47080b7cdd830047b6ad8e0c469"
+              ],
+              [
+                "software_decrypt_128",
+                "ffeeddccbbaa99887766554433221100",
+                "ffeeddccbbaa99887766554433221100"
+              ],
+              [
+                "software_decrypt_128",
+                "ffeeddccbbaa99887766554433221100",
+                "ffeeddccbbaa99887766554433221100"
+              ]
+            ],
+            "cases": [
+              "idle_reset",
+              "illegal_register",
+              "shadow_update_error",
+              "fatal_alert_test_handshake",
+              "command_integrity_fault",
+              "error_reset_recovery"
+            ],
+            "tl_transactions": 244,
+            "edn_transfers": 48,
+            "edn_stall_edges": 0
+          },
+          "execution": {
+            "command": [
+              "/experiment/run/original/model/Vperipheral_tb",
+              "+verilator+seed+41",
+              "+schedule_seed=41",
+              "+extended",
+              "+clk_half=5",
+              "+clk_phase=0",
+              "+edn_half=6",
+              "+edn_phase=1",
+              "+reset_cycles=6",
+              "+edn_release_cycles=0",
+              "+shadow_release_cycles=0",
+              "+edn_delay=0",
+              "+edn_jitter=0",
+              "+tl_jitter=0",
+              "+exercise_errors=1"
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-17T08:40:30.511577+00:00",
+            "runtime_seconds": 0.10143052399996577,
+            "stop": null,
+            "stdout": "simulate-errors.stdout.log",
+            "stderr": "simulate-errors.stderr.log"
+          }
+        }
+      },
+      "receipt_sha256": "b83d165e398b3ba18023412ac6dde7de97682170cbb3b9ae1987368d96f08502"
+    },
+    "translated": {
+      "schema_version": 1,
+      "scope": "peripheral",
+      "status": "PASS",
+      "diagnostic": "Evaluate the individual Verilator scenario outcomes",
+      "seed": 41,
+      "timeout_seconds": 270,
+      "inputs": {
+        "source_manifest_sha256": "5bbe2656335b12ffc74aa6e15b17eb401e717cf002d685d4991ed853b1cf69db",
+        "translation_sha256": "f2adfd17f78bbdbe0ecad10a61e08d8a574aa706feb0a2c7b818775fd5f944a8",
+        "testbench_sha256": "2fe919d7d0d8211008020492b02179785a72cc0fb62cfa0f082fe6f9cf263750"
+      },
+      "tools": {
+        "verilator": {
+          "path": "/tools/usr/bin/verilator",
+          "sha256": "4c6292ab82e57b7f34ab26dbae86ba9c494bacfb088b6ff34be93c553d1301b1",
+          "version": "Verilator 5.020 2024-01-01 rev (Debian 5.020-1)"
+        },
+        "verilator_bin": {
+          "path": "/tools/usr/bin/verilator_bin",
+          "sha256": "25f33046f0055a6982c67cdc55081685a844abb50d044cfda087bd418db9be6c"
+        }
+      },
+      "observations": {
+        "common": {
+          "trace_sha256": "04c6a02b47a7fef4fc56dd30f43744453a3e0767b98a892e4a63e4b327f95a13",
+          "core_edges": 647,
+          "edn_edges": 647,
+          "first_edges_ns": {
+            "CORE": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                15
+              ]
+            ],
+            "EDN": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                15
+              ]
+            ]
+          },
+          "vectors": [
+            [
+              "software_encrypt_128",
+              "5ac5b47080b7cdd830047b6ad8e0c469",
+              "5ac5b47080b7cdd830047b6ad8e0c469"
+            ],
+            [
+              "software_decrypt_128",
+              "ffeeddccbbaa99887766554433221100",
+              "ffeeddccbbaa99887766554433221100"
+            ]
+          ],
+          "cases": [
+            "idle_reset",
+            "illegal_register"
+          ],
+          "tl_transactions": 158,
+          "edn_transfers": 32,
+          "edn_stall_edges": 0
+        },
+        "phase_offset": {
+          "trace_sha256": "5f7377cd9184ea777c478d9b3c28768df80a33bfed85688bb482e865ba0487e3",
+          "core_edges": 743,
+          "edn_edges": 742,
+          "first_edges_ns": {
+            "CORE": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                15
+              ]
+            ],
+            "EDN": [
+              [
+                0,
+                8
+              ],
+              [
+                1,
+                18
+              ]
+            ]
+          },
+          "vectors": [
+            [
+              "software_encrypt_128",
+              "5ac5b47080b7cdd830047b6ad8e0c469",
+              "5ac5b47080b7cdd830047b6ad8e0c469"
+            ],
+            [
+              "software_decrypt_128",
+              "ffeeddccbbaa99887766554433221100",
+              "ffeeddccbbaa99887766554433221100"
+            ]
+          ],
+          "cases": [
+            "idle_reset",
+            "illegal_register"
+          ],
+          "tl_transactions": 182,
+          "edn_transfers": 32,
+          "edn_stall_edges": 128
+        },
+        "independent": {
+          "trace_sha256": "5fa8e4a192b7a3bed7aaff661ce48426ccba73548b3c2944a77bbd35e6ad83a4",
+          "core_edges": 1578,
+          "edn_edges": 901,
+          "first_edges_ns": {
+            "CORE": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                13
+              ]
+            ],
+            "EDN": [
+              [
+                0,
+                9
+              ],
+              [
+                1,
+                23
+              ]
+            ]
+          },
+          "vectors": [
+            [
+              "software_encrypt_128",
+              "5ac5b47080b7cdd830047b6ad8e0c469",
+              "5ac5b47080b7cdd830047b6ad8e0c469"
+            ],
+            [
+              "software_decrypt_128",
+              "ffeeddccbbaa99887766554433221100",
+              "ffeeddccbbaa99887766554433221100"
+            ]
+          ],
+          "cases": [
+            "idle_reset",
+            "illegal_register"
+          ],
+          "tl_transactions": 215,
+          "edn_transfers": 32,
+          "edn_stall_edges": 406
+        },
+        "sideload": {
+          "trace_sha256": "a0b885f997d4d9dedf5247b9c955f49d4743f6d4ee7dd31b407193c6627a8dd6",
+          "core_edges": 2492,
+          "edn_edges": 1780,
+          "first_edges_ns": {
+            "CORE": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                15
+              ]
+            ],
+            "EDN": [
+              [
+                0,
+                9
+              ],
+              [
+                1,
+                23
+              ]
+            ]
+          },
+          "vectors": [
+            [
+              "software_encrypt_128",
+              "5ac5b47080b7cdd830047b6ad8e0c469",
+              "5ac5b47080b7cdd830047b6ad8e0c469"
+            ],
+            [
+              "software_decrypt_128",
+              "ffeeddccbbaa99887766554433221100",
+              "ffeeddccbbaa99887766554433221100"
+            ],
+            [
+              "sideload_encrypt_128",
+              "5ac5b47080b7cdd830047b6ad8e0c469",
+              "5ac5b47080b7cdd830047b6ad8e0c469"
+            ],
+            [
+              "sideload_pins_changed_old_key",
+              "5ac5b47080b7cdd830047b6ad8e0c469",
+              "5ac5b47080b7cdd830047b6ad8e0c469"
+            ],
+            [
+              "sideload_update_128",
+              "2e2b34ca59fa4c883b2c8aefd44be966",
+              "2e2b34ca59fa4c883b2c8aefd44be966"
+            ],
+            [
+              "sideload_encrypt_192",
+              "91710deca070af6ee0df4c86a47ca9dd",
+              "91710deca070af6ee0df4c86a47ca9dd"
+            ],
+            [
+              "sideload_sanitized_encrypt_256",
+              "8960494b9049fceabf456751cab7a28e",
+              "8960494b9049fceabf456751cab7a28e"
+            ],
+            [
+              "sideload_decrypt_256",
+              "ffeeddccbbaa99887766554433221100",
+              "ffeeddccbbaa99887766554433221100"
+            ],
+            [
+              "software_encrypt_128",
+              "5ac5b47080b7cdd830047b6ad8e0c469",
+              "5ac5b47080b7cdd830047b6ad8e0c469"
+            ]
+          ],
+          "cases": [
+            "idle_reset",
+            "illegal_register",
+            "sideload_invalid_key",
+            "active_reset"
+          ],
+          "tl_transactions": 408,
+          "edn_transfers": 88,
+          "edn_stall_edges": 176
+        },
+        "errors": {
+          "trace_sha256": "5a68a51f4394f0418ff091ea061abae834f306afe4e872cd76e2c02efe844331",
+          "core_edges": 1028,
+          "edn_edges": 856,
+          "first_edges_ns": {
+            "CORE": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                15
+              ]
+            ],
+            "EDN": [
+              [
+                0,
+                7
+              ],
+              [
+                1,
+                19
+              ]
+            ]
+          },
+          "vectors": [
+            [
+              "software_encrypt_128",
+              "5ac5b47080b7cdd830047b6ad8e0c469",
+              "5ac5b47080b7cdd830047b6ad8e0c469"
+            ],
+            [
+              "software_decrypt_128",
+              "ffeeddccbbaa99887766554433221100",
+              "ffeeddccbbaa99887766554433221100"
+            ],
+            [
+              "software_decrypt_128",
+              "ffeeddccbbaa99887766554433221100",
+              "ffeeddccbbaa99887766554433221100"
+            ]
+          ],
+          "cases": [
+            "idle_reset",
+            "illegal_register",
+            "shadow_update_error",
+            "fatal_alert_test_handshake",
+            "command_integrity_fault",
+            "error_reset_recovery"
+          ],
+          "tl_transactions": 244,
+          "edn_transfers": 48,
+          "edn_stall_edges": 0
+        }
+      },
+      "execution": [
+        {
+          "command": [
+            "/tools/usr/bin/verilator",
+            "--version"
+          ],
+          "return_code": 0,
+          "started_at": "2026-11-17T08:40:49.713483+00:00",
+          "runtime_seconds": 0.15175176899992948,
+          "stop": null,
+          "stdout": "version.stdout.log",
+          "stderr": "version.stderr.log"
+        },
+        {
+          "command": [
+            "/tools/usr/bin/verilator",
+            "--binary",
+            "--timing",
+            "-j",
+            "2",
+            "--top-module",
+            "peripheral_tb",
+            "--Mdir",
+            "model",
+            "-Wno-fatal",
+            "-I/inputs/src/lowrisc_dv_dv_macros_0",
+            "-I/inputs/src/lowrisc_prim_assert_0.1/rtl",
+            "-DSYNTHESIS=1",
+            "-DDISABLE_PRIM_CDC_RAND_DELAY",
+            "/inputs/src/lowrisc_constants_top_pkg_0/rtl/top_pkg.sv",
+            "/inputs/src/lowrisc_ip_entropy_src_pkg_0.1/rtl/entropy_src_pkg.sv",
+            "/inputs/src/lowrisc_prim_abstract_prim_pkg_0.1/prim_pkg.sv",
+            "/inputs/src/lowrisc_prim_cipher_pkg_0.1/rtl/prim_cipher_pkg.sv",
+            "/inputs/src/lowrisc_prim_pad_wrapper_pkg_0/rtl/prim_pad_wrapper_pkg.sv",
+            "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_pkg.sv",
+            "/inputs/src/lowrisc_prim_sha2_pkg_0/rtl/prim_sha2_pkg.sv",
+            "/inputs/src/lowrisc_prim_count_0/rtl/prim_count_pkg.sv",
+            "/inputs/src/lowrisc_prim_util_0.1/rtl/prim_util_pkg.sv",
+            "/inputs/src/lowrisc_ip_lc_ctrl_state_pkg_0.1/rtl/lc_ctrl_state_pkg.sv",
+            "/inputs/src/lowrisc_prim_trivium_0.1/rtl/prim_trivium_pkg.sv",
+            "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi_pkg.sv",
+            "/inputs/src/lowrisc_prim_subreg_0/rtl/prim_subreg_pkg.sv",
+            "/inputs/src/lowrisc_tlul_headers_0.1/rtl/tlul_pkg.sv",
+            "/inputs/src/lowrisc_ip_lc_ctrl_pkg_0.1/rtl/lc_ctrl_reg_pkg.sv",
+            "/inputs/src/lowrisc_ip_lc_ctrl_pkg_0.1/rtl/lc_ctrl_pkg.sv",
+            "/inputs/src/lowrisc_ip_csrng_pkg_0.1/rtl/csrng_reg_pkg.sv",
+            "/inputs/src/lowrisc_ip_csrng_pkg_0.1/rtl/csrng_pkg.sv",
+            "/inputs/src/lowrisc_ip_edn_pkg_0.1/rtl/edn_reg_pkg.sv",
+            "/inputs/src/lowrisc_ip_edn_pkg_0.1/rtl/edn_pkg.sv",
+            "/inputs/src/lowrisc_prim_alert_0/rtl/prim_alert_pkg.sv",
+            "/inputs/src/lowrisc_prim_esc_0/rtl/prim_esc_pkg.sv",
+            "/inputs/src/lowrisc_ip_keymgr_pkg_0.1/rtl/keymgr_reg_pkg.sv",
+            "/inputs/src/lowrisc_ip_keymgr_pkg_0.1/rtl/keymgr_pkg.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_reg_pkg.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_pkg.sv",
+            "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sbox_canright_pkg.sv",
+            "/experiment/run/translated/translated_model.v",
+            "/repo/examples/opentitan-aes/peripheral_tb.sv"
+          ],
+          "return_code": 0,
+          "started_at": "2026-11-17T08:40:49.865510+00:00",
+          "runtime_seconds": 123.37791490899997,
+          "stop": null,
+          "stdout": "compile.stdout.log",
+          "stderr": "compile.stderr.log"
+        },
+        {
+          "command": [
+            "/experiment/run/translated/model/Vperipheral_tb",
+            "+verilator+seed+41",
+            "+schedule_seed=41",
+            "+extended",
+            "+clk_half=5",
+            "+clk_phase=0",
+            "+edn_half=5",
+            "+edn_phase=0",
+            "+reset_cycles=6",
+            "+edn_release_cycles=0",
+            "+shadow_release_cycles=0",
+            "+edn_delay=0",
+            "+edn_jitter=0",
+            "+tl_jitter=0"
+          ],
+          "return_code": 0,
+          "started_at": "2026-11-17T08:42:55.021029+00:00",
+          "runtime_seconds": 0.051170790000014676,
+          "stop": null,
+          "stdout": "simulate-common.stdout.log",
+          "stderr": "simulate-common.stderr.log"
+        },
+        {
+          "command": [
+            "/experiment/run/translated/model/Vperipheral_tb",
+            "+verilator+seed+41",
+            "+schedule_seed=41",
+            "+extended",
+            "+clk_half=5",
+            "+clk_phase=0",
+            "+edn_half=5",
+            "+edn_phase=3",
+            "+reset_cycles=6",
+            "+edn_release_cycles=0",
+            "+shadow_release_cycles=0",
+            "+edn_delay=4",
+            "+edn_jitter=0",
+            "+tl_jitter=0"
+          ],
+          "return_code": 0,
+          "started_at": "2026-11-17T08:42:55.078467+00:00",
+          "runtime_seconds": 0.05112197600010404,
+          "stop": null,
+          "stdout": "simulate-phase_offset.stdout.log",
+          "stderr": "simulate-phase_offset.stderr.log"
+        },
+        {
+          "command": [
+            "/experiment/run/translated/model/Vperipheral_tb",
+            "+verilator+seed+41",
+            "+schedule_seed=41",
+            "+extended",
+            "+clk_half=4",
+            "+clk_phase=1",
+            "+edn_half=7",
+            "+edn_phase=2",
+            "+reset_cycles=8",
+            "+edn_release_cycles=2",
+            "+shadow_release_cycles=1",
+            "+edn_delay=9",
+            "+edn_jitter=8",
+            "+tl_jitter=3"
+          ],
+          "return_code": 0,
+          "started_at": "2026-11-17T08:42:55.137336+00:00",
+          "runtime_seconds": 0.10123439099993448,
+          "stop": null,
+          "stdout": "simulate-independent.stdout.log",
+          "stderr": "simulate-independent.stderr.log"
+        },
+        {
+          "command": [
+            "/experiment/run/translated/model/Vperipheral_tb",
+            "+verilator+seed+41",
+            "+schedule_seed=41",
+            "+extended",
+            "+clk_half=5",
+            "+clk_phase=0",
+            "+edn_half=7",
+            "+edn_phase=2",
+            "+reset_cycles=6",
+            "+edn_release_cycles=0",
+            "+shadow_release_cycles=0",
+            "+edn_delay=2",
+            "+edn_jitter=0",
+            "+tl_jitter=2",
+            "+exercise_sideload=1"
+          ],
+          "return_code": 0,
+          "started_at": "2026-11-17T08:42:55.250511+00:00",
+          "runtime_seconds": 0.15141303100017467,
+          "stop": null,
+          "stdout": "simulate-sideload.stdout.log",
+          "stderr": "simulate-sideload.stderr.log"
+        },
+        {
+          "command": [
+            "/experiment/run/translated/model/Vperipheral_tb",
+            "+verilator+seed+41",
+            "+schedule_seed=41",
+            "+extended",
+            "+clk_half=5",
+            "+clk_phase=0",
+            "+edn_half=6",
+            "+edn_phase=1",
+            "+reset_cycles=6",
+            "+edn_release_cycles=0",
+            "+shadow_release_cycles=0",
+            "+edn_delay=0",
+            "+edn_jitter=0",
+            "+tl_jitter=0",
+            "+exercise_errors=1"
+          ],
+          "return_code": 0,
+          "started_at": "2026-11-17T08:42:55.424120+00:00",
+          "runtime_seconds": 0.0511466149998796,
+          "stop": null,
+          "stdout": "simulate-errors.stdout.log",
+          "stderr": "simulate-errors.stderr.log"
+        }
+      ],
+      "outputs": {
+        "compile.stderr.log": "b4e03e6f5a5545591758af01a1bb296500a72f94442bf31538efe1712e9893de",
+        "compile.stdout.log": "bd9766b80e69c9b33ee8100d8b2a95a5a44be59fd03754879245fe4ac3a0e328",
+        "model/Vperipheral_tb": "bdd84982ca132a980dfecd89ed71e628825f280160d269d71429d2442c4c2031",
+        "simulate-common.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulate-common.stdout.log": "282d8dbdf303ca0a52538413703289d943ed37fe88bfd65c996f48fb915bd38e",
+        "simulate-errors.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulate-errors.stdout.log": "8b04915984a35a9ced3a31c73ba7a2338d2bffa346a3fe3334f7b606da36c02c",
+        "simulate-independent.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulate-independent.stdout.log": "f76087654aa7dd05111969f2284e536827a6fef13b6977fc92e37e68f557f851",
+        "simulate-phase_offset.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulate-phase_offset.stdout.log": "64e031c6a933649a44c17d2adafcc9ec739fa62286b52c3905618537262228fa",
+        "simulate-sideload.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "simulate-sideload.stdout.log": "f99a262f18a5523b1c35460d9e14dcece976e76b30487948795c1a831e2c1425",
+        "version.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version.stdout.log": "26daf9ad1ba36ee1c20cab9a869d0a1fbb8117230c80c78ec2d8cf597f64c4a5"
+      },
+      "scenarios": {
+        "common": {
+          "status": "PASS",
+          "diagnostic": "Required protocol checks and known-answer vectors passed",
+          "config": {
+            "clk_half": 5,
+            "clk_phase": 0,
+            "edn_half": 5,
+            "edn_phase": 0,
+            "reset_cycles": 6,
+            "edn_release_cycles": 0,
+            "shadow_release_cycles": 0,
+            "edn_delay": 0,
+            "edn_jitter": 0,
+            "tl_jitter": 0
+          },
+          "observations": {
+            "trace_sha256": "04c6a02b47a7fef4fc56dd30f43744453a3e0767b98a892e4a63e4b327f95a13",
+            "core_edges": 647,
+            "edn_edges": 647,
+            "first_edges_ns": {
+              "CORE": [
+                [
+                  0,
+                  5
+                ],
+                [
+                  1,
+                  15
+                ]
+              ],
+              "EDN": [
+                [
+                  0,
+                  5
+                ],
+                [
+                  1,
+                  15
+                ]
+              ]
+            },
+            "vectors": [
+              [
+                "software_encrypt_128",
+                "5ac5b47080b7cdd830047b6ad8e0c469",
+                "5ac5b47080b7cdd830047b6ad8e0c469"
+              ],
+              [
+                "software_decrypt_128",
+                "ffeeddccbbaa99887766554433221100",
+                "ffeeddccbbaa99887766554433221100"
+              ]
+            ],
+            "cases": [
+              "idle_reset",
+              "illegal_register"
+            ],
+            "tl_transactions": 158,
+            "edn_transfers": 32,
+            "edn_stall_edges": 0
+          },
+          "execution": {
+            "command": [
+              "/experiment/run/translated/model/Vperipheral_tb",
+              "+verilator+seed+41",
+              "+schedule_seed=41",
+              "+extended",
+              "+clk_half=5",
+              "+clk_phase=0",
+              "+edn_half=5",
+              "+edn_phase=0",
+              "+reset_cycles=6",
+              "+edn_release_cycles=0",
+              "+shadow_release_cycles=0",
+              "+edn_delay=0",
+              "+edn_jitter=0",
+              "+tl_jitter=0"
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-17T08:42:55.021029+00:00",
+            "runtime_seconds": 0.051170790000014676,
+            "stop": null,
+            "stdout": "simulate-common.stdout.log",
+            "stderr": "simulate-common.stderr.log"
+          }
+        },
+        "phase_offset": {
+          "status": "PASS",
+          "diagnostic": "Required protocol checks and known-answer vectors passed",
+          "config": {
+            "clk_half": 5,
+            "clk_phase": 0,
+            "edn_half": 5,
+            "edn_phase": 3,
+            "reset_cycles": 6,
+            "edn_release_cycles": 0,
+            "shadow_release_cycles": 0,
+            "edn_delay": 4,
+            "edn_jitter": 0,
+            "tl_jitter": 0
+          },
+          "observations": {
+            "trace_sha256": "5f7377cd9184ea777c478d9b3c28768df80a33bfed85688bb482e865ba0487e3",
+            "core_edges": 743,
+            "edn_edges": 742,
+            "first_edges_ns": {
+              "CORE": [
+                [
+                  0,
+                  5
+                ],
+                [
+                  1,
+                  15
+                ]
+              ],
+              "EDN": [
+                [
+                  0,
+                  8
+                ],
+                [
+                  1,
+                  18
+                ]
+              ]
+            },
+            "vectors": [
+              [
+                "software_encrypt_128",
+                "5ac5b47080b7cdd830047b6ad8e0c469",
+                "5ac5b47080b7cdd830047b6ad8e0c469"
+              ],
+              [
+                "software_decrypt_128",
+                "ffeeddccbbaa99887766554433221100",
+                "ffeeddccbbaa99887766554433221100"
+              ]
+            ],
+            "cases": [
+              "idle_reset",
+              "illegal_register"
+            ],
+            "tl_transactions": 182,
+            "edn_transfers": 32,
+            "edn_stall_edges": 128
+          },
+          "execution": {
+            "command": [
+              "/experiment/run/translated/model/Vperipheral_tb",
+              "+verilator+seed+41",
+              "+schedule_seed=41",
+              "+extended",
+              "+clk_half=5",
+              "+clk_phase=0",
+              "+edn_half=5",
+              "+edn_phase=3",
+              "+reset_cycles=6",
+              "+edn_release_cycles=0",
+              "+shadow_release_cycles=0",
+              "+edn_delay=4",
+              "+edn_jitter=0",
+              "+tl_jitter=0"
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-17T08:42:55.078467+00:00",
+            "runtime_seconds": 0.05112197600010404,
+            "stop": null,
+            "stdout": "simulate-phase_offset.stdout.log",
+            "stderr": "simulate-phase_offset.stderr.log"
+          }
+        },
+        "independent": {
+          "status": "PASS",
+          "diagnostic": "Required protocol checks and known-answer vectors passed",
+          "config": {
+            "clk_half": 4,
+            "clk_phase": 1,
+            "edn_half": 7,
+            "edn_phase": 2,
+            "reset_cycles": 8,
+            "edn_release_cycles": 2,
+            "shadow_release_cycles": 1,
+            "edn_delay": 9,
+            "edn_jitter": 8,
+            "tl_jitter": 3
+          },
+          "observations": {
+            "trace_sha256": "5fa8e4a192b7a3bed7aaff661ce48426ccba73548b3c2944a77bbd35e6ad83a4",
+            "core_edges": 1578,
+            "edn_edges": 901,
+            "first_edges_ns": {
+              "CORE": [
+                [
+                  0,
+                  5
+                ],
+                [
+                  1,
+                  13
+                ]
+              ],
+              "EDN": [
+                [
+                  0,
+                  9
+                ],
+                [
+                  1,
+                  23
+                ]
+              ]
+            },
+            "vectors": [
+              [
+                "software_encrypt_128",
+                "5ac5b47080b7cdd830047b6ad8e0c469",
+                "5ac5b47080b7cdd830047b6ad8e0c469"
+              ],
+              [
+                "software_decrypt_128",
+                "ffeeddccbbaa99887766554433221100",
+                "ffeeddccbbaa99887766554433221100"
+              ]
+            ],
+            "cases": [
+              "idle_reset",
+              "illegal_register"
+            ],
+            "tl_transactions": 215,
+            "edn_transfers": 32,
+            "edn_stall_edges": 406
+          },
+          "execution": {
+            "command": [
+              "/experiment/run/translated/model/Vperipheral_tb",
+              "+verilator+seed+41",
+              "+schedule_seed=41",
+              "+extended",
+              "+clk_half=4",
+              "+clk_phase=1",
+              "+edn_half=7",
+              "+edn_phase=2",
+              "+reset_cycles=8",
+              "+edn_release_cycles=2",
+              "+shadow_release_cycles=1",
+              "+edn_delay=9",
+              "+edn_jitter=8",
+              "+tl_jitter=3"
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-17T08:42:55.137336+00:00",
+            "runtime_seconds": 0.10123439099993448,
+            "stop": null,
+            "stdout": "simulate-independent.stdout.log",
+            "stderr": "simulate-independent.stderr.log"
+          }
+        },
+        "sideload": {
+          "status": "PASS",
+          "diagnostic": "Required protocol checks and known-answer vectors passed",
+          "config": {
+            "clk_half": 5,
+            "clk_phase": 0,
+            "edn_half": 7,
+            "edn_phase": 2,
+            "reset_cycles": 6,
+            "edn_release_cycles": 0,
+            "shadow_release_cycles": 0,
+            "edn_delay": 2,
+            "edn_jitter": 0,
+            "tl_jitter": 2,
+            "exercise_sideload": 1
+          },
+          "observations": {
+            "trace_sha256": "a0b885f997d4d9dedf5247b9c955f49d4743f6d4ee7dd31b407193c6627a8dd6",
+            "core_edges": 2492,
+            "edn_edges": 1780,
+            "first_edges_ns": {
+              "CORE": [
+                [
+                  0,
+                  5
+                ],
+                [
+                  1,
+                  15
+                ]
+              ],
+              "EDN": [
+                [
+                  0,
+                  9
+                ],
+                [
+                  1,
+                  23
+                ]
+              ]
+            },
+            "vectors": [
+              [
+                "software_encrypt_128",
+                "5ac5b47080b7cdd830047b6ad8e0c469",
+                "5ac5b47080b7cdd830047b6ad8e0c469"
+              ],
+              [
+                "software_decrypt_128",
+                "ffeeddccbbaa99887766554433221100",
+                "ffeeddccbbaa99887766554433221100"
+              ],
+              [
+                "sideload_encrypt_128",
+                "5ac5b47080b7cdd830047b6ad8e0c469",
+                "5ac5b47080b7cdd830047b6ad8e0c469"
+              ],
+              [
+                "sideload_pins_changed_old_key",
+                "5ac5b47080b7cdd830047b6ad8e0c469",
+                "5ac5b47080b7cdd830047b6ad8e0c469"
+              ],
+              [
+                "sideload_update_128",
+                "2e2b34ca59fa4c883b2c8aefd44be966",
+                "2e2b34ca59fa4c883b2c8aefd44be966"
+              ],
+              [
+                "sideload_encrypt_192",
+                "91710deca070af6ee0df4c86a47ca9dd",
+                "91710deca070af6ee0df4c86a47ca9dd"
+              ],
+              [
+                "sideload_sanitized_encrypt_256",
+                "8960494b9049fceabf456751cab7a28e",
+                "8960494b9049fceabf456751cab7a28e"
+              ],
+              [
+                "sideload_decrypt_256",
+                "ffeeddccbbaa99887766554433221100",
+                "ffeeddccbbaa99887766554433221100"
+              ],
+              [
+                "software_encrypt_128",
+                "5ac5b47080b7cdd830047b6ad8e0c469",
+                "5ac5b47080b7cdd830047b6ad8e0c469"
+              ]
+            ],
+            "cases": [
+              "idle_reset",
+              "illegal_register",
+              "sideload_invalid_key",
+              "active_reset"
+            ],
+            "tl_transactions": 408,
+            "edn_transfers": 88,
+            "edn_stall_edges": 176
+          },
+          "execution": {
+            "command": [
+              "/experiment/run/translated/model/Vperipheral_tb",
+              "+verilator+seed+41",
+              "+schedule_seed=41",
+              "+extended",
+              "+clk_half=5",
+              "+clk_phase=0",
+              "+edn_half=7",
+              "+edn_phase=2",
+              "+reset_cycles=6",
+              "+edn_release_cycles=0",
+              "+shadow_release_cycles=0",
+              "+edn_delay=2",
+              "+edn_jitter=0",
+              "+tl_jitter=2",
+              "+exercise_sideload=1"
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-17T08:42:55.250511+00:00",
+            "runtime_seconds": 0.15141303100017467,
+            "stop": null,
+            "stdout": "simulate-sideload.stdout.log",
+            "stderr": "simulate-sideload.stderr.log"
+          }
+        },
+        "errors": {
+          "status": "PASS",
+          "diagnostic": "Required protocol checks and known-answer vectors passed",
+          "config": {
+            "clk_half": 5,
+            "clk_phase": 0,
+            "edn_half": 6,
+            "edn_phase": 1,
+            "reset_cycles": 6,
+            "edn_release_cycles": 0,
+            "shadow_release_cycles": 0,
+            "edn_delay": 0,
+            "edn_jitter": 0,
+            "tl_jitter": 0,
+            "exercise_errors": 1
+          },
+          "observations": {
+            "trace_sha256": "5a68a51f4394f0418ff091ea061abae834f306afe4e872cd76e2c02efe844331",
+            "core_edges": 1028,
+            "edn_edges": 856,
+            "first_edges_ns": {
+              "CORE": [
+                [
+                  0,
+                  5
+                ],
+                [
+                  1,
+                  15
+                ]
+              ],
+              "EDN": [
+                [
+                  0,
+                  7
+                ],
+                [
+                  1,
+                  19
+                ]
+              ]
+            },
+            "vectors": [
+              [
+                "software_encrypt_128",
+                "5ac5b47080b7cdd830047b6ad8e0c469",
+                "5ac5b47080b7cdd830047b6ad8e0c469"
+              ],
+              [
+                "software_decrypt_128",
+                "ffeeddccbbaa99887766554433221100",
+                "ffeeddccbbaa99887766554433221100"
+              ],
+              [
+                "software_decrypt_128",
+                "ffeeddccbbaa99887766554433221100",
+                "ffeeddccbbaa99887766554433221100"
+              ]
+            ],
+            "cases": [
+              "idle_reset",
+              "illegal_register",
+              "shadow_update_error",
+              "fatal_alert_test_handshake",
+              "command_integrity_fault",
+              "error_reset_recovery"
+            ],
+            "tl_transactions": 244,
+            "edn_transfers": 48,
+            "edn_stall_edges": 0
+          },
+          "execution": {
+            "command": [
+              "/experiment/run/translated/model/Vperipheral_tb",
+              "+verilator+seed+41",
+              "+schedule_seed=41",
+              "+extended",
+              "+clk_half=5",
+              "+clk_phase=0",
+              "+edn_half=6",
+              "+edn_phase=1",
+              "+reset_cycles=6",
+              "+edn_release_cycles=0",
+              "+shadow_release_cycles=0",
+              "+edn_delay=0",
+              "+edn_jitter=0",
+              "+tl_jitter=0",
+              "+exercise_errors=1"
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-17T08:42:55.424120+00:00",
+            "runtime_seconds": 0.0511466149998796,
+            "stop": null,
+            "stdout": "simulate-errors.stdout.log",
+            "stderr": "simulate-errors.stderr.log"
+          }
+        }
+      },
+      "receipt_sha256": "547b56d5f0fef558dc560051d286f21f38a4c205926771899dc924ad70f894e9"
+    }
+  },
+  "correspondence": {
+    "structural": {
+      "status": "PASS",
+      "implementations": {
+        "original": {
+          "status": "PASS",
+          "diagnostic": "Native elaboration matched the pinned Yosys interface",
+          "ports": {
+            "clk_i": {
+              "direction": "input",
+              "width": 1
+            },
+            "rst_ni": {
+              "direction": "input",
+              "width": 1
+            },
+            "rst_shadowed_ni": {
+              "direction": "input",
+              "width": 1
+            },
+            "clk_edn_i": {
+              "direction": "input",
+              "width": 1
+            },
+            "rst_edn_ni": {
+              "direction": "input",
+              "width": 1
+            },
+            "idle_o": {
+              "direction": "output",
+              "width": 4
+            },
+            "lc_escalate_en_i": {
+              "direction": "input",
+              "width": 4
+            },
+            "edn_o": {
+              "direction": "output",
+              "width": 1
+            },
+            "alert_rx_i": {
+              "direction": "input",
+              "width": 8
+            },
+            "alert_tx_o": {
+              "direction": "output",
+              "width": 4
+            },
+            "edn_i": {
+              "direction": "input",
+              "width": 34
+            },
+            "keymgr_key_i": {
+              "direction": "input",
+              "width": 513
+            },
+            "tl_i": {
+              "direction": "input",
+              "width": 109
+            },
+            "tl_o": {
+              "direction": "output",
+              "width": 66
+            }
+          },
+          "execution": {
+            "command": [
+              "/tools/usr/bin/verilator",
+              "--cc",
+              "--top-module",
+              "aes",
+              "--prefix",
+              "VAesInterface",
+              "--Mdir",
+              "interface",
+              "-Wno-fatal",
+              "-I/inputs/src/lowrisc_dv_dv_macros_0",
+              "-I/inputs/src/lowrisc_prim_assert_0.1/rtl",
+              "-DSYNTHESIS=1",
+              "-DDISABLE_PRIM_CDC_RAND_DELAY",
+              "/inputs/src/lowrisc_constants_top_pkg_0/rtl/top_pkg.sv",
+              "/inputs/src/lowrisc_dv_pins_if_0/pins_if.sv",
+              "/inputs/src/lowrisc_ip_entropy_src_pkg_0.1/rtl/entropy_src_pkg.sv",
+              "/inputs/src/lowrisc_prim_abstract_prim_pkg_0.1/prim_pkg.sv",
+              "/inputs/src/lowrisc_prim_cipher_pkg_0.1/rtl/prim_cipher_pkg.sv",
+              "/inputs/src/lowrisc_prim_generic_and2_0/rtl/prim_generic_and2.sv",
+              "/inputs/src/lowrisc_prim_generic_buf_0/rtl/prim_generic_buf.sv",
+              "/inputs/src/lowrisc_prim_generic_flop_0/rtl/prim_generic_flop.sv",
+              "/inputs/src/lowrisc_prim_generic_xnor2_0/rtl/prim_generic_xnor2.sv",
+              "/inputs/src/lowrisc_prim_generic_xor2_0/rtl/prim_generic_xor2.sv",
+              "/inputs/src/lowrisc_prim_pad_wrapper_pkg_0/rtl/prim_pad_wrapper_pkg.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_pkg.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_22_16_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_22_16_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_28_22_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_28_22_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_39_32_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_39_32_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_64_57_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_64_57_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_72_64_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_72_64_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_hamming_22_16_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_hamming_22_16_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_hamming_39_32_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_hamming_39_32_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_hamming_72_64_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_hamming_72_64_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_hamming_76_68_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_hamming_76_68_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_22_16_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_22_16_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_28_22_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_28_22_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_39_32_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_39_32_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_64_57_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_64_57_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_72_64_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_72_64_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_hamming_22_16_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_hamming_22_16_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_hamming_39_32_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_hamming_39_32_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_hamming_72_64_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_hamming_72_64_enc.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_hamming_76_68_dec.sv",
+              "/inputs/src/lowrisc_prim_secded_0.1/rtl/prim_secded_inv_hamming_76_68_enc.sv",
+              "/inputs/src/lowrisc_prim_sha2_pkg_0/rtl/prim_sha2_pkg.sv",
+              "/inputs/src/lowrisc_prim_xilinx_and2_0/rtl/prim_xilinx_and2.sv",
+              "/inputs/src/lowrisc_prim_xilinx_buf_0/rtl/prim_xilinx_buf.sv",
+              "/inputs/src/lowrisc_prim_xilinx_clock_mux2_0/rtl/prim_xilinx_clock_mux2.sv",
+              "/inputs/src/lowrisc_prim_xilinx_flop_0/rtl/prim_xilinx_flop.sv",
+              "/inputs/src/lowrisc_prim_xilinx_flop_en_0/rtl/prim_xilinx_flop_en.sv",
+              "/inputs/src/lowrisc_prim_xilinx_ultrascale_and2_0/rtl/prim_xilinx_ultrascale_and2.sv",
+              "/inputs/src/lowrisc_prim_xilinx_ultrascale_buf_0/rtl/prim_xilinx_ultrascale_buf.sv",
+              "/inputs/src/lowrisc_prim_xilinx_ultrascale_clock_inv_0/rtl/prim_xilinx_ultrascale_clock_inv.sv",
+              "/inputs/src/lowrisc_prim_xilinx_ultrascale_clock_mux2_0/rtl/prim_xilinx_ultrascale_clock_mux2.sv",
+              "/inputs/src/lowrisc_prim_xilinx_ultrascale_flop_0/rtl/prim_xilinx_ultrascale_flop.sv",
+              "/inputs/src/lowrisc_prim_xilinx_ultrascale_flop_en_0/rtl/prim_xilinx_ultrascale_flop_en.sv",
+              "/inputs/src/lowrisc_prim_xilinx_ultrascale_xor2_0/rtl/prim_xilinx_ultrascale_xor2.sv",
+              "/inputs/src/lowrisc_prim_xilinx_xor2_0/rtl/prim_xilinx_xor2.sv",
+              "/inputs/src/lowrisc_prim_arbiter_0/rtl/prim_arbiter_fixed.sv",
+              "/inputs/src/lowrisc_prim_arbiter_0/rtl/prim_arbiter_ppc.sv",
+              "/inputs/src/lowrisc_prim_arbiter_0/rtl/prim_arbiter_tree.sv",
+              "/inputs/src/lowrisc_prim_arbiter_0/rtl/prim_arbiter_tree_dup.sv",
+              "/inputs/src/lowrisc_prim_cdc_rand_delay_0/rtl/prim_cdc_rand_delay.sv",
+              "/inputs/src/lowrisc_prim_cipher_0/rtl/prim_subst_perm.sv",
+              "/inputs/src/lowrisc_prim_cipher_0/rtl/prim_present.sv",
+              "/inputs/src/lowrisc_prim_cipher_0/rtl/prim_prince.sv",
+              "/inputs/src/lowrisc_prim_count_0/rtl/prim_count_pkg.sv",
+              "/inputs/src/lowrisc_prim_count_0/rtl/prim_count.sv",
+              "/inputs/src/lowrisc_prim_generic_clock_mux2_0/rtl/prim_generic_clock_mux2.sv",
+              "/inputs/src/lowrisc_prim_generic_pad_wrapper_0/rtl/prim_generic_pad_wrapper.sv",
+              "/inputs/src/lowrisc_prim_lfsr_0.1/rtl/prim_lfsr.sv",
+              "/inputs/src/lowrisc_prim_sec_anchor_0.1/rtl/prim_sec_anchor_buf.sv",
+              "/inputs/src/lowrisc_prim_sec_anchor_0.1/rtl/prim_sec_anchor_flop.sv",
+              "/inputs/src/lowrisc_prim_sha2_0/rtl/prim_sha2_pad.sv",
+              "/inputs/src/lowrisc_prim_sha2_0/rtl/prim_sha2.sv",
+              "/inputs/src/lowrisc_prim_sha2_0/rtl/prim_sha2_32.sv",
+              "/inputs/src/lowrisc_prim_sparse_fsm_0/rtl/prim_sparse_fsm_flop.sv",
+              "/inputs/src/lowrisc_prim_util_0.1/rtl/prim_util_pkg.sv",
+              "/inputs/src/lowrisc_prim_xilinx_pad_wrapper_0/rtl/prim_xilinx_pad_wrapper.sv",
+              "/inputs/src/lowrisc_prim_xilinx_ultrascale_pad_wrapper_0/rtl/prim_xilinx_ultrascale_pad_wrapper.sv",
+              "/inputs/src/lowrisc_ip_lc_ctrl_state_pkg_0.1/rtl/lc_ctrl_state_pkg.sv",
+              "/inputs/src/lowrisc_prim_abstract_and2_0/prim_and2.sv",
+              "/inputs/src/lowrisc_prim_abstract_buf_0/prim_buf.sv",
+              "/inputs/src/lowrisc_prim_abstract_clock_mux2_0/prim_clock_mux2.sv",
+              "/inputs/src/lowrisc_prim_abstract_flop_0/prim_flop.sv",
+              "/inputs/src/lowrisc_prim_abstract_pad_wrapper_0/prim_pad_wrapper.sv",
+              "/inputs/src/lowrisc_prim_abstract_xnor2_0/prim_xnor2.sv",
+              "/inputs/src/lowrisc_prim_abstract_xor2_0/prim_xor2.sv",
+              "/inputs/src/lowrisc_prim_generic_flop_en_0/rtl/prim_generic_flop_en.sv",
+              "/inputs/src/lowrisc_prim_onehot_check_0/rtl/prim_onehot_check.sv",
+              "/inputs/src/lowrisc_prim_trivium_0.1/rtl/prim_trivium_pkg.sv",
+              "/inputs/src/lowrisc_prim_trivium_0.1/rtl/prim_trivium.sv",
+              "/inputs/src/lowrisc_prim_abstract_flop_en_0/prim_flop_en.sv",
+              "/inputs/src/lowrisc_prim_blanker_0/rtl/prim_blanker.sv",
+              "/inputs/src/lowrisc_prim_generic_clock_inv_0/rtl/prim_generic_clock_inv.sv",
+              "/inputs/src/lowrisc_prim_generic_flop_2sync_0/rtl/prim_generic_flop_2sync.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi_pkg.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi4_sender.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi4_sync.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi4_dec.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi8_sender.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi8_sync.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi8_dec.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi12_sender.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi12_sync.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi12_dec.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi16_sender.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi16_sync.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi16_dec.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi20_sender.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi20_sync.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi20_dec.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi24_sender.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi24_sync.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi24_dec.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi28_sender.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi28_sync.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi28_dec.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi32_sender.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi32_sync.sv",
+              "/inputs/src/lowrisc_prim_mubi_0.1/rtl/prim_mubi32_dec.sv",
+              "/inputs/src/lowrisc_prim_reg_we_check_0/rtl/prim_reg_we_check.sv",
+              "/inputs/src/lowrisc_prim_abstract_clock_inv_0/prim_clock_inv.sv",
+              "/inputs/src/lowrisc_prim_abstract_flop_2sync_0/prim_flop_2sync.sv",
+              "/inputs/src/lowrisc_prim_subreg_0/rtl/prim_subreg_pkg.sv",
+              "/inputs/src/lowrisc_prim_subreg_0/rtl/prim_reg_cdc.sv",
+              "/inputs/src/lowrisc_prim_subreg_0/rtl/prim_reg_cdc_arb.sv",
+              "/inputs/src/lowrisc_prim_subreg_0/rtl/prim_subreg.sv",
+              "/inputs/src/lowrisc_prim_subreg_0/rtl/prim_subreg_arb.sv",
+              "/inputs/src/lowrisc_prim_subreg_0/rtl/prim_subreg_ext.sv",
+              "/inputs/src/lowrisc_prim_subreg_0/rtl/prim_subreg_shadow.sv",
+              "/inputs/src/lowrisc_tlul_headers_0.1/rtl/tlul_pkg.sv",
+              "/inputs/src/lowrisc_ip_lc_ctrl_pkg_0.1/rtl/lc_ctrl_reg_pkg.sv",
+              "/inputs/src/lowrisc_ip_lc_ctrl_pkg_0.1/rtl/lc_ctrl_pkg.sv",
+              "/inputs/src/lowrisc_tlul_trans_intg_0.1/rtl/tlul_data_integ_enc.sv",
+              "/inputs/src/lowrisc_tlul_trans_intg_0.1/rtl/tlul_data_integ_dec.sv",
+              "/inputs/src/lowrisc_tlul_trans_intg_0.1/rtl/tlul_cmd_intg_gen.sv",
+              "/inputs/src/lowrisc_tlul_trans_intg_0.1/rtl/tlul_cmd_intg_chk.sv",
+              "/inputs/src/lowrisc_tlul_trans_intg_0.1/rtl/tlul_rsp_intg_gen.sv",
+              "/inputs/src/lowrisc_tlul_trans_intg_0.1/rtl/tlul_rsp_intg_chk.sv",
+              "/inputs/src/lowrisc_ip_csrng_pkg_0.1/rtl/csrng_reg_pkg.sv",
+              "/inputs/src/lowrisc_ip_csrng_pkg_0.1/rtl/csrng_pkg.sv",
+              "/inputs/src/lowrisc_prim_diff_decode_0/rtl/prim_diff_decode.sv",
+              "/inputs/src/lowrisc_prim_fifo_0/rtl/prim_fifo_async_sram_adapter.sv",
+              "/inputs/src/lowrisc_prim_fifo_0/rtl/prim_fifo_async_simple.sv",
+              "/inputs/src/lowrisc_prim_fifo_0/rtl/prim_fifo_async.sv",
+              "/inputs/src/lowrisc_prim_fifo_0/rtl/prim_fifo_sync.sv",
+              "/inputs/src/lowrisc_prim_fifo_0/rtl/prim_fifo_sync_cnt.sv",
+              "/inputs/src/lowrisc_prim_lc_sync_0.1/rtl/prim_lc_sync.sv",
+              "/inputs/src/lowrisc_prim_rst_sync_0/rtl/prim_rst_sync.sv",
+              "/inputs/src/lowrisc_ip_edn_pkg_0.1/rtl/edn_reg_pkg.sv",
+              "/inputs/src/lowrisc_ip_edn_pkg_0.1/rtl/edn_pkg.sv",
+              "/inputs/src/lowrisc_prim_alert_0/rtl/prim_alert_pkg.sv",
+              "/inputs/src/lowrisc_prim_alert_0/rtl/prim_alert_receiver.sv",
+              "/inputs/src/lowrisc_prim_alert_0/rtl/prim_alert_sender.sv",
+              "/inputs/src/lowrisc_prim_esc_0/rtl/prim_esc_pkg.sv",
+              "/inputs/src/lowrisc_prim_esc_0/rtl/prim_esc_receiver.sv",
+              "/inputs/src/lowrisc_prim_esc_0/rtl/prim_esc_sender.sv",
+              "/inputs/src/lowrisc_tlul_common_0.1/rtl/tlul_fifo_sync.sv",
+              "/inputs/src/lowrisc_tlul_common_0.1/rtl/tlul_fifo_async.sv",
+              "/inputs/src/lowrisc_tlul_common_0.1/rtl/tlul_assert.sv",
+              "/inputs/src/lowrisc_tlul_common_0.1/rtl/tlul_err.sv",
+              "/inputs/src/lowrisc_tlul_common_0.1/rtl/tlul_assert_multiple.sv",
+              "/inputs/src/lowrisc_ip_keymgr_pkg_0.1/rtl/keymgr_reg_pkg.sv",
+              "/inputs/src/lowrisc_ip_keymgr_pkg_0.1/rtl/keymgr_pkg.sv",
+              "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_clock_gating_sync.sv",
+              "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_sram_arbiter.sv",
+              "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_slicer.sv",
+              "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_sync_reqack.sv",
+              "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_sync_reqack_data.sv",
+              "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_sync_slow_fast.sv",
+              "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_keccak.sv",
+              "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_packer.sv",
+              "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_packer_fifo.sv",
+              "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_gate_gen.sv",
+              "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_pulse_sync.sv",
+              "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_filter.sv",
+              "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_filter_ctr.sv",
+              "/inputs/src/lowrisc_prim_all_0.1/rtl/prim_intr_hw.sv",
+              "/inputs/src/lowrisc_tlul_adapter_reg_0.1/rtl/tlul_adapter_reg.sv",
+              "/inputs/src/lowrisc_tlul_adapter_sram_0.1/rtl/tlul_sram_byte.sv",
+              "/inputs/src/lowrisc_tlul_adapter_sram_0.1/rtl/tlul_adapter_sram.sv",
+              "/inputs/src/lowrisc_tlul_lc_gate_0.1/rtl/tlul_lc_gate.sv",
+              "/inputs/src/lowrisc_tlul_socket_1n_0.1/rtl/tlul_err_resp.sv",
+              "/inputs/src/lowrisc_tlul_socket_1n_0.1/rtl/tlul_socket_1n.sv",
+              "/inputs/src/lowrisc_tlul_socket_m1_0.1/rtl/tlul_socket_m1.sv",
+              "/inputs/src/lowrisc_tlul_sram2tlul_0.1/rtl/sram2tlul.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_reg_pkg.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_pkg.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_reg_top.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_ctrl_reg_shadowed.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_core.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_ctr.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_ctr_fsm.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_ctr_fsm_p.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_ctr_fsm_n.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_control.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_control_fsm.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_control_fsm_p.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_control_fsm_n.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_reg_status.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sel_buf_chk.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_cipher_core.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_cipher_control.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_cipher_control_fsm.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_cipher_control_fsm_p.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_cipher_control_fsm_n.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sub_bytes.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sbox.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sbox_lut.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sbox_canright_pkg.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sbox_canright.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sbox_canright_masked_noreuse.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sbox_canright_masked.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_sbox_dom.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_shift_rows.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_mix_columns.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_mix_single_column.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_key_expand.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_prng_clearing.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes_prng_masking.sv",
+              "/inputs/src/lowrisc_ip_aes_1.0/rtl/aes.sv"
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-17T08:38:09.925346+00:00",
+            "runtime_seconds": 9.444496506000064,
+            "stop": null,
+            "stdout": "interface.stdout.log",
+            "stderr": "interface.stderr.log"
+          },
+          "outputs": {
+            "interface.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "interface.stderr.log": "e5001b100c0d27e23285b06c1845194732664d3357e983d013e33250ca79eea2",
+            "interface/VAesInterface.h": "72f313f30c92648721bcd1eb52548fe19302071be0a8642cb56b1f649c2548c1"
+          }
+        },
+        "translated": {
+          "status": "PASS",
+          "diagnostic": "Native elaboration matched the pinned Yosys interface",
+          "ports": {
+            "clk_i": {
+              "direction": "input",
+              "width": 1
+            },
+            "rst_ni": {
+              "direction": "input",
+              "width": 1
+            },
+            "rst_shadowed_ni": {
+              "direction": "input",
+              "width": 1
+            },
+            "clk_edn_i": {
+              "direction": "input",
+              "width": 1
+            },
+            "rst_edn_ni": {
+              "direction": "input",
+              "width": 1
+            },
+            "idle_o": {
+              "direction": "output",
+              "width": 4
+            },
+            "lc_escalate_en_i": {
+              "direction": "input",
+              "width": 4
+            },
+            "edn_o": {
+              "direction": "output",
+              "width": 1
+            },
+            "alert_rx_i": {
+              "direction": "input",
+              "width": 8
+            },
+            "alert_tx_o": {
+              "direction": "output",
+              "width": 4
+            },
+            "keymgr_key_i": {
+              "direction": "input",
+              "width": 513
+            },
+            "tl_i": {
+              "direction": "input",
+              "width": 109
+            },
+            "tl_o": {
+              "direction": "output",
+              "width": 66
+            },
+            "edn_i": {
+              "direction": "input",
+              "width": 34
+            }
+          },
+          "execution": {
+            "command": [
+              "/tools/usr/bin/verilator",
+              "--cc",
+              "--top-module",
+              "aes",
+              "--prefix",
+              "VAesInterface",
+              "--Mdir",
+              "interface",
+              "-Wno-fatal",
+              "/experiment/run/translated/translated_model.v"
+            ],
+            "return_code": 0,
+            "started_at": "2026-11-17T08:40:40.405134+00:00",
+            "runtime_seconds": 9.29373784300003,
+            "stop": null,
+            "stdout": "interface.stdout.log",
+            "stderr": "interface.stderr.log"
+          },
+          "outputs": {
+            "interface.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "interface.stderr.log": "51e5b35e07cfe3d1994c99bb5b158c621059171d7bba47e7d99f5d994b021c65",
+            "interface/VAesInterface.h": "8bea7fad8f37515c6739895041f0e6a66b2689204406d9f3d5e2a49931f2e40f"
+          }
+        }
+      }
+    },
+    "differential": {
+      "status": "PASS",
+      "diagnostic": "Observed cycles agree under the recorded stimulus",
+      "scenarios": {
+        "common": {
+          "status": "PASS",
+          "diagnostic": "Observed cycles agree under the recorded stimulus"
+        },
+        "phase_offset": {
+          "status": "PASS",
+          "diagnostic": "Observed cycles agree under the recorded stimulus"
+        },
+        "independent": {
+          "status": "PASS",
+          "diagnostic": "Observed cycles agree under the recorded stimulus"
+        },
+        "sideload": {
+          "status": "PASS",
+          "diagnostic": "Observed cycles agree under the recorded stimulus"
+        },
+        "errors": {
+          "status": "PASS",
+          "diagnostic": "Observed cycles agree under the recorded stimulus"
+        }
+      },
+      "implementation": "Yosys-elaborated model of the pinned sv2v translation"
+    },
+    "formal": {
+      "status": "BLOCKED",
+      "diagnostic": "No qualified full sequential proof setup for dual clocks, resets, EDN, masking and X semantics. The existing Yosys SAT profile is combinational.",
+      "partition": {
+        "status": "PASS",
+        "diagnostic": "Bounded SAT correspondence of the key and IV register-status instances",
+        "module": "aes_reg_status",
+        "widths": [
+          8,
+          16
+        ],
+        "depth": 8,
+        "solver_seconds": 20,
+        "inputs": {
+          "aes_reg_status.sv": "4a0570cd078be09436a1d30ac12c7021222080a63b49a205341fc17b3519b52c",
+          "translation.v": "f2adfd17f78bbdbe0ecad10a61e08d8a574aa706feb0a2c7b818775fd5f944a8"
+        },
+        "assumptions": {
+          "state": "No assumed initial match; compare all outputs after an observed reset step",
+          "reset": "Both models see active-low reset in step 1, then unconstrained reset",
+          "clock": "One common abstract clock step with async2sync reset semantics",
+          "entropy": "No entropy input on this partition",
+          "logic": "Defined binary inputs, no four-state X/Z or physical reset timing proof",
+          "outputs": "new_o, new_pulse_o and clean_o"
+        },
+        "yosys_sha256": "f626d08aed1d0a42ff4d9ba6b982a81d988cb84f77114514a865978c75f9497f",
+        "cases": {
+          "8": {
+            "status": "PASS",
+            "execution": {
+              "command": [
+                "/OpenROAD-flow-scripts/tools/install/yosys/bin/yosys",
+                "-Q",
+                "-s",
+                "width-8.ys"
+              ],
+              "return_code": 0,
+              "started_at": "2026-11-17T08:42:55.556457+00:00",
+              "runtime_seconds": 3.818865380000034,
+              "stop": null,
+              "stdout": "proof-8.stdout.log",
+              "stderr": "proof-8.stderr.log"
+            },
+            "outputs": {
+              "width-8.ys": "5dd802a40dabcabbb76d5652cd3e32d459a2c8fc15af2bedd0873a9070e441f4",
+              "proof-8.stdout.log": "73fbc4cfd92863154bc7888451196f922ea913d5b7df13182b8d1caa381a6c70",
+              "proof-8.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          },
+          "16": {
+            "status": "PASS",
+            "execution": {
+              "command": [
+                "/OpenROAD-flow-scripts/tools/install/yosys/bin/yosys",
+                "-Q",
+                "-s",
+                "width-16.ys"
+              ],
+              "return_code": 0,
+              "started_at": "2026-11-17T08:42:59.376343+00:00",
+              "runtime_seconds": 3.969820625000011,
+              "stop": null,
+              "stdout": "proof-16.stdout.log",
+              "stderr": "proof-16.stderr.log"
+            },
+            "outputs": {
+              "width-16.ys": "5a84fea7b82980d4af13537d5fad997aa2238059f7a557e43caeff7d6743d50d",
+              "proof-16.stdout.log": "41e03b9786224e9e9acbd85fc10caf3144b5aa0159729b5d4382b2a9a9fe7783",
+              "proof-16.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          }
+        }
+      }
+    }
+  },
+  "translation_model": {
+    "status": "PASS",
+    "diagnostic": "Yosys elaborated the byte-identical sv2v translation",
+    "translation_sha256": "f2adfd17f78bbdbe0ecad10a61e08d8a574aa706feb0a2c7b818775fd5f944a8",
+    "yosys_sha256": "f626d08aed1d0a42ff4d9ba6b982a81d988cb84f77114514a865978c75f9497f",
+    "execution": {
+      "command": [
+        "/OpenROAD-flow-scripts/tools/install/yosys/bin/yosys",
+        "-Q",
+        "-p",
+        "read_verilog translation.v; hierarchy -check -top aes; proc; check -assert; write_verilog -noattr translated_model.v"
+      ],
+      "return_code": 0,
+      "started_at": "2026-11-17T08:40:31.268846+00:00",
+      "runtime_seconds": 9.044535892999988,
+      "stop": null,
+      "stdout": "yosys-model.stdout.log",
+      "stderr": "yosys-model.stderr.log"
+    },
+    "outputs": {
+      "yosys-model.stdout.log": "a8f701538827e5ec5faff5407e3d5681d21defe2dedeb88564b511e6345588c8",
+      "yosys-model.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "translated_model.v": "e6b34e4f01606687f81277b378ee8ab1a6b6e45f08f0458d3825f1a6382bef00"
+    }
+  },
+  "direct_translation_interface": {
+    "status": "INFRASTRUCTURE_ERROR",
+    "diagnostic": "Native interface elaboration failed",
+    "ports": {},
+    "execution": {
+      "command": [
+        "/tools/usr/bin/verilator",
+        "--cc",
+        "--top-module",
+        "aes",
+        "--prefix",
+        "VAesInterface",
+        "--Mdir",
+        "interface",
+        "-Wno-fatal",
+        "/repo/experiments/m11b-aes-route-01/aes-input/aes.v"
+      ],
+      "return_code": 1,
+      "started_at": "2026-11-17T08:40:30.633376+00:00",
+      "runtime_seconds": 0.6048179990000335,
+      "stop": null,
+      "stdout": "interface.stdout.log",
+      "stderr": "interface.stderr.log"
+    },
+    "outputs": {
+      "interface.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interface.stderr.log": "849d9afea3225879b5289750ded3cf1924ea18f248c5ed1ac1b3ecccd59222f2"
+    }
+  },
+  "receipt_sha256": "36bcf274d0b71b26edfcaba49eb8cf2ad24c4c02b1e3d6466cdda47410548f3d"
+}

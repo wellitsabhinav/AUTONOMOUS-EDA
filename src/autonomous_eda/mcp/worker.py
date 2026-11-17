@@ -69,6 +69,7 @@ def read(request: Request, target: Path) -> Model:
             status="AVAILABLE",
             rtl_revision=receipt["rtl_revision"],
             gates=receipt["gates"],
+            scenarios=receipt.get("scenarios", {}),
             obligations=receipt["obligations"],
             evidence_references=receipt["evidence_references"],
         )

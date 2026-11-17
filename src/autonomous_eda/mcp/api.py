@@ -177,6 +177,7 @@ class AESQualification(Model):
     status: Literal["AVAILABLE", "UNKNOWN"]
     rtl_revision: str | None = None
     gates: dict[str, str] = Field(default_factory=dict)
+    scenarios: dict[str, str] = Field(default_factory=dict)
     obligations: dict[str, str] = Field(default_factory=dict)
     evidence_references: dict[str, dict[str, str]] = Field(default_factory=dict)
 

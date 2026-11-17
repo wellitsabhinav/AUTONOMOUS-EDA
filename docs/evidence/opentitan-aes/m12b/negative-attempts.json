@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "peripheral_attempt_01": {
+    "directory": "experiments/m12b-aes-peripheral-01",
+    "receipt_file_sha256": "696aeb1a2b6ce765dad2ca72784c404f3d539fa8bb7836e11ecdebde5c14782d",
+    "receipt_sha256": "674621d2312281300c82b160e31129a23c5a4c7149a4d3ff7abcd0522e340665",
+    "original": "PASS",
+    "translated": "INFRASTRUCTURE_ERROR",
+    "translated_direct_stderr_sha256": "849d9afea3225879b5289750ded3cf1924ea18f248c5ed1ac1b3ecccd59222f2",
+    "translated_compile_stderr_sha256": "5c1dfacf8fe111f98a7759e37dc2cf6c96ea155861070d807284447a073d26e8",
+    "diagnostic": "Raw sv2v syntax has a zero-width select. The first container PATH omitted the installed Yosys executable.",
+    "disposition": "Preserved. Subsequent attempts used the pinned Yosys PATH and fresh directories."
+  }
+}

@@ -11,6 +11,8 @@ from pathlib import Path
 from typing import Any
 
 from ..manifest import RTLManifest, fingerprint, integer, sha256
+from .aes_formal import partition_proof
+from .aes_scenarios import DEFAULTS, PROFILES, first_difference, scenario_observations
 from .process import Execution, execute, log_text
 
 CORE_MARKER = "SUCCESS: All AES ciphertexts correctly decrypted."
@@ -78,6 +80,8 @@ def regression(
     simulation: str,
     tool_name: str = "verilator",
     timeout: int,
+    multi_clock: bool = False,
+    seed: int = SEED,
     cancelled: Callable[[], bool] = lambda: False,
 ) -> dict[str, Any]:
     timeout = integer(timeout, "AES regression deadline", 3600)
@@ -87,6 +91,7 @@ def regression(
     tools: dict[str, Any] = {}
     runs: list[Execution] = []
     facts: dict[str, Any] = {}
+    scenarios: dict[str, Any] = {}
     status = "BLOCKED"
     reason = f"Required executable unavailable: {tool_name}"
     found = shutil.which(tool_name)
@@ -117,9 +122,45 @@ def regression(
                 status, reason = failure
             elif build.return_code != 0 or not product.is_file():
                 status, reason = "INFRASTRUCTURE_ERROR", "Compilation did not produce a simulator"
+            elif multi_clock:
+                for name, overrides in PROFILES.items():
+                    config = {**DEFAULTS, **overrides}
+                    run = execute(
+                        [
+                            str(product.resolve()),
+                            f"+verilator+seed+{seed}",
+                            f"+schedule_seed={seed}",
+                            "+extended",
+                            *(f"+{key}={value}" for key, value in config.items()),
+                        ],
+                        work,
+                        f"simulate-{name}",
+                        deadline,
+                        cancelled,
+                    )
+                    runs.append(run)
+                    state, diagnostic, observed = simulation_result(work, run, scope)
+                    checked_state, checked_reason, observed = scenario_observations(
+                        log_text(work, run.stdout).splitlines(), name, config
+                    )
+                    if state == "PASS":
+                        state, diagnostic = checked_state, checked_reason
+                    scenarios[name] = {
+                        "status": state,
+                        "diagnostic": diagnostic,
+                        "config": config,
+                        "observations": observed,
+                        "execution": asdict(run),
+                    }
+                status = next(
+                    (case["status"] for case in scenarios.values() if case["status"] != "PASS"),
+                    "PASS",
+                )
+                reason = "Evaluate the individual Verilator scenario outcomes"
+                facts = {name: case["observations"] for name, case in scenarios.items()}
             else:
                 run = execute(
-                    [str(product.resolve()), f"+verilator+seed+{SEED}"],
+                    [str(product.resolve()), f"+verilator+seed+{seed}"],
                     work,
                     "simulate",
                     deadline,
@@ -139,7 +180,7 @@ def regression(
         "scope": scope,
         "status": status,
         "diagnostic": reason,
-        "seed": SEED,
+        "seed": seed,
         "timeout_seconds": timeout,
         "inputs": sources,
         "tools": tools,
@@ -147,6 +188,8 @@ def regression(
         "execution": [asdict(run) for run in runs],
         "outputs": outputs,
     }
+    if multi_clock:
+        report["scenarios"] = scenarios
     return {**report, "receipt_sha256": fingerprint(report)}
 
 
@@ -291,10 +334,14 @@ def peripheral(
     inventory: dict[str, Any],
     *,
     timeout: int,
+    multi_clock: bool = False,
+    seed: int = SEED,
 ) -> dict[str, Any]:
     timeout = integer(timeout, "AES regression deadline", 3600)
     if timeout < 1:
         raise ValueError("AES regression deadline must be positive")
+    if not 1 <= seed <= 2**31 - 1:
+        raise ValueError("AES regression seed must be in 1..2147483647")
     work = work.resolve()
     work.mkdir(parents=True)
     flags = [
@@ -351,11 +398,28 @@ def peripheral(
             ],
             simulation="model/Vperipheral_tb",
             timeout=timeout,
+            multi_clock=multi_clock,
+            seed=seed,
         )
-    observed = differential(regressions["original"], regressions["translated"])
+    observed: dict[str, Any] = differential(regressions["original"], regressions["translated"])
+    if multi_clock:
+        compared = {}
+        for name in PROFILES:
+            original = regressions["original"]["scenarios"].get(name, {"status": "BLOCKED"})
+            translated = regressions["translated"]["scenarios"].get(name, {"status": "BLOCKED"})
+            result: dict[str, Any] = differential(original, translated)
+            if "execution" in original and "execution" in translated:
+                mismatch = first_difference(
+                    work / "original" / original["execution"]["stdout"],
+                    work / "translated" / translated["execution"]["stdout"],
+                )
+                if mismatch is not None:
+                    result["first_difference"] = mismatch
+            compared[name] = result
+        observed = {**observed, "scenarios": compared}
     if normalized and normalized["status"] == "PASS":
         observed["implementation"] = "Yosys-elaborated model of the pinned sv2v translation"
-    stages = {
+    stages: dict[str, dict[str, Any]] = {
         "structural": {
             "status": (
                 "PASS"
@@ -375,13 +439,22 @@ def peripheral(
             ),
         },
     }
+    if multi_clock:
+        stages["formal"]["partition"] = partition_proof(
+            rtl, translation, work / "formal", timeout=min(timeout, 60)
+        )
     report = {
         "schema_version": 1,
         "identity": binding,
         "semantic_scope": (
-            "Finite Verilator two-state simulation. Both ports share a test clock and reset. "
-            "CDC random delays are disabled. Deterministic EDN transfers and valid TL-UL "
-            "response fields are compared. X/Z and unobserved internal state are outside scope."
+            "Finite Verilator two-state simulation. CDC random delays are disabled. "
+            + (
+                "Common, phase-offset and independent clocks with bounded protocol scenarios. "
+                "TL-UL, EDN, resets and alerts are traced on their respective clock edges. "
+                if multi_clock
+                else "A common test clock drives both clocks. "
+            )
+            + "X/Z and unobserved internal state are outside scope."
         ),
         "functional": regressions,
         "correspondence": stages,

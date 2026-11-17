@@ -91,9 +91,12 @@ def build_parser() -> argparse.ArgumentParser:
             aes.add_argument("--topgen", type=Path, required=True)
             aes.add_argument("--upstream", type=Path, required=True)
             aes.add_argument("--native-output", type=Path, help="new pre-route evidence directory")
+            aes.add_argument("--diagnostic-budget", type=Path, help="experimental JSON delays")
         else:
             aes.add_argument("--output", type=Path, required=True, help="new experiment directory")
             aes.add_argument("--testbench", type=Path, required=True)
+            aes.add_argument("--multi-clock", action="store_true", help="run all AES scenarios")
+            aes.add_argument("--seed", type=int, default=41)
     aes_core = readiness_actions.add_parser("aes-core", help="run upstream AES cipher-core DV")
     aes_core.add_argument("directory", type=Path, help="fresh FuseSoC cipher-core build")
     aes_core.add_argument("--timeout", type=int, default=240)
@@ -356,8 +359,16 @@ def controller_main(args: argparse.Namespace) -> int:
                 args.upstream,
                 args.inspection,
             )
+            if args.diagnostic_budget and not args.native_output:
+                raise ValueError("The diagnostic budget requires --native-output")
             if args.native_output:
-                native = pre_route(args.directory, args.native_output, timeout=args.timeout)
+                native = pre_route(
+                    args.directory,
+                    args.native_output,
+                    timeout=args.timeout,
+                    ports=result["ports"],
+                    budget=args.diagnostic_budget,
+                )
                 result["pre_route"] = {**native, "native_receipt_sha256": fingerprint(native)}
         elif args.readiness_action == "aes-peripheral":
             from .aes_contract import INSPECTION_DIGEST, require_digest, source_identity
@@ -379,6 +390,8 @@ def controller_main(args: argparse.Namespace) -> int:
                 args.output,
                 data["modules"]["aes"]["ports"],
                 timeout=args.timeout,
+                multi_clock=args.multi_clock,
+                seed=args.seed,
             )
         elif args.readiness_action == "aes-record":
             from .aes_qualification import record

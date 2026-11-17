@@ -33,6 +33,12 @@ structural and differential evidence. The blocked formal and timing obligations
 remain visible alongside the physical result in CLI, Studio, and MCP.
 [Milestone 12 evaluation](MILESTONE_12_EVALUATION.md)
 
+Milestone 12B verifies the generated Earl Grey AES clock and reset nets. Both
+clock ports connect to `clk_main_aes`. Primary and EDN use the same reset net,
+and the shadow registers use the corresponding shadow reset. Source-bound edge traces cover independently
+driven clocks, sideload and alert/error behavior. The documented CDC and full
+interface timing blockers remain. [Milestone 12B evaluation](MILESTONE_12B_EVALUATION.md)
+
 The isolated AES SDC treats `clk_i` and `clk_edn_i` as one experimental 8.5 ns
 clock. The block has `rst_ni`, `rst_shadowed_ni` and `rst_edn_ni` reset inputs.
 Its isolated constraint evidence does not qualify EDN clock relationships, reset and

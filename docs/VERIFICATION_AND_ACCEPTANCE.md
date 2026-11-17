@@ -45,6 +45,12 @@ Each native verification or coverage dispatch creates an attempt and atomically 
 
 Icarus runs trusted operator HDL. A pass requires one exact success marker with a zero exit status. An exact failure marker fails regression. Yosys compares distinct reference and candidate source sets with matching ports and supported combinational cells. SAT checks the output mismatch trigger for every defined two-state input. Sequential behavior, X/Z behavior and property checking require separate obligations. Native dispatch uses separate logs, a timeout and process cleanup. The pinned coverage container also has CPU, memory and PID limits.
 
+The AES-specific Verilator profile records five bounded schedules and compares
+trusted known answers, protocol handshakes and edge traces. The Yosys partition
+proof applies to the key and IV `aes_reg_status` instances at depth 8 under a
+shared reset and abstract clock. Full peripheral equivalence and CDC qualification
+retain independent blocked gates. [Measured results](MILESTONE_12B_EVALUATION.md)
+
 MCP's `get_acceptance_summary` reads the full profile from an allowlisted schema 1 snapshot. It uses the read-only worker. The AI supervisor consumes recorded facts, while the deterministic evaluator owns acceptance.
 
 Use `verify RUN --profile PROFILE --render` to export `acceptance.json`, `acceptance.md` and PNGs. `artifacts gallery RUN` revalidates the matrix and figure provenance. See the [evaluation](VERIFICATION_EVALUATION.md) and [gallery](EXAMPLE_GALLERY.md).

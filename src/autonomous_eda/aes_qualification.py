@@ -11,6 +11,7 @@ from .evidence import Experiment, verified_artifact
 from .manifest import fingerprint
 from .opentitan_physical import INPUTS, RTL_DIGEST, RTL_REVISION
 from .partition_readiness import metadata
+from .verification.aes_scenarios import PROFILES
 
 RECEIPT = "verification/aes-qualification.json"
 STATES = {"PASS", "FAIL", "BLOCKED", "UNKNOWN", "TIMEOUT", "INFRASTRUCTURE_ERROR"}
@@ -23,6 +24,14 @@ GATES = (
     "differential",
     "formal",
     "resource_admission",
+)
+INTERFACE_GATES = (
+    "clock_reset_structure",
+    "cdc_qualification",
+    "multi_clock",
+    "sideload",
+    "alert_errors",
+    "bounded_formal",
 )
 
 
@@ -100,9 +109,35 @@ def record(
             if name not in ("structural", "differential", "formal"):
                 raise ValueError("Unsupported AES correspondence stage")
             states[name] = stage["status"]
+    cases: dict[str, str] = {}
+    if "clock_reset_review" in timing:
+        review = timing["clock_reset_review"]
+        states.update(dict.fromkeys(INTERFACE_GATES, "UNKNOWN"))
+        states["clock_reset_structure"] = review["status"]
+        states["cdc_qualification"] = review["qualification"]
+    original = design["functional"]["original"] if design else {}
+    if design is not None and "scenarios" in original:
+        for name in INTERFACE_GATES:
+            states.setdefault(name, "UNKNOWN")
+        digest_payload(original, "receipt_sha256")
+        scenarios = original["scenarios"]
+        if set(scenarios) - PROFILES.keys():
+            raise ValueError("Unsupported AES scenario in qualification evidence")
+        cases = {name: scenarios.get(name, {}).get("status", "BLOCKED") for name in PROFILES}
+        clock_states = [cases[name] for name in ("common", "phase_offset", "independent")]
+        states["multi_clock"] = (
+            "FAIL"
+            if "FAIL" in clock_states
+            else next((state for state in clock_states if state != "PASS"), "PASS")
+        )
+        states["sideload"] = cases["sideload"]
+        states["alert_errors"] = cases["errors"]
+        states["bounded_formal"] = (
+            design["correspondence"]["formal"].get("partition", {}).get("status", "BLOCKED")
+        )
     if plan:
         states["resource_admission"] = "PASS" if plan["execution_allowed"] else "BLOCKED"
-    if not set(states.values()) <= STATES:
+    if not (set(states.values()) | set(cases.values())) <= STATES:
         raise ValueError("Unsupported AES qualification status")
     summary = {
         "schema_version": 1,
@@ -116,6 +151,8 @@ def record(
         },
         "evidence_references": sources,
     }
+    if cases:
+        summary["scenarios"] = cases
     return {**summary, "qualification_receipt_sha256": fingerprint(summary)}
 
 
@@ -129,8 +166,16 @@ def read(root: Path, evidence: Experiment) -> dict[str, Any] | None:
     digest_payload(data, "qualification_receipt_sha256")
     if any(data.get(key) != value for key, value in identity(evidence).items()):
         raise ValueError("AES qualification receipt belongs to a different run")
-    if set(data["gates"]) != set(GATES) or not set(data["gates"].values()) <= STATES:
+    gate_names = set(data["gates"])
+    if (
+        gate_names not in (set(GATES), set(GATES + INTERFACE_GATES))
+        or not set(data["gates"].values()) <= STATES
+    ):
         raise ValueError("Invalid AES qualification gate inventory")
+    if "scenarios" in data and (
+        set(data["scenarios"]) != PROFILES.keys() or not set(data["scenarios"].values()) <= STATES
+    ):
+        raise ValueError("Invalid AES qualification scenario inventory")
     for reference in data["evidence_references"].values():
         if not re.fullmatch(r"[a-zA-Z0-9._-]{1,80}", reference["file"]) or not re.fullmatch(
             r"[0-9a-f]{64}", reference["sha256"]

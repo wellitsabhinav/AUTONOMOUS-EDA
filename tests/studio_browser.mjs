@@ -116,6 +116,19 @@ if (process.argv[4] === "resources") {
             await wait('document.querySelector("#aes-qualification").open && '
                 +'document.querySelector("#aes-qualification-content").textContent.includes("BLOCKED")');
         }
+        if (process.env.AEDA_STUDIO_EXPECT_AES_12B === "1") {
+            const aes = JSON.parse(qualification).aes_qualification;
+            for (const gate of ["clock_reset_structure", "multi_clock", "sideload", "alert_errors", "differential"]) {
+                if (aes?.gates[gate] !== "PASS") throw new Error("Expected passed AES gate " + gate);
+            }
+            for (const gate of ["interface_timing", "cdc_qualification", "formal", "resource_admission"]) {
+                if (aes?.gates[gate] !== "BLOCKED") throw new Error("Expected blocked AES gate " + gate);
+            }
+            if (aes.scenarios.independent !== "PASS") throw new Error("Missing independent scenario");
+            await wait('document.querySelector("#aes-qualification").open && '
+                +'document.querySelector("#aes-qualification-content").textContent.includes("Key-manager sideload") && '
+                +'document.querySelector("#aes-qualification-content").textContent.includes("Verilator scenarios")');
+        }
     }
     await cdp("Emulation.setDeviceMetricsOverride",{width:1440,height:1050,deviceScaleFactor:1,mobile:false});
     await screenshot("resources");
