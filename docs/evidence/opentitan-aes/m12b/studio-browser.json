@@ -1,0 +1,27 @@
+{
+  "run_id": "eb2896531cd2412d9611ee79d80f6ceb",
+  "routeState": "failed",
+  "renderMs": 163.60089999999997,
+  "viewportWidth": 390,
+  "scrollWidth": 390,
+  "source_sha256": "e23e644389bee941da3c33c5bcc4481429f3d24d83e3e743efae743273c44316",
+  "source_bytes": 27690,
+  "qualification_source_sha256": "4df2528e40823957af291931e3ab953fd66119acf8c6a1124ba237f76e2adcff",
+  "image_sha256": "a82de3e819d183cef0fe5826bfb6caa2b1b07569bc690291acf66cfb6dbcfe95",
+  "mobile_sha256": "076a28dd97176feb0eb04f4a83a1f37b14c5fa8408c309564d61a8f542a9117d",
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Edg/157.0.4341.60",
+    "revision": "@fbcb2989a6c61b72a4919fe1028e58e70131cd46",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+    "jsVersion": "15.7.11.7"
+  },
+  "generated_at": "2026-11-17T08:47:03.443Z",
+  "generation_command": [
+    "F:\\AgenticAI\\tests\\studio_browser.mjs",
+    "http://127.0.0.1:8778/",
+    "experiments/m12b-aes-browser-01",
+    "resources",
+    "failed"
+  ]
+}

@@ -300,6 +300,22 @@ def test_historical_receipt_readback(tmp_path: Path, monkeypatch: pytest.MonkeyP
         read(tmp_path, evidence)
 
 
+def test_published_milestone_receipt_binds_readback_and_native_evidence() -> None:
+    archive = Path("docs/evidence/opentitan-aes/m12b")
+    receipt = json.loads((archive / "aes-qualification.json").read_text(encoding="utf-8"))
+    digest_payload(receipt, "qualification_receipt_sha256")
+    for name, reference in receipt["evidence_references"].items():
+        directory = archive.parent / "qualification" if name == "core" else archive
+        assert sha256(directory / reference["file"]) == reference["sha256"]
+    readback = json.loads((archive / "readback.json").read_text(encoding="utf-8"))
+    assert readback["qualification_receipt_sha256"] == receipt["qualification_receipt_sha256"]
+    assert readback["mcp"]["scenarios"] == receipt["scenarios"]
+    assert receipt["gates"]["interface_timing"] == "BLOCKED"
+    assert receipt["gates"]["formal"] == "BLOCKED"
+    assert receipt["gates"]["resource_admission"] == "BLOCKED"
+    assert sha256(archive / readback["studio"]["receipt"]) == readback["studio"]["sha256"]
+
+
 def test_native_widths_and_directions() -> None:
     assert interface_ports("    VL_IN8(&clk_i,0,0);\n    VL_OUTW(&tl_o,65,0,3);") == {
         "clk_i": {"direction": "input", "width": 1},

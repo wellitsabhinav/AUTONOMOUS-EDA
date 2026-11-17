@@ -1,0 +1,579 @@
+{
+  "schema_version": 1,
+  "status": "BLOCKED",
+  "identity": {
+    "rtl_revision": "b2d662157db2802bde0e40dfc96fd0316042d116",
+    "source_manifest_sha256": "5bbe2656335b12ffc74aa6e15b17eb401e717cf002d685d4991ed853b1cf69db",
+    "resolution_sha256": "acdbf45488cc71751c23bcaae016b133bcbc0080f6d3785523c711b14fd9283a",
+    "source_count": 226,
+    "generated_source_count": 11,
+    "edam_sha256": "3cf853b50911cd294d5f514d24259a356ef4131aa413d4f5d3eeff4303d0b5ab",
+    "translation_sha256": "f2adfd17f78bbdbe0ecad10a61e08d8a574aa706feb0a2c7b818775fd5f944a8"
+  },
+  "inputs_sha256": {
+    "topgen_hjson": "8e61ec4ee1cc3b85136be5195b81ecf061d279fd9d96507fdb9485379090e9d5",
+    "top_sdc": "891277a47732ea52a5f0c6c60a1d3f96f4d2d1d136cec407b7bba459af16a47c",
+    "ip_hjson": "c24582db98a2cf823657ae2c304da03fb921a4f70aa519ff7a7819f26a1e795a",
+    "asic_setup": "aeb9ec60d2e1ec41d7a71f901d32fd7d6ae116850e5c67457f9c26d46a4ab591",
+    "integration_rtl": "392bb28af6e913941f422b7745de4f3dd06514cdfbe66e3753d82dadd21867a3",
+    "topgen_json": "acb246657d975a40fa1250648d03686f66003a9b0a2e9f33fb65c660cde06e0d",
+    "elaborated_inventory": "e81837fbc65eba1775958837963946e7f972dac719eb38428603d05cb4dab41d",
+    "block_sdc": "c9469d7e34cb05c457c8951806a15754f7c785dda43bdd6f80aa1525ddb020cc"
+  },
+  "upstream": {
+    "clock_sources": {
+      "clk_i": "main",
+      "clk_edn_i": "main"
+    },
+    "main_frequency_hz": 100000000,
+    "main_nominal_period_ns": 10.0,
+    "reset_connections": {
+      "rst_ni": "lc",
+      "rst_edn_ni": "lc"
+    },
+    "topgen_parameters": {
+      "SecMasking": "1",
+      "SecSBoxImpl": "aes_pkg::SBoxImplDom"
+    },
+    "rtl_defaults": {
+      "AES192Enable": 1,
+      "SecMasking": 1,
+      "SecSBoxImpl": "SBoxImplDom"
+    },
+    "interrupt_ports": [],
+    "timing_scope": "Top-level ASIC SDC and logical TopGen connectivity",
+    "port_provenance": "Elaborated inventory and hw/ip/aes/rtl/aes.sv interface wiring"
+  },
+  "ports": {
+    "alert_rx_i": {
+      "direction": "input",
+      "width": 8,
+      "interface": "alert receive",
+      "peripheral_clock_port": "clk_i",
+      "peripheral_reset_port": "rst_ni",
+      "port_timing": "BLOCKED"
+    },
+    "alert_tx_o": {
+      "direction": "output",
+      "width": 4,
+      "interface": "alert transmit",
+      "peripheral_clock_port": "clk_i",
+      "peripheral_reset_port": "rst_ni",
+      "port_timing": "BLOCKED"
+    },
+    "clk_edn_i": {
+      "direction": "input",
+      "width": 1,
+      "interface": "clock",
+      "peripheral_clock_port": "clk_edn_i",
+      "peripheral_reset_port": null,
+      "port_timing": "EXPERIMENTAL_CLOCK"
+    },
+    "clk_i": {
+      "direction": "input",
+      "width": 1,
+      "interface": "clock",
+      "peripheral_clock_port": "clk_i",
+      "peripheral_reset_port": null,
+      "port_timing": "EXPERIMENTAL_CLOCK"
+    },
+    "edn_i": {
+      "direction": "input",
+      "width": 34,
+      "interface": "EDN response",
+      "peripheral_clock_port": "clk_edn_i",
+      "peripheral_reset_port": "rst_edn_ni",
+      "port_timing": "BLOCKED"
+    },
+    "edn_o": {
+      "direction": "output",
+      "width": 1,
+      "interface": "EDN request",
+      "peripheral_clock_port": "clk_edn_i",
+      "peripheral_reset_port": "rst_edn_ni",
+      "port_timing": "BLOCKED"
+    },
+    "idle_o": {
+      "direction": "output",
+      "width": 4,
+      "interface": "idle indication",
+      "peripheral_clock_port": "clk_i",
+      "peripheral_reset_port": "rst_ni",
+      "port_timing": "BLOCKED"
+    },
+    "keymgr_key_i": {
+      "direction": "input",
+      "width": 513,
+      "interface": "key manager sideload",
+      "peripheral_clock_port": "clk_i",
+      "peripheral_reset_port": "rst_ni",
+      "port_timing": "BLOCKED"
+    },
+    "lc_escalate_en_i": {
+      "direction": "input",
+      "width": 4,
+      "interface": "life cycle escalation",
+      "peripheral_clock_port": "clk_i",
+      "peripheral_reset_port": "rst_ni",
+      "port_timing": "BLOCKED"
+    },
+    "rst_edn_ni": {
+      "direction": "input",
+      "width": 1,
+      "interface": "reset",
+      "peripheral_clock_port": "clk_edn_i",
+      "peripheral_reset_port": "rst_edn_ni",
+      "port_timing": "BLOCKED"
+    },
+    "rst_ni": {
+      "direction": "input",
+      "width": 1,
+      "interface": "reset",
+      "peripheral_clock_port": "clk_i",
+      "peripheral_reset_port": "rst_ni",
+      "port_timing": "BLOCKED"
+    },
+    "rst_shadowed_ni": {
+      "direction": "input",
+      "width": 1,
+      "interface": "reset",
+      "peripheral_clock_port": "clk_i",
+      "peripheral_reset_port": "rst_shadowed_ni",
+      "port_timing": "BLOCKED"
+    },
+    "tl_i": {
+      "direction": "input",
+      "width": 109,
+      "interface": "TL-UL request",
+      "peripheral_clock_port": "clk_i",
+      "peripheral_reset_port": "rst_ni",
+      "port_timing": "BLOCKED"
+    },
+    "tl_o": {
+      "direction": "output",
+      "width": 66,
+      "interface": "TL-UL response",
+      "peripheral_clock_port": "clk_i",
+      "peripheral_reset_port": "rst_ni",
+      "port_timing": "BLOCKED"
+    }
+  },
+  "experimental": {
+    "clock": {
+      "name": "main",
+      "period_ns": 8.5,
+      "ports": [
+        "clk_i",
+        "clk_edn_i"
+      ],
+      "source": "aes-input/block.sdc"
+    },
+    "io_delays": {},
+    "exceptions": [],
+    "path_groups": []
+  },
+  "coverage_matrix": {
+    "clock_source_and_period": {
+      "classification": "UPSTREAM_DERIVED",
+      "source": "hw/top_earlgrey/rtl/autogen/top_earlgrey.sv:2254\u20132259; TopGen clocks",
+      "clock_net": "clkmgr_aon_clocks.clk_main_aes",
+      "nominal_period_ns": 10.0
+    },
+    "test_synthesis_period": {
+      "classification": "UPSTREAM_DERIVED",
+      "source": "chip_earlgrey_asic.sdc:40\u201347; ot.sdc_setup.tcl:8\u20139",
+      "derivation": "Nominal period multiplied by MAIN_TCK_FACTOR",
+      "factor": 0.85,
+      "period_ns": 8.5
+    },
+    "top_clock_uncertainty": {
+      "classification": "UPSTREAM_DERIVED",
+      "source": "chip_earlgrey_asic.sdc:7\u201312,47\u201348",
+      "scope": "Top-level test synthesis MAIN_CLK",
+      "pt_shell_ns": 0.05,
+      "other_tool_ns": 0.5
+    },
+    "block_clock": {
+      "classification": "EXPERIMENTAL",
+      "name": "main",
+      "period_ns": 8.5,
+      "ports": [
+        "clk_i",
+        "clk_edn_i"
+      ],
+      "source": "aes-input/block.sdc"
+    },
+    "liberty": {
+      "classification": "TECHNOLOGY_DERIVED",
+      "source": "sky130_fd_sc_hd__tt_025C_1v80.lib",
+      "sha256": "ec0e1067a35c8bf20b11e58d1e8ac53326067e4dac84a125cc1b917a3518d0d9",
+      "corner": "tt_025C_1v80",
+      "unit": "ns",
+      "scope": "Cell timing arcs and pin capacitance at the mapped corner"
+    },
+    "port_budgets": {
+      "alert_rx_i": {
+        "classification": "UNRESOLVED",
+        "direction": "input",
+        "width": 8,
+        "integration_net": "alert_rx[43:42]",
+        "block_reference_clock": "clk_i",
+        "interface": "alert receive",
+        "min_delay_ns": null,
+        "max_delay_ns": null,
+        "transition_ns": null,
+        "load_pf": null,
+        "reason": "Generated connectivity identifies the peer only"
+      },
+      "alert_tx_o": {
+        "classification": "UNRESOLVED",
+        "direction": "output",
+        "width": 4,
+        "integration_net": "alert_tx[43:42]",
+        "block_reference_clock": "clk_i",
+        "interface": "alert transmit",
+        "min_delay_ns": null,
+        "max_delay_ns": null,
+        "transition_ns": null,
+        "load_pf": null,
+        "reason": "Generated connectivity identifies the peer only"
+      },
+      "edn_i": {
+        "classification": "UNRESOLVED",
+        "direction": "input",
+        "width": 34,
+        "integration_net": "edn0_edn_rsp[5]",
+        "block_reference_clock": "clk_edn_i",
+        "interface": "EDN response",
+        "min_delay_ns": null,
+        "max_delay_ns": null,
+        "transition_ns": null,
+        "load_pf": null,
+        "reason": "Generated connectivity identifies the peer only"
+      },
+      "edn_o": {
+        "classification": "UNRESOLVED",
+        "direction": "output",
+        "width": 1,
+        "integration_net": "edn0_edn_req[5]",
+        "block_reference_clock": "clk_edn_i",
+        "interface": "EDN request",
+        "min_delay_ns": null,
+        "max_delay_ns": null,
+        "transition_ns": null,
+        "load_pf": null,
+        "reason": "Generated connectivity identifies the peer only"
+      },
+      "idle_o": {
+        "classification": "UNRESOLVED",
+        "direction": "output",
+        "width": 4,
+        "integration_net": "clkmgr_aon_idle[0]",
+        "block_reference_clock": "clk_i",
+        "interface": "idle indication",
+        "min_delay_ns": null,
+        "max_delay_ns": null,
+        "transition_ns": null,
+        "load_pf": null,
+        "reason": "Generated connectivity identifies the peer only"
+      },
+      "keymgr_key_i": {
+        "classification": "UNRESOLVED",
+        "direction": "input",
+        "width": 513,
+        "integration_net": "keymgr_aes_key",
+        "block_reference_clock": "clk_i",
+        "interface": "key manager sideload",
+        "min_delay_ns": null,
+        "max_delay_ns": null,
+        "transition_ns": null,
+        "load_pf": null,
+        "reason": "Generated connectivity identifies the peer only"
+      },
+      "lc_escalate_en_i": {
+        "classification": "UNRESOLVED",
+        "direction": "input",
+        "width": 4,
+        "integration_net": "lc_ctrl_lc_escalate_en",
+        "block_reference_clock": "clk_i",
+        "interface": "life cycle escalation",
+        "min_delay_ns": null,
+        "max_delay_ns": null,
+        "transition_ns": null,
+        "load_pf": null,
+        "reason": "Generated connectivity identifies the peer only"
+      },
+      "rst_edn_ni": {
+        "classification": "UNRESOLVED",
+        "direction": "input",
+        "width": 1,
+        "integration_net": "rstmgr_aon_resets.rst_lc_n[rstmgr_pkg::Domain0Sel]",
+        "block_reference_clock": "clk_edn_i",
+        "interface": "reset",
+        "min_delay_ns": null,
+        "max_delay_ns": null,
+        "transition_ns": null,
+        "load_pf": null,
+        "reason": "Generated connectivity identifies the peer only"
+      },
+      "rst_ni": {
+        "classification": "UNRESOLVED",
+        "direction": "input",
+        "width": 1,
+        "integration_net": "rstmgr_aon_resets.rst_lc_n[rstmgr_pkg::Domain0Sel]",
+        "block_reference_clock": "clk_i",
+        "interface": "reset",
+        "min_delay_ns": null,
+        "max_delay_ns": null,
+        "transition_ns": null,
+        "load_pf": null,
+        "reason": "Generated connectivity identifies the peer only"
+      },
+      "rst_shadowed_ni": {
+        "classification": "UNRESOLVED",
+        "direction": "input",
+        "width": 1,
+        "integration_net": "rstmgr_aon_resets.rst_lc_shadowed_n[rstmgr_pkg::Domain0Sel]",
+        "block_reference_clock": "clk_i",
+        "interface": "reset",
+        "min_delay_ns": null,
+        "max_delay_ns": null,
+        "transition_ns": null,
+        "load_pf": null,
+        "reason": "Generated connectivity identifies the peer only"
+      },
+      "tl_i": {
+        "classification": "UNRESOLVED",
+        "direction": "input",
+        "width": 109,
+        "integration_net": "aes_tl_req",
+        "block_reference_clock": "clk_i",
+        "interface": "TL-UL request",
+        "min_delay_ns": null,
+        "max_delay_ns": null,
+        "transition_ns": null,
+        "load_pf": null,
+        "reason": "Generated connectivity identifies the peer only"
+      },
+      "tl_o": {
+        "classification": "UNRESOLVED",
+        "direction": "output",
+        "width": 66,
+        "integration_net": "aes_tl_rsp",
+        "block_reference_clock": "clk_i",
+        "interface": "TL-UL response",
+        "min_delay_ns": null,
+        "max_delay_ns": null,
+        "transition_ns": null,
+        "load_pf": null,
+        "reason": "Generated connectivity identifies the peer only"
+      }
+    },
+    "outstanding": {
+      "clock_relationship": {
+        "classification": "UNRESOLVED",
+        "reason": "Qualify block clock relationships, phase/skew and generated clocks"
+      },
+      "clock_uncertainty": {
+        "classification": "UNRESOLVED",
+        "reason": "Supply block setup and hold uncertainty at the selected corners"
+      },
+      "reset_cdc": {
+        "classification": "UNRESOLVED",
+        "reason": "Qualify shadow reset mapping, reset release, CDC and alert synchronizers"
+      },
+      "input_delays": {
+        "classification": "UNRESOLVED",
+        "reason": "Supply min/max arrivals and reference clocks for each non-clock input"
+      },
+      "output_delays": {
+        "classification": "UNRESOLVED",
+        "reason": "Supply min/max required times and reference clocks for each output"
+      },
+      "electrical": {
+        "classification": "UNRESOLVED",
+        "reason": "Supply input transitions or driving cells, and output loads"
+      },
+      "exceptions": {
+        "classification": "UNRESOLVED",
+        "reason": "Review and substantiate asynchronous, false-path and multicycle exceptions"
+      },
+      "path_groups": {
+        "classification": "UNRESOLVED",
+        "reason": "Bind endpoint groups to clock and interface obligations"
+      }
+    }
+  },
+  "clock_reset_review": {
+    "status": "PASS",
+    "scope": "Pinned RTL and elaborated synchronizer inventory",
+    "clock_relationship": "Both AES inputs attach to one generated net in Earl Grey",
+    "reset_nets": {
+      "rst_shadowed_ni": "rstmgr_aon_resets.rst_lc_shadowed_n[rstmgr_pkg::Domain0Sel]",
+      "rst_ni": "rstmgr_aon_resets.rst_lc_n[rstmgr_pkg::Domain0Sel]",
+      "rst_edn_ni": "rstmgr_aon_resets.rst_lc_n[rstmgr_pkg::Domain0Sel]"
+    },
+    "edn": {
+      "source": "hw/ip/aes/rtl/aes.sv:131\u2013170",
+      "bridge": "$paramod$e211f1a91a3260625db421893ae81b2e99ac1e61\\prim_sync_reqack_data",
+      "control_synchronizers": {
+        "gen_nrz_hs_protocol.ack_sync": "$paramod\\prim_flop_2sync\\Width=s32'00000000000000000000000000000001",
+        "gen_nrz_hs_protocol.req_sync": "$paramod\\prim_flop_2sync\\Width=s32'00000000000000000000000000000001"
+      },
+      "data": "Destination-to-source bundled entropy bus, DataReg=0; hold through handshake",
+      "reset": "The selected NRZ handshake assumes coordinated source and destination resets"
+    },
+    "alerts": {
+      "senders": [
+        "$paramod\\prim_alert_sender\\AsyncOn=1'1\\IsFatal=s32'00000000000000000000000000000000",
+        "$paramod\\prim_alert_sender\\AsyncOn=1'1\\IsFatal=s32'00000000000000000000000000000001"
+      ],
+      "ping_ack_decoders": [
+        "$paramod\\prim_diff_decode\\AsyncOn=1'1",
+        "$paramod\\prim_diff_decode\\AsyncOn=1'1",
+        "$paramod\\prim_diff_decode\\AsyncOn=1'1",
+        "$paramod\\prim_diff_decode\\AsyncOn=1'1"
+      ]
+    },
+    "life_cycle": "$paramod\\prim_lc_sync\\NumCopies=s32'00000000000000000000000000000001",
+    "qualification": "BLOCKED",
+    "unverified": [
+      "Reset deassertion and recovery/removal across the physical clock trees",
+      "Reconvergence, differential skew, bundled-data settling and metastability",
+      "Unilateral reset during an outstanding asynchronous EDN handshake"
+    ]
+  },
+  "obligations": {
+    "clock_relationship": {
+      "status": "BLOCKED",
+      "requirement": "Qualify block clock relationships, phase/skew and generated clocks"
+    },
+    "clock_uncertainty": {
+      "status": "BLOCKED",
+      "requirement": "Supply block setup and hold uncertainty at the selected corners"
+    },
+    "reset_cdc": {
+      "status": "BLOCKED",
+      "requirement": "Qualify shadow reset mapping, reset release, CDC and alert synchronizers"
+    },
+    "input_delays": {
+      "status": "BLOCKED",
+      "requirement": "Supply min/max arrivals and reference clocks for each non-clock input"
+    },
+    "output_delays": {
+      "status": "BLOCKED",
+      "requirement": "Supply min/max required times and reference clocks for each output"
+    },
+    "electrical": {
+      "status": "BLOCKED",
+      "requirement": "Supply input transitions or driving cells, and output loads"
+    },
+    "exceptions": {
+      "status": "BLOCKED",
+      "requirement": "Review and substantiate asynchronous, false-path and multicycle exceptions"
+    },
+    "path_groups": {
+      "status": "BLOCKED",
+      "requirement": "Bind endpoint groups to clock and interface obligations"
+    }
+  },
+  "contract_sha256": "897a5504c9550a38394c6e7cf01725e328be355990f7a9334d3a5689b24e0f1b",
+  "pre_route": {
+    "schema_version": 1,
+    "scope": "mapped synthesis checkpoint, no extracted parasitics",
+    "inputs": {
+      "results/sky130hd/opentitan_aes/base/1_synth.odb": "18ad20ce95f6b1be9dea55e83b70fb7886958752f8d852d0b27a5b59d36c1e67",
+      "aes-input/block.sdc": "c9469d7e34cb05c457c8951806a15754f7c785dda43bdd6f80aa1525ddb020cc"
+    },
+    "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+    "corner": "tt_025C_1v80",
+    "diagnostic_budget": null,
+    "production_constraints": {
+      "interface_min_max": "BLOCKED",
+      "clock_uncertainty": "BLOCKED",
+      "exception_and_path_group_review": "BLOCKED",
+      "extracted_setup_hold_and_electrical": "BLOCKED"
+    },
+    "sta_parse": "PASS",
+    "status": "BLOCKED",
+    "diagnostic": "Native probe completed at mapped synthesis",
+    "checks": {
+      "no_clock": "PASSED",
+      "multiple_clock": "PASSED",
+      "unconstrained_endpoints": "FAILED",
+      "no_input_delay": "FAILED",
+      "no_output_delay": "FAILED",
+      "generated_clocks": "PASSED",
+      "loops": "PASSED"
+    },
+    "missing_counts": {
+      "unconstrained_endpoints": 80,
+      "no_input_delay": 671,
+      "no_output_delay": 68
+    },
+    "clocks": [
+      "main"
+    ],
+    "clock_period_ns": 8.5,
+    "mapped_slack_ns": {
+      "hold": 0.33121,
+      "setup": -0.379158
+    },
+    "units": {
+      "time": "1ns",
+      "capacitance": "1pF"
+    },
+    "ports": {
+      "alert_rx_i": 8,
+      "alert_tx_o": 4,
+      "clk_edn_i": 1,
+      "clk_i": 1,
+      "edn_i": 34,
+      "edn_o": 1,
+      "idle_o": 4,
+      "keymgr_key_i": 513,
+      "lc_escalate_en_i": 4,
+      "rst_edn_ni": 1,
+      "rst_ni": 1,
+      "rst_shadowed_ni": 1,
+      "tl_i": 109,
+      "tl_o": 66
+    },
+    "liberty_sha256": "ec0e1067a35c8bf20b11e58d1e8ac53326067e4dac84a125cc1b917a3518d0d9",
+    "outputs": {
+      "sta.stdout.log": "e1950262c8f5cb222b6891e364ec0c95aa2a538c96d850636617d79371433cd8",
+      "sta.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "aes-preroute.tcl": "459f48d0ed86c4a60f6b55c3e443805cc1c15c2881c7f159c0edc589458487be"
+    },
+    "execution": {
+      "command": [
+        "/usr/bin/docker",
+        "run",
+        "--rm",
+        "--pull=never",
+        "--network=none",
+        "--name",
+        "aeda-91ab8b29bcd34e28a8ee403d00bd7383",
+        "--cpus=1",
+        "--memory=1200m",
+        "--memory-swap=1200m",
+        "--pids-limit=128",
+        "-v",
+        "/var/tmp/m12b-aes-sta.EIJvBb/sta:/work:ro",
+        "--entrypoint",
+        "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad",
+        "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+        "-exit",
+        "/work/aes-preroute.tcl"
+      ],
+      "return_code": 0,
+      "started_at": "2026-11-17T08:44:08.576750+00:00",
+      "runtime_seconds": 6.791580033999935,
+      "stop": null,
+      "stdout": "sta.stdout.log",
+      "stderr": "sta.stderr.log"
+    },
+    "docker_sha256": "7ed12b00293d64742419a6601ae97960a367a0ce97c88b06e3278cc0a409557b",
+    "native_receipt_sha256": "567f919174895b4581dbaa970ca7a5675bc9da52c1140c8bec16f66edd50ed80"
+  }
+}

@@ -1,5 +1,13 @@
 # Project state
 
+- Milestone 12B verified five native AES scenarios on original RTL and the
+  Yosys-elaborated sv2v model, with 11,414 matching core and EDN edges. Sideload,
+  alert/error and bounded key/IV register-status proof passed. OpenSTA verified
+  the mapped 8.5 ns context and measured missing I/O coverage. Production input
+  and output budgets, formal CDC, and full sequential equivalence remain blocked.
+  Host admission capped the exploratory route at 3,122 MiB, below the proposed
+  3,240 MiB. The pinned AES stays at Level 2. [Measured evaluation](MILESTONE_12B_EVALUATION.md)
+
 - Milestone 12 reproduced the pinned AES cipher-core test in 3,297 cycles and
   ran a 626-cycle TL-UL peripheral regression against original SystemVerilog
   and a Yosys-elaborated model of the byte-identical sv2v translation. The traces

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "run_id": "eb2896531cd2412d9611ee79d80f6ceb",
+  "qualification_receipt_sha256": "437037a2ea2770f5059685dc84a15360da8fde8c78201588934507a6f7ca60ee",
+  "cli": {
+    "command": "autonomous-eda readiness qualification experiments/m12b-aes-readback",
+    "output_sha256": "aa9a2d9d39d1e6aaf7ebace956668861e7e9137c7c100f89f06374f4b5ba2476",
+    "readiness_level": 2,
+    "implementation_status": "FAILED",
+    "physical_acceptance_status": "BLOCKED",
+    "design_qualification_status": "BLOCKED"
+  },
+  "mcp": {
+    "transport": "SDK stdio",
+    "tool": "get_aes_qualification",
+    "status": "AVAILABLE",
+    "output_sha256": "f950301fa4324837cd5c5d99a04a067637e3387561ec6376c8054742fa09993d",
+    "scenarios": {
+      "common": "PASS",
+      "phase_offset": "PASS",
+      "independent": "PASS",
+      "sideload": "PASS",
+      "errors": "PASS"
+    },
+    "production_timing": "BLOCKED",
+    "full_equivalence": "BLOCKED"
+  },
+  "studio": {
+    "receipt": "studio-browser.json",
+    "sha256": "e12f58f3e87f09a8a32a67a2d913cbe959653933e31d728d549b95bc5867d365"
+  }
+}
