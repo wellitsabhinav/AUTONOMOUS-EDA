@@ -172,6 +172,15 @@ class AcceptanceSummary(Model):
     gates: dict[str, str]
 
 
+class AESQualification(Model):
+    run_id: str
+    status: Literal["AVAILABLE", "UNKNOWN"]
+    rtl_revision: str | None = None
+    gates: dict[str, str] = Field(default_factory=dict)
+    obligations: dict[str, str] = Field(default_factory=dict)
+    evidence_references: dict[str, dict[str, str]] = Field(default_factory=dict)
+
+
 class Denied(ValueError):
     """An identifier is unavailable under this server's policy."""
 

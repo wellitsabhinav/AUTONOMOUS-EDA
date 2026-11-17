@@ -255,7 +255,7 @@ class Snapshot:
                 continue
             raise UnsafeEvidence("Use a completed SQLite run without journal sidecars")
 
-    def collect(self) -> None:
+    def collect(self, *, include_artifacts: bool = True) -> None:
         self.source.check()
         records: list[object] = []
         if self.copy("run.sqlite3"):
@@ -294,6 +294,8 @@ class Snapshot:
             records.append(json.loads((self.target / "reference.json").read_bytes())["sha256"])
         else:
             raise FileNotFoundError("No recorded experiment")
+        if not include_artifacts:
+            return
         for record in records:
             if not isinstance(record, dict):
                 raise UnsafeEvidence("Invalid evidence inventory")
@@ -312,8 +314,8 @@ def load_evidence(source: Source, target: Path) -> Experiment:
     return collect_evidence(Snapshot(source, target))
 
 
-def collect_evidence(snapshot: Snapshot) -> Experiment:
-    snapshot.collect()
+def collect_evidence(snapshot: Snapshot, *, include_artifacts: bool = True) -> Experiment:
+    snapshot.collect(include_artifacts=include_artifacts)
     evidence = get_experiment(snapshot.target, legacy_root=snapshot.source.root)
     # Historical controller reports without artifact-bound deck verification
     # cannot establish an MCP pass or failure for those gates.

@@ -179,4 +179,10 @@ def qualify(
             }
         },
     }
+    if is_aes:
+        from .aes_qualification import read
+
+        aes_evidence = read(root, evidence)
+        if aes_evidence is not None:
+            report["aes_qualification"] = aes_evidence
     return {**report, "qualification_sha256": fingerprint(report)}

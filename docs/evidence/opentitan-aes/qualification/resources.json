@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-11-17T07:37:02.525710+00:00",
+  "source_run_id": "eb2896531cd2412d9611ee79d80f6ceb",
+  "configuration_sha256": "a44212a6b8fa9b62e2e1ceaa63d1048a8398d0d8c0484a679e3221a87ac5dead",
+  "execution_configuration_sha256": "897e1783d5264d0718adfc692d4569054aab9eba9dde04120fb391efb14c7c02",
+  "source_memory_mib": 3000,
+  "manifest_sha256": "c8df5b2e7fa9fe50fb7c8497999a55a3c28a86577c574f15db9365e36522605e",
+  "image": "openroad/orfs@sha256:8eff077230b86729f6248b34eeab370e486fa4052d34c60d9067e3e4aa720987",
+  "stage": "route",
+  "policy": "bounded-trial",
+  "verdict": "INSUFFICIENT_RESOURCES",
+  "execution_allowed": false,
+  "reasons": [
+    "The configured container limit plus host reserve exceeds available RAM"
+  ],
+  "margin_fraction": 0.08,
+  "budget": {
+    "stage_seconds": 2700,
+    "wall_seconds": 3700,
+    "artifact_bytes": 2147483648,
+    "memory_bytes": 3397386240,
+    "swap_bytes": 0,
+    "cpu_cores": 2,
+    "source": "retained run configuration and explicit invocation limits"
+  },
+  "host": {
+    "available_memory_bytes": 3494064128,
+    "total_memory_bytes": 4106866688,
+    "cpu_cores": 4,
+    "filesystem_free_bytes": 172937388032,
+    "source": "host memory API, CPU affinity and destination filesystem stat"
+  },
+  "retained_source_bytes": {
+    "value": 788927147,
+    "source": "retained experiment tree stat"
+  },
+  "observed_peak_bytes": 3145728000,
+  "confirmed_oom_limit_bytes": 3145728000,
+  "minimum_trial_memory_mib": 3240,
+  "maximum_trial_memory_mib_on_host": 3085,
+  "observed_elapsed_seconds": 2255.852820007,
+  "observed_elapsed_headroom_seconds": 444.147179993,
+  "attempts": [
+    {
+      "attempt": 7,
+      "state": "failed",
+      "exit_code": 2,
+      "runtime": {
+        "value": 2255.852820007,
+        "unit": "s",
+        "source": "run.sqlite3 attempts[7].runtime_seconds",
+        "log_sha256": "e9f056f31c80789f09d7f48cb5122e3d011b5ed5035c22934ae03c48e6f40abd"
+      },
+      "classification": "CONFIRMED_OOM",
+      "memory_peak": {
+        "observed_at": "2026-11-15T15:26:42.093635+00:00",
+        "source": "linux cgroup v2",
+        "value": 3145728000,
+        "unit": "B",
+        "artifact_sha256": "1f1f2fd4beff91a05d4022f7c45f45b280bd4e3873858564a025ee258c37d180"
+      },
+      "memory_limit": {
+        "value": 3145728000,
+        "unit": "B",
+        "source": "Docker HostConfig.Memory",
+        "artifact_sha256": "1f1f2fd4beff91a05d4022f7c45f45b280bd4e3873858564a025ee258c37d180"
+      }
+    },
+    {
+      "attempt": 6,
+      "state": "failed",
+      "exit_code": 124,
+      "runtime": {
+        "value": 900.8390783859998,
+        "unit": "s",
+        "source": "run.sqlite3 attempts[6].runtime_seconds",
+        "log_sha256": "7db2d84c86521bb58570d982ab325b5653ce669d4c58ca7732d3795b004e14a5"
+      },
+      "classification": null,
+      "memory_peak": null,
+      "memory_limit": null
+    }
+  ],
+  "checkpoints": {
+    "synth": {
+      "attempt_id": 1,
+      "artifacts": {
+        "results/sky130hd/opentitan_aes/base/1_synth.odb": "18ad20ce95f6b1be9dea55e83b70fb7886958752f8d852d0b27a5b59d36c1e67",
+        "results/sky130hd/opentitan_aes/base/1_synth.sdc": "9434b9e1442eaf5fdf6fbeda35fc95cf46e43717bf6b9ba51133e390d9c5d11e"
+      }
+    },
+    "floorplan": {
+      "attempt_id": 2,
+      "artifacts": {
+        "results/sky130hd/opentitan_aes/base/2_floorplan.odb": "09174f77f467cb087f2ed4df50e60fea21b7a24fcd86ecc6cfc6df21e36e6f7a",
+        "results/sky130hd/opentitan_aes/base/2_floorplan.sdc": "9434b9e1442eaf5fdf6fbeda35fc95cf46e43717bf6b9ba51133e390d9c5d11e"
+      }
+    },
+    "place": {
+      "attempt_id": 3,
+      "artifacts": {
+        "results/sky130hd/opentitan_aes/base/3_place.odb": "82f237ac8bf329013796707ae2a51f82fd140a66ba7bbf6fcb053c2bc9b634d9",
+        "results/sky130hd/opentitan_aes/base/3_place.sdc": "9434b9e1442eaf5fdf6fbeda35fc95cf46e43717bf6b9ba51133e390d9c5d11e"
+      }
+    },
+    "cts": {
+      "attempt_id": 4,
+      "artifacts": {
+        "results/sky130hd/opentitan_aes/base/4_cts.odb": "dec1bf50750434f6c5e47eedacfbd57f3ee14a5b314e88693b1643ddaf785b24",
+        "results/sky130hd/opentitan_aes/base/4_cts.sdc": "437815ffc7e2b699955986cdb10e078f9ec7c7dddd0c3f255a472cf736dea242"
+      }
+    },
+    "grt": {
+      "attempt_id": 5,
+      "artifacts": {
+        "results/sky130hd/opentitan_aes/base/5_1_grt.odb": "72c9792677b0392a08a22a292a88b596568e151200d3e8ab80ead4517563a551",
+        "results/sky130hd/opentitan_aes/base/5_1_grt.sdc": "437815ffc7e2b699955986cdb10e078f9ec7c7dddd0c3f255a472cf736dea242"
+      }
+    }
+  },
+  "stage_attempt_counts": {
+    "route": 2,
+    "finish": 0
+  },
+  "uncertainty": "Observed maxima and elapsed times from incomplete runs are lower bounds. A sampled kernel peak covers execution through its sample time. The minimum trial cap includes the observed margin and does not establish a completion requirement.",
+  "plan_sha256": "20d3874bf9a39e03aace45649724c71533d1aee85576a865f0be84f317a94ff5"
+}

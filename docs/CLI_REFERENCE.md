@@ -30,6 +30,15 @@ Run `autonomous-eda COMMAND --help` for current arguments and defaults. The same
 - `run` and physical `resume` accept `--wall-clock-seconds` and `--max-artifact-mib`. The controller checks total retained run-file bytes periodically, including failed attempts, and stops dispatch without erasing evidence. The limits apply to that implementation invocation.
 - Implementation dispatch also accepts `--max-tool-processes` for Docker's process and thread limit, and `--max-retries` for additional attempts per implementation stage. A limit of zero retries allows the first attempt and preserves an interrupted checkpoint for later operator review.
 - `verify RUN` invokes the platform decks. Its exit code reflects their outcomes. Use `verify RUN --profile physical --coverage --decks` for the wider physical verification scope.
+- `readiness aes-contract RUN` reads the pinned AES source and interface inventory. Use
+  `--native-output NEW_DIR` for independent pre-route OpenSTA readback.
+- `readiness aes-core DV_BUILD` runs a fresh upstream FuseSoC cipher-core export.
+  `readiness aes-peripheral RUN` runs the independent SystemVerilog and translated-model
+  checks using the pinned AES sources and a specified testbench.
+- `readiness aes-record RUN` binds the JSON reports to the physical run identity.
+  Place the result at `verification/aes-qualification.json` in an approved run copy
+  for `readiness qualification`, the Studio Resources view, and read-only MCP.
+  [Commands and inputs](MILESTONE_12_EVALUATION.md#reproduce)
 - A profiled `verify` accepts `--markdown` and returns 0 for acceptance and 1 for failed or blocked acceptance. `report RUN --profile PROFILE` reads the verdict for an existing run without executing physical stages.
 - `report RUN --engineering` writes Markdown with retained attempts, runtime, verified native process RSS where available, implementation measurements and independent gate status. Unprofiled `report RUN` keeps its JSON format.
 - `diagnose RUN --json` emits structured evidence. A successful diagnosis can report a failed gate.

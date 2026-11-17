@@ -25,7 +25,7 @@ from .io_ring import configure as configure_io
 from .io_ring import main as io_main
 from .knowledge.cli import configure as configure_knowledge
 from .knowledge.cli import main as knowledge_main
-from .manifest import ORFSManifest, RTLManifest, integer, load_manifest
+from .manifest import ORFSManifest, RTLManifest, fingerprint, integer, load_manifest
 from .mcp.cli import configure as configure_mcp
 from .mcp.cli import main as mcp_main
 from .optimization_cli import configure as configure_optimization
@@ -76,6 +76,35 @@ def build_parser() -> argparse.ArgumentParser:
         "qualification", help="evaluate independent implementation, physical and design gates"
     )
     qualification.add_argument("directory", type=Path)
+    for action, help_text in (
+        ("aes-contract", "inventory and validate pinned AES interface timing"),
+        ("aes-peripheral", "run independent native AES interface and peripheral checks"),
+    ):
+        aes = readiness_actions.add_parser(action, help=help_text)
+        aes.add_argument("directory", type=Path, help="retained AES physical run")
+        aes.add_argument("--source-manifest", type=Path, required=True)
+        aes.add_argument("--resolved", type=Path, required=True)
+        aes.add_argument("--edam", type=Path, required=True)
+        aes.add_argument("--inspection", type=Path, required=True)
+        aes.add_argument("--timeout", type=int, default=240)
+        if action == "aes-contract":
+            aes.add_argument("--topgen", type=Path, required=True)
+            aes.add_argument("--upstream", type=Path, required=True)
+            aes.add_argument("--native-output", type=Path, help="new pre-route evidence directory")
+        else:
+            aes.add_argument("--output", type=Path, required=True, help="new experiment directory")
+            aes.add_argument("--testbench", type=Path, required=True)
+    aes_core = readiness_actions.add_parser("aes-core", help="run upstream AES cipher-core DV")
+    aes_core.add_argument("directory", type=Path, help="fresh FuseSoC cipher-core build")
+    aes_core.add_argument("--timeout", type=int, default=240)
+    aes_record = readiness_actions.add_parser(
+        "aes-record", help="bind AES receipts to a physical run"
+    )
+    aes_record.add_argument("directory", type=Path)
+    aes_record.add_argument("--contract", type=Path, required=True)
+    aes_record.add_argument("--core", type=Path)
+    aes_record.add_argument("--peripheral", type=Path)
+    aes_record.add_argument("--resource-plan", type=Path)
     resources = commands.add_parser("resources", help="plan and execute bounded checkpoint retries")
     resource_actions = resources.add_subparsers(dest="resource_action", required=True)
     history = resource_actions.add_parser("history", help="read verified attempt resource history")
@@ -311,6 +340,56 @@ def controller_main(args: argparse.Namespace) -> int:
             from .partition_readiness import plan_partitions
 
             result = plan_partitions(args.topgen_json, args.edam_json, args.revision)
+        elif args.readiness_action == "aes-core":
+            from .verification.aes_native import cipher_core
+
+            result = cipher_core(args.directory, timeout=args.timeout)
+        elif args.readiness_action == "aes-contract":
+            from .aes_contract import pre_route, timing_contract
+
+            result = timing_contract(
+                args.directory,
+                args.source_manifest,
+                args.resolved,
+                args.edam,
+                args.topgen,
+                args.upstream,
+                args.inspection,
+            )
+            if args.native_output:
+                native = pre_route(args.directory, args.native_output, timeout=args.timeout)
+                result["pre_route"] = {**native, "native_receipt_sha256": fingerprint(native)}
+        elif args.readiness_action == "aes-peripheral":
+            from .aes_contract import INSPECTION_DIGEST, require_digest, source_identity
+            from .opentitan_physical import INPUTS, check_translated_rtl
+            from .partition_readiness import metadata
+            from .verification.aes_native import peripheral
+
+            rtl, identity = source_identity(args.source_manifest, args.resolved, args.edam)
+            require_digest(args.inspection, INSPECTION_DIGEST, "elaborated interface inventory")
+            data, _ = metadata(args.inspection)
+            if data["manifest_sha256"] != identity["source_manifest_sha256"]:
+                raise ValueError("AES inspection and manifest identify different sources")
+            translated = args.directory.resolve() / INPUTS[0]
+            check_translated_rtl(translated)
+            result = peripheral(
+                rtl,
+                translated,
+                args.testbench.resolve(),
+                args.output,
+                data["modules"]["aes"]["ports"],
+                timeout=args.timeout,
+            )
+        elif args.readiness_action == "aes-record":
+            from .aes_qualification import record
+
+            result = record(
+                get_experiment(args.directory),
+                args.contract,
+                args.core,
+                args.peripheral,
+                args.resource_plan,
+            )
         else:
             from .qualification import qualify
 

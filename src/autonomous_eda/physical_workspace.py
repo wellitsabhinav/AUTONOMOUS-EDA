@@ -362,7 +362,7 @@ class Workspace:
 
         result = qualify(self.run)
         self.check_run(result["run_id"])
-        return {
+        summary = {
             name: result[name]
             for name in (
                 "run_id",
@@ -373,6 +373,9 @@ class Workspace:
                 "verification_gates",
             )
         }
+        if "aes_qualification" in result:
+            summary["aes_qualification"] = result["aes_qualification"]
+        return summary
 
     def check_run(self, run_id: str) -> None:
         if run_id != self.manifest["run_id"]:

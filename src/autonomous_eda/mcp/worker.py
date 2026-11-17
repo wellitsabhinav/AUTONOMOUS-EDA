@@ -10,6 +10,7 @@ from pydantic import Field
 from ..structured import resource_page
 from .api import (
     AcceptanceSummary,
+    AESQualification,
     Denied,
     ExperimentArgs,
     ExperimentPageArgs,
@@ -18,7 +19,7 @@ from .api import (
     UnsupportedCorner,
     View,
 )
-from .snapshot import Snapshot, Source, load_evidence
+from .snapshot import Snapshot, Source, collect_evidence, load_evidence
 from .tools import MAX_RESULT_BYTES, TOOLS, bounded, failure, project
 
 
@@ -53,6 +54,24 @@ def read(request: Request, target: Path) -> Model:
             history.attempts.pop()
             history.next_offset = args.offset + len(history.attempts)
         return history
+    if request.tool == "get_aes_qualification":
+        from ..aes_qualification import RECEIPT
+        from ..aes_qualification import read as read_aes
+
+        snapshot = Snapshot(source, target)
+        snapshot.copy(RECEIPT)
+        evidence = collect_evidence(snapshot, include_artifacts=False)
+        receipt = read_aes(target, evidence)
+        if receipt is None:
+            return AESQualification(run_id=evidence["run_id"], status="UNKNOWN")
+        return AESQualification(
+            run_id=evidence["run_id"],
+            status="AVAILABLE",
+            rtl_revision=receipt["rtl_revision"],
+            gates=receipt["gates"],
+            obligations=receipt["obligations"],
+            evidence_references=receipt["evidence_references"],
+        )
     evidence = load_evidence(source, target)
     if request.tool == "get_acceptance_summary":
         from ..verification.policy import Policy

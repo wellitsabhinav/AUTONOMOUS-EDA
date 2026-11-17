@@ -94,3 +94,6 @@ thead { background: #182431; }
 @media (max-width: 610px) { main, .topbar { padding: .75rem; } .topbar { flex-wrap: wrap; } .local { display: none; } .workbench, .console-grid { display: block; } .sidebar { border-right: 0; border-bottom: 1px solid var(--line); } #display, .layers { display: flex; gap: .35rem; flex-wrap: wrap; } .canvases { display: block; } .card + .card { margin-top: .8rem; } }
 @media (max-width: 610px) { th:first-child { width: 28%; } th:nth-child(2) { width: 23%; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
+#aes-qualification-content {
+    overflow-wrap: anywhere;
+}

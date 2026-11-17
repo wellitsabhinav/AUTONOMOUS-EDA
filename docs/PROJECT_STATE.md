@@ -1,5 +1,13 @@
 # Project state
 
+- Milestone 12 reproduced the pinned AES cipher-core test in 3,297 cycles and
+  ran a 626-cycle TL-UL peripheral regression against original SystemVerilog
+  and a Yosys-elaborated model of the byte-identical sv2v translation. The traces
+  and all 14 top ports matched. OpenSTA independently parsed the experimental
+  constraint and found uncovered endpoints and missing I/O delays. Formal
+  equivalence and final physical gates remain blocked at readiness Level 2.
+  [Evaluation and native receipts](MILESTONE_12_EVALUATION.md)
+
 - The Milestone 10 AES follow-up reused the pinned Sky130HD checkpoint at 8.5 ns. Its
   1,000-second detailed-route trial recorded `WALL_TIMEOUT`, a 3,091,898,368 B
   cgroup high-water mark and Docker `OOMKilled=false`. It preserved the original

@@ -112,6 +112,11 @@ Detailed routing expired at its 900-second limit with exit 124. The last native 
 
 ## Run the upstream cipher-core testbench
 
+Milestone 12 adds a bounded runner for this target and a TL-UL testbench for the
+peripheral. The independent models compare observed cycles under the same reset,
+clock, and entropy stimulus. Run the timing contract and native regressions using
+the [Milestone 12 commands](../MILESTONE_12_EVALUATION.md#reproduce).
+
 The upstream pre-DV testbench exercised the masked DOM cipher core with reseeding and encrypt/decrypt round trips. Verilator 5.020 reported 3,297 simulated cycles, two successful oracle messages and exit 0. The build took 79.82 s and the simulation took 0.73 s. This covers the isolated cipher core. The peripheral DV suite, translated RTL equivalence and mapped functional verification remain open. [Native verification receipt](../evidence/earlgrey/aes-cipher-core-dv.json) · [Pinned testbench](https://github.com/lowRISC/opentitan/tree/b2d662157db2802bde0e40dfc96fd0316042d116/hw/ip/aes/pre_dv/aes_cipher_core_tb)
 
 From the tutorial's Linux environment, prepare the native fileset. Download and extract the Ubuntu 24.04 packages into the isolated tool directory. Check the package digests against the receipt.
