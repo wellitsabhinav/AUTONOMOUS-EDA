@@ -1,10 +1,13 @@
 """Check the maintained Markdown and the published figure receipts."""
 
+import argparse
 import json
 import re
 import shlex
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
+
+import pytest
 
 from autonomous_eda.cli import build_parser
 from autonomous_eda.manifest import sha256
@@ -79,34 +82,216 @@ def test_published_acceptance_sources_match_figure_receipts() -> None:
             assert image["source_sha256"] == [sha256(folder / "acceptance.json")]
 
 
+def parser_actions(parser: argparse.ArgumentParser) -> dict[str, argparse.ArgumentParser]:
+    for action in parser._actions:
+        if isinstance(action, argparse._SubParsersAction):
+            return dict(action.choices)
+    return {}
+
+
+def parse_cli_example(parser: argparse.ArgumentParser, command: str) -> list[str]:
+    lexer = shlex.shlex(command, posix=True, punctuation_chars=True)
+    lexer.whitespace_split = True
+    tokens = []
+    for token in lexer:
+        if token in {"|", "||", "&", "&&", ">", ">>", "<", ";"}:
+            break
+        tokens.append(token)
+    if "--help" in tokens or "--version" in tokens:
+        with pytest.raises(SystemExit) as raised:
+            parser.parse_args(tokens)
+        assert raised.value.code == 0, command
+    else:
+        parser.parse_args(tokens)
+    for token in tokens:
+        if token.startswith(("examples/", "configs/")):
+            assert (ROOT / token).exists(), command
+    return tokens
+
+
 def test_manual_covers_public_cli_and_example_syntax() -> None:
     parser = build_parser()
-    help_text = parser.format_usage()
-    listed = re.search(r"\{([\w,-]+)\}", help_text)
-    assert listed is not None
+    public = parser_actions(parser)
     reference = (ROOT / "docs/CLI_REFERENCE.md").read_text(encoding="utf-8")
     documented = set(re.findall(r"^\| `([\w-]+)` \|", reference, re.M))
-    assert documented == set(listed[1].split(","))
+    assert documented == public.keys()
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    cli = readme.split("\n## CLI reference\n", 1)[1].split("\n## ", 1)[0]
+    examples = re.findall(r"^\| `([a-z][\w-]*)` \| `([^`]+)`<br>", cli, re.M)
+    assert {family for family, _ in examples} == public.keys()
+    for family, command in examples:
+        assert parse_cli_example(parser, command)[0] == family
 
     for name in ("README.md", "docs/tutorials/GCD_WALKTHROUGH.md", "docs/PHYSICAL_WORKSPACE.md"):
-        body = (ROOT / name).read_text(encoding="utf-8").replace("\\\n", " ")
-        for line in body.splitlines():
+        manual = (ROOT / name).read_text(encoding="utf-8").replace("\\\n", " ")
+        for line in manual.splitlines():
             if line.startswith("autonomous-eda "):
-                parser.parse_args(shlex.split(line)[1:])
+                parse_cli_example(parser, line.removeprefix("autonomous-eda "))
+
+
+def test_readme_budget_and_report_flags_match_parser_scopes() -> None:
+    flags: dict[str, set[str]] = {}
+
+    def collect(group: argparse.ArgumentParser, path: str = "") -> None:
+        for action in group._actions:
+            for option in action.option_strings:
+                flags.setdefault(option, set()).add(path)
+        for name, child in parser_actions(group).items():
+            collect(child, f"{path} {name}".strip())
+
+    collect(build_parser())
+    scopes = {
+        "--memory-mib": {"run", "resources plan", "resources retry", "optimize plan"},
+        "--wall-clock-seconds": {"run", "resume"},
+        "--max-artifact-mib": {"run", "resume"},
+        "--max-tool-processes": {"run", "resume"},
+        "--max-retries": {"run", "resume"},
+        "--profile": {"verify", "report", "resume", "optimize frontier"},
+        "--coverage": {"verify"},
+        "--decks": {"verify"},
+        "--render": {"verify", "optimize run", "optimize resume"},
+        "--markdown": {"verify", "report", "resume"},
+        "--engineering": {"report"},
+    }
+    assert {flag: flags[flag] for flag in scopes} == scopes
+    lines = (ROOT / "README.md").read_text(encoding="utf-8").splitlines()
+    for flag, commands in scopes.items():
+        row = next(line for line in lines if line.startswith(f"| `{flag}`"))
+        assert set(re.findall(r"`([^`]+)`", row.split("|")[2])) == commands
+
+
+def github_anchor(title: str) -> str:
+    return re.sub(r"[^\w -]", "", title.lower()).replace(" ", "-")
+
+
+def heading_anchors(path: Path) -> list[str]:
+    headings: list[str] = []
+    for _, line in markdown_lines(path):
+        match = re.match(r"^#{1,6} (.+)$", line)
+        if match:
+            anchor = github_anchor(match[1])
+            candidate = anchor
+            suffix = 0
+            while candidate in headings:
+                suffix += 1
+                candidate = f"{anchor}-{suffix}"
+            headings.append(candidate)
+    return headings
 
 
 def test_readme_navigation_covers_all_sections() -> None:
-    lines = [line for _, line in markdown_lines(ROOT / "README.md")]
-    headings = [line[3:] for line in lines if line.startswith("## ")]
-    anchors = [heading.lower().replace(" ", "-") for heading in headings]
+    readme = ROOT / "README.md"
+    lines = [line for _, line in markdown_lines(readme)]
+    anchors = [github_anchor(line[3:]) for line in lines if line.startswith("## ")]
+    toc = lines[lines.index("**Contents**") + 1 : lines.index("## Installation and quickstart")]
     navigation = [
         target[1:]
-        for line in lines
+        for line in toc
         if line.startswith("- [")
         for _, _, target in LINK.findall(line)
         if target.startswith("#")
     ]
     assert navigation == anchors
+    for path in [readme, *(ROOT / "docs").rglob("*.md")]:
+        for number, line in markdown_lines(path):
+            for _, _, target in LINK.findall(line):
+                url = urlsplit(target)
+                if url.scheme or url.netloc or not url.fragment:
+                    continue
+                destination = (path.parent / unquote(url.path)).resolve() if url.path else path
+                if path == readme or destination == readme:
+                    assert unquote(url.fragment) in heading_anchors(destination), (
+                        f"{path.relative_to(ROOT)}:{number}: {target}"
+                    )
+
+
+def test_readme_fences_and_tables() -> None:
+    readme = ROOT / "README.md"
+    opened = ""
+    for line in readme.read_text(encoding="utf-8").splitlines():
+        match = FENCE.match(line)
+        if not match:
+            continue
+        marker = match[1]
+        if not opened:
+            assert re.fullmatch(r"\w+", line[match.end() :]), line
+            opened = marker
+        elif marker[0] == opened[0] and len(marker) >= len(opened):
+            assert line[match.end() :] == ""
+            opened = ""
+    assert not opened
+
+    width = 0
+    for _, line in markdown_lines(readme):
+        if not line.startswith("|"):
+            width = 0
+            continue
+        assert line.endswith("|")
+        cells = line[1:-1].split("|")
+        if not width:
+            width = len(cells)
+            assert width >= 2
+        assert len(cells) == width, line
+
+
+def test_readme_figure_captions_bind_published_hashes() -> None:
+    lines = [line for _, line in markdown_lines(ROOT / "README.md")]
+    seen = set()
+    for index, line in enumerate(lines):
+        for tag in IMAGE.findall(line):
+            match = re.search(r'\bsrc="([^"]+)"', tag)
+            assert match is not None
+            image = ROOT / match[1]
+            assert image not in seen, image
+            seen.add(image)
+            caption = lines[index + 2]
+            assert lines[index + 1] == "" and caption.startswith("*")
+            receipts = [
+                ROOT / target
+                for _, _, target in LINK.findall(caption)
+                if target.endswith(
+                    (
+                        "/provenance.json",
+                        "/visualization_manifest.json",
+                        "/resource-browser-check.json",
+                        "/verified-correction.json",
+                    )
+                )
+            ]
+            assert len(receipts) == 1, caption
+            record = json.loads(receipts[0].read_bytes())
+            if "stages" in record:
+                digest = record["stages"][image.stem]["png_sha256"]
+            elif "images" in record:
+                entry = next(
+                    item for item in record["images"].values() if item["filename"] == image.name
+                )
+                digest = entry["image_sha256"]
+            elif "browser_review" in record:
+                assert record["browser_review"]["file"] == image.name
+                digest = record["browser_review"]["image_sha256"]
+            else:
+                digest = record["image_sha256"]
+            assert sha256(image) == digest, image
+
+    stages = ROOT / "docs/images/gcd-stage-snapshots"
+    assert {
+        stages / f"{stage}.png"
+        for stage in ("floorplan", "place", "cts", "grt", "route", "finish", "gds")
+    } <= seen
+    synthesis = ROOT / "docs/images/readme"
+    assert synthesis / "gcd-synthesis.png" in seen
+    record = json.loads((synthesis / "provenance.json").read_bytes())
+    source = synthesis / record["source_file"]
+    receipt = json.loads((ROOT / "docs/evidence/gcd-walkthrough/receipt.json").read_bytes())
+    assert record["run_id"] == receipt["run_id"]
+    assert record["stage"] == "synth"
+    assert (
+        sha256(source)
+        == record["source_sha256"]
+        == receipt["attempts"][0]["artifacts"][record["source_artifact"]]
+    )
+    assert set(record["selected_keys"]) <= json.loads(source.read_bytes()).keys()
 
 
 def test_gcd_walkthrough_publication_matches_recorded_evidence() -> None:

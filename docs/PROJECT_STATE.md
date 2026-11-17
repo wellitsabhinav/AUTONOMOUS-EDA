@@ -1,5 +1,12 @@
 # Project state
 
+- The [README handbook workstream #44](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/44)
+  reproduced the seven-stage Sky130HD GCD flow on the Milestone 12 baseline.
+  Extracted setup failed at −1.20488 ns. Independent coverage, hold, router,
+  platform DRC, LVS and GDS reopening passed. The workstream rebased after 12B
+  and added its measured AES qualification evidence and CLI flags.
+  [Native, rendering and CLI validation](README_OVERHAUL_EVALUATION.md)
+
 - Milestone 12B verified five native AES scenarios on original RTL and the
   Yosys-elaborated sv2v model, with 11,414 matching core and EDN edges. Sideload,
   alert/error and bounded key/IV register-status proof passed. OpenSTA verified

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "run_id": "b162fa09cf9442dda08b0b31cb58c728",
+  "stage": "synth",
+  "source_artifact": "logs/sky130hd/gcd/base/1_synth.json",
+  "source_sha256": "897e5bb3a4be24c642115b3dbdff1fee4f44dfb29954473157f4738ffe5e726e",
+  "source_file": "gcd-synthesis.json",
+  "selected_keys": [
+    "synth__design__instance__count__stdcell",
+    "synth__design__instance__area__stdcell",
+    "synth__design__instance__count__macros",
+    "synth__flow__errors__count"
+  ],
+  "renderer": "Pillow ImageDraw",
+  "renderer_version": "12.2.0",
+  "fonts": {
+    "consola.ttf": "cf00b507b3286870cc5064ebd0633c303f70b491a4af25eec2d32df413db0179",
+    "consolab.ttf": "7e8de70c92a891722bd3fbd623db005caab2bfe267e5dab5be46b95a44e0c7f1"
+  },
+  "image_size_px": [
+    900,
+    275
+  ],
+  "filename": "gcd-synthesis.png",
+  "image_sha256": "a8f1e97f99b394ecbe4c3dbba6a0e8d2869ec4edbca4cc277f4b7008753e409e"
+}
