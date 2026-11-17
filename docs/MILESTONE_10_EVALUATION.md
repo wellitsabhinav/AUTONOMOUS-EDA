@@ -27,7 +27,7 @@ OpenTitan AES at `b2d662157db2802bde0e40dfc96fd0316042d116` exercised real packa
 
 The [AES physical receipt](evidence/opentitan-aes/physical.json) includes per-stage wall time, available native process RSS, checkpoint hashes, the failed routing log receipt and the independent gate matrix. The last detailed-routing progress row reported 15,973 interim violations. The stage left no final detailed-router or deck result. The [GCD recovery receipt](evidence/gcd-recovery/recovery.json) records 147.999 s of successful stage time, the two reused upstream attempts and the retained SIGTERM attempt.
 
-The resource guard stopped native GCD synthesis under a five-second invocation budget and retained its log. The real process limit test passed Docker a 64-task limit. Resuming with zero retries reused the record and refused a second synthesis dispatch. Budget controls include per-run CPU, Docker RAM and stage duration plus optional invocation wall-time, sampled artifact bytes, process counts and retries. Confirmed OOM detection, multi-run scheduling and configurable retention remain pending. [Resource-limit and replay receipt](evidence/integration/verified-correction.json)
+The resource guard stopped native GCD synthesis under a five-second invocation budget and retained its log. The real process limit test passed Docker a 64-task limit. Resuming with zero retries reused the record and refused a second synthesis dispatch. Budget controls include per-run CPU, Docker RAM and stage duration plus optional invocation wall-time, sampled artifact bytes, process counts and retries. Milestone 11 added Docker-confirmed OOM detection and cgroup high-water sampling. [Resource-limit and replay receipt](evidence/integration/verified-correction.json) · [Resource telemetry](RESOURCE_TELEMETRY.md)
 
 ## Readiness and Studio
 
@@ -50,4 +50,36 @@ The native Linux `rtl-formal` fixture passed Yosys elaboration and SAT equivalen
 
 The milestone remains open for a qualified AES block timing contract, full peripheral DV, translated-RTL equivalence, a complete detailed-route and extraction run, final GDS and independent decks, macro Liberty and LVS qualification, and a qualified hierarchical implementation. Studio still needs larger-scale incremental geometry delivery and more complete per-net timing data.
 
-For Milestone 11, extend resource telemetry with measured container high-water marks, explicit OOM evidence, and run and stage benchmark reporting. Use that telemetry to plan a fresh AES detailed-route attempt with the same clock intent. Carry the completed result through finish and independent physical gates before ranking optimization trials or advancing the OpenTitan hierarchy.
+## Bounded AES route follow-up
+
+The follow-up started from `f36e9d7` after all four main CI jobs passed. The tracking issue was open, there were no open PRs, and the merged resource-recovery PR had no inline review threads. The trial used the pinned OpenTitan AES Sky130HD configuration and its existing 8.5 ns `main` clock on `clk_i` and `clk_edn_i`. It reused the verified synthesis, floorplan, placement, CTS and global-route checkpoint chain in an isolated experiment. [Tracking issue #11](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/issues/11) · [Main CI](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/actions/runs/43737729825) · [Resource-recovery PR #39](https://github.com/wellitsabhinav/AUTONOMOUS-EDA/pull/39)
+
+Using the prior OOM evidence and the recorded 8% host reserve, the planner put the exploratory completion trial at a minimum of 3,240 MiB. The WSL sample of 3,525,033,984 B available admitted at most 3,112 MiB, so that trial was blocked before dispatch. A shorter measurement trial from the original pilot used two CPUs, a 3,000 MiB container cap, zero additional swap, a 1,000 s route limit, a 1,100 s invocation limit and a 2 GiB retained-artifact budget. The planner rejected 900 s because the pilot's 900.839 s elapsed time plus the margin reached that limit. This trial measures routing within its deadline, and the budget for completion remains unknown.
+
+### Measured outcome
+
+| Detailed-route attempt | Limit (s) | Controller elapsed (s) | Observed cgroup high-water (B) | Terminal evidence |
+| --- | ---: | ---: | ---: | --- |
+| Milestone 10B pilot | 900 | 900.839 | Unknown | Controller timeout, exit 124 |
+| Milestone 11 retry | 2,700 | 2,255.853 | 3,145,728,000 | `CONFIRMED_OOM`, Docker `OOMKilled=true`, exit 2 |
+| Bounded follow-up | 1,000 | 1,001.181 | 3,091,898,368 | `WALL_TIMEOUT`, controller exit 124, Docker exit 137 after controller SIGKILL, `OOMKilled=false` |
+
+The follow-up sampled Linux cgroup v2 `memory.peak` and retained 441 rows. The last sample confirmed a high-water mark of 2,948.66 MiB (98.29% of the cap) and zero observed cgroup OOM events and kills. The last verified OpenROAD progress row was iteration 0 at 40%, with 15,973 interim violations. Docker cleanup succeeded. The original 29 pilot artifacts and the prior OOM log, terminal receipt and sample journal rehashed successfully. The follow-up also retained the inherited timeout and verified all ten upstream checkpoint files against the pilot. [Follow-up receipt, hashes and gate matrix](evidence/opentitan-aes/bounded-route.json) · [Original pilot](evidence/opentitan-aes/physical.json) · [Prior OOM](evidence/resource-telemetry/aes-terminal.json)
+
+AES remains at readiness Level 2. Detailed route failed to complete and finish produced no final products. OpenRCX extraction, extracted setup and hold, timing coverage, detailed-router and platform design rule checks, layout versus schematic and independent GDSII reopening are blocked. Physical acceptance and design qualification are blocked. [Independent core qualification](OPENTITAN_READINESS.md#independent-core-qualification)
+
+### Reproduce the bounded trial
+
+From the repository root in Linux or WSL2 with the pinned ORFS image cached, use the retained pilot as the source and a fresh directory as the destination. The retry rechecks the source checkpoint hashes and host headroom before dispatch.
+
+```sh
+export PYTHONPATH=src
+python -m autonomous_eda resources retry experiments/m10-aes-physical-01 \
+  experiments/m10-aes-route-telemetry-reproduction --stage route \
+  --stage-seconds 1000 --wall-seconds 1100 --artifact-mib 2048 \
+  --memory-mib 3000 --margin 0.08 --policy bounded-trial
+python -m autonomous_eda resources history experiments/m10-aes-route-telemetry-01 --samples 2
+python -m autonomous_eda readiness qualification experiments/m10-aes-route-telemetry-01
+```
+
+The last two commands read the recorded trial. Substitute the reproduction directory to inspect a repeat attempt.

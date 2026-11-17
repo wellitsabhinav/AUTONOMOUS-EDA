@@ -1,5 +1,12 @@
 # Project state
 
+- The Milestone 10 AES follow-up reused the pinned Sky130HD checkpoint at 8.5 ns. Its
+  1,000-second detailed-route trial recorded `WALL_TIMEOUT`, a 3,091,898,368 B
+  cgroup high-water mark and Docker `OOMKilled=false`. It preserved the original
+  timeout and the later 3,000 MiB Docker-confirmed OOM. An exploratory 3,240 MiB
+  retry exceeded measured host headroom with the 8% reserve. AES remains at Level 2
+  with final physical acceptance blocked. [Measured evaluation](MILESTONE_10_EVALUATION.md#bounded-aes-route-follow-up)
+
 - The Milestone 11 follow-up added explicit memory caps for isolated retries and
   bound resume to the saved dispatch budget. A native GCD replay recovered from a
   five-second routing timeout at 768 MiB and completed at 1,024 MiB. The live AES
