@@ -638,6 +638,37 @@ async function refreshVerification() {
 }
 
 let resourcePage = null;
+function renderAESQualification(report) {
+    const details = $("aes-qualification");
+    details.hidden = !report;
+    const content = $("aes-qualification-content");
+    content.replaceChildren();
+    if (!report) return;
+    const labels = {
+        interface_timing: "Interface timing", pre_route_sta: "Pre-route SDC parse",
+        cipher_core: "Cipher-core regression", peripheral: "Peripheral regression",
+        structural: "Structural correspondence", differential: "Differential regression",
+        formal: "Sequential equivalence", resource_admission: "Resource admission"
+    };
+    content.append(element("p", "RTL revision " + report.rtl_revision));
+    content.append(element("p", "Source manifest " + report.source_manifest_sha256));
+    const list = element("dl");
+    for (const [gate, state] of Object.entries(report.gates)) {
+        list.append(element("dt", labels[gate] || gate));
+        const color = {PASS:"passed", FAIL:"failed"}[state] || state.toLowerCase();
+        list.append(element("dd", state, "gate " + color));
+    }
+    content.append(list);
+    const obligations = element("ul");
+    for (const detail of Object.values(report.obligations))
+        obligations.append(element("li", detail));
+    content.append(obligations);
+    const evidence = element("details");
+    evidence.append(element("summary", "Evidence files and SHA-256"));
+    for (const reference of Object.values(report.evidence_references))
+        evidence.append(element("p", reference.file + " · " + reference.sha256));
+    content.append(evidence);
+}
 let resourceRefreshing = false;
 let resourceActive = false;
 const resourceTitles = {...labels, synth:"Synthesis", finish:"Finish",
@@ -782,6 +813,7 @@ async function refreshResources() {
         if (!active) {
             json("/api/resource-qualification").then(result=>{
                 if (!result || resourcePage?.run_id!==result.run_id) return;
+                renderAESQualification(result.aes_qualification);
                 qualification.textContent = "Readiness Level "+(result.readiness_level ?? "unknown")
                     +" · Implementation "+result.implementation_status
                     +" · Physical acceptance "+result.physical_acceptance_status

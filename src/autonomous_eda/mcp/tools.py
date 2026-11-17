@@ -84,6 +84,11 @@ TOOLS = {
         api.ExperimentArgs,
         api.AcceptanceSummary,
     ),
+    "get_aes_qualification": ToolSpec(
+        "Read the bound OpenTitan AES qualification receipt without invoking tools.",
+        api.ExperimentArgs,
+        api.AESQualification,
+    ),
     "list_artifacts": ToolSpec(
         "Page through artifact identifiers and integrity metadata.",
         api.ExperimentPageArgs,

@@ -105,6 +105,17 @@ if (process.argv[4] === "resources") {
         });
         qualification = loaded.result.value;
         await writeFile(output+"/resource-qualification-api.json",qualification);
+        if (process.env.AEDA_STUDIO_EXPECT_AES_QUALIFICATION === "1") {
+            const aes = JSON.parse(qualification).aes_qualification;
+            if (aes?.gates.cipher_core !== "PASS" || aes?.gates.formal !== "BLOCKED"
+                || aes?.gates.interface_timing !== "BLOCKED") {
+                throw new Error("Expected the verified AES qualification gates");
+            }
+            await wait('!document.querySelector("#aes-qualification").hidden');
+            await invoke("#aes-qualification summary");
+            await wait('document.querySelector("#aes-qualification").open && '
+                +'document.querySelector("#aes-qualification-content").textContent.includes("BLOCKED")');
+        }
     }
     await cdp("Emulation.setDeviceMetricsOverride",{width:1440,height:1050,deviceScaleFactor:1,mobile:false});
     await screenshot("resources");
